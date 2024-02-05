@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9C457E12B71302500A5A347 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C9C457E02B71302500A5A347 /* KakaoSDKAuth */; };
+		C9C457E32B71302500A5A347 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = C9C457E22B71302500A5A347 /* KakaoSDKUser */; };
 		C9D4BD1B2B71089800584641 /* StumeetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D4BD1A2B71089800584641 /* StumeetApp.swift */; };
 		C9D4BD1D2B71089800584641 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D4BD1C2B71089800584641 /* ContentView.swift */; };
 		C9D4BD1F2B71089900584641 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9D4BD1E2B71089900584641 /* Assets.xcassets */; };
@@ -34,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C9C457DE2B712F8400A5A347 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C9D4BD172B71089800584641 /* Stumeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stumeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9D4BD1A2B71089800584641 /* StumeetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetApp.swift; sourceTree = "<group>"; };
 		C9D4BD1C2B71089800584641 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,6 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9C457E32B71302500A5A347 /* KakaoSDKUser in Frameworks */,
+				C9C457E12B71302500A5A347 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +99,7 @@
 		C9D4BD192B71089800584641 /* Stumeet */ = {
 			isa = PBXGroup;
 			children = (
+				C9C457DE2B712F8400A5A347 /* Info.plist */,
 				C9D4BD1A2B71089800584641 /* StumeetApp.swift */,
 				C9D4BD1C2B71089800584641 /* ContentView.swift */,
 				C9D4BD1E2B71089900584641 /* Assets.xcassets */,
@@ -143,6 +149,10 @@
 			dependencies = (
 			);
 			name = Stumeet;
+			packageProductDependencies = (
+				C9C457E02B71302500A5A347 /* KakaoSDKAuth */,
+				C9C457E22B71302500A5A347 /* KakaoSDKUser */,
+			);
 			productName = Stumeet;
 			productReference = C9D4BD172B71089800584641 /* Stumeet.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +225,9 @@
 				Base,
 			);
 			mainGroup = C9D4BD0E2B71089800584641;
+			packageReferences = (
+				C9C457DF2B71302500A5A347 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+			);
 			productRefGroup = C9D4BD182B71089800584641 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -422,8 +435,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Stumeet/Preview Content\"";
+				DEVELOPMENT_TEAM = 6HFDQ6HY5J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stumeet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -434,11 +449,15 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stumeet.Stumeet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hohyeonmoon.stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -450,8 +469,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Stumeet/Preview Content\"";
+				DEVELOPMENT_TEAM = 6HFDQ6HY5J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stumeet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,11 +483,15 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stumeet.Stumeet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hohyeonmoon.stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -582,6 +607,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C9C457DF2B71302500A5A347 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.20.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C9C457E02B71302500A5A347 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9C457DF2B71302500A5A347 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		C9C457E22B71302500A5A347 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9C457DF2B71302500A5A347 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C9D4BD0F2B71089800584641 /* Project object */;
 }
