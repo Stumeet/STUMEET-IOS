@@ -10,6 +10,7 @@ import UIKit
 class NicknameViewController: BaseViewController {
 
     // MARK: - UIComponents
+    
     let titleLabel: UILabel = {
         let label = UILabel().setLabelProperty(
             text: "닉네임을 입력해주세요",
@@ -59,12 +60,14 @@ class NicknameViewController: BaseViewController {
     }()
     
     // MARK: - LifeCycles
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     
     // MARK: - Setup
+    
     override func setupStyles() {
         view.backgroundColor = .white
     }
@@ -111,6 +114,8 @@ class NicknameViewController: BaseViewController {
     }
 
 }
+
+// MARK: Objc Function
 
 extension NicknameViewController {
     
