@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  ChangeProfileViewController.swift.swift
 //  Stumeet
 //
 //  Created by 정지훈 on 2/8/24.
@@ -7,118 +7,45 @@
 
 import UIKit
 
-class LoginViewController: BaseViewController {
+class ChangeProfileViewController: BaseViewController {
     
     // TODO: - icon image, titleLabel 속성, vertiaclLine, navigation title
     
     // MARK: - UIComponets
 
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        
-        label.font = .boldSystemFont(ofSize: 26)
-        label.text =
-                    """
-                    스터밋과 함께하는 
-                    슬기로운 공부생활!
-                    """
-        label.numberOfLines = 2
-        
-        let attributeString = NSMutableAttributedString(string: label.text!)
-        attributeString.addAttribute(.foregroundColor, value: StumeetColor.primaryInfo.color, range: NSRange(location: 0, length: 3))
-        label.attributedText = attributeString
+    let titleLabel: UILabel = {
+        let label = UILabel().setLabelProperty(
+            text: "프로필 사진을 설정해주세요",
+            font: .boldSystemFont(ofSize: 24),
+            color: nil)
         
         return label
     }()
     
-    var emailView: UIView = {
-        let view = UIView()
-        
-        view.backgroundColor = StumeetColor.gray75.color
-        view.layer.cornerRadius = 16
-        return view
-    }()
-    
-    var emailImageView: UIImageView = {
-        let imageView = UIImageView()
-        
-        imageView.backgroundColor = .black
-        return imageView
-    }()
-    
-    var emailTextField: UITextField = {
-        let textField = UITextField()
-        
-        textField.placeholder = "이메일"
-        textField.font = .systemFont(ofSize: 16)
-        textField.textColor = StumeetColor.gray400.color
-        return textField
-    }()
-    
-    var passwordlView: UIView = {
-        let view = UIView()
-        
-        view.backgroundColor = StumeetColor.gray75.color
-        view.layer.cornerRadius = 16
-        return view
-    }()
-    
-    var passwordImageView: UIImageView = {
-        let imageView = UIImageView()
-        
-        imageView.backgroundColor = .black
-        return imageView
-    }()
-    
-    var passwordTextField: UITextField = {
-        let textField = UITextField()
-        
-        textField.placeholder = "비밀번호"
-        textField.font = .systemFont(ofSize: 16)
-        textField.textColor = StumeetColor.gray400.color
-        return textField
-    }()
-    
-    lazy var loginButton: UIButton = {
+    lazy var profileImageButton: UIButton = {
         let button = UIButton()
-        button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
-        button.setTitle("로그인", for: .normal)
-        button.setTitleColor(StumeetColor.gray50.color, for: .normal)
-        button.backgroundColor = StumeetColor.primaryInfo.color
+        button.addTarget(self, action: #selector(didTapImageButton), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 90
         
-        button.layer.cornerRadius = 16
         return button
     }()
     
-    var registerStackView: UIStackView = {
-        let stackView = UIStackView()
-        
-        stackView.spacing = 12
-        stackView.axis = .horizontal
-        return stackView
-    }()
-    
-    var findPassWordButton: UIButton = {
+    lazy var changeImageButton: UIButton = {
         let button = UIButton()
+        button.addTarget(self, action: #selector(didTapImageButton), for: .touchUpInside)
+        button.backgroundColor = .systemPink
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 32
         
-        button.setTitle("비밀번호 찾기", for: .normal)
-        button.setTitleColor(StumeetColor.gray200.color, for: .normal)
         return button
     }()
     
-    var verticalLineLabel: UILabel = {
-        let label = UILabel()
+    lazy var nextButton: UIButton = {
+        let button = UIButton().makeRegisterBottomButton(text: "다음")
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         
-        label.text = "|"
-        label.textColor = StumeetColor.gray200.color
-        return label
-    }()
-    
-    var registerButton: UIButton = {
-        let button = UIButton()
-        
-        button.setTitle("회원가입", for: .normal)
-        button.setTitleColor(StumeetColor.gray200.color, for: .normal)
         return button
     }()
     
@@ -141,97 +68,52 @@ class LoginViewController: BaseViewController {
     override func setupAddView() {
         
         [
-            findPassWordButton,
-            verticalLineLabel,
-            registerButton
-        ]   .forEach { registerStackView.addArrangedSubview($0) }
-        
-        
-        [
-            emailImageView,
-            emailTextField
-        ]   .forEach { emailView.addSubview($0) }
-        
-        [
-            passwordImageView,
-            passwordTextField
-        ]   .forEach { passwordlView.addSubview($0) }
-        
-        
-        [
             titleLabel,
-            emailView,
-            passwordlView,
-            loginButton,
-            registerStackView
+            profileImageButton,
+            changeImageButton,
+            nextButton
         ]   .forEach { view.addSubview($0) }
         
         
     }
     
     override func setupConstaints() {
+        
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(44)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
         }
         
-        emailView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(24)
-            make.top.equalTo(titleLabel.snp.bottom).offset(24)
-            make.height.equalTo(72)
-        }
-        
-        emailImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(24)
-        }
-        
-        emailTextField.snp.makeConstraints { make in
-            make.leading.equalTo(emailImageView.snp.trailing).offset(8)
-            make.centerY.equalToSuperview()
-        }
-        
-        passwordlView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(24)
-            make.top.equalTo(emailView.snp.bottom).offset(16)
-            make.height.equalTo(72)
-        }
-        
-        passwordImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(24)
-        }
-        
-        passwordTextField.snp.makeConstraints { make in
-            make.leading.equalTo(passwordImageView.snp.trailing).offset(8)
-            make.centerY.equalToSuperview()
-        }
-        
-        loginButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(24)
-            make.top.equalTo(passwordlView.snp.bottom).offset(24)
-            make.height.equalTo(72)
-        }
-        
-        registerStackView.snp.makeConstraints { make in
+        profileImageButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(loginButton.snp.bottom).offset(24)
+            make.top.equalTo(titleLabel.snp.bottom).offset(32)
+            make.width.height.equalTo(180)
         }
-    }
-    
-    override func bind() {
         
-        // TODO: ViewModel과 Binding, Coordinator패턴 도입
+        changeImageButton.snp.makeConstraints { make in
+            make.trailing.equalTo(profileImageButton.snp.trailing)
+            make.bottom.equalTo(profileImageButton.snp.bottom)
+            make.width.height.equalTo(64)
+        }
+        
+        nextButton.snp.makeConstraints { make in
+            make.height.equalTo(72)
+            make.bottom.equalToSuperview().inset(34)
+            make.trailing.leading.equalToSuperview().inset(16)
+        }
     }
 }
 
 
 // MARK: Objc Function
 
-extension LoginViewController {
-    @objc func didTapLoginButton(_ sender: UIButton) {
-        present(StartViewController(), animated: true)
+extension ChangeProfileViewController {
+    
+    @objc func didTapNextButton(_ sender: UIButton) {
+        navigationController?.pushViewController(NicknameViewController(), animated: true)
+    }
+    
+    @objc func didTapImageButton(_ sender: UIButton) {
+        
     }
 }
