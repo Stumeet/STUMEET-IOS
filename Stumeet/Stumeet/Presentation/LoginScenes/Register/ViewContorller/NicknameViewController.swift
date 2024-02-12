@@ -120,7 +120,7 @@ class NicknameViewController: BaseViewController {
 extension NicknameViewController {
     
     @objc func didTapNextButton(_ sender: UIButton) {
-        navigationController?.pushViewController(NicknameViewController(), animated: true)
+        navigationController?.pushViewController(SelectRegionViewController(), animated: true)
     }
 }
     

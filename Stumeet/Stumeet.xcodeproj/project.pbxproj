@@ -20,10 +20,14 @@
 		CA76600F2B749FA0009121FA /* ChangeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76600E2B749FA0009121FA /* ChangeProfileViewController.swift */; };
 		CA7660142B74A0EE009121FA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7660132B74A0EE009121FA /* BaseViewController.swift */; };
 		CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7660162B74A53B009121FA /* StumeetColor.swift */; };
+		CAC15C392B79C50A0061F43A /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C382B79C50A0061F43A /* TagCell.swift */; };
+		CAC15C3B2B79C56C0061F43A /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C3A2B79C56C0061F43A /* BaseCollectionViewCell.swift */; };
+		CAC15C3D2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C3C2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift */; };
 		CAD04F882B7735E800B68BFD /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F872B7735E800B68BFD /* NicknameViewController.swift */; };
 		CAD04F8B2B77371A00B68BFD /* UITextField++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8A2B77371A00B68BFD /* UITextField++Extension.swift */; };
 		CAD04F8D2B773AF000B68BFD /* UILabel++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */; };
 		CAD04F8F2B773D0C00B68BFD /* UIButton++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */; };
+		CAD04F912B7741FC00B68BFD /* SelectRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,10 +62,14 @@
 		CA76600E2B749FA0009121FA /* ChangeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfileViewController.swift; sourceTree = "<group>"; };
 		CA7660132B74A0EE009121FA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CA7660162B74A53B009121FA /* StumeetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetColor.swift; sourceTree = "<group>"; };
+		CAC15C382B79C50A0061F43A /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		CAC15C3A2B79C56C0061F43A /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		CAC15C3C2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterAlginCollectionViewLayout.swift; sourceTree = "<group>"; };
 		CAD04F872B7735E800B68BFD /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		CAD04F8A2B77371A00B68BFD /* UITextField++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField++Extension.swift"; sourceTree = "<group>"; };
 		CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel++Extension.swift"; sourceTree = "<group>"; };
 		CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton++Extension.swift"; sourceTree = "<group>"; };
+		CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRegionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +179,7 @@
 				CA76600E2B749FA0009121FA /* ChangeProfileViewController.swift */,
 				CA02680F2B74F5F800D9790F /* StartViewController.swift */,
 				CAD04F872B7735E800B68BFD /* NicknameViewController.swift */,
+				CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */,
 			);
 			path = ViewContorller;
 			sourceTree = "<group>";
@@ -196,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				CA7660132B74A0EE009121FA /* BaseViewController.swift */,
+				CAC15C3A2B79C56C0061F43A /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -208,9 +218,19 @@
 			path = Colors;
 			sourceTree = "<group>";
 		};
+		CAC15C372B79C4F70061F43A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CAC15C382B79C50A0061F43A /* TagCell.swift */,
+				CAC15C3C2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		CAD04F862B77310B00B68BFD /* Register */ = {
 			isa = PBXGroup;
 			children = (
+				CAC15C372B79C4F70061F43A /* View */,
 				CA76600D2B749E4C009121FA /* ViewModel */,
 				CA76600C2B749E3F009121FA /* ViewContorller */,
 			);
@@ -367,10 +387,14 @@
 				CAD04F8D2B773AF000B68BFD /* UILabel++Extension.swift in Sources */,
 				CA76600F2B749FA0009121FA /* ChangeProfileViewController.swift in Sources */,
 				CAD04F8B2B77371A00B68BFD /* UITextField++Extension.swift in Sources */,
+				CAD04F912B7741FC00B68BFD /* SelectRegionViewController.swift in Sources */,
 				CAD04F8F2B773D0C00B68BFD /* UIButton++Extension.swift in Sources */,
 				CA0268102B74F5F800D9790F /* StartViewController.swift in Sources */,
 				CA7660142B74A0EE009121FA /* BaseViewController.swift in Sources */,
 				CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */,
+				CAC15C3D2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift in Sources */,
+				CAC15C3B2B79C56C0061F43A /* BaseCollectionViewCell.swift in Sources */,
+				CAC15C392B79C50A0061F43A /* TagCell.swift in Sources */,
 				C9D4BD1D2B71089800584641 /* ContentView.swift in Sources */,
 				CAD04F882B7735E800B68BFD /* NicknameViewController.swift in Sources */,
 				C9D4BD1B2B71089800584641 /* StumeetApp.swift in Sources */,
