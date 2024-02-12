@@ -1,5 +1,5 @@
 //
-//  SelectRegionViewController.swift
+//  SelectFieldViewController.swift
 //  Stumeet
 //
 //  Created by 정지훈 on 2/10/24.
@@ -7,33 +7,55 @@
 
 import UIKit
 
-class SelectRegionViewController: BaseViewController {
+class SelectFieldViewController: BaseViewController {
 
     let tagList: [String] = [
-        "서울",
-        "인천/경기",
-        "전북",
-        "전남",
-        "강원",
-        "경북",
-        "경남",
-        "충북",
-        "충남",
-        "제주"
+        "IT",
+        "출판",
+        "디자인",
+        "마케팅/기록",
+        "어학",
+        "취업준비",
+        "자연계",
+        "방송",
+        "자율스터디",
+        "경제",
+        "자격증",
+        "인문계",
+        "봉사활동"
       ]
     
     // MARK: - UIComponents
     
     let titleLabel: UILabel = {
         let label = UILabel().setLabelProperty(
-            text: "지역을 선택해주세요",
+            text: "분야를 선택해주세요",
             font: .boldSystemFont(ofSize: 20),
             color: nil)
         
         return label
     }()
     
-    
+    lazy var searchTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Search"
+        textField.backgroundColor = StumeetColor.primary50.color
+        textField.layer.cornerRadius = 10
+        textField.layer.masksToBounds = true
+        
+        let rightImageView = UIImageView(image: UIImage(systemName: "magnifyingglass")?.withTintColor(StumeetColor.primary700.color))
+        rightImageView.tintColor = .gray
+        rightImageView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        
+        // TODO: - Image 변경 후 수정
+        
+        textField.rightView = rightImageView
+        textField.rightViewMode = .always
+        textField.addLeftPadding(24)
+        
+        return textField
+    }()
+
     lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = CenterAlignCollectionViewLayout()
@@ -70,6 +92,7 @@ class SelectRegionViewController: BaseViewController {
     override func setupAddView() {
         [
             titleLabel,
+            searchTextField,
             tagCollectionView,
             nextButton
         ]   .forEach { view.addSubview($0) }
@@ -82,10 +105,16 @@ class SelectRegionViewController: BaseViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(34)
         }
         
+        searchTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(32)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(56)
+        }
+        
         tagCollectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(14)
-            make.top.equalTo(titleLabel.snp.bottom).offset(32)
-            make.height.equalTo(96)
+            make.top.equalTo(searchTextField.snp.bottom).offset(32)
+            make.height.equalTo(208)
         }
         
         nextButton.snp.makeConstraints { make in
@@ -97,7 +126,7 @@ class SelectRegionViewController: BaseViewController {
 }
 
 // MARK: - DataSource
-extension SelectRegionViewController: UICollectionViewDataSource {
+extension SelectFieldViewController: UICollectionViewDataSource {
   
     
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -114,7 +143,7 @@ extension SelectRegionViewController: UICollectionViewDataSource {
 }
 
 // MARK: - Delegate
-extension SelectRegionViewController: UICollectionViewDelegateFlowLayout {
+extension SelectFieldViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -140,9 +169,12 @@ extension SelectRegionViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: Objc Function
 
-extension SelectRegionViewController {
+extension SelectFieldViewController {
     
     @objc func didTapNextButton(_ sender: UIButton) {
-        navigationController?.pushViewController(SelectFieldViewController(), animated: true)
+        let startVC = StartViewController()
+        startVC.modalPresentationStyle = .fullScreen
+        
+        present(startVC, animated: true)
     }
 }

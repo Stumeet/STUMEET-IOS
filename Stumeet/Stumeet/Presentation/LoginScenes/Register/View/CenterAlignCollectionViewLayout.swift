@@ -1,5 +1,5 @@
 //
-//  CenterAlginCollectionViewLayout.swift
+//  CenterAlignCollectionViewLayout.swift
 //  Stumeet
 //
 //  Created by 정지훈 on 2/12/24.
@@ -35,4 +35,3 @@ class CenterAlignCollectionViewLayout: UICollectionViewFlowLayout {
         return attributes
     }
 }
-

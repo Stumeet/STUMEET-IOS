@@ -22,7 +22,8 @@
 		CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7660162B74A53B009121FA /* StumeetColor.swift */; };
 		CAC15C392B79C50A0061F43A /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C382B79C50A0061F43A /* TagCell.swift */; };
 		CAC15C3B2B79C56C0061F43A /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C3A2B79C56C0061F43A /* BaseCollectionViewCell.swift */; };
-		CAC15C3D2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C3C2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift */; };
+		CAC15C3D2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C3C2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift */; };
+		CAC15C3F2B79DA510061F43A /* SelectFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC15C3E2B79DA500061F43A /* SelectFieldViewController.swift */; };
 		CAD04F882B7735E800B68BFD /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F872B7735E800B68BFD /* NicknameViewController.swift */; };
 		CAD04F8B2B77371A00B68BFD /* UITextField++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8A2B77371A00B68BFD /* UITextField++Extension.swift */; };
 		CAD04F8D2B773AF000B68BFD /* UILabel++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */; };
@@ -64,7 +65,8 @@
 		CA7660162B74A53B009121FA /* StumeetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetColor.swift; sourceTree = "<group>"; };
 		CAC15C382B79C50A0061F43A /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		CAC15C3A2B79C56C0061F43A /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
-		CAC15C3C2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterAlginCollectionViewLayout.swift; sourceTree = "<group>"; };
+		CAC15C3C2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
+		CAC15C3E2B79DA500061F43A /* SelectFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFieldViewController.swift; sourceTree = "<group>"; };
 		CAD04F872B7735E800B68BFD /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		CAD04F8A2B77371A00B68BFD /* UITextField++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField++Extension.swift"; sourceTree = "<group>"; };
 		CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel++Extension.swift"; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				CA02680F2B74F5F800D9790F /* StartViewController.swift */,
 				CAD04F872B7735E800B68BFD /* NicknameViewController.swift */,
 				CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */,
+				CAC15C3E2B79DA500061F43A /* SelectFieldViewController.swift */,
 			);
 			path = ViewContorller;
 			sourceTree = "<group>";
@@ -222,7 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				CAC15C382B79C50A0061F43A /* TagCell.swift */,
-				CAC15C3C2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift */,
+				CAC15C3C2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -392,10 +395,11 @@
 				CA0268102B74F5F800D9790F /* StartViewController.swift in Sources */,
 				CA7660142B74A0EE009121FA /* BaseViewController.swift in Sources */,
 				CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */,
-				CAC15C3D2B79CF740061F43A /* CenterAlginCollectionViewLayout.swift in Sources */,
+				CAC15C3D2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift in Sources */,
 				CAC15C3B2B79C56C0061F43A /* BaseCollectionViewCell.swift in Sources */,
 				CAC15C392B79C50A0061F43A /* TagCell.swift in Sources */,
 				C9D4BD1D2B71089800584641 /* ContentView.swift in Sources */,
+				CAC15C3F2B79DA510061F43A /* SelectFieldViewController.swift in Sources */,
 				CAD04F882B7735E800B68BFD /* NicknameViewController.swift in Sources */,
 				C9D4BD1B2B71089800584641 /* StumeetApp.swift in Sources */,
 			);
