@@ -24,6 +24,16 @@ class SelectRegionViewController: BaseViewController {
     
     // MARK: - UIComponents
     
+    let titleLabel: UILabel = {
+        let label = UILabel().setLabelProperty(
+            text: "지역을 선택해주세요",
+            font: .boldSystemFont(ofSize: 20),
+            color: nil)
+        
+        return label
+    }()
+    
+    
     lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = CenterAlignCollectionViewLayout()
@@ -38,6 +48,13 @@ class SelectRegionViewController: BaseViewController {
     }()
     
     
+    lazy var nextButton: UIButton = {
+        let button = UIButton().makeRegisterBottomButton(text: "다음")
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        
+        return button
+    }()
+    
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
@@ -47,19 +64,34 @@ class SelectRegionViewController: BaseViewController {
     // MARK: - Setup
     
     override func setupStyles() {
-        tagCollectionView.delegate = self
-        tagCollectionView.dataSource = self
+        view.backgroundColor = .white
     }
     
     override func setupAddView() {
         [
-            tagCollectionView
+            titleLabel,
+            tagCollectionView,
+            nextButton
         ]   .forEach { view.addSubview($0) }
     }
     
     override func setupConstaints() {
+        
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(24)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(34)
+        }
+        
         tagCollectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(14)
+            make.top.equalTo(titleLabel.snp.bottom).offset(32)
+            make.height.equalTo(96)
+        }
+        
+        nextButton.snp.makeConstraints { make in
+            make.height.equalTo(72)
+            make.bottom.equalToSuperview().inset(34)
+            make.trailing.leading.equalToSuperview().inset(16)
         }
     }
 }
@@ -100,4 +132,17 @@ extension SelectRegionViewController: UICollectionViewDelegateFlowLayout {
         return 8
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
+    }
+    
+}
+
+// MARK: Objc Function
+
+extension SelectRegionViewController {
+    
+    @objc func didTapNextButton(_ sender: UIButton) {
+        navigationController?.pushViewController(SelectRegionViewController(), animated: true)
+    }
 }
