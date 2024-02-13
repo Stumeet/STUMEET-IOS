@@ -37,6 +37,8 @@ class SelectRegionViewController: BaseViewController {
     lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = CenterAlignCollectionViewLayout()
+        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 8
         
         collectionView.collectionViewLayout = layout
         collectionView.isScrollEnabled = false
@@ -105,7 +107,10 @@ extension SelectRegionViewController: UICollectionViewDataSource {
   }
   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TagCell.identifier,
+            for: indexPath) as? TagCell
+        else { return UICollectionViewCell() }
         
         cell.tagLabel.text = tagList[indexPath.item]
         
@@ -116,7 +121,9 @@ extension SelectRegionViewController: UICollectionViewDataSource {
 // MARK: - Delegate
 extension SelectRegionViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let text = tagList[indexPath.item]
         let font = UIFont.systemFont(ofSize: 16)
@@ -127,15 +134,6 @@ extension SelectRegionViewController: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 16
-    }
-    
 }
 
 // MARK: Objc Function

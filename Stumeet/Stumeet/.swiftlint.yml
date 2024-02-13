@@ -1,5 +1,14 @@
 # .swiftlint.yml
 
+disabled_rules:
+  - todo
+  - unneeded_override # 필요하지 않는 override 함수
+  
+excluded:
+  - Carthage
+  - Pods
+  - StumeetTests
+  - StumeetUITests
 # 강제 형 변환
 force_cast: warning
 force_try: warning
@@ -12,7 +21,7 @@ trailing_whitespace:
 
 # 한 줄의 최대 길이
 line_length:
-  warning: 120
+  warning: 150
   error: 200
 
 # 파일당 최대 줄 수
@@ -43,8 +52,9 @@ vertical_whitespace:
 
 # 중첩 규칙 설정
 nesting:
-  warning: 3
-  error: 4
+  type_level:
+    warning: 3
+    error: 4
 
 # 개발 중에 적었던 print문 경고표시
 custom_rules:

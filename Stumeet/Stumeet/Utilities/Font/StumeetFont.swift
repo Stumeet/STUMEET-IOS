@@ -7,8 +7,6 @@
 
 import UIKit
 
-//import PretendardKit
-
 enum StumeetFont {
     
     // MARK: - Heading

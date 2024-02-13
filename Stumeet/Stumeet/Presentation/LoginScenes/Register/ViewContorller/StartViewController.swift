@@ -20,7 +20,11 @@ class StartViewController: BaseViewController {
         label.font = .boldSystemFont(ofSize: 20)
         
         let attributeString = NSMutableAttributedString(string: label.text!)
-        attributeString.addAttribute(.foregroundColor, value: StumeetColor.primaryInfo.color, range: NSRange(location: 0, length: 3))
+        attributeString.addAttribute(
+            .foregroundColor,
+            value: StumeetColor.primaryInfo.color,
+            range: NSRange(location: 0, length: 3)
+        )
         label.attributedText = attributeString
         
         return label
