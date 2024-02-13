@@ -124,11 +124,12 @@
 		C9D4BD192B71089800584641 /* Stumeet */ = {
 			isa = PBXGroup;
 			children = (
-				CA7660112B74A0D8009121FA /* Utilities */,
+				CA0778C02B7B349800BDFF1D /* Data */,
+				CA0778B92B7B312000BDFF1D /* Domain */,
 				CA76600A2B749D93009121FA /* Presentation */,
-				C9D4BD1A2B71089800584641 /* StumeetApp.swift */,
-				C9D4BD1C2B71089800584641 /* ContentView.swift */,
-				C9D4BD1E2B71089900584641 /* Assets.xcassets */,
+				CA7660112B74A0D8009121FA /* Utilities */,
+				CA0778B82B7B310E00BDFF1D /* Resource */,
+				CA0778CA2B7B35B500BDFF1D /* NetworkService */,
 				C9D4BD202B71089900584641 /* Preview Content */,
 			);
 			path = Stumeet;
@@ -159,10 +160,159 @@
 			path = StumeetUITests;
 			sourceTree = "<group>";
 		};
+		CA0778B82B7B310E00BDFF1D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				C9D4BD1E2B71089900584641 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		CA0778B92B7B312000BDFF1D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				CA0778BB2B7B344A00BDFF1D /* Entity */,
+				CA0778BC2B7B345B00BDFF1D /* Interface */,
+				CA0778BE2B7B347700BDFF1D /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		CA0778BA2B7B315500BDFF1D /* Font */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		CA0778BB2B7B344A00BDFF1D /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		CA0778BC2B7B345B00BDFF1D /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				CA0778BD2B7B346900BDFF1D /* Repository */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		CA0778BD2B7B346900BDFF1D /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		CA0778BE2B7B347700BDFF1D /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				CA0778BF2B7B349000BDFF1D /* Protocol */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		CA0778BF2B7B349000BDFF1D /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		CA0778C02B7B349800BDFF1D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CA0778C22B7B34A600BDFF1D /* Network */,
+				CA0778C12B7B349D00BDFF1D /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		CA0778C12B7B349D00BDFF1D /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		CA0778C22B7B34A600BDFF1D /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CA0778C42B7B34B700BDFF1D /* DataMapping */,
+				CA0778C32B7B34B000BDFF1D /* Service */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		CA0778C32B7B34B000BDFF1D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		CA0778C42B7B34B700BDFF1D /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		CA0778C52B7B352700BDFF1D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		CA0778C62B7B353700BDFF1D /* HomeScenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeScenes;
+			sourceTree = "<group>";
+		};
+		CA0778C72B7B354600BDFF1D /* StudyListScenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = StudyListScenes;
+			sourceTree = "<group>";
+		};
+		CA0778C82B7B356200BDFF1D /* CalendarScenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CalendarScenes;
+			sourceTree = "<group>";
+		};
+		CA0778C92B7B357E00BDFF1D /* MyPageScenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MyPageScenes;
+			sourceTree = "<group>";
+		};
+		CA0778CA2B7B35B500BDFF1D /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
 		CA76600A2B749D93009121FA /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				CA76600B2B749DE6009121FA /* LoginScenes */,
+				CA0778C62B7B353700BDFF1D /* HomeScenes */,
+				CA0778C72B7B354600BDFF1D /* StudyListScenes */,
+				CA0778C82B7B356200BDFF1D /* CalendarScenes */,
+				CA0778C92B7B357E00BDFF1D /* MyPageScenes */,
+				C9D4BD1A2B71089800584641 /* StumeetApp.swift */,
+				C9D4BD1C2B71089800584641 /* ContentView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -170,6 +320,7 @@
 		CA76600B2B749DE6009121FA /* LoginScenes */ = {
 			isa = PBXGroup;
 			children = (
+				CA0778C52B7B352700BDFF1D /* Login */,
 				CAD04F862B77310B00B68BFD /* Register */,
 			);
 			path = LoginScenes;
@@ -197,6 +348,7 @@
 		CA7660112B74A0D8009121FA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				CA0778BA2B7B315500BDFF1D /* Font */,
 				CAD04F892B7736F400B68BFD /* Extension */,
 				CA7660152B74A4B4009121FA /* Colors */,
 				CA7660122B74A0E4009121FA /* Base */,
