@@ -32,6 +32,9 @@
 		CAD04F8D2B773AF000B68BFD /* UILabel++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */; };
 		CAD04F8F2B773D0C00B68BFD /* UIButton++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */; };
 		CAD04F912B7741FC00B68BFD /* SelectRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */; };
+		CAFDECD22B7BB0890023BFE8 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECD12B7BB0890023BFE8 /* ViewModelType.swift */; };
+		CAFDECD72B7BB1360023BFE8 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CAFDECD62B7BB1360023BFE8 /* CombineCocoa */; };
+		CAFDECD92B7BB8270023BFE8 /* UIVIew++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECD82B7BB8270023BFE8 /* UIVIew++Extension.swift */; };
 		D76E701912CDE1E23B97612B /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF923B5E5D809F1B2AA441F /* Pods_Stumeet_StumeetUITests.framework */; };
 		FA20E07CC5218C5967CE37C9 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B48F0743F4E6191D6802591 /* Pods_StumeetTests.framework */; };
 /* End PBXBuildFile section */
@@ -86,6 +89,8 @@
 		CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel++Extension.swift"; sourceTree = "<group>"; };
 		CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton++Extension.swift"; sourceTree = "<group>"; };
 		CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRegionViewController.swift; sourceTree = "<group>"; };
+		CAFDECD12B7BB0890023BFE8 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		CAFDECD82B7BB8270023BFE8 /* UIVIew++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew++Extension.swift"; sourceTree = "<group>"; };
 		D7370B83B5A26CEA7D97D8F1 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		F6E00C94ED323CC54676A9C1 /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +102,7 @@
 			files = (
 				CA0778CD2B7B37BF00BDFF1D /* PretendardKit in Frameworks */,
 				CA02680A2B74ABA900D9790F /* SnapKit in Frameworks */,
+				CAFDECD72B7BB1360023BFE8 /* CombineCocoa in Frameworks */,
 				48576F9167644452FA29B44D /* Pods_Stumeet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +351,7 @@
 		CA76600A2B749D93009121FA /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				CAFDECD32B7BB0BE0023BFE8 /* Common */,
 				CA76600B2B749DE6009121FA /* LoginScenes */,
 				CA0778C62B7B353700BDFF1D /* HomeScenes */,
 				CA0778C72B7B354600BDFF1D /* StudyListScenes */,
@@ -436,8 +443,25 @@
 				CAD04F8A2B77371A00B68BFD /* UITextField++Extension.swift */,
 				CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */,
 				CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */,
+				CAFDECD82B7BB8270023BFE8 /* UIVIew++Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		CAFDECD32B7BB0BE0023BFE8 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CAFDECD42B7BB0C30023BFE8 /* ViewModel */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		CAFDECD42B7BB0C30023BFE8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CAFDECD12B7BB0890023BFE8 /* ViewModelType.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -461,6 +485,7 @@
 			packageProductDependencies = (
 				CA0268092B74ABA900D9790F /* SnapKit */,
 				CA0778CC2B7B37BF00BDFF1D /* PretendardKit */,
+				CAFDECD62B7BB1360023BFE8 /* CombineCocoa */,
 			);
 			productName = Stumeet;
 			productReference = C9D4BD172B71089800584641 /* Stumeet.app */;
@@ -539,6 +564,7 @@
 			packageReferences = (
 				CA7660102B74A01F009121FA /* XCRemoteSwiftPackageReference "SnapKit" */,
 				CA0778CB2B7B37BF00BDFF1D /* XCRemoteSwiftPackageReference "PretendardKit" */,
+				CAFDECD52B7BB1360023BFE8 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 			);
 			productRefGroup = C9D4BD182B71089800584641 /* Products */;
 			projectDirPath = "";
@@ -671,6 +697,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAFDECD92B7BB8270023BFE8 /* UIVIew++Extension.swift in Sources */,
 				CAD04F8D2B773AF000B68BFD /* UILabel++Extension.swift in Sources */,
 				CA76600F2B749FA0009121FA /* ChangeProfileViewController.swift in Sources */,
 				CAD04F8B2B77371A00B68BFD /* UITextField++Extension.swift in Sources */,
@@ -679,6 +706,7 @@
 				CA0268102B74F5F800D9790F /* StartViewController.swift in Sources */,
 				CA7660142B74A0EE009121FA /* BaseViewController.swift in Sources */,
 				CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */,
+				CAFDECD22B7BB0890023BFE8 /* ViewModelType.swift in Sources */,
 				CAC15C3D2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift in Sources */,
 				CAC15C3B2B79C56C0061F43A /* BaseCollectionViewCell.swift in Sources */,
 				CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */,
@@ -1038,6 +1066,14 @@
 				minimumVersion = 5.7.0;
 			};
 		};
+		CAFDECD52B7BB1360023BFE8 /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1050,6 +1086,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA0778CB2B7B37BF00BDFF1D /* XCRemoteSwiftPackageReference "PretendardKit" */;
 			productName = PretendardKit;
+		};
+		CAFDECD62B7BB1360023BFE8 /* CombineCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAFDECD52B7BB1360023BFE8 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			productName = CombineCocoa;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

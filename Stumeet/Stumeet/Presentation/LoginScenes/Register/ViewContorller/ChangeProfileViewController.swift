@@ -9,40 +9,44 @@ import UIKit
 
 class ChangeProfileViewController: BaseViewController {
     
-    // TODO: - icon image, titleLabel 속성, vertiaclLine, navigation title
-    
     // MARK: - UIComponets
+    
+    private lazy var progressBar: UIView = {
+        let view = UIView().makeProgressBar(percent: 0.2)
+        
+        return view
+    }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel().setLabelProperty(
             text: "프로필 사진을 설정해주세요",
-            font: .boldSystemFont(ofSize: 24),
+            font: StumeetFont.titleMedium.font,
             color: nil)
         
         return label
     }()
     
-    lazy var profileImageButton: UIButton = {
+    private lazy var profileImageButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(didTapImageButton), for: .touchUpInside)
-        button.backgroundColor = .black
+        button.setImage(UIImage(named: "changeProfileCharacter"), for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 90
         
         return button
     }()
     
-    lazy var changeImageButton: UIButton = {
+    private lazy var changeImageButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(didTapImageButton), for: .touchUpInside)
-        button.backgroundColor = .systemPink
+        button.setImage(UIImage(named: "changeProfileButton"), for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 32
         
         return button
     }()
     
-    lazy var nextButton: UIButton = {
+    private lazy var nextButton: UIButton = {
         let button = UIButton().makeRegisterBottomButton(text: "다음")
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         
@@ -53,20 +57,20 @@ class ChangeProfileViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        configureNavigationBarItems()
     }
     
     // MARK: - SetUP
     
-    // TODO: - navigationbar 커스텀
-    
     override func setupStyles() {
         view.backgroundColor = .white
-        navigationItem.title = "로그인"
     }
     
     override func setupAddView() {
         
         [
+            progressBar,
             titleLabel,
             profileImageButton,
             changeImageButton,
@@ -78,8 +82,15 @@ class ChangeProfileViewController: BaseViewController {
     
     override func setupConstaints() {
         
+        progressBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(4)
+        }
+        
+        
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(24)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(36)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
         }
         
@@ -101,6 +112,27 @@ class ChangeProfileViewController: BaseViewController {
             make.trailing.leading.equalToSuperview().inset(16)
         }
     }
+    
+    func configureNavigationBarItems() {
+        
+        let backButton = UIBarButtonItem(
+            image: UIImage(named: "backButton"),
+            style: .plain,
+            target: self,
+            action: nil
+        )
+        backButton.tintColor = .black
+        
+        let titleLabel = UILabel().setLabelProperty(
+            text: "프로필 설정",
+            font: StumeetFont.titleMedium.font,
+            color: nil
+        )
+        
+        let navigationTitleItem = UIBarButtonItem(customView: titleLabel)
+        
+        navigationItem.leftBarButtonItems = [backButton, navigationTitleItem]
+    }
 }
 
 
@@ -108,11 +140,11 @@ class ChangeProfileViewController: BaseViewController {
 
 extension ChangeProfileViewController {
     
-    @objc func didTapNextButton(_ sender: UIButton) {
+    @objc private func didTapNextButton(_ sender: UIButton) {
         navigationController?.pushViewController(NicknameViewController(), animated: true)
     }
     
-    @objc func didTapImageButton(_ sender: UIButton) {
+    @objc private func didTapImageButton(_ sender: UIButton) {
         
     }
 }
