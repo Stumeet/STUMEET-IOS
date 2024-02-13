@@ -7,8 +7,15 @@
 
 import SwiftUI
 
+import PretendardKit
+
 @main
 struct StumeetApp: App {
+    
+    init() {
+        PretendardKit.register()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

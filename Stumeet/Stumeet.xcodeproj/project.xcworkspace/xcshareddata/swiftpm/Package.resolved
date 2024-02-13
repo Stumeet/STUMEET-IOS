@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "pretendardkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wookeon/PretendardKit.git",
+      "state" : {
+        "revision" : "d8362d8ecee86c297f2784fa453037136914bc2c",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit.git",

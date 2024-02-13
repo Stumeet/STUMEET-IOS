@@ -17,6 +17,8 @@
 		CA02680A2B74ABA900D9790F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA0268092B74ABA900D9790F /* SnapKit */; };
 		CA02680C2B74ABA900D9790F /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = CA02680B2B74ABA900D9790F /* SnapKit-Dynamic */; };
 		CA0268102B74F5F800D9790F /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02680F2B74F5F800D9790F /* StartViewController.swift */; };
+		CA0778CD2B7B37BF00BDFF1D /* PretendardKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA0778CC2B7B37BF00BDFF1D /* PretendardKit */; };
+		CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0778CE2B7B394600BDFF1D /* StumeetFont.swift */; };
 		CA76600F2B749FA0009121FA /* ChangeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76600E2B749FA0009121FA /* ChangeProfileViewController.swift */; };
 		CA7660142B74A0EE009121FA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7660132B74A0EE009121FA /* BaseViewController.swift */; };
 		CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7660162B74A53B009121FA /* StumeetColor.swift */; };
@@ -60,6 +62,7 @@
 		C9D4BD352B71089900584641 /* StumeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITests.swift; sourceTree = "<group>"; };
 		C9D4BD372B71089900584641 /* StumeetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA02680F2B74F5F800D9790F /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		CA0778CE2B7B394600BDFF1D /* StumeetFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetFont.swift; sourceTree = "<group>"; };
 		CA76600E2B749FA0009121FA /* ChangeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfileViewController.swift; sourceTree = "<group>"; };
 		CA7660132B74A0EE009121FA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CA7660162B74A53B009121FA /* StumeetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetColor.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0778CD2B7B37BF00BDFF1D /* PretendardKit in Frameworks */,
 				CA02680A2B74ABA900D9790F /* SnapKit in Frameworks */,
 				CA02680C2B74ABA900D9790F /* SnapKit-Dynamic in Frameworks */,
 			);
@@ -181,6 +185,7 @@
 		CA0778BA2B7B315500BDFF1D /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				CA0778CE2B7B394600BDFF1D /* StumeetFont.swift */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -421,6 +426,7 @@
 			packageProductDependencies = (
 				CA0268092B74ABA900D9790F /* SnapKit */,
 				CA02680B2B74ABA900D9790F /* SnapKit-Dynamic */,
+				CA0778CC2B7B37BF00BDFF1D /* PretendardKit */,
 			);
 			productName = Stumeet;
 			productReference = C9D4BD172B71089800584641 /* Stumeet.app */;
@@ -496,6 +502,7 @@
 			mainGroup = C9D4BD0E2B71089800584641;
 			packageReferences = (
 				CA7660102B74A01F009121FA /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CA0778CB2B7B37BF00BDFF1D /* XCRemoteSwiftPackageReference "PretendardKit" */,
 			);
 			productRefGroup = C9D4BD182B71089800584641 /* Products */;
 			projectDirPath = "";
@@ -549,6 +556,7 @@
 				CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */,
 				CAC15C3D2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift in Sources */,
 				CAC15C3B2B79C56C0061F43A /* BaseCollectionViewCell.swift in Sources */,
+				CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */,
 				CAC15C392B79C50A0061F43A /* TagCell.swift in Sources */,
 				C9D4BD1D2B71089800584641 /* ContentView.swift in Sources */,
 				CAC15C3F2B79DA510061F43A /* SelectFieldViewController.swift in Sources */,
@@ -881,6 +889,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CA0778CB2B7B37BF00BDFF1D /* XCRemoteSwiftPackageReference "PretendardKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wookeon/PretendardKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		CA7660102B74A01F009121FA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -901,6 +917,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA7660102B74A01F009121FA /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";
+		};
+		CA0778CC2B7B37BF00BDFF1D /* PretendardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA0778CB2B7B37BF00BDFF1D /* XCRemoteSwiftPackageReference "PretendardKit" */;
+			productName = PretendardKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
