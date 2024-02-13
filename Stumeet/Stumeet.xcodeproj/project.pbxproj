@@ -16,7 +16,6 @@
 		C9D4BD362B71089900584641 /* StumeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D4BD352B71089900584641 /* StumeetUITests.swift */; };
 		C9D4BD382B71089900584641 /* StumeetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D4BD372B71089900584641 /* StumeetUITestsLaunchTests.swift */; };
 		CA02680A2B74ABA900D9790F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA0268092B74ABA900D9790F /* SnapKit */; };
-		CA02680C2B74ABA900D9790F /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = CA02680B2B74ABA900D9790F /* SnapKit-Dynamic */; };
 		CA0268102B74F5F800D9790F /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02680F2B74F5F800D9790F /* StartViewController.swift */; };
 		CA0778CD2B7B37BF00BDFF1D /* PretendardKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA0778CC2B7B37BF00BDFF1D /* PretendardKit */; };
 		CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0778CE2B7B394600BDFF1D /* StumeetFont.swift */; };
@@ -98,7 +97,6 @@
 			files = (
 				CA0778CD2B7B37BF00BDFF1D /* PretendardKit in Frameworks */,
 				CA02680A2B74ABA900D9790F /* SnapKit in Frameworks */,
-				CA02680C2B74ABA900D9790F /* SnapKit-Dynamic in Frameworks */,
 				48576F9167644452FA29B44D /* Pods_Stumeet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,13 +307,6 @@
 			path = DataMapping;
 			sourceTree = "<group>";
 		};
-		CA0778C52B7B352700BDFF1D /* Login */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		CA0778C62B7B353700BDFF1D /* HomeScenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -368,7 +359,6 @@
 		CA76600B2B749DE6009121FA /* LoginScenes */ = {
 			isa = PBXGroup;
 			children = (
-				CA0778C52B7B352700BDFF1D /* Login */,
 				CAD04F862B77310B00B68BFD /* Register */,
 			);
 			path = LoginScenes;
@@ -470,7 +460,6 @@
 			name = Stumeet;
 			packageProductDependencies = (
 				CA0268092B74ABA900D9790F /* SnapKit */,
-				CA02680B2B74ABA900D9790F /* SnapKit-Dynamic */,
 				CA0778CC2B7B37BF00BDFF1D /* PretendardKit */,
 			);
 			productName = Stumeet;
@@ -1056,11 +1045,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA7660102B74A01F009121FA /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		CA02680B2B74ABA900D9790F /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CA7660102B74A01F009121FA /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 		CA0778CC2B7B37BF00BDFF1D /* PretendardKit */ = {
 			isa = XCSwiftPackageProductDependency;
