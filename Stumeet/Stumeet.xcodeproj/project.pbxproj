@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48576F9167644452FA29B44D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158C7CA900EDDE1D6803889F /* Pods_Stumeet.framework */; };
 		C9D4BD1B2B71089800584641 /* StumeetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D4BD1A2B71089800584641 /* StumeetApp.swift */; };
 		C9D4BD1D2B71089800584641 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D4BD1C2B71089800584641 /* ContentView.swift */; };
 		C9D4BD1F2B71089900584641 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9D4BD1E2B71089900584641 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 		CA0268102B74F5F800D9790F /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02680F2B74F5F800D9790F /* StartViewController.swift */; };
 		CA0778CD2B7B37BF00BDFF1D /* PretendardKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA0778CC2B7B37BF00BDFF1D /* PretendardKit */; };
 		CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0778CE2B7B394600BDFF1D /* StumeetFont.swift */; };
+		CA0778D72B7B41C500BDFF1D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CA0778D62B7B41C500BDFF1D /* .swiftlint.yml */; };
 		CA76600F2B749FA0009121FA /* ChangeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA76600E2B749FA0009121FA /* ChangeProfileViewController.swift */; };
 		CA7660142B74A0EE009121FA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7660132B74A0EE009121FA /* BaseViewController.swift */; };
 		CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7660162B74A53B009121FA /* StumeetColor.swift */; };
@@ -31,6 +33,8 @@
 		CAD04F8D2B773AF000B68BFD /* UILabel++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */; };
 		CAD04F8F2B773D0C00B68BFD /* UIButton++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */; };
 		CAD04F912B7741FC00B68BFD /* SelectRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */; };
+		D76E701912CDE1E23B97612B /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF923B5E5D809F1B2AA441F /* Pods_Stumeet_StumeetUITests.framework */; };
+		FA20E07CC5218C5967CE37C9 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B48F0743F4E6191D6802591 /* Pods_StumeetTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08CBC02CD4D6963D8F7ADF31 /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		0AF923B5E5D809F1B2AA441F /* Pods_Stumeet_StumeetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stumeet_StumeetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		158C7CA900EDDE1D6803889F /* Pods_Stumeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stumeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		655A56035598238CA5526B6D /* Pods-StumeetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StumeetTests.debug.xcconfig"; path = "Target Support Files/Pods-StumeetTests/Pods-StumeetTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8B48F0743F4E6191D6802591 /* Pods_StumeetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StumeetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A27C257830F376F560C9C609 /* Pods-StumeetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StumeetTests.release.xcconfig"; path = "Target Support Files/Pods-StumeetTests/Pods-StumeetTests.release.xcconfig"; sourceTree = "<group>"; };
+		C39E62330B8FB4B08467F1BD /* Pods-Stumeet-StumeetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.release.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C9D4BD172B71089800584641 /* Stumeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stumeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9D4BD1A2B71089800584641 /* StumeetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetApp.swift; sourceTree = "<group>"; };
 		C9D4BD1C2B71089800584641 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +74,7 @@
 		C9D4BD372B71089900584641 /* StumeetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA02680F2B74F5F800D9790F /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		CA0778CE2B7B394600BDFF1D /* StumeetFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetFont.swift; sourceTree = "<group>"; };
+		CA0778D62B7B41C500BDFF1D /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CA76600E2B749FA0009121FA /* ChangeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfileViewController.swift; sourceTree = "<group>"; };
 		CA7660132B74A0EE009121FA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CA7660162B74A53B009121FA /* StumeetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetColor.swift; sourceTree = "<group>"; };
@@ -75,6 +87,8 @@
 		CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel++Extension.swift"; sourceTree = "<group>"; };
 		CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton++Extension.swift"; sourceTree = "<group>"; };
 		CAD04F902B7741FC00B68BFD /* SelectRegionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRegionViewController.swift; sourceTree = "<group>"; };
+		D7370B83B5A26CEA7D97D8F1 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
+		F6E00C94ED323CC54676A9C1 /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +99,7 @@
 				CA0778CD2B7B37BF00BDFF1D /* PretendardKit in Frameworks */,
 				CA02680A2B74ABA900D9790F /* SnapKit in Frameworks */,
 				CA02680C2B74ABA900D9790F /* SnapKit-Dynamic in Frameworks */,
+				48576F9167644452FA29B44D /* Pods_Stumeet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA20E07CC5218C5967CE37C9 /* Pods_StumeetTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,12 +115,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D76E701912CDE1E23B97612B /* Pods_Stumeet_StumeetUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0CE74B29F8E99622618AA583 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D7370B83B5A26CEA7D97D8F1 /* Pods-Stumeet.debug.xcconfig */,
+				F6E00C94ED323CC54676A9C1 /* Pods-Stumeet.release.xcconfig */,
+				08CBC02CD4D6963D8F7ADF31 /* Pods-Stumeet-StumeetUITests.debug.xcconfig */,
+				C39E62330B8FB4B08467F1BD /* Pods-Stumeet-StumeetUITests.release.xcconfig */,
+				655A56035598238CA5526B6D /* Pods-StumeetTests.debug.xcconfig */,
+				A27C257830F376F560C9C609 /* Pods-StumeetTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		2665DEF5305E83014AFD8DFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				158C7CA900EDDE1D6803889F /* Pods_Stumeet.framework */,
+				0AF923B5E5D809F1B2AA441F /* Pods_Stumeet_StumeetUITests.framework */,
+				8B48F0743F4E6191D6802591 /* Pods_StumeetTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C9D4BD0E2B71089800584641 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +152,8 @@
 				C9D4BD2A2B71089900584641 /* StumeetTests */,
 				C9D4BD342B71089900584641 /* StumeetUITests */,
 				C9D4BD182B71089800584641 /* Products */,
+				0CE74B29F8E99622618AA583 /* Pods */,
+				2665DEF5305E83014AFD8DFD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +177,7 @@
 				CA0778B82B7B310E00BDFF1D /* Resource */,
 				CA0778CA2B7B35B500BDFF1D /* NetworkService */,
 				C9D4BD202B71089900584641 /* Preview Content */,
+				CA0778D62B7B41C500BDFF1D /* .swiftlint.yml */,
 			);
 			path = Stumeet;
 			sourceTree = "<group>";
@@ -414,6 +457,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9D4BD3B2B71089900584641 /* Build configuration list for PBXNativeTarget "Stumeet" */;
 			buildPhases = (
+				DCAEBB6D1A78CCD0C0C24B44 /* [CP] Check Pods Manifest.lock */,
+				CA0778D52B7B416B00BDFF1D /* SwiftLint Script */,
 				C9D4BD132B71089800584641 /* Sources */,
 				C9D4BD142B71089800584641 /* Frameworks */,
 				C9D4BD152B71089800584641 /* Resources */,
@@ -436,6 +481,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9D4BD3E2B71089900584641 /* Build configuration list for PBXNativeTarget "StumeetTests" */;
 			buildPhases = (
+				203B7D46A29EF9D22CAB80F0 /* [CP] Check Pods Manifest.lock */,
 				C9D4BD232B71089900584641 /* Sources */,
 				C9D4BD242B71089900584641 /* Frameworks */,
 				C9D4BD252B71089900584641 /* Resources */,
@@ -454,6 +500,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9D4BD412B71089900584641 /* Build configuration list for PBXNativeTarget "StumeetUITests" */;
 			buildPhases = (
+				4888E62BB65940DF50FAA6EB /* [CP] Check Pods Manifest.lock */,
 				C9D4BD2D2B71089900584641 /* Sources */,
 				C9D4BD2E2B71089900584641 /* Frameworks */,
 				C9D4BD2F2B71089900584641 /* Resources */,
@@ -520,6 +567,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0778D72B7B41C500BDFF1D /* .swiftlint.yml in Resources */,
 				C9D4BD222B71089900584641 /* Preview Assets.xcassets in Resources */,
 				C9D4BD1F2B71089900584641 /* Assets.xcassets in Resources */,
 			);
@@ -540,6 +588,94 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		203B7D46A29EF9D22CAB80F0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StumeetTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4888E62BB65940DF50FAA6EB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Stumeet-StumeetUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA0778D52B7B416B00BDFF1D /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		DCAEBB6D1A78CCD0C0C24B44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Stumeet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C9D4BD132B71089800584641 /* Sources */ = {
@@ -650,7 +786,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -707,7 +843,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -719,6 +855,7 @@
 		};
 		C9D4BD3C2B71089900584641 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7370B83B5A26CEA7D97D8F1 /* Pods-Stumeet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -727,6 +864,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Stumeet/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -748,6 +886,7 @@
 		};
 		C9D4BD3D2B71089900584641 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6E00C94ED323CC54676A9C1 /* Pods-Stumeet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -756,6 +895,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Stumeet/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -777,6 +917,7 @@
 		};
 		C9D4BD3F2B71089900584641 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 655A56035598238CA5526B6D /* Pods-StumeetTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -796,6 +937,7 @@
 		};
 		C9D4BD402B71089900584641 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A27C257830F376F560C9C609 /* Pods-StumeetTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -815,6 +957,7 @@
 		};
 		C9D4BD422B71089900584641 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08CBC02CD4D6963D8F7ADF31 /* Pods-Stumeet-StumeetUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -832,6 +975,7 @@
 		};
 		C9D4BD432B71089900584641 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C39E62330B8FB4B08467F1BD /* Pods-Stumeet-StumeetUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

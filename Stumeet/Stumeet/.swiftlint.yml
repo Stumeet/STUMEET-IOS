@@ -1,0 +1,56 @@
+# .swiftlint.yml
+
+# 강제 형 변환
+force_cast: warning
+force_try: warning
+
+# 의미없는 공백/줄 바꿈
+trailing_newline: warning
+trailing_whitespace:
+    severity: warning
+    ignores_empty_lines: true
+
+# 한 줄의 최대 길이
+line_length:
+  warning: 120
+  error: 200
+
+# 파일당 최대 줄 수
+file_length:
+  warning: 500
+  error: 800
+
+# 타입 본문의 최대 길이
+type_body_length:
+  warning: 300
+  error: 500
+
+# 함수 본문의 최대 길이를 설정합니다.
+function_body_length:
+  warning: 50
+  error: 100
+
+# 식별자 이름 규칙 설정
+identifier_name:
+  min_length: 3
+  max_length:
+    warning: 40
+    error: 50
+
+# 빈 줄 설정
+vertical_whitespace:
+  max_empty_lines: 2
+
+# 중첩 규칙 설정
+nesting:
+  warning: 3
+  error: 4
+
+# 개발 중에 적었던 print문 경고표시
+custom_rules:
+  disable_print:
+    included: ".*\\.swift"
+    name: "print usage"
+    regex: "((\\bprint)|(Swift\\.print))\\s*\\("
+    message: "Prefer os_log over print"
+    severity: warning
