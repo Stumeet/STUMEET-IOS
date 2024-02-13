@@ -53,7 +53,6 @@ class ChangeProfileViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     // MARK: - SetUP
