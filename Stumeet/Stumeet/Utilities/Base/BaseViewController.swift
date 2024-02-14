@@ -20,6 +20,7 @@ class BaseViewController: UIViewController {
         setupStyles()
         setupAddView()
         setupConstaints()
+        bind()
     }
 
     /// View와 관련된 Style을 설정합니다.

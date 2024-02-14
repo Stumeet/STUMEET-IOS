@@ -5,7 +5,11 @@
 //  Created by 정지훈 on 2/8/24.
 //
 
+import Combine
 import UIKit
+import PhotosUI
+
+import CombineCocoa
 
 class ChangeProfileViewController: BaseViewController {
     
@@ -28,7 +32,6 @@ class ChangeProfileViewController: BaseViewController {
     
     private lazy var profileImageButton: UIButton = {
         let button = UIButton()
-        button.addTarget(self, action: #selector(didTapImageButton), for: .touchUpInside)
         button.setImage(UIImage(named: "changeProfileCharacter"), for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 90
@@ -38,7 +41,6 @@ class ChangeProfileViewController: BaseViewController {
     
     private lazy var changeImageButton: UIButton = {
         let button = UIButton()
-        button.addTarget(self, action: #selector(didTapImageButton), for: .touchUpInside)
         button.setImage(UIImage(named: "changeProfileButton"), for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 32
@@ -48,10 +50,25 @@ class ChangeProfileViewController: BaseViewController {
     
     private lazy var nextButton: UIButton = {
         let button = UIButton().makeRegisterBottomButton(text: "다음")
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         
         return button
     }()
+    
+    // MARK: - Properties
+    
+    private let viewModel: ChangeProfileViewModel
+    private let coordinator: RegisterCoordinator
+    
+    // MARK: - Init
+    init(viewModel: ChangeProfileViewModel, coordinator: RegisterCoordinator) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LfieCycles
     
@@ -61,7 +78,7 @@ class ChangeProfileViewController: BaseViewController {
         configureNavigationBarItems()
     }
     
-    // MARK: - SetUP
+    // MARK: - SetUp
     
     override func setupStyles() {
         view.backgroundColor = .white
@@ -133,18 +150,57 @@ class ChangeProfileViewController: BaseViewController {
         
         navigationItem.leftBarButtonItems = [backButton, navigationTitleItem]
     }
+    
+    override func bind() {
+        
+        // MARK: - Input
+        
+        // 이미지 변경 버튼 Tap
+        let changeImageButtonTapPublisher = Publishers.Merge(
+            changeImageButton.tapPublisher,
+            profileImageButton.tapPublisher
+        ).eraseToAnyPublisher()
+        
+        let input = ChangeProfileViewModel
+            .Input(
+                didTapChangeProfileButton: changeImageButtonTapPublisher,
+                didTapNextButton: nextButton.tapPublisher
+            )
+        
+        // MARK: - Output
+        
+        let output = viewModel.transform(input: input)
+        
+        // navigate To NickNameVC
+        output.pushNickNameVC
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.coordinator.navigateToNickNameVC()
+            }
+            .store(in: &cancellables)
+        
+        // present To PHPickerView
+        output.showAlbum
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                
+                var config = PHPickerConfiguration()
+                config.filter = .images
+                config.selectionLimit = 1
+                let pickerVC = PHPickerViewController(configuration: config)
+                pickerVC.delegate = self
+                
+                self?.coordinator.presentPHPickerView(pickerVC: pickerVC)
+            }
+            .store(in: &cancellables)
+    }
 }
 
+// MARK: - PHPickerViewDelegate
 
-// MARK: Objc Function
-
-extension ChangeProfileViewController {
-    
-    @objc private func didTapNextButton(_ sender: UIButton) {
-        navigationController?.pushViewController(NicknameViewController(), animated: true)
-    }
-    
-    @objc private func didTapImageButton(_ sender: UIButton) {
+extension ChangeProfileViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
         
     }
 }
