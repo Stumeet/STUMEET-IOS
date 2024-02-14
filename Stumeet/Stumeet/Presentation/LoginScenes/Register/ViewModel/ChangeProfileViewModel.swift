@@ -42,10 +42,10 @@ final class ChangeProfileViewModel: ViewModelType {
         // Input
         
         let pushNickNameVC = input.didTapNextButton
-            .eraseToAnyPublisher()
+            
         
         let showAlbum = input.didTapChangeProfileButton
-            .eraseToAnyPublisher()
+            
         
         let selectedPhoto = didSelectPhoto
             .eraseToAnyPublisher()

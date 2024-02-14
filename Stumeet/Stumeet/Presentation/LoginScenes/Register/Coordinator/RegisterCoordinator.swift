@@ -26,8 +26,13 @@ class RegisterCoordinator: Coordinator {
     }
     
     func navigateToNickNameVC() {
-        let nicknameVC = NicknameViewController()
+        let nicknameVC = NicknameViewController(viewModel: NicknameViewModel(), coordinator: self)
         navigationController.pushViewController(nicknameVC, animated: true)
+    }
+    
+    func navigateToSelectRegionVC() {
+        let selectRegionVC = SelectRegionViewController()
+        navigationController.pushViewController(selectRegionVC, animated: true)
     }
     
     func presentPHPickerView(pickerVC: PHPickerViewController) {

@@ -36,7 +36,8 @@ enum StumeetColor {
     
     // MARK: - Other
     case danger
-    case warning
+    case warning50
+    case warning500
     case success
     case primaryInfo
 }
@@ -71,7 +72,8 @@ extension StumeetColor {
             
         // Others
         case .danger: return #colorLiteral(red: 0.9215686275, green: 0.2705882353, blue: 0.2705882353, alpha: 1)
-        case .warning: return #colorLiteral(red: 0.9568627451, green: 0.6941176471, blue: 0.168627451, alpha: 1)
+        case .warning50: return #colorLiteral(red: 0.9843137255, green: 0.968627451, blue: 0.9254901961, alpha: 1)
+        case .warning500: return #colorLiteral(red: 0.9568627451, green: 0.6941176471, blue: 0.168627451, alpha: 1)
         case .success: return #colorLiteral(red: 0.03921568627, green: 0.7607843137, blue: 0.5843137255, alpha: 1)
         case .primaryInfo: return #colorLiteral(red: 0.01176470588, green: 0.5058823529, blue: 0.4588235294, alpha: 1)
         }

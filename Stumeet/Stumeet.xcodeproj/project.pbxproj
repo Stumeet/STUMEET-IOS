@@ -39,6 +39,8 @@
 		CAFDECDE2B7BD3EF0023BFE8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECDD2B7BD3EF0023BFE8 /* Coordinator.swift */; };
 		CAFDECE12B7BD8D10023BFE8 /* RegisterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE02B7BD8D10023BFE8 /* RegisterCoordinator.swift */; };
 		CAFDECE42B7C84860023BFE8 /* CoreGraphicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE32B7C84860023BFE8 /* CoreGraphicsManager.swift */; };
+		CAFDECE62B7C8BFC0023BFE8 /* UIViewController++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE52B7C8BFC0023BFE8 /* UIViewController++Extension.swift */; };
+		CAFDECE82B7C8EA60023BFE8 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE72B7C8EA60023BFE8 /* NicknameViewModel.swift */; };
 		D76E701912CDE1E23B97612B /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF923B5E5D809F1B2AA441F /* Pods_Stumeet_StumeetUITests.framework */; };
 		FA20E07CC5218C5967CE37C9 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B48F0743F4E6191D6802591 /* Pods_StumeetTests.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +101,8 @@
 		CAFDECDD2B7BD3EF0023BFE8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		CAFDECE02B7BD8D10023BFE8 /* RegisterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCoordinator.swift; sourceTree = "<group>"; };
 		CAFDECE32B7C84860023BFE8 /* CoreGraphicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreGraphicsManager.swift; sourceTree = "<group>"; };
+		CAFDECE52B7C8BFC0023BFE8 /* UIViewController++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController++Extension.swift"; sourceTree = "<group>"; };
+		CAFDECE72B7C8EA60023BFE8 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		D7370B83B5A26CEA7D97D8F1 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		F6E00C94ED323CC54676A9C1 /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -395,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				CAFDECDA2B7BC8300023BFE8 /* ChangeProfileViewModel.swift */,
+				CAFDECE72B7C8EA60023BFE8 /* NicknameViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				CAD04F8C2B773AF000B68BFD /* UILabel++Extension.swift */,
 				CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */,
 				CAFDECD82B7BB8270023BFE8 /* UIVIew++Extension.swift */,
+				CAFDECE52B7C8BFC0023BFE8 /* UIViewController++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -750,8 +756,10 @@
 				CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */,
 				CAFDECDB2B7BC8300023BFE8 /* ChangeProfileViewModel.swift in Sources */,
 				CAC15C392B79C50A0061F43A /* TagCell.swift in Sources */,
+				CAFDECE62B7C8BFC0023BFE8 /* UIViewController++Extension.swift in Sources */,
 				C9D4BD1D2B71089800584641 /* ContentView.swift in Sources */,
 				CAFDECE12B7BD8D10023BFE8 /* RegisterCoordinator.swift in Sources */,
+				CAFDECE82B7C8EA60023BFE8 /* NicknameViewModel.swift in Sources */,
 				CAC15C3F2B79DA510061F43A /* SelectFieldViewController.swift in Sources */,
 				CAD04F882B7735E800B68BFD /* NicknameViewController.swift in Sources */,
 				C9D4BD1B2B71089800584641 /* StumeetApp.swift in Sources */,

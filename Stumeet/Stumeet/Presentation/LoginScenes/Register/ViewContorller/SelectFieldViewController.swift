@@ -75,7 +75,7 @@ class SelectFieldViewController: BaseViewController {
     
     
     lazy var nextButton: UIButton = {
-        let button = UIButton().makeRegisterBottomButton(text: "다음")
+        let button = UIButton().makeRegisterBottomButton(text: "다음", color: StumeetColor.gray200.color)
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         
         return button

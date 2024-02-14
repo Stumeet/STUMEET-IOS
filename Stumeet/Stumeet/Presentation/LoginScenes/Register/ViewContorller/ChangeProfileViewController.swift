@@ -49,7 +49,7 @@ class ChangeProfileViewController: BaseViewController {
     }()
     
     private lazy var nextButton: UIButton = {
-        let button = UIButton().makeRegisterBottomButton(text: "다음")
+        let button = UIButton().makeRegisterBottomButton(text: "다음", color: StumeetColor.primaryInfo.color)
         
         return button
     }()
@@ -75,7 +75,7 @@ class ChangeProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        configureNavigationBarItems()
+        configureRegisterNavigationBarItems()
     }
     
     // MARK: - SetUp
@@ -128,27 +128,6 @@ class ChangeProfileViewController: BaseViewController {
             make.bottom.equalToSuperview().inset(34)
             make.trailing.leading.equalToSuperview().inset(16)
         }
-    }
-    
-    func configureNavigationBarItems() {
-        
-        let backButton = UIBarButtonItem(
-            image: UIImage(named: "backButton"),
-            style: .plain,
-            target: self,
-            action: nil
-        )
-        backButton.tintColor = .black
-        
-        let titleLabel = UILabel().setLabelProperty(
-            text: "프로필 설정",
-            font: StumeetFont.titleMedium.font,
-            color: nil
-        )
-        
-        let navigationTitleItem = UIBarButtonItem(customView: titleLabel)
-        
-        navigationItem.leftBarButtonItems = [backButton, navigationTitleItem]
     }
     
     override func bind() {

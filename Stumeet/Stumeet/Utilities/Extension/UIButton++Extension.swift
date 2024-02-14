@@ -12,10 +12,10 @@ extension UIButton {
     
     /// RegisterScene에 들어가는 공통된 하단 버튼을 만드는 함수입니다.
     /// - Parameter text: "button title"
-    func makeRegisterBottomButton(text: String) -> UIButton {
+    func makeRegisterBottomButton(text: String, color: UIColor) -> UIButton {
         self.setTitle(text, for: .normal)
         self.setTitleColor(StumeetColor.gray50.color, for: .normal)
-        self.backgroundColor = StumeetColor.primaryInfo.color
+        self.backgroundColor = color
         self.layer.cornerRadius = 16
         
         return self
