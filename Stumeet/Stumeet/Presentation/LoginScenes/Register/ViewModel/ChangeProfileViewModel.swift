@@ -5,7 +5,7 @@
 //  Created by 정지훈 on 2/14/24.
 //
 
-import Foundation
+import UIKit
 
 import Combine
 
@@ -23,10 +23,11 @@ final class ChangeProfileViewModel: ViewModelType {
     struct Output {
         let pushNickNameVC: AnyPublisher<Void, Never>
         let showAlbum: AnyPublisher<Void, Never>
+        let profileImage: AnyPublisher<UIImage, Never>
     }
     
     // MARK: - Properties
-    
+    let didSelectPhoto = PassthroughSubject<UIImage, Never>()
     
     // MARK: - Init
     
@@ -46,11 +47,15 @@ final class ChangeProfileViewModel: ViewModelType {
         let showAlbum = input.didTapChangeProfileButton
             .eraseToAnyPublisher()
         
+        let selectedPhoto = didSelectPhoto
+            .eraseToAnyPublisher()
+        
         // Output
         
         return Output(
             pushNickNameVC: pushNickNameVC,
-            showAlbum: showAlbum
+            showAlbum: showAlbum,
+            profileImage: selectedPhoto
         )
     }
 }

@@ -183,7 +183,6 @@ class ChangeProfileViewController: BaseViewController {
         output.showAlbum
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                
                 var config = PHPickerConfiguration()
                 config.filter = .images
                 config.selectionLimit = 1
@@ -193,14 +192,43 @@ class ChangeProfileViewController: BaseViewController {
                 self?.coordinator.presentPHPickerView(pickerVC: pickerVC)
             }
             .store(in: &cancellables)
+        
+        // binding Profile Image
+        output.profileImage
+            .receive(on: RunLoop.main)
+            .sink { [weak self] image in
+                self?.profileImageButton.setImage(image, for: .normal)
+            }
+            .store(in: &cancellables)
+
     }
 }
 
 // MARK: - PHPickerViewDelegate
 
 extension ChangeProfileViewController: PHPickerViewControllerDelegate {
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         
+        let cgManager = CoreGraphicManager()
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, _ in
+                if let url {
+                    let targetSize = CGSize(width: 180, height: 180)
+                    
+                    guard let downsampledImageData = cgManager.downsample(
+                        imageAt: url,
+                        to: targetSize,
+                        scale: UIScreen.main.scale) else { return }
+                    
+                    self.viewModel.didSelectPhoto.send(downsampledImageData)
+                }
+            }
+        }
+        picker.dismiss(animated: true)
     }
 }
