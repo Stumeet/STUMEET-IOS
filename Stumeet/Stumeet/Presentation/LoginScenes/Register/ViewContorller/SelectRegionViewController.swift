@@ -50,7 +50,7 @@ class SelectRegionViewController: BaseViewController {
     var datasource: UICollectionViewDiffableDataSource<RegionSection, Region>?
     
     // MARK: - Init
-    init(coordinator: RegisterCoordinator, viewModel: SelectRegionViewModel) {
+    init(viewModel: SelectRegionViewModel, coordinator: RegisterCoordinator) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
