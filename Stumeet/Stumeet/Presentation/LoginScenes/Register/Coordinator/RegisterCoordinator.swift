@@ -39,7 +39,11 @@ class RegisterCoordinator: Coordinator {
     }
     
     func navigateToSelectFieldVC() {
-        let selectFieldVC = SelectFieldViewController()
+        
+        let useCase = DefaultSelectFieldUseCase(repository: DefaultSelectFieldRepository())
+        let selectFieldVC = SelectFieldViewController(
+            viewModel: SelecteFieldViewModel(useCase: useCase),
+            coordinator: self)
         navigationController.pushViewController(selectFieldVC, animated: true)
     }
     

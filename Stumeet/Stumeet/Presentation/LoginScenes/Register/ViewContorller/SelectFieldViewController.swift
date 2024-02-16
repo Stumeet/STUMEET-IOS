@@ -7,30 +7,21 @@
 
 import UIKit
 
-class SelectFieldViewController: BaseViewController {
+import CombineCocoa
 
-    let tagList: [String] = [
-        "IT",
-        "출판",
-        "디자인",
-        "마케팅/기록",
-        "어학",
-        "취업준비",
-        "자연계",
-        "방송",
-        "자율스터디",
-        "경제",
-        "자격증",
-        "인문계",
-        "봉사활동"
-      ]
+class SelectFieldViewController: BaseViewController {
     
     // MARK: - UIComponents
+    private lazy var progressBar: UIView = {
+        let view = UIView().makeProgressBar(percent: 0.8)
+        
+        return view
+    }()
     
     let titleLabel: UILabel = {
         let label = UILabel().setLabelProperty(
             text: "분야를 선택해주세요",
-            font: .boldSystemFont(ofSize: 20),
+            font: StumeetFont.titleMedium.font,
             color: nil)
         
         return label
@@ -43,13 +34,7 @@ class SelectFieldViewController: BaseViewController {
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
         
-        let rightImageView = UIImageView(
-            image: UIImage(systemName: "magnifyingglass")?.withTintColor(StumeetColor.primary700.color)
-        )
-        rightImageView.tintColor = .gray
-        rightImageView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        
-        // TODO: - Image 변경 후 수정
+        let rightImageView = UIImageView(image: UIImage(named: "search"))
         
         textField.rightView = rightImageView
         textField.rightViewMode = .always
@@ -59,16 +44,9 @@ class SelectFieldViewController: BaseViewController {
     }()
 
     lazy var tagCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let layout = CenterAlignCollectionViewLayout()
-        layout.minimumLineSpacing = 16
-        layout.minimumInteritemSpacing = 8
-        
-        collectionView.collectionViewLayout = layout
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.isScrollEnabled = false
         collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
         return collectionView
     }()
@@ -76,15 +54,32 @@ class SelectFieldViewController: BaseViewController {
     
     lazy var nextButton: UIButton = {
         let button = UIButton().makeRegisterBottomButton(text: "다음", color: StumeetColor.gray200.color)
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         
         return button
     }()
+    
+    // MARK: - Properties
+    let viewModel: SelecteFieldViewModel
+    let coordinator: RegisterCoordinator
+    var datasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
+    
+    // MARK: - Init
+    init(viewModel: SelecteFieldViewModel, coordinator: RegisterCoordinator) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureRegisterNavigationBarItems()
+        configureDatasource()
     }
     
     // MARK: - Setup
@@ -95,6 +90,7 @@ class SelectFieldViewController: BaseViewController {
     
     override func setupAddView() {
         [
+            progressBar,
             titleLabel,
             searchTextField,
             tagCollectionView,
@@ -104,9 +100,15 @@ class SelectFieldViewController: BaseViewController {
     
     override func setupConstaints() {
         
+        progressBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(4)
+        }
+        
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(34)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
         }
         
         searchTextField.snp.makeConstraints { make in
@@ -116,7 +118,7 @@ class SelectFieldViewController: BaseViewController {
         }
         
         tagCollectionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(14)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(searchTextField.snp.bottom).offset(32)
             make.height.equalTo(208)
         }
@@ -127,56 +129,71 @@ class SelectFieldViewController: BaseViewController {
             make.trailing.leading.equalToSuperview().inset(16)
         }
     }
+    
+    override func bind() {
+        
+        // Input
+        
+        let input = SelecteFieldViewModel.Input(
+                didSelectField: tagCollectionView.didSelectItemPublisher
+            )
+        
+        let output = viewModel.transform(input: input)
+        
+        
+        // Output
+        
+        // collectiionview snapshot
+        output.fieldItems
+            .receive(on: RunLoop.main)
+            .sink { [weak self] item in
+                var snapshot = NSDiffableDataSourceSnapshot<FieldSection, Field>()
+                snapshot.appendSections([.main])
+                snapshot.appendItems(item)
+                
+                guard let datasource = self?.datasource else { return }
+                datasource.apply(snapshot, animatingDifferences: false)
+            }
+            .store(in: &cancellables)
+        
+        // nextButton Enable 
+        output.isNextButtonEnabled
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isEnable in
+                self?.nextButton.isEnabled = isEnable
+                self?.nextButton.backgroundColor = isEnable ? StumeetColor.primaryInfo.color : StumeetColor.gray200.color
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(40))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(40))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(8)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 16
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
 }
 
 // MARK: - DataSource
-extension SelectFieldViewController: UICollectionViewDataSource {
-  
-    
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return tagList.count
-  }
-  
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(
-                withReuseIdentifier: TagCell.identifier,
-                for: indexPath
-            ) as? TagCell
-        else { return UICollectionViewCell() }
-        
-        cell.tagLabel.text = tagList[indexPath.item]
-        
-        return cell
-    }
-}
-
-// MARK: - Delegate
-extension SelectFieldViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let text = tagList[indexPath.item]
-        let font = UIFont.systemFont(ofSize: 16)
-        let textSize = text.size(withAttributes: [NSAttributedString.Key.font: font])
-        
-        let cellWidth = textSize.width + 32
-        let cellHeight: CGFloat = 40
-        
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-}
-
-// MARK: Objc Function
-
 extension SelectFieldViewController {
-    
-    @objc func didTapNextButton(_ sender: UIButton) {
-        let startVC = StartViewController()
-        startVC.modalPresentationStyle = .fullScreen
-        
-        present(startVC, animated: true)
+    func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, item in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell
+            else { return UICollectionViewCell() }
+            
+            cell.backgroundColor = item.isSelected ? StumeetColor.primaryInfo.color : StumeetColor.primary50.color
+            cell.tagLabel.textColor = item.isSelected ? .white : .black
+            cell.tagLabel.text = item.field
+            return cell
+        })
     }
 }

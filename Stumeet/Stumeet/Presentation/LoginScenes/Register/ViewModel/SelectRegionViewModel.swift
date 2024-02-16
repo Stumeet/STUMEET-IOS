@@ -24,7 +24,6 @@ final class SelectRegionViewModel: ViewModelType {
     }
     
     // MARK: - Properties
-    private var cancellables = Set<AnyCancellable>()
     private let useCase: SelectRegionUseCase
     
     // MARK: - Init
@@ -36,23 +35,20 @@ final class SelectRegionViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         
         // input
-        let didSelectItem = input.didSelectItem
-
-        let navigateToField = input.didTapNextButton
         
-        // Output
-        let regionItems = useCase.getRegions()
+        let regionItems = input.didSelectItem
+            .flatMap { [weak self] indexPath -> AnyPublisher<[Region], Never> in
+                guard let self = self else { return Just([]).eraseToAnyPublisher() }
+                return self.useCase.selectRegion(at: indexPath)
+            }
+            .merge(with: useCase.getRegions())
+            .eraseToAnyPublisher()
+        
+        let navigateToField = input.didTapNextButton
         
         let isNextButtonEnabled = regionItems
             .map { $0.contains { $0.isSelected } }
             .eraseToAnyPublisher()
-        
-        didSelectItem
-            .map { [weak self] indexPath in
-                self?.useCase.selectRegion(at: indexPath)
-            }
-            .sink(receiveValue: { _ in })
-            .store(in: &cancellables)
         
         return Output(
             regionItems: regionItems,

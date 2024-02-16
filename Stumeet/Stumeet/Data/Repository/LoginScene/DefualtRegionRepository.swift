@@ -18,7 +18,7 @@ class DefaultRegionRepository: RegionRepository {
     }
     
     func selectRegion(at indexPath: IndexPath) -> AnyPublisher<[Region], Never> {
-        for (index, _) in regions.enumerated() {
+        for index in regions.indices {
             regions[index].isSelected = index == indexPath.row
         }
         regionsSubject.send(regions)
