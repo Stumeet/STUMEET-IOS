@@ -31,8 +31,13 @@ class RegisterCoordinator: Coordinator {
     }
     
     func navigateToSelectRegionVC() {
-        let selectRegionVC = SelectRegionViewController()
+        let selectRegionVC = SelectRegionViewController(coordinator: self, viewModel: SelectRegionViewModel())
         navigationController.pushViewController(selectRegionVC, animated: true)
+    }
+    
+    func navigateToSelectFieldVC() {
+        let selectFieldVC = SelectFieldViewController()
+        navigationController.pushViewController(selectFieldVC, animated: true)
     }
     
     func presentPHPickerView(pickerVC: PHPickerViewController) {

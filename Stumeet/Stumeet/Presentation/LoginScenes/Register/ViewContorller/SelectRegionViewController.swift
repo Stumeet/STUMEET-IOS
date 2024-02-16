@@ -5,24 +5,19 @@
 //  Created by 정지훈 on 2/10/24.
 //
 
+import Combine
 import UIKit
+
+import CombineCocoa
 
 class SelectRegionViewController: BaseViewController {
 
-    let tagList: [String] = [
-        "서울",
-        "인천/경기",
-        "전북",
-        "전남",
-        "강원",
-        "경북",
-        "경남",
-        "충북",
-        "충남",
-        "제주"
-      ]
-    
     // MARK: - UIComponents
+    private lazy var progressBar: UIView = {
+        let view = UIView().makeProgressBar(percent: 0.6)
+        
+        return view
+    }()
     
     let titleLabel: UILabel = {
         let label = UILabel().setLabelProperty(
@@ -35,16 +30,9 @@ class SelectRegionViewController: BaseViewController {
     
     
     lazy var tagCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        let layout = CenterAlignCollectionViewLayout()
-        layout.minimumLineSpacing = 16
-        layout.minimumInteritemSpacing = 8
-        
-        collectionView.collectionViewLayout = layout
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.isScrollEnabled = false
         collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
         return collectionView
     }()
@@ -52,15 +40,33 @@ class SelectRegionViewController: BaseViewController {
     
     lazy var nextButton: UIButton = {
         let button = UIButton().makeRegisterBottomButton(text: "다음", color: StumeetColor.gray200.color)
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         
         return button
     }()
+    
+    // MARK: - Properties
+    let coordinator: RegisterCoordinator
+    let viewModel: SelectRegionViewModel
+    var datasource: UICollectionViewDiffableDataSource<RegionSection, Region>?
+    
+    // MARK: - Init
+    init(coordinator: RegisterCoordinator, viewModel: SelectRegionViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureRegisterNavigationBarItems()
+        configureDatasource()
     }
     
     // MARK: - Setup
@@ -71,6 +77,7 @@ class SelectRegionViewController: BaseViewController {
     
     override func setupAddView() {
         [
+            progressBar,
             titleLabel,
             tagCollectionView,
             nextButton
@@ -79,9 +86,15 @@ class SelectRegionViewController: BaseViewController {
     
     override func setupConstaints() {
         
+        progressBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(4)
+        }
+        
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(34)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
         }
         
         tagCollectionView.snp.makeConstraints { make in
@@ -96,51 +109,80 @@ class SelectRegionViewController: BaseViewController {
             make.trailing.leading.equalToSuperview().inset(16)
         }
     }
-}
-
-// MARK: - DataSource
-extension SelectRegionViewController: UICollectionViewDataSource {
-  
     
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return tagList.count
-  }
-  
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TagCell.identifier,
-            for: indexPath) as? TagCell
-        else { return UICollectionViewCell() }
+    override func bind() {
         
-        cell.tagLabel.text = tagList[indexPath.item]
+        // Input
         
-        return cell
+        let input = SelectRegionViewModel.Input(
+            didSelectItem: tagCollectionView.didSelectItemPublisher,
+            didTapNextButton: nextButton.tapPublisher
+        )
+        
+        // Output
+        
+        let output = viewModel.transform(input: input)
+        
+        // collectiionview snapshot
+        output.regionItems
+            .receive(on: RunLoop.main)
+            .sink { [weak self] item in
+                var snapshot = NSDiffableDataSourceSnapshot<RegionSection, Region>()
+                snapshot.appendSections([.main])
+                snapshot.appendItems(item)
+                
+                guard let datasource = self?.datasource else { return }
+                datasource.apply(snapshot, animatingDifferences: false)
+            }
+            .store(in: &cancellables)
+        
+        // nextButton Enalbe
+        output.isNextButtonEnabled
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isEnable in
+                self?.nextButton.isEnabled = isEnable
+                self?.nextButton.backgroundColor = isEnable ? StumeetColor.primaryInfo.color : StumeetColor.gray200.color
+            }
+            .store(in: &cancellables)
+        
+        // navigateToSelectFieldVC
+        output.navigateToSelectFieldVC
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.coordinator.navigateToSelectFieldVC()
+            }
+            .store(in: &cancellables)
+
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(40))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(40))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(8)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 16
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
     }
 }
 
-// MARK: - Delegate
-extension SelectRegionViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let text = tagList[indexPath.item]
-        let font = UIFont.systemFont(ofSize: 16)
-        let textSize = text.size(withAttributes: [NSAttributedString.Key.font: font])
-        
-        let cellWidth = textSize.width + 32
-        let cellHeight: CGFloat = 40
-        
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-}
-
-// MARK: Objc Function
-
+// MARK: - Datasource
 extension SelectRegionViewController {
-    
-    @objc func didTapNextButton(_ sender: UIButton) {
-        navigationController?.pushViewController(SelectFieldViewController(), animated: true)
+    func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, item in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell
+            else { return UICollectionViewCell() }
+            
+            cell.backgroundColor = item.isSelected ? StumeetColor.primaryInfo.color : StumeetColor.primary50.color
+            cell.tagLabel.textColor = item.isSelected ? .white : .black
+            cell.tagLabel.text = item.region
+            return cell
+        })
     }
 }

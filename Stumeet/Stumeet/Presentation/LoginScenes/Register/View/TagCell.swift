@@ -42,7 +42,8 @@ class TagCell: BaseCollectionViewCell {
     
     override func setupConstaints() {
         tagLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(16)
         }
     }
 }

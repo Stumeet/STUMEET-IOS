@@ -41,6 +41,8 @@
 		CAFDECE42B7C84860023BFE8 /* CoreGraphicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE32B7C84860023BFE8 /* CoreGraphicsManager.swift */; };
 		CAFDECE62B7C8BFC0023BFE8 /* UIViewController++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE52B7C8BFC0023BFE8 /* UIViewController++Extension.swift */; };
 		CAFDECE82B7C8EA60023BFE8 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE72B7C8EA60023BFE8 /* NicknameViewModel.swift */; };
+		CAFDECEA2B7CC2360023BFE8 /* SelectRegionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECE92B7CC2360023BFE8 /* SelectRegionViewModel.swift */; };
+		CAFDECEC2B7CCDE90023BFE8 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECEB2B7CCDE90023BFE8 /* Region.swift */; };
 		D76E701912CDE1E23B97612B /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF923B5E5D809F1B2AA441F /* Pods_Stumeet_StumeetUITests.framework */; };
 		FA20E07CC5218C5967CE37C9 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B48F0743F4E6191D6802591 /* Pods_StumeetTests.framework */; };
 /* End PBXBuildFile section */
@@ -103,6 +105,8 @@
 		CAFDECE32B7C84860023BFE8 /* CoreGraphicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreGraphicsManager.swift; sourceTree = "<group>"; };
 		CAFDECE52B7C8BFC0023BFE8 /* UIViewController++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController++Extension.swift"; sourceTree = "<group>"; };
 		CAFDECE72B7C8EA60023BFE8 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
+		CAFDECE92B7CC2360023BFE8 /* SelectRegionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRegionViewModel.swift; sourceTree = "<group>"; };
+		CAFDECEB2B7CCDE90023BFE8 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		D7370B83B5A26CEA7D97D8F1 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		F6E00C94ED323CC54676A9C1 /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -400,6 +404,7 @@
 			children = (
 				CAFDECDA2B7BC8300023BFE8 /* ChangeProfileViewModel.swift */,
 				CAFDECE72B7C8EA60023BFE8 /* NicknameViewModel.swift */,
+				CAFDECE92B7CC2360023BFE8 /* SelectRegionViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 		CAD04F862B77310B00B68BFD /* Register */ = {
 			isa = PBXGroup;
 			children = (
+				CAFDECEE2B7CCEF90023BFE8 /* Model */,
 				CAFDECDF2B7BD8BF0023BFE8 /* Coordinator */,
 				CAC15C372B79C4F70061F43A /* View */,
 				CA76600D2B749E4C009121FA /* ViewModel */,
@@ -504,6 +510,14 @@
 				CAFDECE32B7C84860023BFE8 /* CoreGraphicsManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		CAFDECEE2B7CCEF90023BFE8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CAFDECEB2B7CCDE90023BFE8 /* Region.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -744,6 +758,7 @@
 				CA76600F2B749FA0009121FA /* ChangeProfileViewController.swift in Sources */,
 				CAD04F8B2B77371A00B68BFD /* UITextField++Extension.swift in Sources */,
 				CAD04F912B7741FC00B68BFD /* SelectRegionViewController.swift in Sources */,
+				CAFDECEC2B7CCDE90023BFE8 /* Region.swift in Sources */,
 				CAD04F8F2B773D0C00B68BFD /* UIButton++Extension.swift in Sources */,
 				CA0268102B74F5F800D9790F /* StartViewController.swift in Sources */,
 				CAFDECE42B7C84860023BFE8 /* CoreGraphicsManager.swift in Sources */,
@@ -751,6 +766,7 @@
 				CA7660172B74A53B009121FA /* StumeetColor.swift in Sources */,
 				CAFDECD22B7BB0890023BFE8 /* ViewModelType.swift in Sources */,
 				CAC15C3D2B79CF740061F43A /* CenterAlignCollectionViewLayout.swift in Sources */,
+				CAFDECEA2B7CC2360023BFE8 /* SelectRegionViewModel.swift in Sources */,
 				CAC15C3B2B79C56C0061F43A /* BaseCollectionViewCell.swift in Sources */,
 				CAFDECDE2B7BD3EF0023BFE8 /* Coordinator.swift in Sources */,
 				CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */,
