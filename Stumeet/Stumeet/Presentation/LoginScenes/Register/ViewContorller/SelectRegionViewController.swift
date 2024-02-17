@@ -8,7 +8,6 @@
 import Combine
 import UIKit
 
-import CombineCocoa
 
 class SelectRegionViewController: BaseViewController {
 
@@ -19,7 +18,7 @@ class SelectRegionViewController: BaseViewController {
         return view
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel().setLabelProperty(
             text: "지역을 선택해주세요",
             font: .boldSystemFont(ofSize: 20),
@@ -29,7 +28,7 @@ class SelectRegionViewController: BaseViewController {
     }()
     
     
-    lazy var tagCollectionView: UICollectionView = {
+    private lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.isScrollEnabled = false
         collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
@@ -38,16 +37,16 @@ class SelectRegionViewController: BaseViewController {
     }()
     
     
-    lazy var nextButton: UIButton = {
+    private lazy var nextButton: UIButton = {
         let button = UIButton().makeRegisterBottomButton(text: "다음", color: StumeetColor.gray200.color)
         
         return button
     }()
     
     // MARK: - Properties
-    let coordinator: RegisterCoordinator
-    let viewModel: SelectRegionViewModel
-    var datasource: UICollectionViewDiffableDataSource<RegionSection, Region>?
+    private let coordinator: RegisterCoordinator
+    private let viewModel: SelectRegionViewModel
+    private var datasource: UICollectionViewDiffableDataSource<RegionSection, Region>?
     
     // MARK: - Init
     init(viewModel: SelectRegionViewModel, coordinator: RegisterCoordinator) {
@@ -112,14 +111,14 @@ class SelectRegionViewController: BaseViewController {
     
     override func bind() {
         
-        // Input
+        // MARK: - Input
         
         let input = SelectRegionViewModel.Input(
             didSelectItem: tagCollectionView.didSelectItemPublisher,
             didTapNextButton: nextButton.tapPublisher
         )
         
-        // Output
+        // MARK: - Output
         
         let output = viewModel.transform(input: input)
         
@@ -174,7 +173,7 @@ class SelectRegionViewController: BaseViewController {
 
 // MARK: - Datasource
 extension SelectRegionViewController {
-    func configureDatasource() {
+    private func configureDatasource() {
         datasource = UICollectionViewDiffableDataSource(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell
             else { return UICollectionViewCell() }

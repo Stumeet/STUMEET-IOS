@@ -13,7 +13,7 @@ class StartViewController: BaseViewController {
     
     // MARK: - UIComponents
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         
         label.text = "스터밋에 오신걸 환영해요!"
@@ -30,7 +30,7 @@ class StartViewController: BaseViewController {
         return label
     }()
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         
         imageView.image = UIImage(systemName: "apple.logo")
@@ -38,7 +38,7 @@ class StartViewController: BaseViewController {
         return imageView
     }()
     
-    let startButton: UIButton = {
+    private let startButton: UIButton = {
         let button = UIButton()
         
         button.setTitle("시작하기", for: .normal)

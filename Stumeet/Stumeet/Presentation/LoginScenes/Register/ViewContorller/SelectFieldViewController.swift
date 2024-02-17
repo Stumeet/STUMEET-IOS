@@ -7,11 +7,11 @@
 
 import UIKit
 
-import CombineCocoa
 
 class SelectFieldViewController: BaseViewController {
     
     // MARK: - UIComponents
+    
     private lazy var progressBar: UIView = {
         let view = UIView().makeProgressBar(percent: 0.8)
         
@@ -27,7 +27,7 @@ class SelectFieldViewController: BaseViewController {
         return label
     }()
     
-    lazy var searchTextField: UITextField = {
+    private lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Search"
         textField.backgroundColor = StumeetColor.primary50.color
@@ -47,7 +47,7 @@ class SelectFieldViewController: BaseViewController {
         return textField
     }()
     
-    lazy var fieldTableView: UITableView = {
+    private lazy var fieldTableView: UITableView = {
         let tableView = UITableView(frame: .init())
         
         tableView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -61,7 +61,7 @@ class SelectFieldViewController: BaseViewController {
     }()
     
 
-    lazy var tagCollectionView: UICollectionView = {
+    private lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.isScrollEnabled = false
         collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
@@ -70,17 +70,17 @@ class SelectFieldViewController: BaseViewController {
     }()
     
     
-    lazy var nextButton: UIButton = {
+    private lazy var nextButton: UIButton = {
         let button = UIButton().makeRegisterBottomButton(text: "다음", color: StumeetColor.gray200.color)
         
         return button
     }()
     
     // MARK: - Properties
-    let viewModel: SelecteFieldViewModel
-    let coordinator: RegisterCoordinator
-    var tagDatasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
-    var fieldDataSource: UITableViewDiffableDataSource<FieldSection, AddableField>?
+    private let viewModel: SelecteFieldViewModel
+    private let coordinator: RegisterCoordinator
+    private var tagDatasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
+    private var fieldDataSource: UITableViewDiffableDataSource<FieldSection, AddableField>?
     
     // MARK: - Init
     init(viewModel: SelecteFieldViewModel, coordinator: RegisterCoordinator) {
@@ -163,7 +163,7 @@ class SelectFieldViewController: BaseViewController {
     
     override func bind() {
         
-        // Input
+        // MARK: - Input
         
         let input = SelecteFieldViewModel.Input(
                 didSelectField: tagCollectionView.didSelectItemPublisher,
@@ -174,7 +174,7 @@ class SelectFieldViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         
-        // Output
+        // MARK: - Output
         
         // 태그 리스트 snapshot
         output.fieldItems
@@ -238,8 +238,9 @@ class SelectFieldViewController: BaseViewController {
 }
 
 // MARK: - DataSource
+
 extension SelectFieldViewController {
-    func configureDatasource() {
+    private func configureDatasource() {
         tagDatasource = UICollectionViewDiffableDataSource(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell
             else { return UICollectionViewCell() }

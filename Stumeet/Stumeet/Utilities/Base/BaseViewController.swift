@@ -5,9 +5,10 @@
 //  Created by 정지훈 on 2/8/24.
 //
 
+import Combine
 import UIKit
 
-import Combine
+import CombineCocoa
 import SnapKit
 
 class BaseViewController: UIViewController {

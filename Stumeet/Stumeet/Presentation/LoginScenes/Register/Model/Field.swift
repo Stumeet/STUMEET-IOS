@@ -49,6 +49,6 @@ extension AddableField {
         AddableField(field: "테스트1"),
         AddableField(field: "테스트2"),
         AddableField(field: "테스트3"),
-        AddableField(field: "테스트4"),
+        AddableField(field: "테스트4")
     ]
 }

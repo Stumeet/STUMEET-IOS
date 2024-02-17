@@ -8,8 +8,6 @@
 import Combine
 import UIKit
 
-import CombineCocoa
-
 
 class NicknameViewController: BaseViewController {
 
@@ -31,7 +29,7 @@ class NicknameViewController: BaseViewController {
         return label
     }()
     
-    let nicknameTextField: UITextField = {
+    private let nicknameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "영어 대/소문자, 한글 10글자 이내"
         textField.font = StumeetFont.bodyMedium16.font
@@ -42,7 +40,7 @@ class NicknameViewController: BaseViewController {
         return textField
     }()
     
-    let textCountLabel: UILabel = {
+    private let textCountLabel: UILabel = {
         let label = UILabel().setLabelProperty(
             text: "0/10",
             font: StumeetFont.bodyMedium16.font,
@@ -52,7 +50,7 @@ class NicknameViewController: BaseViewController {
         return label
     }()
     
-    let captionLabel: UILabel = {
+    private let captionLabel: UILabel = {
         let label = UILabel().setLabelProperty(
             text: "우와 멋진 닉네임이에요!",
             font: StumeetFont.bodyMedium16.font,
@@ -64,15 +62,15 @@ class NicknameViewController: BaseViewController {
         return label
     }()
     
-    lazy var nextButton: UIButton = {
+    private lazy var nextButton: UIButton = {
         let button = UIButton().makeRegisterBottomButton(text: "다음", color: StumeetColor.gray200.color)
 
         return button
     }()
     
     // MARK: - Properties
-    let coordinator: RegisterCoordinator
-    let viewModel: NicknameViewModel
+    private let coordinator: RegisterCoordinator
+    private let viewModel: NicknameViewModel
     
     // MARK: - Init
     init(viewModel: NicknameViewModel, coordinator: RegisterCoordinator) {
@@ -151,20 +149,20 @@ class NicknameViewController: BaseViewController {
     
     override func bind() {
         
-        // Input
+        // MARK: - Input
         
         let input = NicknameViewModel.Input(
             changeText: nicknameTextField
                 .textPublisher.compactMap { $0 }
                 .eraseToAnyPublisher(),
             didTapNextButton: nextButton.tapPublisher
-            
         )
     
-        // Output
+        // MARK: - Output
         
         let output = viewModel.transform(input: input)
     
+        // 중복에따른 캡션 변경
         output.isDuplicate
             .removeDuplicates()
             .receive(on: RunLoop.main)
@@ -181,6 +179,7 @@ class NicknameViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        // 다음 버튼 Enable 업데이트
         output.isNextButtonEnable
             .removeDuplicates()
             .receive(on: RunLoop.main)
@@ -190,6 +189,7 @@ class NicknameViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        // count label 업데이트
         output.count
             .receive(on: RunLoop.main)
             .sink { [weak self] count in
@@ -199,6 +199,7 @@ class NicknameViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        // 10보다 클 경우 입력 제한
         output.isBiggerThanTen
             .receive(on: RunLoop.main)
             .filter { $0 }
@@ -207,6 +208,7 @@ class NicknameViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        // 지역 선택VC로 push
         output.navigateToSelectRegionVC
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectRegionVC)
