@@ -32,16 +32,34 @@ class SelectFieldViewController: BaseViewController {
         textField.placeholder = "Search"
         textField.backgroundColor = StumeetColor.primary50.color
         textField.layer.cornerRadius = 10
-        textField.layer.masksToBounds = true
         
         let rightImageView = UIImageView(image: UIImage(named: "search"))
         
-        textField.rightView = rightImageView
+        let rightViewContainer = UIView()
+        rightViewContainer.frame = CGRect(x: 0, y: 0, width: rightImageView.frame.width, height: rightImageView.frame.height)
+        rightImageView.frame = CGRect(x: -24, y: 0, width: rightImageView.frame.width, height: rightImageView.frame.height)
+        rightViewContainer.addSubview(rightImageView)
+        
+        textField.rightView = rightViewContainer
         textField.rightViewMode = .always
         textField.addLeftPadding(24)
         
         return textField
     }()
+    
+    lazy var fieldTableView: UITableView = {
+        let tableView = UITableView(frame: .init())
+        
+        tableView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        tableView.layer.cornerRadius = 10
+        tableView.isHidden = true
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 56
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        return tableView
+    }()
+    
 
     lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -61,7 +79,8 @@ class SelectFieldViewController: BaseViewController {
     // MARK: - Properties
     let viewModel: SelecteFieldViewModel
     let coordinator: RegisterCoordinator
-    var datasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
+    var tagDatasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
+    var fieldDataSource: UITableViewDiffableDataSource<FieldSection, AddableField>?
     
     // MARK: - Init
     init(viewModel: SelecteFieldViewModel, coordinator: RegisterCoordinator) {
@@ -82,6 +101,11 @@ class SelectFieldViewController: BaseViewController {
         configureDatasource()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fieldTableView.layer.addBorder([.left, .right, .bottom], color: StumeetColor.gray100.color, width: 1)
+    }
+    
     // MARK: - Setup
     
     override func setupStyles() {
@@ -94,6 +118,7 @@ class SelectFieldViewController: BaseViewController {
             titleLabel,
             searchTextField,
             tagCollectionView,
+            fieldTableView,
             nextButton
         ]   .forEach { view.addSubview($0) }
     }
@@ -120,7 +145,13 @@ class SelectFieldViewController: BaseViewController {
         tagCollectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(searchTextField.snp.bottom).offset(32)
-            make.height.equalTo(208)
+            make.bottom.equalToSuperview()
+        }
+        
+        fieldTableView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalTo(searchTextField.snp.bottom).offset(-10)
+            make.height.equalTo(280)
         }
         
         nextButton.snp.makeConstraints { make in
@@ -135,7 +166,9 @@ class SelectFieldViewController: BaseViewController {
         // Input
         
         let input = SelecteFieldViewModel.Input(
-                didSelectField: tagCollectionView.didSelectItemPublisher
+                didSelectField: tagCollectionView.didSelectItemPublisher,
+                didSearchField: searchTextField.textPublisher,
+                didSelectSearchedField: fieldTableView.didSelectRowPublisher
             )
         
         let output = viewModel.transform(input: input)
@@ -143,25 +176,46 @@ class SelectFieldViewController: BaseViewController {
         
         // Output
         
-        // collectiionview snapshot
+        // 태그 리스트 snapshot
         output.fieldItems
             .receive(on: RunLoop.main)
             .sink { [weak self] item in
+                if !(self?.fieldTableView.isHidden)! {
+                    self?.fieldTableView.isHidden = true
+                }
+                
                 var snapshot = NSDiffableDataSourceSnapshot<FieldSection, Field>()
                 snapshot.appendSections([.main])
                 snapshot.appendItems(item)
                 
-                guard let datasource = self?.datasource else { return }
+                guard let datasource = self?.tagDatasource else { return }
                 datasource.apply(snapshot, animatingDifferences: false)
             }
             .store(in: &cancellables)
         
-        // nextButton Enable 
+        // 다음 버튼 Enable
         output.isNextButtonEnabled
             .receive(on: RunLoop.main)
             .sink { [weak self] isEnable in
                 self?.nextButton.isEnabled = isEnable
                 self?.nextButton.backgroundColor = isEnable ? StumeetColor.primaryInfo.color : StumeetColor.gray200.color
+            }
+            .store(in: &cancellables)
+        
+        // 검색 리스트 snapshot
+        output.searchedItems
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] item in
+                
+                self?.fieldTableView.isHidden = item.isEmpty
+                
+                var snapshot = NSDiffableDataSourceSnapshot<FieldSection, AddableField>()
+                snapshot.appendSections([.main])
+                snapshot.appendItems(item)
+                
+                guard let datasource = self?.fieldDataSource else { return }
+                datasource.apply(snapshot, animatingDifferences: false)
             }
             .store(in: &cancellables)
     }
@@ -186,13 +240,24 @@ class SelectFieldViewController: BaseViewController {
 // MARK: - DataSource
 extension SelectFieldViewController {
     func configureDatasource() {
-        datasource = UICollectionViewDiffableDataSource(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, item in
+        tagDatasource = UICollectionViewDiffableDataSource(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell
             else { return UICollectionViewCell() }
             
             cell.backgroundColor = item.isSelected ? StumeetColor.primaryInfo.color : StumeetColor.primary50.color
             cell.tagLabel.textColor = item.isSelected ? .white : .black
             cell.tagLabel.text = item.field
+            return cell
+        })
+        
+        fieldDataSource = UITableViewDiffableDataSource(tableView: fieldTableView, cellProvider: { tableView, indexPath, item in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            
+            cell.textLabel?.text = item.field
+            cell.textLabel?.font = StumeetFont.bodyMedium16.font
+            cell.textLabel?.textColor = StumeetColor.gray400.color
+            cell.selectionStyle = .none
+            
             return cell
         })
     }

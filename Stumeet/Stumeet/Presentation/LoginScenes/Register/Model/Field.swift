@@ -16,8 +16,13 @@ struct Field: Hashable {
     var isSelected: Bool
 }
 
+struct AddableField: Hashable {
+    let field: String
+}
+
+
 extension Field {
-    static let list: [Field] = {[
+    static var list: [Field] = [
         Field(field: "IT", isSelected: false),
         Field(field: "출판", isSelected: false),
         Field(field: "디자인", isSelected: false),
@@ -31,5 +36,19 @@ extension Field {
         Field(field: "자격증", isSelected: false),
         Field(field: "인문계", isSelected: false),
         Field(field: "봉사활동", isSelected: false)
-    ]}()
+    ]
+}
+
+extension AddableField {
+    static var list: [AddableField] = [
+        AddableField(field: "UXUI 디자인"),
+        AddableField(field: "영상 디자인"),
+        AddableField(field: "산업 디자인"),
+        AddableField(field: "그래픽 디자인"),
+        AddableField(field: "편집 디자인"),
+        AddableField(field: "테스트1"),
+        AddableField(field: "테스트2"),
+        AddableField(field: "테스트3"),
+        AddableField(field: "테스트4"),
+    ]
 }

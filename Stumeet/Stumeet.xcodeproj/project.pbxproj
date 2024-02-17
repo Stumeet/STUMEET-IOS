@@ -51,6 +51,7 @@
 		CAFDECFD2B7F429C0023BFE8 /* SelectFieldUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECFC2B7F429C0023BFE8 /* SelectFieldUseCase.swift */; };
 		CAFDECFF2B7F435B0023BFE8 /* SelecteFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDECFE2B7F435B0023BFE8 /* SelecteFieldRepository.swift */; };
 		CAFDED012B7F43AB0023BFE8 /* DefaultSelectFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDED002B7F43AB0023BFE8 /* DefaultSelectFieldRepository.swift */; };
+		CAFDED032B7FB4360023BFE8 /* CALayer++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDED022B7FB4360023BFE8 /* CALayer++Extension.swift */; };
 		D76E701912CDE1E23B97612B /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF923B5E5D809F1B2AA441F /* Pods_Stumeet_StumeetUITests.framework */; };
 		FA20E07CC5218C5967CE37C9 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B48F0743F4E6191D6802591 /* Pods_StumeetTests.framework */; };
 /* End PBXBuildFile section */
@@ -123,6 +124,7 @@
 		CAFDECFC2B7F429C0023BFE8 /* SelectFieldUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFieldUseCase.swift; sourceTree = "<group>"; };
 		CAFDECFE2B7F435B0023BFE8 /* SelecteFieldRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecteFieldRepository.swift; sourceTree = "<group>"; };
 		CAFDED002B7F43AB0023BFE8 /* DefaultSelectFieldRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSelectFieldRepository.swift; sourceTree = "<group>"; };
+		CAFDED022B7FB4360023BFE8 /* CALayer++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer++Extension.swift"; sourceTree = "<group>"; };
 		D7370B83B5A26CEA7D97D8F1 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		F6E00C94ED323CC54676A9C1 /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -487,6 +489,7 @@
 				CAD04F8E2B773D0C00B68BFD /* UIButton++Extension.swift */,
 				CAFDECD82B7BB8270023BFE8 /* UIVIew++Extension.swift */,
 				CAFDECE52B7C8BFC0023BFE8 /* UIViewController++Extension.swift */,
+				CAFDED022B7FB4360023BFE8 /* CALayer++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -816,6 +819,7 @@
 				CAFDECFF2B7F435B0023BFE8 /* SelecteFieldRepository.swift in Sources */,
 				CAFDECDE2B7BD3EF0023BFE8 /* Coordinator.swift in Sources */,
 				CA0778CF2B7B394600BDFF1D /* StumeetFont.swift in Sources */,
+				CAFDED032B7FB4360023BFE8 /* CALayer++Extension.swift in Sources */,
 				CAFDECF82B7F400D0023BFE8 /* Field.swift in Sources */,
 				CAFDECDB2B7BC8300023BFE8 /* ChangeProfileViewModel.swift in Sources */,
 				CAC15C392B79C50A0061F43A /* TagCell.swift in Sources */,

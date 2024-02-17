@@ -11,4 +11,6 @@ import Foundation
 protocol SelecteFieldRepository {
     func getFields() -> AnyPublisher<[Field], Never>
     func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never>
+    func getSearchedField(text: String) -> AnyPublisher<[AddableField], Never>
+    func addField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never>
 }

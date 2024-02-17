@@ -14,12 +14,15 @@ final class SelecteFieldViewModel: ViewModelType {
     
     struct Input {
         let didSelectField: AnyPublisher<IndexPath, Never>
+        let didSearchField: AnyPublisher<String?, Never>
+        let didSelectSearchedField: AnyPublisher<IndexPath, Never>
     }
     
     // MARK: - Output
     
     struct Output {
         let fieldItems: AnyPublisher<[Field], Never>
+        let searchedItems: AnyPublisher<[AddableField], Never>
         let isNextButtonEnabled: AnyPublisher<Bool, Never>
     }
     
@@ -36,12 +39,27 @@ final class SelecteFieldViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let fieldItems = input.didSelectField
+        let addFieldItem = input.didSelectSearchedField
             .flatMap { [weak self] indexPath -> AnyPublisher<[Field], Never> in
-                guard let self = self else { return Just([]).eraseToAnyPublisher() }
+                guard let self = self else { return Empty().eraseToAnyPublisher() }
+                return self.useCase.addField(at: indexPath)
+            }
+        
+        let fieldItems =
+        input.didSelectField
+            .flatMap { [weak self] indexPath -> AnyPublisher<[Field], Never> in
+                guard let self = self else { return Empty().eraseToAnyPublisher() }
                 return self.useCase.selectField(at: indexPath)
             }
-            .merge(with: useCase.getFields())
+            .merge(with: useCase.getFields(), addFieldItem)
+            .eraseToAnyPublisher()
+        
+        let searchedItems = input.didSearchField
+            .compactMap { $0 }
+            .flatMap { [weak self] text -> AnyPublisher<[AddableField], Never> in
+                guard let self = self else { return Empty().eraseToAnyPublisher() }
+                return self.useCase.getSearchedField(text: text)
+            }
             .eraseToAnyPublisher()
         
         let isNextButtonEnable = fieldItems
@@ -50,6 +68,7 @@ final class SelecteFieldViewModel: ViewModelType {
         
         return Output(
             fieldItems: fieldItems,
+            searchedItems: searchedItems,
             isNextButtonEnabled: isNextButtonEnable
         )
     }

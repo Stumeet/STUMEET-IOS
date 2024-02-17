@@ -11,6 +11,8 @@ import Foundation
 protocol SelectFieldUseCase {
     func getFields() -> AnyPublisher<[Field], Never>
     func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never>
+    func getSearchedField(text: String) -> AnyPublisher<[AddableField], Never>
+    func addField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never>
 }
 
 final class DefaultSelectFieldUseCase: SelectFieldUseCase {
@@ -26,5 +28,13 @@ final class DefaultSelectFieldUseCase: SelectFieldUseCase {
     
     func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never> {
         return repository.selectField(at: indexPath)
+    }
+    
+    func getSearchedField(text: String) -> AnyPublisher<[AddableField], Never> {
+        return repository.getSearchedField(text: text)
+    }
+    
+    func addField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never> {
+        return repository.addField(at: indexPath)
     }
 }
