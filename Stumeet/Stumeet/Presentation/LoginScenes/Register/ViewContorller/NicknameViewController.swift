@@ -167,15 +167,9 @@ class NicknameViewController: BaseViewController {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink { [weak self] isDuplicate in
-                if isDuplicate {
-                    self?.captionLabel.textColor = StumeetColor.warning500.color
-                    self?.nicknameTextField.backgroundColor = StumeetColor.warning50.color
-                    self?.captionLabel.text = "이미 사용중인 닉네임이에요"
-                } else {
-                    self?.captionLabel.textColor = StumeetColor.success.color
-                    self?.nicknameTextField.backgroundColor = StumeetColor.primary50.color
-                    self?.captionLabel.text = "우와, 멋진 닉네임이에요!"
-                }
+                self?.captionLabel.textColor = isDuplicate ? StumeetColor.warning500.color : StumeetColor.success.color
+                self?.nicknameTextField.backgroundColor = isDuplicate ? StumeetColor.warning50.color : StumeetColor.primary50.color
+                self?.captionLabel.text = isDuplicate ? "이미 사용중인 닉네임이에요" : "우와, 멋진 닉네임이에요!"
             }
             .store(in: &cancellables)
         
