@@ -189,21 +189,13 @@ extension ChangeProfileViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         
-        let cgManager = CoreGraphicManager()
         
         let itemProvider = results.first?.itemProvider
         
         if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, _ in
                 if let url {
-                    let targetSize = CGSize(width: 180, height: 180)
-                    
-                    guard let downsampledImageData = cgManager.downsample(
-                        imageAt: url,
-                        to: targetSize,
-                        scale: UIScreen.main.scale) else { return }
-                    
-                    self.viewModel.didSelectPhoto.send(downsampledImageData)
+                    self.viewModel.didSelectPhoto.send(url)
                 }
             }
         }

@@ -27,7 +27,7 @@ final class ChangeProfileViewModel: ViewModelType {
     }
     
     // MARK: - Properties
-    let didSelectPhoto = PassthroughSubject<UIImage, Never>()
+    let didSelectPhoto = PassthroughSubject<URL, Never>()
     
     // MARK: - Init
     
@@ -42,12 +42,20 @@ final class ChangeProfileViewModel: ViewModelType {
         // Input
         
         let pushNickNameVC = input.didTapNextButton
-            
+        
         
         let showAlbum = input.didTapChangeProfileButton
-            
+        
         
         let selectedPhoto = didSelectPhoto
+            .map { url in
+                let targetSize = CGSize(width: 180, height: 180)
+                let cgManager = CoreGraphicManager()
+                let downsampledImageData = cgManager.downsample(imageAt: url, to: targetSize, scale: UIScreen.main.scale)
+                
+                return downsampledImageData
+            }
+            .compactMap { $0 }
             .eraseToAnyPublisher()
         
         // Output
