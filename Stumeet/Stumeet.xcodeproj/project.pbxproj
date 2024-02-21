@@ -1,0 +1,1349 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5967BF00304D336ED6B3D4B7 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB2C2DC7520A5564D640A7D /* Pods_StumeetTests.framework */; };
+		7B458D0B14DFA556A7E15222 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A6E7239113303AB7B9122EB /* Pods_Stumeet_StumeetUITests.framework */; };
+		B773215B60755F951B7FE780 /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554804A1E035995245ABC553 /* Pods_Stumeet.framework */; };
+		CA28E9E42B86264E0041EF52 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA28E9E32B86264E0041EF52 /* TabBarViewController.swift */; };
+		CA28E9EA2B86268B0041EF52 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA28E9E92B86268B0041EF52 /* HomeViewController.swift */; };
+		CA28E9EC2B8626980041EF52 /* StudyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA28E9EB2B8626980041EF52 /* StudyListViewController.swift */; };
+		CA28E9EE2B86269F0041EF52 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA28E9ED2B86269F0041EF52 /* CalendarViewController.swift */; };
+		CA28E9F02B8626A60041EF52 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA28E9EF2B8626A60041EF52 /* MyPageViewController.swift */; };
+		CA28E9F32B86275C0041EF52 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA28E9F22B86275C0041EF52 /* TabBarCoordinator.swift */; };
+		CA571F0D2B85064400E85A42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F0C2B85064400E85A42 /* AppDelegate.swift */; };
+		CA571F0F2B85064400E85A42 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F0E2B85064400E85A42 /* SceneDelegate.swift */; };
+		CA571F192B85064500E85A42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA571F172B85064500E85A42 /* LaunchScreen.storyboard */; };
+		CA571F242B85064600E85A42 /* StumeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F232B85064600E85A42 /* StumeetTests.swift */; };
+		CA571F2E2B85064600E85A42 /* StumeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F2D2B85064600E85A42 /* StumeetUITests.swift */; };
+		CA571F302B85064600E85A42 /* StumeetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F2F2B85064600E85A42 /* StumeetUITestsLaunchTests.swift */; };
+		CA571F902B85067200E85A42 /* DefualtRegionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F422B85067200E85A42 /* DefualtRegionRepository.swift */; };
+		CA571F912B85067200E85A42 /* DefaultSelectFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F432B85067200E85A42 /* DefaultSelectFieldRepository.swift */; };
+		CA571F942B85067200E85A42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA571F4A2B85067200E85A42 /* Assets.xcassets */; };
+		CA571F962B85067200E85A42 /* UITextField++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F4E2B85067200E85A42 /* UITextField++Extension.swift */; };
+		CA571F972B85067200E85A42 /* UILabel++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F4F2B85067200E85A42 /* UILabel++Extension.swift */; };
+		CA571F982B85067200E85A42 /* CALayer++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F502B85067200E85A42 /* CALayer++Extension.swift */; };
+		CA571F992B85067200E85A42 /* UIButton++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F512B85067200E85A42 /* UIButton++Extension.swift */; };
+		CA571F9A2B85067200E85A42 /* UIVIew++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F522B85067200E85A42 /* UIVIew++Extension.swift */; };
+		CA571F9B2B85067200E85A42 /* UIViewController++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F532B85067200E85A42 /* UIViewController++Extension.swift */; };
+		CA571F9C2B85067200E85A42 /* StumeetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F552B85067200E85A42 /* StumeetColor.swift */; };
+		CA571F9D2B85067200E85A42 /* StumeetFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F572B85067200E85A42 /* StumeetFont.swift */; };
+		CA571F9E2B85067200E85A42 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F592B85067200E85A42 /* BaseViewController.swift */; };
+		CA571F9F2B85067200E85A42 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F5A2B85067200E85A42 /* BaseCollectionViewCell.swift */; };
+		CA571FA12B85067200E85A42 /* RegionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F602B85067200E85A42 /* RegionRepository.swift */; };
+		CA571FA22B85067200E85A42 /* SelecteFieldRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F612B85067200E85A42 /* SelecteFieldRepository.swift */; };
+		CA571FA52B85067200E85A42 /* SelectRegionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F672B85067200E85A42 /* SelectRegionUseCase.swift */; };
+		CA571FA62B85067200E85A42 /* SelectFieldUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F682B85067200E85A42 /* SelectFieldUseCase.swift */; };
+		CA571FA92B85067200E85A42 /* SelectRegionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F712B85067200E85A42 /* SelectRegionViewModel.swift */; };
+		CA571FAA2B85067200E85A42 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F722B85067200E85A42 /* NicknameViewModel.swift */; };
+		CA571FAB2B85067200E85A42 /* ChangeProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F732B85067200E85A42 /* ChangeProfileViewModel.swift */; };
+		CA571FAC2B85067200E85A42 /* SelecteFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F742B85067200E85A42 /* SelecteFieldViewModel.swift */; };
+		CA571FAD2B85067200E85A42 /* RegisterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F762B85067200E85A42 /* RegisterCoordinator.swift */; };
+		CA571FAE2B85067200E85A42 /* SelectFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F782B85067200E85A42 /* SelectFieldViewController.swift */; };
+		CA571FAF2B85067200E85A42 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F792B85067200E85A42 /* StartViewController.swift */; };
+		CA571FB02B85067200E85A42 /* SelectRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F7A2B85067200E85A42 /* SelectRegionViewController.swift */; };
+		CA571FB12B85067200E85A42 /* ChangeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F7B2B85067200E85A42 /* ChangeProfileViewController.swift */; };
+		CA571FB22B85067200E85A42 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F7C2B85067200E85A42 /* NicknameViewController.swift */; };
+		CA571FB32B85067200E85A42 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F7E2B85067200E85A42 /* Field.swift */; };
+		CA571FB42B85067200E85A42 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F7F2B85067200E85A42 /* Region.swift */; };
+		CA571FB52B85067200E85A42 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F812B85067200E85A42 /* TagCell.swift */; };
+		CA571FB62B85067200E85A42 /* CenterAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F822B85067200E85A42 /* CenterAlignCollectionViewLayout.swift */; };
+		CA571FB82B85067200E85A42 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F872B85067200E85A42 /* ViewModelType.swift */; };
+		CA571FB92B85067200E85A42 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F892B85067200E85A42 /* Coordinator.swift */; };
+		CA571FBA2B85067200E85A42 /* CoreGraphicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA571F8B2B85067200E85A42 /* CoreGraphicsManager.swift */; };
+		CA571FBE2B85075400E85A42 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA571FBD2B85075400E85A42 /* CombineCocoa */; };
+		CA571FC12B85077C00E85A42 /* PretendardKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA571FC02B85077C00E85A42 /* PretendardKit */; };
+		CA571FC42B85082500E85A42 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA571FC32B85082500E85A42 /* SnapKit */; };
+		CA571FC72B8508FE00E85A42 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = CA571FC62B8508FE00E85A42 /* CombineMoya */; };
+		CA571FC92B8508FE00E85A42 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA571FC82B8508FE00E85A42 /* Moya */; };
+		CA87AB4D2B850C2A0095D833 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CA87AB4C2B850C2A0095D833 /* .swiftlint.yml */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CA571F202B85064600E85A42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA571F012B85064400E85A42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA571F082B85064400E85A42;
+			remoteInfo = Stumeet;
+		};
+		CA571F2A2B85064600E85A42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA571F012B85064400E85A42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA571F082B85064400E85A42;
+			remoteInfo = Stumeet;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		04F22964597B301753273232 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
+		413CA0A36BF57964FF5DFD81 /* Pods-Stumeet-StumeetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.release.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.release.xcconfig"; sourceTree = "<group>"; };
+		554804A1E035995245ABC553 /* Pods_Stumeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stumeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		640E03092583DCAAAC798D7A /* Pods-StumeetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StumeetTests.release.xcconfig"; path = "Target Support Files/Pods-StumeetTests/Pods-StumeetTests.release.xcconfig"; sourceTree = "<group>"; };
+		6460A33C03256110B5084C34 /* Pods-StumeetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StumeetTests.debug.xcconfig"; path = "Target Support Files/Pods-StumeetTests/Pods-StumeetTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6A6E7239113303AB7B9122EB /* Pods_Stumeet_StumeetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stumeet_StumeetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		819B5D6268B876BA0E71333F /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		9292599BCE7F0303641ED072 /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
+		9FB2C2DC7520A5564D640A7D /* Pods_StumeetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StumeetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA28E9E32B86264E0041EF52 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		CA28E9E92B86268B0041EF52 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		CA28E9EB2B8626980041EF52 /* StudyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListViewController.swift; sourceTree = "<group>"; };
+		CA28E9ED2B86269F0041EF52 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		CA28E9EF2B8626A60041EF52 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		CA28E9F22B86275C0041EF52 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
+		CA571F092B85064400E85A42 /* Stumeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stumeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA571F0C2B85064400E85A42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CA571F0E2B85064400E85A42 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		CA571F182B85064500E85A42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CA571F1A2B85064500E85A42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA571F1F2B85064600E85A42 /* StumeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StumeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA571F232B85064600E85A42 /* StumeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetTests.swift; sourceTree = "<group>"; };
+		CA571F292B85064600E85A42 /* StumeetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StumeetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA571F2D2B85064600E85A42 /* StumeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITests.swift; sourceTree = "<group>"; };
+		CA571F2F2B85064600E85A42 /* StumeetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CA571F3D2B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F402B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F422B85067200E85A42 /* DefualtRegionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefualtRegionRepository.swift; sourceTree = "<group>"; };
+		CA571F432B85067200E85A42 /* DefaultSelectFieldRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSelectFieldRepository.swift; sourceTree = "<group>"; };
+		CA571F462B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F482B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F4A2B85067200E85A42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CA571F4E2B85067200E85A42 /* UITextField++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField++Extension.swift"; sourceTree = "<group>"; };
+		CA571F4F2B85067200E85A42 /* UILabel++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel++Extension.swift"; sourceTree = "<group>"; };
+		CA571F502B85067200E85A42 /* CALayer++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer++Extension.swift"; sourceTree = "<group>"; };
+		CA571F512B85067200E85A42 /* UIButton++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton++Extension.swift"; sourceTree = "<group>"; };
+		CA571F522B85067200E85A42 /* UIVIew++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIVIew++Extension.swift"; sourceTree = "<group>"; };
+		CA571F532B85067200E85A42 /* UIViewController++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController++Extension.swift"; sourceTree = "<group>"; };
+		CA571F552B85067200E85A42 /* StumeetColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StumeetColor.swift; sourceTree = "<group>"; };
+		CA571F572B85067200E85A42 /* StumeetFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StumeetFont.swift; sourceTree = "<group>"; };
+		CA571F592B85067200E85A42 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		CA571F5A2B85067200E85A42 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		CA571F5E2B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F602B85067200E85A42 /* RegionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionRepository.swift; sourceTree = "<group>"; };
+		CA571F612B85067200E85A42 /* SelecteFieldRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelecteFieldRepository.swift; sourceTree = "<group>"; };
+		CA571F632B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F662B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F672B85067200E85A42 /* SelectRegionUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRegionUseCase.swift; sourceTree = "<group>"; };
+		CA571F682B85067200E85A42 /* SelectFieldUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFieldUseCase.swift; sourceTree = "<group>"; };
+		CA571F6B2B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F6D2B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F712B85067200E85A42 /* SelectRegionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRegionViewModel.swift; sourceTree = "<group>"; };
+		CA571F722B85067200E85A42 /* NicknameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
+		CA571F732B85067200E85A42 /* ChangeProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeProfileViewModel.swift; sourceTree = "<group>"; };
+		CA571F742B85067200E85A42 /* SelecteFieldViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelecteFieldViewModel.swift; sourceTree = "<group>"; };
+		CA571F762B85067200E85A42 /* RegisterCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCoordinator.swift; sourceTree = "<group>"; };
+		CA571F782B85067200E85A42 /* SelectFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFieldViewController.swift; sourceTree = "<group>"; };
+		CA571F792B85067200E85A42 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		CA571F7A2B85067200E85A42 /* SelectRegionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRegionViewController.swift; sourceTree = "<group>"; };
+		CA571F7B2B85067200E85A42 /* ChangeProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeProfileViewController.swift; sourceTree = "<group>"; };
+		CA571F7C2B85067200E85A42 /* NicknameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		CA571F7E2B85067200E85A42 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		CA571F7F2B85067200E85A42 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
+		CA571F812B85067200E85A42 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		CA571F822B85067200E85A42 /* CenterAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
+		CA571F842B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA571F872B85067200E85A42 /* ViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		CA571F892B85067200E85A42 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		CA571F8B2B85067200E85A42 /* CoreGraphicsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphicsManager.swift; sourceTree = "<group>"; };
+		CA571F8D2B85067200E85A42 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CA87AB4C2B850C2A0095D833 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA571F062B85064400E85A42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA571FC42B85082500E85A42 /* SnapKit in Frameworks */,
+				CA571FC12B85077C00E85A42 /* PretendardKit in Frameworks */,
+				CA571FC72B8508FE00E85A42 /* CombineMoya in Frameworks */,
+				CA571FC92B8508FE00E85A42 /* Moya in Frameworks */,
+				CA571FBE2B85075400E85A42 /* CombineCocoa in Frameworks */,
+				B773215B60755F951B7FE780 /* Pods_Stumeet.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA571F1C2B85064600E85A42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5967BF00304D336ED6B3D4B7 /* Pods_StumeetTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA571F262B85064600E85A42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B458D0B14DFA556A7E15222 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		286C64698C3168B6CC657CCB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				04F22964597B301753273232 /* Pods-Stumeet.debug.xcconfig */,
+				9292599BCE7F0303641ED072 /* Pods-Stumeet.release.xcconfig */,
+				819B5D6268B876BA0E71333F /* Pods-Stumeet-StumeetUITests.debug.xcconfig */,
+				413CA0A36BF57964FF5DFD81 /* Pods-Stumeet-StumeetUITests.release.xcconfig */,
+				6460A33C03256110B5084C34 /* Pods-StumeetTests.debug.xcconfig */,
+				640E03092583DCAAAC798D7A /* Pods-StumeetTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		2E26EB7D1FE2CF1A7E692B2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				554804A1E035995245ABC553 /* Pods_Stumeet.framework */,
+				6A6E7239113303AB7B9122EB /* Pods_Stumeet_StumeetUITests.framework */,
+				9FB2C2DC7520A5564D640A7D /* Pods_StumeetTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CA28E9E12B8626200041EF52 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9F12B86274A0041EF52 /* Coordinator */,
+				CA28E9E22B86262A0041EF52 /* ViewController */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		CA28E9E22B86262A0041EF52 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9E32B86264E0041EF52 /* TabBarViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA28E9E52B86265D0041EF52 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9E92B86268B0041EF52 /* HomeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA28E9E62B86266C0041EF52 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9EB2B8626980041EF52 /* StudyListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA28E9E72B8626760041EF52 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9ED2B86269F0041EF52 /* CalendarViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA28E9E82B86267A0041EF52 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9EF2B8626A60041EF52 /* MyPageViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA28E9F12B86274A0041EF52 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9F22B86275C0041EF52 /* TabBarCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		CA571F002B85064400E85A42 = {
+			isa = PBXGroup;
+			children = (
+				CA571F0B2B85064400E85A42 /* Stumeet */,
+				CA571F222B85064600E85A42 /* StumeetTests */,
+				CA571F2C2B85064600E85A42 /* StumeetUITests */,
+				CA571F0A2B85064400E85A42 /* Products */,
+				286C64698C3168B6CC657CCB /* Pods */,
+				2E26EB7D1FE2CF1A7E692B2F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		CA571F0A2B85064400E85A42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F092B85064400E85A42 /* Stumeet.app */,
+				CA571F1F2B85064600E85A42 /* StumeetTests.xctest */,
+				CA571F292B85064600E85A42 /* StumeetUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CA571F0B2B85064400E85A42 /* Stumeet */ = {
+			isa = PBXGroup;
+			children = (
+				CA87AB4C2B850C2A0095D833 /* .swiftlint.yml */,
+				CA7687F22B850A1D003C2EFD /* Application */,
+				CA571F3E2B85067200E85A42 /* Data */,
+				CA571F5B2B85067200E85A42 /* Domain */,
+				CA571F3C2B85067200E85A42 /* NetworkService */,
+				CA571F692B85067200E85A42 /* Presentation */,
+				CA571F492B85067200E85A42 /* Resource */,
+				CA571F4C2B85067200E85A42 /* Utilities */,
+				CA571F172B85064500E85A42 /* LaunchScreen.storyboard */,
+			);
+			path = Stumeet;
+			sourceTree = "<group>";
+		};
+		CA571F222B85064600E85A42 /* StumeetTests */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F232B85064600E85A42 /* StumeetTests.swift */,
+			);
+			path = StumeetTests;
+			sourceTree = "<group>";
+		};
+		CA571F2C2B85064600E85A42 /* StumeetUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F2D2B85064600E85A42 /* StumeetUITests.swift */,
+				CA571F2F2B85064600E85A42 /* StumeetUITestsLaunchTests.swift */,
+			);
+			path = StumeetUITests;
+			sourceTree = "<group>";
+		};
+		CA571F3C2B85067200E85A42 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F3D2B85067200E85A42 /* .gitkeep */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		CA571F3E2B85067200E85A42 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F3F2B85067200E85A42 /* Repository */,
+				CA571F442B85067200E85A42 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		CA571F3F2B85067200E85A42 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F402B85067200E85A42 /* .gitkeep */,
+				CA571F412B85067200E85A42 /* LoginScene */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		CA571F412B85067200E85A42 /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F422B85067200E85A42 /* DefualtRegionRepository.swift */,
+				CA571F432B85067200E85A42 /* DefaultSelectFieldRepository.swift */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		CA571F442B85067200E85A42 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F452B85067200E85A42 /* DataMapping */,
+				CA571F472B85067200E85A42 /* Service */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		CA571F452B85067200E85A42 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F462B85067200E85A42 /* .gitkeep */,
+			);
+			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		CA571F472B85067200E85A42 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F482B85067200E85A42 /* .gitkeep */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		CA571F492B85067200E85A42 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F4A2B85067200E85A42 /* Assets.xcassets */,
+				CA571F1A2B85064500E85A42 /* Info.plist */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		CA571F4C2B85067200E85A42 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F4D2B85067200E85A42 /* Extension */,
+				CA571F542B85067200E85A42 /* Colors */,
+				CA571F562B85067200E85A42 /* Font */,
+				CA571F582B85067200E85A42 /* Base */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		CA571F4D2B85067200E85A42 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F4E2B85067200E85A42 /* UITextField++Extension.swift */,
+				CA571F4F2B85067200E85A42 /* UILabel++Extension.swift */,
+				CA571F502B85067200E85A42 /* CALayer++Extension.swift */,
+				CA571F512B85067200E85A42 /* UIButton++Extension.swift */,
+				CA571F522B85067200E85A42 /* UIVIew++Extension.swift */,
+				CA571F532B85067200E85A42 /* UIViewController++Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		CA571F542B85067200E85A42 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F552B85067200E85A42 /* StumeetColor.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		CA571F562B85067200E85A42 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F572B85067200E85A42 /* StumeetFont.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		CA571F582B85067200E85A42 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F592B85067200E85A42 /* BaseViewController.swift */,
+				CA571F5A2B85067200E85A42 /* BaseCollectionViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		CA571F5B2B85067200E85A42 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F5C2B85067200E85A42 /* Interface */,
+				CA571F622B85067200E85A42 /* Entity */,
+				CA571F642B85067200E85A42 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		CA571F5C2B85067200E85A42 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F5D2B85067200E85A42 /* Repository */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		CA571F5D2B85067200E85A42 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F5E2B85067200E85A42 /* .gitkeep */,
+				CA571F5F2B85067200E85A42 /* LoginScene */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		CA571F5F2B85067200E85A42 /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F602B85067200E85A42 /* RegionRepository.swift */,
+				CA571F612B85067200E85A42 /* SelecteFieldRepository.swift */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		CA571F622B85067200E85A42 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F632B85067200E85A42 /* .gitkeep */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		CA571F642B85067200E85A42 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F652B85067200E85A42 /* Protocol */,
+				CA571F672B85067200E85A42 /* SelectRegionUseCase.swift */,
+				CA571F682B85067200E85A42 /* SelectFieldUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		CA571F652B85067200E85A42 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F662B85067200E85A42 /* .gitkeep */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		CA571F692B85067200E85A42 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9E12B8626200041EF52 /* TabBar */,
+				CA571F6A2B85067200E85A42 /* HomeScenes */,
+				CA571F6C2B85067200E85A42 /* StudyListScenes */,
+				CA571F6E2B85067200E85A42 /* LoginScenes */,
+				CA571F832B85067200E85A42 /* CalendarScenes */,
+				CA571F852B85067200E85A42 /* Common */,
+				CA571F8C2B85067200E85A42 /* MyPageScenes */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		CA571F6A2B85067200E85A42 /* HomeScenes */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9E52B86265D0041EF52 /* ViewController */,
+				CA571F6B2B85067200E85A42 /* .gitkeep */,
+			);
+			path = HomeScenes;
+			sourceTree = "<group>";
+		};
+		CA571F6C2B85067200E85A42 /* StudyListScenes */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9E62B86266C0041EF52 /* ViewController */,
+				CA571F6D2B85067200E85A42 /* .gitkeep */,
+			);
+			path = StudyListScenes;
+			sourceTree = "<group>";
+		};
+		CA571F6E2B85067200E85A42 /* LoginScenes */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F6F2B85067200E85A42 /* Register */,
+			);
+			path = LoginScenes;
+			sourceTree = "<group>";
+		};
+		CA571F6F2B85067200E85A42 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F702B85067200E85A42 /* ViewModel */,
+				CA571F752B85067200E85A42 /* Coordinator */,
+				CA571F772B85067200E85A42 /* ViewContorller */,
+				CA571F7D2B85067200E85A42 /* Model */,
+				CA571F802B85067200E85A42 /* View */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		CA571F702B85067200E85A42 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F712B85067200E85A42 /* SelectRegionViewModel.swift */,
+				CA571F722B85067200E85A42 /* NicknameViewModel.swift */,
+				CA571F732B85067200E85A42 /* ChangeProfileViewModel.swift */,
+				CA571F742B85067200E85A42 /* SelecteFieldViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CA571F752B85067200E85A42 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F762B85067200E85A42 /* RegisterCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		CA571F772B85067200E85A42 /* ViewContorller */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F782B85067200E85A42 /* SelectFieldViewController.swift */,
+				CA571F792B85067200E85A42 /* StartViewController.swift */,
+				CA571F7A2B85067200E85A42 /* SelectRegionViewController.swift */,
+				CA571F7B2B85067200E85A42 /* ChangeProfileViewController.swift */,
+				CA571F7C2B85067200E85A42 /* NicknameViewController.swift */,
+			);
+			path = ViewContorller;
+			sourceTree = "<group>";
+		};
+		CA571F7D2B85067200E85A42 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F7E2B85067200E85A42 /* Field.swift */,
+				CA571F7F2B85067200E85A42 /* Region.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CA571F802B85067200E85A42 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F812B85067200E85A42 /* TagCell.swift */,
+				CA571F822B85067200E85A42 /* CenterAlignCollectionViewLayout.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CA571F832B85067200E85A42 /* CalendarScenes */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9E72B8626760041EF52 /* ViewController */,
+				CA571F842B85067200E85A42 /* .gitkeep */,
+			);
+			path = CalendarScenes;
+			sourceTree = "<group>";
+		};
+		CA571F852B85067200E85A42 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F862B85067200E85A42 /* ViewModel */,
+				CA571F882B85067200E85A42 /* Coordinator */,
+				CA571F8A2B85067200E85A42 /* Manager */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		CA571F862B85067200E85A42 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F872B85067200E85A42 /* ViewModelType.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CA571F882B85067200E85A42 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F892B85067200E85A42 /* Coordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		CA571F8A2B85067200E85A42 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F8B2B85067200E85A42 /* CoreGraphicsManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		CA571F8C2B85067200E85A42 /* MyPageScenes */ = {
+			isa = PBXGroup;
+			children = (
+				CA28E9E82B86267A0041EF52 /* ViewController */,
+				CA571F8D2B85067200E85A42 /* .gitkeep */,
+			);
+			path = MyPageScenes;
+			sourceTree = "<group>";
+		};
+		CA7687F22B850A1D003C2EFD /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				CA571F0C2B85064400E85A42 /* AppDelegate.swift */,
+				CA571F0E2B85064400E85A42 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA571F082B85064400E85A42 /* Stumeet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA571F332B85064600E85A42 /* Build configuration list for PBXNativeTarget "Stumeet" */;
+			buildPhases = (
+				B21D69032A0275DB9842BC9F /* [CP] Check Pods Manifest.lock */,
+				CA87AB4B2B850B970095D833 /* SwiftLint Script */,
+				CA571F052B85064400E85A42 /* Sources */,
+				CA571F062B85064400E85A42 /* Frameworks */,
+				CA571F072B85064400E85A42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Stumeet;
+			packageProductDependencies = (
+				CA571FBD2B85075400E85A42 /* CombineCocoa */,
+				CA571FC02B85077C00E85A42 /* PretendardKit */,
+				CA571FC32B85082500E85A42 /* SnapKit */,
+				CA571FC62B8508FE00E85A42 /* CombineMoya */,
+				CA571FC82B8508FE00E85A42 /* Moya */,
+			);
+			productName = Stumeet;
+			productReference = CA571F092B85064400E85A42 /* Stumeet.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CA571F1E2B85064600E85A42 /* StumeetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA571F362B85064600E85A42 /* Build configuration list for PBXNativeTarget "StumeetTests" */;
+			buildPhases = (
+				CFD4C37F69D83BDFCB7A0E39 /* [CP] Check Pods Manifest.lock */,
+				CA571F1B2B85064600E85A42 /* Sources */,
+				CA571F1C2B85064600E85A42 /* Frameworks */,
+				CA571F1D2B85064600E85A42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA571F212B85064600E85A42 /* PBXTargetDependency */,
+			);
+			name = StumeetTests;
+			productName = StumeetTests;
+			productReference = CA571F1F2B85064600E85A42 /* StumeetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CA571F282B85064600E85A42 /* StumeetUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA571F392B85064600E85A42 /* Build configuration list for PBXNativeTarget "StumeetUITests" */;
+			buildPhases = (
+				A20EFAA0E284BAC76E125642 /* [CP] Check Pods Manifest.lock */,
+				CA571F252B85064600E85A42 /* Sources */,
+				CA571F262B85064600E85A42 /* Frameworks */,
+				CA571F272B85064600E85A42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA571F2B2B85064600E85A42 /* PBXTargetDependency */,
+			);
+			name = StumeetUITests;
+			productName = StumeetUITests;
+			productReference = CA571F292B85064600E85A42 /* StumeetUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CA571F012B85064400E85A42 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					CA571F082B85064400E85A42 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					CA571F1E2B85064600E85A42 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = CA571F082B85064400E85A42;
+					};
+					CA571F282B85064600E85A42 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = CA571F082B85064400E85A42;
+					};
+				};
+			};
+			buildConfigurationList = CA571F042B85064400E85A42 /* Build configuration list for PBXProject "Stumeet" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CA571F002B85064400E85A42;
+			packageReferences = (
+				CA571FBC2B85075400E85A42 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				CA571FBF2B85077C00E85A42 /* XCRemoteSwiftPackageReference "PretendardKit" */,
+				CA571FC22B85082500E85A42 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CA571FC52B8508FE00E85A42 /* XCRemoteSwiftPackageReference "Moya" */,
+			);
+			productRefGroup = CA571F0A2B85064400E85A42 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA571F082B85064400E85A42 /* Stumeet */,
+				CA571F1E2B85064600E85A42 /* StumeetTests */,
+				CA571F282B85064600E85A42 /* StumeetUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA571F072B85064400E85A42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA87AB4D2B850C2A0095D833 /* .swiftlint.yml in Resources */,
+				CA571F192B85064500E85A42 /* LaunchScreen.storyboard in Resources */,
+				CA571F942B85067200E85A42 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA571F1D2B85064600E85A42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA571F272B85064600E85A42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A20EFAA0E284BAC76E125642 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Stumeet-StumeetUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B21D69032A0275DB9842BC9F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Stumeet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA87AB4B2B850B970095D833 /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		CFD4C37F69D83BDFCB7A0E39 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StumeetTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA571F052B85064400E85A42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA571FB52B85067200E85A42 /* TagCell.swift in Sources */,
+				CA571FA62B85067200E85A42 /* SelectFieldUseCase.swift in Sources */,
+				CA571FA22B85067200E85A42 /* SelecteFieldRepository.swift in Sources */,
+				CA28E9EA2B86268B0041EF52 /* HomeViewController.swift in Sources */,
+				CA571FB12B85067200E85A42 /* ChangeProfileViewController.swift in Sources */,
+				CA28E9E42B86264E0041EF52 /* TabBarViewController.swift in Sources */,
+				CA571FB42B85067200E85A42 /* Region.swift in Sources */,
+				CA571F9E2B85067200E85A42 /* BaseViewController.swift in Sources */,
+				CA28E9F32B86275C0041EF52 /* TabBarCoordinator.swift in Sources */,
+				CA571F9F2B85067200E85A42 /* BaseCollectionViewCell.swift in Sources */,
+				CA571FBA2B85067200E85A42 /* CoreGraphicsManager.swift in Sources */,
+				CA571F9A2B85067200E85A42 /* UIVIew++Extension.swift in Sources */,
+				CA571FAC2B85067200E85A42 /* SelecteFieldViewModel.swift in Sources */,
+				CA571F972B85067200E85A42 /* UILabel++Extension.swift in Sources */,
+				CA571FB92B85067200E85A42 /* Coordinator.swift in Sources */,
+				CA571F992B85067200E85A42 /* UIButton++Extension.swift in Sources */,
+				CA28E9F02B8626A60041EF52 /* MyPageViewController.swift in Sources */,
+				CA571FB82B85067200E85A42 /* ViewModelType.swift in Sources */,
+				CA571F9C2B85067200E85A42 /* StumeetColor.swift in Sources */,
+				CA571F0D2B85064400E85A42 /* AppDelegate.swift in Sources */,
+				CA571F0F2B85064400E85A42 /* SceneDelegate.swift in Sources */,
+				CA571FB22B85067200E85A42 /* NicknameViewController.swift in Sources */,
+				CA571F912B85067200E85A42 /* DefaultSelectFieldRepository.swift in Sources */,
+				CA28E9EE2B86269F0041EF52 /* CalendarViewController.swift in Sources */,
+				CA571F9B2B85067200E85A42 /* UIViewController++Extension.swift in Sources */,
+				CA28E9EC2B8626980041EF52 /* StudyListViewController.swift in Sources */,
+				CA571FB62B85067200E85A42 /* CenterAlignCollectionViewLayout.swift in Sources */,
+				CA571FAA2B85067200E85A42 /* NicknameViewModel.swift in Sources */,
+				CA571F902B85067200E85A42 /* DefualtRegionRepository.swift in Sources */,
+				CA571F962B85067200E85A42 /* UITextField++Extension.swift in Sources */,
+				CA571FAB2B85067200E85A42 /* ChangeProfileViewModel.swift in Sources */,
+				CA571FA12B85067200E85A42 /* RegionRepository.swift in Sources */,
+				CA571FB02B85067200E85A42 /* SelectRegionViewController.swift in Sources */,
+				CA571FAD2B85067200E85A42 /* RegisterCoordinator.swift in Sources */,
+				CA571FB32B85067200E85A42 /* Field.swift in Sources */,
+				CA571F9D2B85067200E85A42 /* StumeetFont.swift in Sources */,
+				CA571FAF2B85067200E85A42 /* StartViewController.swift in Sources */,
+				CA571FA52B85067200E85A42 /* SelectRegionUseCase.swift in Sources */,
+				CA571FAE2B85067200E85A42 /* SelectFieldViewController.swift in Sources */,
+				CA571F982B85067200E85A42 /* CALayer++Extension.swift in Sources */,
+				CA571FA92B85067200E85A42 /* SelectRegionViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA571F1B2B85064600E85A42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA571F242B85064600E85A42 /* StumeetTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA571F252B85064600E85A42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA571F302B85064600E85A42 /* StumeetUITestsLaunchTests.swift in Sources */,
+				CA571F2E2B85064600E85A42 /* StumeetUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CA571F212B85064600E85A42 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA571F082B85064400E85A42 /* Stumeet */;
+			targetProxy = CA571F202B85064600E85A42 /* PBXContainerItemProxy */;
+		};
+		CA571F2B2B85064600E85A42 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA571F082B85064400E85A42 /* Stumeet */;
+			targetProxy = CA571F2A2B85064600E85A42 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CA571F172B85064500E85A42 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CA571F182B85064500E85A42 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CA571F312B85064600E85A42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CA571F322B85064600E85A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CA571F342B85064600E85A42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04F22964597B301753273232 /* Pods-Stumeet.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA571F352B85064600E85A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9292599BCE7F0303641ED072 /* Pods-Stumeet.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CA571F372B85064600E85A42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6460A33C03256110B5084C34 /* Pods-StumeetTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stumeet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Stumeet";
+			};
+			name = Debug;
+		};
+		CA571F382B85064600E85A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 640E03092583DCAAAC798D7A /* Pods-StumeetTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stumeet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Stumeet";
+			};
+			name = Release;
+		};
+		CA571F3A2B85064600E85A42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 819B5D6268B876BA0E71333F /* Pods-Stumeet-StumeetUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Stumeet;
+			};
+			name = Debug;
+		};
+		CA571F3B2B85064600E85A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 413CA0A36BF57964FF5DFD81 /* Pods-Stumeet-StumeetUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Stumeet;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA571F042B85064400E85A42 /* Build configuration list for PBXProject "Stumeet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA571F312B85064600E85A42 /* Debug */,
+				CA571F322B85064600E85A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA571F332B85064600E85A42 /* Build configuration list for PBXNativeTarget "Stumeet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA571F342B85064600E85A42 /* Debug */,
+				CA571F352B85064600E85A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA571F362B85064600E85A42 /* Build configuration list for PBXNativeTarget "StumeetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA571F372B85064600E85A42 /* Debug */,
+				CA571F382B85064600E85A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA571F392B85064600E85A42 /* Build configuration list for PBXNativeTarget "StumeetUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA571F3A2B85064600E85A42 /* Debug */,
+				CA571F3B2B85064600E85A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CA571FBC2B85075400E85A42 /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
+		CA571FBF2B85077C00E85A42 /* XCRemoteSwiftPackageReference "PretendardKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wookeon/PretendardKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		CA571FC22B85082500E85A42 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		CA571FC52B8508FE00E85A42 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA571FBD2B85075400E85A42 /* CombineCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA571FBC2B85075400E85A42 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			productName = CombineCocoa;
+		};
+		CA571FC02B85077C00E85A42 /* PretendardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA571FBF2B85077C00E85A42 /* XCRemoteSwiftPackageReference "PretendardKit" */;
+			productName = PretendardKit;
+		};
+		CA571FC32B85082500E85A42 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA571FC22B85082500E85A42 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		CA571FC62B8508FE00E85A42 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA571FC52B8508FE00E85A42 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		CA571FC82B8508FE00E85A42 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA571FC52B8508FE00E85A42 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = CA571F012B85064400E85A42 /* Project object */;
+}
