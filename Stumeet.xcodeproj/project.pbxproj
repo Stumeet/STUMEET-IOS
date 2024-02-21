@@ -1,0 +1,606 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CAD495C62B863B6500AB61D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495C52B863B6500AB61D9 /* AppDelegate.swift */; };
+		CAD495C82B863B6500AB61D9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495C72B863B6500AB61D9 /* SceneDelegate.swift */; };
+		CAD495CA2B863B6500AB61D9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495C92B863B6500AB61D9 /* ViewController.swift */; };
+		CAD495CD2B863B6500AB61D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD495CB2B863B6500AB61D9 /* Main.storyboard */; };
+		CAD495CF2B863B6800AB61D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD495CE2B863B6800AB61D9 /* Assets.xcassets */; };
+		CAD495D22B863B6800AB61D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD495D02B863B6800AB61D9 /* LaunchScreen.storyboard */; };
+		CAD495DD2B863B6800AB61D9 /* StumeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495DC2B863B6800AB61D9 /* StumeetTests.swift */; };
+		CAD495E72B863B6800AB61D9 /* StumeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */; };
+		CAD495E92B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CAD495D92B863B6800AB61D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CAD495BA2B863B6500AB61D9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CAD495C12B863B6500AB61D9;
+			remoteInfo = Stumeet;
+		};
+		CAD495E32B863B6800AB61D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CAD495BA2B863B6500AB61D9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CAD495C12B863B6500AB61D9;
+			remoteInfo = Stumeet;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CAD495C22B863B6500AB61D9 /* Stumeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stumeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAD495C52B863B6500AB61D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CAD495C72B863B6500AB61D9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		CAD495C92B863B6500AB61D9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CAD495CC2B863B6500AB61D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CAD495CE2B863B6800AB61D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CAD495D12B863B6800AB61D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CAD495D32B863B6800AB61D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAD495D82B863B6800AB61D9 /* StumeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StumeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAD495DC2B863B6800AB61D9 /* StumeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetTests.swift; sourceTree = "<group>"; };
+		CAD495E22B863B6800AB61D9 /* StumeetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StumeetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITests.swift; sourceTree = "<group>"; };
+		CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CAD495BF2B863B6500AB61D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAD495D52B863B6800AB61D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAD495DF2B863B6800AB61D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CAD495B92B863B6500AB61D9 = {
+			isa = PBXGroup;
+			children = (
+				CAD495C42B863B6500AB61D9 /* Stumeet */,
+				CAD495DB2B863B6800AB61D9 /* StumeetTests */,
+				CAD495E52B863B6800AB61D9 /* StumeetUITests */,
+				CAD495C32B863B6500AB61D9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CAD495C32B863B6500AB61D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CAD495C22B863B6500AB61D9 /* Stumeet.app */,
+				CAD495D82B863B6800AB61D9 /* StumeetTests.xctest */,
+				CAD495E22B863B6800AB61D9 /* StumeetUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CAD495C42B863B6500AB61D9 /* Stumeet */ = {
+			isa = PBXGroup;
+			children = (
+				CAD495C52B863B6500AB61D9 /* AppDelegate.swift */,
+				CAD495C72B863B6500AB61D9 /* SceneDelegate.swift */,
+				CAD495C92B863B6500AB61D9 /* ViewController.swift */,
+				CAD495CB2B863B6500AB61D9 /* Main.storyboard */,
+				CAD495CE2B863B6800AB61D9 /* Assets.xcassets */,
+				CAD495D02B863B6800AB61D9 /* LaunchScreen.storyboard */,
+				CAD495D32B863B6800AB61D9 /* Info.plist */,
+			);
+			path = Stumeet;
+			sourceTree = "<group>";
+		};
+		CAD495DB2B863B6800AB61D9 /* StumeetTests */ = {
+			isa = PBXGroup;
+			children = (
+				CAD495DC2B863B6800AB61D9 /* StumeetTests.swift */,
+			);
+			path = StumeetTests;
+			sourceTree = "<group>";
+		};
+		CAD495E52B863B6800AB61D9 /* StumeetUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */,
+				CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */,
+			);
+			path = StumeetUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CAD495C12B863B6500AB61D9 /* Stumeet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAD495EC2B863B6900AB61D9 /* Build configuration list for PBXNativeTarget "Stumeet" */;
+			buildPhases = (
+				CAD495BE2B863B6500AB61D9 /* Sources */,
+				CAD495BF2B863B6500AB61D9 /* Frameworks */,
+				CAD495C02B863B6500AB61D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Stumeet;
+			productName = Stumeet;
+			productReference = CAD495C22B863B6500AB61D9 /* Stumeet.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CAD495D72B863B6800AB61D9 /* StumeetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAD495EF2B863B6900AB61D9 /* Build configuration list for PBXNativeTarget "StumeetTests" */;
+			buildPhases = (
+				CAD495D42B863B6800AB61D9 /* Sources */,
+				CAD495D52B863B6800AB61D9 /* Frameworks */,
+				CAD495D62B863B6800AB61D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CAD495DA2B863B6800AB61D9 /* PBXTargetDependency */,
+			);
+			name = StumeetTests;
+			productName = StumeetTests;
+			productReference = CAD495D82B863B6800AB61D9 /* StumeetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CAD495E12B863B6800AB61D9 /* StumeetUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAD495F22B863B6900AB61D9 /* Build configuration list for PBXNativeTarget "StumeetUITests" */;
+			buildPhases = (
+				CAD495DE2B863B6800AB61D9 /* Sources */,
+				CAD495DF2B863B6800AB61D9 /* Frameworks */,
+				CAD495E02B863B6800AB61D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CAD495E42B863B6800AB61D9 /* PBXTargetDependency */,
+			);
+			name = StumeetUITests;
+			productName = StumeetUITests;
+			productReference = CAD495E22B863B6800AB61D9 /* StumeetUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CAD495BA2B863B6500AB61D9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					CAD495C12B863B6500AB61D9 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					CAD495D72B863B6800AB61D9 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = CAD495C12B863B6500AB61D9;
+					};
+					CAD495E12B863B6800AB61D9 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = CAD495C12B863B6500AB61D9;
+					};
+				};
+			};
+			buildConfigurationList = CAD495BD2B863B6500AB61D9 /* Build configuration list for PBXProject "Stumeet" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CAD495B92B863B6500AB61D9;
+			productRefGroup = CAD495C32B863B6500AB61D9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CAD495C12B863B6500AB61D9 /* Stumeet */,
+				CAD495D72B863B6800AB61D9 /* StumeetTests */,
+				CAD495E12B863B6800AB61D9 /* StumeetUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CAD495C02B863B6500AB61D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAD495D22B863B6800AB61D9 /* LaunchScreen.storyboard in Resources */,
+				CAD495CF2B863B6800AB61D9 /* Assets.xcassets in Resources */,
+				CAD495CD2B863B6500AB61D9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAD495D62B863B6800AB61D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAD495E02B863B6800AB61D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CAD495BE2B863B6500AB61D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAD495CA2B863B6500AB61D9 /* ViewController.swift in Sources */,
+				CAD495C62B863B6500AB61D9 /* AppDelegate.swift in Sources */,
+				CAD495C82B863B6500AB61D9 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAD495D42B863B6800AB61D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAD495DD2B863B6800AB61D9 /* StumeetTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAD495DE2B863B6800AB61D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAD495E92B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift in Sources */,
+				CAD495E72B863B6800AB61D9 /* StumeetUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CAD495DA2B863B6800AB61D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CAD495C12B863B6500AB61D9 /* Stumeet */;
+			targetProxy = CAD495D92B863B6800AB61D9 /* PBXContainerItemProxy */;
+		};
+		CAD495E42B863B6800AB61D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CAD495C12B863B6500AB61D9 /* Stumeet */;
+			targetProxy = CAD495E32B863B6800AB61D9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CAD495CB2B863B6500AB61D9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CAD495CC2B863B6500AB61D9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CAD495D02B863B6800AB61D9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CAD495D12B863B6800AB61D9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CAD495EA2B863B6900AB61D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CAD495EB2B863B6900AB61D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CAD495ED2B863B6900AB61D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stumeet/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CAD495EE2B863B6900AB61D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stumeet/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CAD495F02B863B6900AB61D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stumeet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Stumeet";
+			};
+			name = Debug;
+		};
+		CAD495F12B863B6900AB61D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stumeet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Stumeet";
+			};
+			name = Release;
+		};
+		CAD495F32B863B6900AB61D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Stumeet;
+			};
+			name = Debug;
+		};
+		CAD495F42B863B6900AB61D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.StumeetUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Stumeet;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CAD495BD2B863B6500AB61D9 /* Build configuration list for PBXProject "Stumeet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAD495EA2B863B6900AB61D9 /* Debug */,
+				CAD495EB2B863B6900AB61D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CAD495EC2B863B6900AB61D9 /* Build configuration list for PBXNativeTarget "Stumeet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAD495ED2B863B6900AB61D9 /* Debug */,
+				CAD495EE2B863B6900AB61D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CAD495EF2B863B6900AB61D9 /* Build configuration list for PBXNativeTarget "StumeetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAD495F02B863B6900AB61D9 /* Debug */,
+				CAD495F12B863B6900AB61D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CAD495F22B863B6900AB61D9 /* Build configuration list for PBXNativeTarget "StumeetUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAD495F32B863B6900AB61D9 /* Debug */,
+				CAD495F42B863B6900AB61D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CAD495BA2B863B6500AB61D9 /* Project object */;
+}
