@@ -16,6 +16,7 @@ final class SelecteFieldViewModel: ViewModelType {
         let didSelectField: AnyPublisher<IndexPath, Never>
         let didSearchField: AnyPublisher<String?, Never>
         let didSelectSearchedField: AnyPublisher<IndexPath, Never>
+        let didTapNextButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -24,6 +25,7 @@ final class SelecteFieldViewModel: ViewModelType {
         let fieldItems: AnyPublisher<[Field], Never>
         let searchedItems: AnyPublisher<[AddableField], Never>
         let isNextButtonEnabled: AnyPublisher<Bool, Never>
+        let presentToTabBar: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -66,10 +68,13 @@ final class SelecteFieldViewModel: ViewModelType {
             .map { $0.contains { $0.isSelected } }
             .eraseToAnyPublisher()
         
+        let presentToTabBar = input.didTapNextButton
+        
         return Output(
             fieldItems: fieldItems,
             searchedItems: searchedItems,
-            isNextButtonEnabled: isNextButtonEnable
+            isNextButtonEnabled: isNextButtonEnable,
+            presentToTabBar: presentToTabBar
         )
     }
 }

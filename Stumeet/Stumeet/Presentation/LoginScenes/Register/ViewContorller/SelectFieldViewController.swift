@@ -167,7 +167,8 @@ class SelectFieldViewController: BaseViewController {
         let input = SelecteFieldViewModel.Input(
                 didSelectField: tagCollectionView.didSelectItemPublisher,
                 didSearchField: searchTextField.textPublisher,
-                didSelectSearchedField: fieldTableView.didSelectRowPublisher
+                didSelectSearchedField: fieldTableView.didSelectRowPublisher,
+                didTapNextButton: nextButton.tapPublisher
             )
         
         let output = viewModel.transform(input: input)
@@ -217,6 +218,14 @@ class SelectFieldViewController: BaseViewController {
                 datasource.apply(snapshot, animatingDifferences: false)
             }
             .store(in: &cancellables)
+        
+        output.presentToTabBar
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.coordinator.presentToTabBar()
+            }
+            .store(in: &cancellables)
+
     }
     
     private func createLayout() -> UICollectionViewLayout {

@@ -52,4 +52,9 @@ class RegisterCoordinator: Coordinator {
         imagePicker.modalPresentationStyle = .fullScreen
         navigationController.present(imagePicker, animated: true)
     }
+    
+    func presentToTabBar() {
+        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
+        tabBarCoordinator.start()
+    }
 }
