@@ -1,6 +1,0 @@
-framework module Pods_Stumeet {
-  umbrella header "Pods-Stumeet-umbrella.h"
-
-  export *
-  module * { export * }
-}
