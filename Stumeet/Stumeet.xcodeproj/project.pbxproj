@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		21E8736A5585D8BC637EA0E8 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E13988B36BA4E051A3A83D /* Pods_StumeetTests.framework */; };
+		35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */; };
+		35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */; };
+		35BDF6FB2B88D2F1000B6DCB /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6FA2B88D2F1000B6DCB /* AppFlowCoordinator.swift */; };
+		35BDF6FE2B88D33E000B6DCB /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6FD2B88D33E000B6DCB /* AppDIContainer.swift */; };
+		35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */; };
+		35BDF7032B88D3D8000B6DCB /* OnboardingScenesDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7022B88D3D8000B6DCB /* OnboardingScenesDIContainer.swift */; };
+		35BDF7062B88D449000B6DCB /* OnboardingFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7052B88D449000B6DCB /* OnboardingFlowCoordinator.swift */; };
+		35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7082B88D6A6000B6DCB /* OnboardingViewModel.swift */; };
+		35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */; };
+		35BDF7122B8B1056000B6DCB /* testVIew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35BDF7112B8B1056000B6DCB /* testVIew.xib */; };
+		35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7142B8B2083000B6DCB /* BasePageControl.swift */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
 		CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
@@ -83,6 +94,17 @@
 /* Begin PBXFileReference section */
 		2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stumeet_StumeetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F6921DA1FDADA19D041AFA6 /* Pods-StumeetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StumeetTests.release.xcconfig"; path = "Target Support Files/Pods-StumeetTests/Pods-StumeetTests.release.xcconfig"; sourceTree = "<group>"; };
+		35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewController.swift; sourceTree = "<group>"; };
+		35BDF6FA2B88D2F1000B6DCB /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
+		35BDF6FD2B88D33E000B6DCB /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
+		35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
+		35BDF7022B88D3D8000B6DCB /* OnboardingScenesDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScenesDIContainer.swift; sourceTree = "<group>"; };
+		35BDF7052B88D449000B6DCB /* OnboardingFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowCoordinator.swift; sourceTree = "<group>"; };
+		35BDF7082B88D6A6000B6DCB /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
+		35BDF7112B8B1056000B6DCB /* testVIew.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testVIew.xib; sourceTree = "<group>"; };
+		35BDF7142B8B2083000B6DCB /* BasePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePageControl.swift; sourceTree = "<group>"; };
 		49E13988B36BA4E051A3A83D /* Pods_StumeetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StumeetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7735D7930081AEFC4B4EB2 /* Pods-Stumeet-StumeetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.release.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7FCB7D7075B1E5E75906578A /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -187,6 +209,100 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35BDF6F02B88CEFA000B6DCB /* OnboardingScenes */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF7042B88D427000B6DCB /* Flows */,
+				35BDF6F12B88CFEA000B6DCB /* Onboarding */,
+				35BDF6F22B88D053000B6DCB /* SnsLogin */,
+			);
+			path = OnboardingScenes;
+			sourceTree = "<group>";
+		};
+		35BDF6F12B88CFEA000B6DCB /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF7072B88D683000B6DCB /* ViewModel */,
+				35BDF6F32B88D065000B6DCB /* View */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		35BDF6F22B88D053000B6DCB /* SnsLogin */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF6F72B88D0AE000B6DCB /* View */,
+			);
+			path = SnsLogin;
+			sourceTree = "<group>";
+		};
+		35BDF6F32B88D065000B6DCB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF7132B8B204B000B6DCB /* Component */,
+				35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		35BDF6F72B88D0AE000B6DCB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		35BDF6FC2B88D323000B6DCB /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF6FD2B88D33E000B6DCB /* AppDIContainer.swift */,
+				35BDF7022B88D3D8000B6DCB /* OnboardingScenesDIContainer.swift */,
+			);
+			path = DIContainer;
+			sourceTree = "<group>";
+		};
+		35BDF7042B88D427000B6DCB /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF7052B88D449000B6DCB /* OnboardingFlowCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		35BDF7072B88D683000B6DCB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF7082B88D6A6000B6DCB /* OnboardingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		35BDF70A2B89039F000B6DCB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */,
+				35BDF7112B8B1056000B6DCB /* testVIew.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		35BDF7132B8B204B000B6DCB /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				35BDF70A2B89039F000B6DCB /* Cell */,
+				35BDF7142B8B2083000B6DCB /* BasePageControl.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		35DB2EE42B8B361100F7C8A9 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		3729421BD57B2BEAA52C2593 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +330,9 @@
 			children = (
 				CA6447CB2B863BB90090DD84 /* AppDelegate.swift */,
 				CA6447CC2B863BB90090DD84 /* SceneDelegate.swift */,
+				35BDF6FA2B88D2F1000B6DCB /* AppFlowCoordinator.swift */,
+				35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */,
+				35BDF6FC2B88D323000B6DCB /* DIContainer */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -283,6 +402,7 @@
 		CA6447DB2B863BB90090DD84 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				35BDF6F02B88CEFA000B6DCB /* OnboardingScenes */,
 				CA6447DC2B863BB90090DD84 /* HomeScenes */,
 				CA6447E02B863BB90090DD84 /* StudyListScenes */,
 				CA6447E42B863BB90090DD84 /* LoginScenes */,
@@ -442,6 +562,7 @@
 		CA6448022B863BB90090DD84 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				35DB2EE42B8B361100F7C8A9 /* Component */,
 				CA6448032B863BB90090DD84 /* ViewModel */,
 				CA6448052B863BB90090DD84 /* Coordinator */,
 				CA6448072B863BB90090DD84 /* Manager */,
@@ -676,6 +797,7 @@
 				CAD495BE2B863B6500AB61D9 /* Sources */,
 				CAD495BF2B863B6500AB61D9 /* Frameworks */,
 				CAD495C02B863B6500AB61D9 /* Resources */,
+				4A44803A9F1DB275F73CC909 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -720,6 +842,7 @@
 				CAD495DE2B863B6800AB61D9 /* Sources */,
 				CAD495DF2B863B6800AB61D9 /* Frameworks */,
 				CAD495E02B863B6800AB61D9 /* Resources */,
+				3130FF3D783AC69B6ABAAC39 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -786,6 +909,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAD495D22B863B6800AB61D9 /* LaunchScreen.storyboard in Resources */,
+				35BDF7122B8B1056000B6DCB /* testVIew.xib in Resources */,
 				CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -807,6 +931,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3130FF3D783AC69B6ABAAC39 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3EF29C9CFAB404459FD6FB00 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -827,6 +968,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A44803A9F1DB275F73CC909 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		73782BE96362D1195D46C257 /* [CP] Check Pods Manifest.lock */ = {
@@ -898,9 +1056,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */,
 				CA6448432B863BB90090DD84 /* Region.swift in Sources */,
+				35BDF7032B88D3D8000B6DCB /* OnboardingScenesDIContainer.swift in Sources */,
 				CA6448372B863BB90090DD84 /* StudyListViewController.swift in Sources */,
 				CA64484B2B863BB90090DD84 /* Coordinator.swift in Sources */,
+				35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */,
 				CA6448332B863BB90090DD84 /* SelectFieldUseCase.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				CA6448472B863BB90090DD84 /* TabBarViewController.swift in Sources */,
@@ -908,25 +1069,32 @@
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
 				CA6448572B863BB90090DD84 /* BaseViewController.swift in Sources */,
+				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
 				CA64483B2B863BB90090DD84 /* SelecteFieldViewModel.swift in Sources */,
 				CA64484A2B863BB90090DD84 /* ViewModelType.swift in Sources */,
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
+				35BDF6FE2B88D33E000B6DCB /* AppDIContainer.swift in Sources */,
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
+				35BDF6FB2B88D2F1000B6DCB /* AppFlowCoordinator.swift in Sources */,
 				CA6448502B863BB90090DD84 /* UILabel++Extension.swift in Sources */,
+				35BDF7062B88D449000B6DCB /* OnboardingFlowCoordinator.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
+				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
 				CA6448352B863BB90090DD84 /* HomeViewController.swift in Sources */,
 				CA6448422B863BB90090DD84 /* Field.swift in Sources */,
+				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
 				CA64483D2B863BB90090DD84 /* SelectFieldViewController.swift in Sources */,
+				35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */,
 				CA6448582B863BB90090DD84 /* BaseCollectionViewCell.swift in Sources */,
 				CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
@@ -1113,7 +1281,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WBG9V97XP4;
+				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1142,7 +1310,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WBG9V97XP4;
+				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
