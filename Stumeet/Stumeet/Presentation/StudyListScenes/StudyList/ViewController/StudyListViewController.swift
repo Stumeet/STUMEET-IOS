@@ -24,9 +24,9 @@ class StudyListViewController: BaseViewController {
         
         button.tapPublisher
             .sink { _ in
-                let vc = StudyActivityViewController()
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+                let studyActivityVC = StudyActivityViewController()
+                studyActivityVC.modalPresentationStyle = .fullScreen
+                self.present(studyActivityVC, animated: true)
             }
             .store(in: &cancellables)
     }

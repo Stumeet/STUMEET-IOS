@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 2/22/24.
 //
 
+import Combine
 import UIKit
 
 class StudyActivityHeaderView: BaseCollectionReusableView {
@@ -15,19 +16,38 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
     
     // MARK: - UIComponents
     
+    let xButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        
+        return button
+    }()
+    
+    private let topLabel: UILabel = {
+        let label = UILabel().setLabelProperty(text: "활동", font: StumeetFont.titleMedium.font, color: .gray800)
+        return label
+    }()
+    
     let allButton: UIButton = {
         let button = makeHeaderButton(title: "전체")
         button.isSelected = true
+        button.titleLabel?.font = StumeetFont.titleSemibold.font
         
         return button
     }()
     
     let groupButton: UIButton = {
-        makeHeaderButton(title: "모임")
+        let button = makeHeaderButton(title: "모임")
+        button.titleLabel?.font = StumeetFont.titleMedium.font
+        button.sizeToFit()
+        return button
     }()
     
     let taskButton: UIButton = {
-        makeHeaderButton(title: "과제")
+        let button = makeHeaderButton(title: "과제")
+        button.titleLabel?.font = StumeetFont.titleMedium.font
+        
+        return button
     }()
     
     let buttonStackView: UIStackView = {
@@ -55,6 +75,18 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
         return button
     }()
     
+    // MARK: - Property
+    
+    var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - Override
+    
+    override func prepareForReuse() {
+        cancellables = Set<AnyCancellable>()
+    }
+    
+    // MARK: - SetUp
+    
     override func setupStyles() {
         backgroundColor = .white
     }
@@ -67,20 +99,34 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
         ]   .forEach { buttonStackView.addArrangedSubview($0) }
         
         [
+            xButton,
+            topLabel,
             buttonStackView,
             sortButton
         ]   .forEach { addSubview($0) }
     }
     
     override func setupConstaints() {
+        
+        xButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(12)
+            make.width.height.equalTo(24)
+        }
+        
+        topLabel.snp.makeConstraints { make in
+            make.leading.equalTo(xButton.snp.trailing).offset(24)
+            make.centerY.equalTo(xButton)
+        }
+        
         buttonStackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.centerY.equalToSuperview()
+            make.top.equalTo(xButton.snp.bottom).offset(28)
         }
         
         sortButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(21)
+            make.trailing.equalToSuperview().inset(16)
+            make.centerY.equalTo(buttonStackView)
         }
     }
 }

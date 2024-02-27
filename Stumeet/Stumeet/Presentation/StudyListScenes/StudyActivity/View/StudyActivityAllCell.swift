@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 2/22/24.
 //
 
+import Combine
 import UIKit
 
 class StudyActivityAllCell: BaseCollectionViewCell {
@@ -102,10 +103,14 @@ class StudyActivityAllCell: BaseCollectionViewCell {
         
         return label
     }()
+}
+
+// MARK: ConfigureUI
+
+extension StudyActivityAllCell {
     
-    // MARK: SetUP
     
-    override func setupAddView() {
+    func allAddView() {
         
         [
             profileImageView,
@@ -127,7 +132,7 @@ class StudyActivityAllCell: BaseCollectionViewCell {
         addSubview(containerView)
     }
     
-    override func setupConstaints() {
+    func setUpAllConstaints() {
         tagLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
             make.leading.equalToSuperview().inset(24)
@@ -184,12 +189,11 @@ class StudyActivityAllCell: BaseCollectionViewCell {
         
     }
     
-}
-
-// MARK: ConfigureUI
-
-extension StudyActivityAllCell {
     func configureAllUI(item: Activity) {
+        removeAddedViews()
+        allAddView()
+        setUpAllConstaints()
+        
         tagLabel.text = item.tag
         titleLabel.text = item.title
         contentLabel.text = item.content
@@ -201,14 +205,12 @@ extension StudyActivityAllCell {
             placeLabel.text = place
         } else {
             placeImageView.isHidden = true
-            placeLabel.isHidden = true
         }
         
         if let time = item.time {
             timeLabel.text = time
         } else {
             timeImageView.isHidden = true
-            timeLabel.isHidden = true
         }
         
         if placeLabel.isHidden && timeLabel.isHidden {
@@ -227,37 +229,40 @@ extension StudyActivityAllCell {
     
     }
     
-    func configureGroupUI(item: Activity) {
-
-        addSubview(checkLabel)
-        titleLabel.text = item.title
-        timeLabel.text = item.time
-        checkLabel.text = "출석"
-        placeLabel.text = item.place
-        
-        bottomStackView.isHidden = true
-        bottomStackView.snp.removeConstraints()
-        
-        titleLabel.snp.remakeConstraints { make in
+    func groupAddView() {
+        [
+            titleLabel,
+            timeImageView,
+            timeLabel,
+            placeLabel,
+            placeImageView,
+            checkLabel
+        ]   .forEach { addSubview($0) }
+    }
+    
+    func setUpGroupConstraints() {
+        titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(24)
         }
         
-        timeImageView.snp.remakeConstraints { make in
+        timeImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.width.height.equalTo(16)
         }
         
-        timeLabel.snp.remakeConstraints { make in
+        timeLabel.snp.makeConstraints { make in
             make.leading.equalTo(timeImageView.snp.trailing).offset(2)
             make.centerY.equalTo(timeImageView)
         }
         
-        placeImageView.snp.remakeConstraints { make in
+        placeImageView.snp.makeConstraints { make in
             make.leading.equalTo(timeLabel.snp.trailing).offset(16)
             make.top.equalTo(timeImageView)
+            make.width.height.equalTo(16)
         }
         
-        placeLabel.snp.remakeConstraints { make in
+        placeLabel.snp.makeConstraints { make in
             make.leading.equalTo(placeImageView.snp.trailing).offset(2)
             make.centerY.equalTo(placeImageView)
         }
@@ -266,34 +271,44 @@ extension StudyActivityAllCell {
             make.top.equalToSuperview().inset(22)
             make.trailing.equalToSuperview().inset(24)
         }
-        
-        containerView.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
     }
     
-    func configureTaskUI(item: Activity) {
-
-        addSubview(checkLabel)
+    func configureGroupUI(item: Activity) {
+        removeAddedViews()
+        groupAddView()
+        setUpGroupConstraints()
+        
         titleLabel.text = item.title
         timeLabel.text = item.time
-        checkLabel.text = "미수행"
+        checkLabel.text = "출석"
+        placeLabel.text = item.place
         
-        bottomStackView.isHidden = true
-        bottomStackView.snp.removeConstraints()
-        placeImageView.isHidden = true
+        if timeImageView.isHidden { timeImageView.isHidden = false }
+        if placeImageView.isHidden { placeImageView.isHidden = false }
+    }
+    
+    func taskAddView() {
         
-        titleLabel.snp.remakeConstraints { make in
+        [
+            titleLabel,
+            timeImageView,
+            timeLabel,
+            checkLabel
+        ]   .forEach { addSubview($0) }
+    }
+    
+    func setUpTaskConstraints() {
+        titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(24)
         }
         
-        timeImageView.snp.remakeConstraints { make in
+        timeImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.width.height.equalTo(16)
         }
         
-        timeLabel.snp.remakeConstraints { make in
+        timeLabel.snp.makeConstraints { make in
             make.leading.equalTo(timeImageView.snp.trailing).offset(2)
             make.centerY.equalTo(timeImageView)
         }
@@ -302,10 +317,29 @@ extension StudyActivityAllCell {
             make.top.equalToSuperview().inset(22)
             make.trailing.equalToSuperview().inset(24)
         }
+    }
+    func configureTaskUI(item: Activity) {
+
+        removeAddedViews()
+        taskAddView()
+        setUpTaskConstraints()
         
-        containerView.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
+        titleLabel.text = item.title
+        timeLabel.text = item.time
+        checkLabel.text = "미수행"
+        
+        if timeImageView.isHidden { timeImageView.isHidden = false }
+    
+    }
+    
+    func removeAddedViews() {
+        
+        for subview in containerView.subviews {
+            subview.removeFromSuperview()
         }
         
+        for subview in subviews {
+            subview.removeFromSuperview()
+        }
     }
 }

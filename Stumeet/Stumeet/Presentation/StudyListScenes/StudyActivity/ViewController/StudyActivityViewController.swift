@@ -11,7 +11,7 @@ class StudyActivityViewController: BaseViewController {
 
     // MARK: - UIComponents
     
-    private lazy var allCollectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createAllLayout(type: .all(nil)))
         collectionView.register(StudyActivityAllCell.self, forCellWithReuseIdentifier: StudyActivityAllCell.identifier)
         collectionView.register(
@@ -33,6 +33,7 @@ class StudyActivityViewController: BaseViewController {
     
     // MARK: - Properties
     
+    let viewModel: StudyActivityViewModel = StudyActivityViewModel(useCase: DefaultStudyActivityUseCase(repository: DefaultStudyActivityRepository()))
     var datasource: UICollectionViewDiffableDataSource<StudyActivitySection, StudyActivityItem>?
 
     // MARK: - LifeCycle
@@ -50,14 +51,14 @@ class StudyActivityViewController: BaseViewController {
     
     override func setupAddView() {
         [
-            allCollectionView,
+            collectionView,
             floatingButton
         ]   .forEach { view.addSubview($0) }
     }
     
     override func setupConstaints() {
         
-        allCollectionView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.bottom.equalToSuperview()
         }
@@ -72,27 +73,36 @@ class StudyActivityViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
-        var currentType: [StudyActivityItem] = []
-        Activity.allData.forEach {
-            currentType.append(.all($0))
-        }
         
-        currentType.publisher
+        let input = StudyActivityViewModel.Input()
+        let output = viewModel.transform(input: input)
+        
+        output.items
+            .removeDuplicates()
             .receive(on: RunLoop.main)
-            .sink { [weak self] item in
-                guard let self = self, let datasource = self.datasource else { return }
-
+            .sink { [weak self] items in
+                guard let self = self,
+                      let datasource = self.datasource else { return }
                 var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivityItem>()
                 snapshot.appendSections([.main])
                 
-                switch item {
+                switch items.first {
                 case .all:
-                    snapshot.appendItems(currentType, toSection: .main)
-                    allCollectionView.setCollectionViewLayout(createAllLayout(type: .all(nil)), animated: true)
-                default: break
+                    self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .all(nil)), animated: false)
+                    self.collectionView.backgroundColor = StumeetColor.primary50.color
+                case .group:
+                    self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .group(nil)), animated: false)
+                    self.collectionView.backgroundColor = .white
+                case .task:
+                    self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .task(nil)), animated: false)
+                    self.collectionView.backgroundColor = .white
+                case .none:
+                    break
                 }
+                self.collectionView.contentOffset = .zero
+                snapshot.appendItems(items, toSection: .main)
+                datasource.apply(snapshot, animatingDifferences: false)
                 
-                datasource.apply(snapshot, animatingDifferences: true)
             }
             .store(in: &cancellables)
     }
@@ -102,8 +112,7 @@ class StudyActivityViewController: BaseViewController {
 
 extension StudyActivityViewController {
     func configureDatasource() {
-        datasource = UICollectionViewDiffableDataSource(collectionView: allCollectionView, cellProvider: { collectionView, indexPath, item in
-            
+        datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
             
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: StudyActivityAllCell.identifier,
@@ -127,6 +136,18 @@ extension StudyActivityViewController {
                 withReuseIdentifier: StudyActivityHeaderView.identifier,
                 for: indexPath) as? StudyActivityHeaderView else { return UICollectionReusableView() }
             
+            header.allButton.tapPublisher
+                .sink(receiveValue: { [weak self] _ in self?.viewModel.didTapAllButton.send()})
+                .store(in: &header.cancellables)
+            
+            header.taskButton.tapPublisher
+                .sink(receiveValue: { [weak self] _ in self?.viewModel.didTapTaskButton.send()})
+                .store(in: &header.cancellables)
+            
+            header.groupButton.tapPublisher
+                .sink(receiveValue: { [weak self] _ in self?.viewModel.didTapGroupButton.send()})
+                .store(in: &header.cancellables)
+                
             return header
         }
     }
@@ -136,6 +157,8 @@ extension StudyActivityViewController {
 
 extension StudyActivityViewController {
     private func createAllLayout(type: StudyActivityItem) -> UICollectionViewCompositionalLayout {
+        var layout: UICollectionViewCompositionalLayout
+        
         switch type {
         case .all:
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(156))
@@ -144,7 +167,7 @@ extension StudyActivityViewController {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(156))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(104))
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize
                 , elementKind: UICollectionView.elementKindSectionHeader,
@@ -153,11 +176,9 @@ extension StudyActivityViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0)
             section.boundarySupplementaryItems = [sectionHeader]
-
             section.interGroupSpacing = 24
-            let layout = UICollectionViewCompositionalLayout(section: section)
+            layout = UICollectionViewCompositionalLayout(section: section)
             
-            return layout
             
         case .group, .task:
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(91))
@@ -166,7 +187,7 @@ extension StudyActivityViewController {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(91))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(104))
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize
                 , elementKind: UICollectionView.elementKindSectionHeader,
@@ -175,9 +196,8 @@ extension StudyActivityViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.boundarySupplementaryItems = [sectionHeader]
             
-            let layout = UICollectionViewCompositionalLayout(section: section)
-            
-            return layout
+            layout = UICollectionViewCompositionalLayout(section: section)
         }
+        return layout
     }
 }

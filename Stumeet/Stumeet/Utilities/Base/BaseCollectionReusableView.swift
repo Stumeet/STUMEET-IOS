@@ -12,7 +12,6 @@ import Combine
 
 class BaseCollectionReusableView: UICollectionReusableView {
     
-    var cancellables = Set<AnyCancellable>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
