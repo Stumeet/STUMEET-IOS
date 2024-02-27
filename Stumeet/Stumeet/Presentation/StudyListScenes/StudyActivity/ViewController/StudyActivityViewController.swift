@@ -35,7 +35,8 @@ class StudyActivityViewController: BaseViewController {
     
     let viewModel: StudyActivityViewModel = StudyActivityViewModel(useCase: DefaultStudyActivityUseCase(repository: DefaultStudyActivityRepository()))
     var datasource: UICollectionViewDiffableDataSource<StudyActivitySection, StudyActivityItem>?
-
+    var headerView: StudyActivityHeaderView?
+    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -77,6 +78,7 @@ class StudyActivityViewController: BaseViewController {
         let input = StudyActivityViewModel.Input()
         let output = viewModel.transform(input: input)
         
+        // collectionview 아이템 바인딩
         output.items
             .removeDuplicates()
             .receive(on: RunLoop.main)
@@ -90,12 +92,15 @@ class StudyActivityViewController: BaseViewController {
                 case .all:
                     self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .all(nil)), animated: false)
                     self.collectionView.backgroundColor = StumeetColor.primary50.color
+                    
                 case .group:
                     self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .group(nil)), animated: false)
                     self.collectionView.backgroundColor = .white
+                    
                 case .task:
                     self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .task(nil)), animated: false)
                     self.collectionView.backgroundColor = .white
+                    
                 case .none:
                     break
                 }
@@ -103,6 +108,16 @@ class StudyActivityViewController: BaseViewController {
                 snapshot.appendItems(items, toSection: .main)
                 datasource.apply(snapshot, animatingDifferences: false)
                 
+            }
+            .store(in: &cancellables)
+        
+        // 버튼 선택 상태 업데이트
+        output.isSelected
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isSelecteds in
+                self?.headerView?.allButton.isSelected = isSelecteds[0]
+                self?.headerView?.groupButton.isSelected = isSelecteds[1]
+                self?.headerView?.taskButton.isSelected = isSelecteds[2]
             }
             .store(in: &cancellables)
     }
@@ -147,7 +162,9 @@ extension StudyActivityViewController {
             header.groupButton.tapPublisher
                 .sink(receiveValue: { [weak self] _ in self?.viewModel.didTapGroupButton.send()})
                 .store(in: &header.cancellables)
-                
+            
+            self.headerView = header
+            
             return header
         }
     }
@@ -156,6 +173,7 @@ extension StudyActivityViewController {
 // MARK: ConfigureLayout
 
 extension StudyActivityViewController {
+    
     private func createAllLayout(type: StudyActivityItem) -> UICollectionViewCompositionalLayout {
         var layout: UICollectionViewCompositionalLayout
         
@@ -178,7 +196,6 @@ extension StudyActivityViewController {
             section.boundarySupplementaryItems = [sectionHeader]
             section.interGroupSpacing = 24
             layout = UICollectionViewCompositionalLayout(section: section)
-            
             
         case .group, .task:
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(91))

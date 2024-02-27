@@ -19,6 +19,7 @@ final class StudyActivityViewModel: ViewModelType {
     
     struct Output {
         let items: AnyPublisher<[StudyActivityItem], Never>
+        let isSelected: AnyPublisher<[Bool], Never>
     }
     
     // MARK: - Properties
@@ -43,28 +44,40 @@ final class StudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
+        // 전체 활동 아이템
         let allItems = didTapAllButton
             .flatMap { [weak self] _ -> AnyPublisher<[StudyActivityItem], Never> in
                 guard let self = self else { return Just([]).eraseToAnyPublisher() }
                 return self.useCase.getActivityItems(type: .all(nil))
             }
         
+        // 그룹 활동 아이템
         let groupItems = didTapGroupButton
             .flatMap { [weak self] _ -> AnyPublisher<[StudyActivityItem], Never> in
                 guard let self = self else { return Just([]).eraseToAnyPublisher() }
                 return self.useCase.getActivityItems(type: .group(nil))
             }
         
+        // 과제 활동 아이템
         let taskItems = didTapTaskButton
             .flatMap { [weak self] _ -> AnyPublisher<[StudyActivityItem], Never> in
                 guard let self = self else { return Just([]).eraseToAnyPublisher() }
                 return self.useCase.getActivityItems(type: .task(nil))
             }
         
+        // 최종 아이템
         let items = Publishers.Merge4(allItems, groupItems, taskItems, initialItems)
             .eraseToAnyPublisher()
         
-        return Output(items: items)
+        // 버튼 선택 상태
+        let isSelected = Publishers.Merge3(
+                didTapAllButton.map { _ in [true, false, false] },
+                didTapGroupButton.map { _ in [false, true, false] },
+                didTapTaskButton.map { _ in [false, false, true] }
+            )
+            .eraseToAnyPublisher()
+        
+        return Output(items: items, isSelected: isSelected)
     }
 
 }
