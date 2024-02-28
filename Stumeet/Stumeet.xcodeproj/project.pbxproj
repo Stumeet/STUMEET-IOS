@@ -25,7 +25,6 @@
 		35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */; };
 		35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7082B88D6A6000B6DCB /* OnboardingViewModel.swift */; };
 		35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */; };
-		35BDF7122B8B1056000B6DCB /* testVIew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35BDF7112B8B1056000B6DCB /* testVIew.xib */; };
 		35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7142B8B2083000B6DCB /* BasePageControl.swift */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
@@ -120,7 +119,6 @@
 		35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
 		35BDF7082B88D6A6000B6DCB /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
-		35BDF7112B8B1056000B6DCB /* testVIew.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testVIew.xib; sourceTree = "<group>"; };
 		35BDF7142B8B2083000B6DCB /* BasePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePageControl.swift; sourceTree = "<group>"; };
 		49E13988B36BA4E051A3A83D /* Pods_StumeetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StumeetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7735D7930081AEFC4B4EB2 /* Pods-Stumeet-StumeetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.release.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -354,7 +352,6 @@
 			isa = PBXGroup;
 			children = (
 				35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */,
-				35BDF7112B8B1056000B6DCB /* testVIew.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -983,7 +980,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAD495D22B863B6800AB61D9 /* LaunchScreen.storyboard in Resources */,
-				35BDF7122B8B1056000B6DCB /* testVIew.xib in Resources */,
 				CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
