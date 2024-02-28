@@ -24,6 +24,7 @@ public class BasePageControl: UIPageControl {
             reset()
         }
     }
+    
     private var unselectedColor: UIColor = .clear {
         didSet {
             reset()
@@ -36,11 +37,13 @@ public class BasePageControl: UIPageControl {
             reset()
         }
     }
+    
     public var dotSpacings: CGFloat = 8 {
         didSet {
             reset()
         }
     }
+    
     public override var numberOfPages: Int {
         didSet {
             reset()
@@ -53,6 +56,7 @@ public class BasePageControl: UIPageControl {
             reset()
         }
     }
+    
     public override var pageIndicatorTintColor: UIColor? {
         get {
             unselectedColor
@@ -61,6 +65,7 @@ public class BasePageControl: UIPageControl {
             unselectedColor = newValue ?? .clear
         }
     }
+    
     public override var currentPageIndicatorTintColor: UIColor? {
         get {
             selectedColor
@@ -69,6 +74,7 @@ public class BasePageControl: UIPageControl {
             selectedColor = newValue ?? .clear
         }
     }
+    
     // MARK: - Public Functions
     public override func draw(_ rect: CGRect) {
         guard numberOfPages > 0 else { return }
@@ -107,9 +113,8 @@ public class BasePageControl: UIPageControl {
     }
     
     public func setOffset(_ offset: CGFloat, width: CGFloat) {
-        guard width > 0, !width.isNaN, !width.isInfinite, !offset.isNaN, !offset.isInfinite else {
-            return
-        }
+        guard width > 0 else { return }
+        
         selectedIndex = Int(offset / width)
         remainingDecimal = offset / width - CGFloat(selectedIndex)
         setNeedsDisplay()

@@ -5,6 +5,7 @@
 //  Created by 조웅희 on 2024/02/23.
 //
 
+import Combine
 import UIKit
 
 class OnboardingViewController: BaseViewController {
@@ -42,9 +43,16 @@ class OnboardingViewController: BaseViewController {
     }()
     
     private let startButton: UIButton = {
-        let button = UIButton()
-        button.applyStyle(.abled)
-        button.setTitle("시작!", for: .normal)
+        var configuration = UIButton.Configuration.filled()
+        var container = AttributeContainer()
+        
+        container.font = StumeetFont.titleSemibold.font
+        container.foregroundColor = StumeetColor.gray50.color
+        
+        configuration.attributedTitle = AttributedString("시작!", attributes: container)
+        configuration.baseBackgroundColor = StumeetColor.primary700.color
+        
+        let button = UIButton(configuration: configuration, primaryAction: nil)
         return button
     }()
     
@@ -57,10 +65,14 @@ class OnboardingViewController: BaseViewController {
     
     // MARK: - Properties
     private let viewModel: OnboardingViewModel
+    private weak var coordinator: AuthNavigation!
         
     // MARK: - Init
-    init(viewModel: OnboardingViewModel) {
+    init(viewModel: OnboardingViewModel,
+         coordinator: AuthNavigation
+    ) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -99,9 +111,8 @@ class OnboardingViewController: BaseViewController {
 
     override func setupConstaints() {
         rootVStackView.snp.makeConstraints {
-            $0.directionalHorizontalEdges.equalToSuperview()
-            $0.top.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview()
+            $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
         }
         
         pageControl.snp.makeConstraints {
@@ -121,6 +132,7 @@ class OnboardingViewController: BaseViewController {
         super.viewDidLoad()
         setupDelegate()
         registerCell()
+
     }
     
     private func setupDelegate() {
@@ -132,7 +144,23 @@ class OnboardingViewController: BaseViewController {
         onboardingCollectionView.register(OnboardingCollectionViewCell.self,
                                           forCellWithReuseIdentifier: OnboardingCollectionViewCell.defaultReuseIdentifier)
     }
-
+    
+    override func bind() {
+        // MARK: - Input
+        let input = OnboardingViewModel.Input(
+            didTapNextButton: startButton.tapPublisher
+        )
+        
+        // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.navigateToSnsLoginVC
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.coordinator.goToSnsLogin()
+            }
+            .store(in: &cancellables)
+    }
 }
 
 extension OnboardingViewController:

@@ -18,6 +18,7 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
         
         return stackView
     }()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -29,6 +30,7 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
         let view =  UIView()
         return view
     }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -47,7 +49,7 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
             titleLabelContainer
         ].forEach { rootView.addArrangedSubview($0)}
     }
-    /// UI 컴포넌트 제약조건을 설정합니다.
+    
     override func setupConstaints() {
         rootView.snp.makeConstraints {
             $0.edges.equalToSuperview()

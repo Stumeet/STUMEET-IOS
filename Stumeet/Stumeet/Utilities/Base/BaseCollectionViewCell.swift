@@ -10,7 +10,8 @@ import UIKit
 import SnapKit
 
 class BaseCollectionViewCell: UICollectionViewCell {
-   
+    static var defaultReuseIdentifier: String { return String(describing: self) }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
                 
