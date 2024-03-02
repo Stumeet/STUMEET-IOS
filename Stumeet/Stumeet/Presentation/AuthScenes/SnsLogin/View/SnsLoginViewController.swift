@@ -150,6 +150,9 @@ class SnsLoginViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.viewModel.loginSnsManger?.signIn()
+                // 임시로 profileVC push
+                let registerCoordinator = RegisterCoordinator(navigationController: (self?.navigationController!)!)
+                registerCoordinator.start()
             }
             .store(in: &cancellables)
     }
