@@ -28,6 +28,13 @@
 		35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7142B8B2083000B6DCB /* BasePageControl.swift */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
+		CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */; };
+		CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEC2B918F99009D4064 /* NicknameRepository.swift */; };
+		CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */; };
+		CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF02B919341009D4064 /* RegisterService.swift */; };
+		CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */; };
+		CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */; };
+		CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */; };
 		CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CB2B863BB90090DD84 /* AppDelegate.swift */; };
 		CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CC2B863BB90090DD84 /* SceneDelegate.swift */; };
@@ -125,6 +132,13 @@
 		7FCB7D7075B1E5E75906578A /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
+		CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUseCase.swift; sourceTree = "<group>"; };
+		CA0A0AEC2B918F99009D4064 /* NicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRepository.swift; sourceTree = "<group>"; };
+		CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNicknameRepository.swift; sourceTree = "<group>"; };
+		CA0A0AF02B919341009D4064 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
+		CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
+		CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestDTO.swift; sourceTree = "<group>"; };
+		CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable++Extension.swift"; sourceTree = "<group>"; };
 		CA6447C82B863BB90090DD84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA6447C92B863BB90090DD84 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA6447CB2B863BB90090DD84 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -385,6 +399,32 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CA0A0AE92B918E0A009D4064 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				CA6447D92B863BB90090DD84 /* SelectRegionUseCase.swift */,
+				CA6447DA2B863BB90090DD84 /* SelectFieldUseCase.swift */,
+				CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		CA4E7EDA2B9307C4009C07FD /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				CA0A0AF02B919341009D4064 /* RegisterService.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		CA4E7EDB2B93080B009C07FD /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		CA6447C72B863BB90090DD84 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +477,7 @@
 			children = (
 				CA6447D22B863BB90090DD84 /* RegionRepository.swift */,
 				CA6447D32B863BB90090DD84 /* SelecteFieldRepository.swift */,
+				CA0A0AEC2B918F99009D4064 /* NicknameRepository.swift */,
 			);
 			path = LoginScene;
 			sourceTree = "<group>";
@@ -452,9 +493,8 @@
 		CA6447D62B863BB90090DD84 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				CA0A0AE92B918E0A009D4064 /* Register */,
 				CA6447D72B863BB90090DD84 /* Protocol */,
-				CA6447D92B863BB90090DD84 /* SelectRegionUseCase.swift */,
-				CA6447DA2B863BB90090DD84 /* SelectFieldUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -696,6 +736,7 @@
 			children = (
 				CA64480F2B863BB90090DD84 /* UITextField++Extension.swift */,
 				CA6448102B863BB90090DD84 /* UILabel++Extension.swift */,
+				CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */,
 				CA6448112B863BB90090DD84 /* CALayer++Extension.swift */,
 				CA6448122B863BB90090DD84 /* UIButton++Extension.swift */,
 				CA6448132B863BB90090DD84 /* UIVIew++Extension.swift */,
@@ -752,6 +793,7 @@
 			children = (
 				CA6448202B863BB90090DD84 /* DefualtRegionRepository.swift */,
 				CA6448212B863BB90090DD84 /* DefaultSelectFieldRepository.swift */,
+				CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */,
 			);
 			path = LoginScene;
 			sourceTree = "<group>";
@@ -768,7 +810,9 @@
 		CA6448232B863BB90090DD84 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				CA4E7EDB2B93080B009C07FD /* Register */,
 				CA6448242B863BB90090DD84 /* .gitkeep */,
+				CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -776,6 +820,7 @@
 		CA6448252B863BB90090DD84 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CA4E7EDA2B9307C4009C07FD /* Register */,
 				353EAEB12B8F68BB008F7E8C /* Prototype */,
 				CA6448262B863BB90090DD84 /* .gitkeep */,
 			);
@@ -868,7 +913,6 @@
 				CAD495BE2B863B6500AB61D9 /* Sources */,
 				CAD495BF2B863B6500AB61D9 /* Frameworks */,
 				CAD495C02B863B6500AB61D9 /* Resources */,
-				4A44803A9F1DB275F73CC909 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -913,7 +957,6 @@
 				CAD495DE2B863B6800AB61D9 /* Sources */,
 				CAD495DF2B863B6800AB61D9 /* Frameworks */,
 				CAD495E02B863B6800AB61D9 /* Resources */,
-				3130FF3D783AC69B6ABAAC39 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1001,23 +1044,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3130FF3D783AC69B6ABAAC39 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3EF29C9CFAB404459FD6FB00 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1038,23 +1064,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4A44803A9F1DB275F73CC909 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		73782BE96362D1195D46C257 /* [CP] Check Pods Manifest.lock */ = {
@@ -1134,8 +1143,10 @@
 				35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */,
 				353EAEB72B8F6B28008F7E8C /* PrototypeAPIManager.swift in Sources */,
 				CA6448332B863BB90090DD84 /* SelectFieldUseCase.swift in Sources */,
+				CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				353EAEA72B8E109C008F7E8C /* CoordinatorTest.swift in Sources */,
+				CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */,
 				353EAEB02B8E19CF008F7E8C /* SnsLoginViewModel.swift in Sources */,
 				CA6448472B863BB90090DD84 /* TabBarViewController.swift in Sources */,
 				353EAEC22B8F839F008F7E8C /* AppleLogin.swift in Sources */,
@@ -1155,8 +1166,11 @@
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
+				CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */,
 				CA6448502B863BB90090DD84 /* UILabel++Extension.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
+				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
+				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
 				353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */,
@@ -1174,6 +1188,7 @@
 				353EAEBE2B8F78F1008F7E8C /* PrototypeAPIData.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
+				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				CA6448552B863BB90090DD84 /* StumeetColor.swift in Sources */,
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
@@ -1181,6 +1196,7 @@
 				CA6448442B863BB90090DD84 /* TagCell.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
 				353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */,
+				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				353EAEB52B8F6A79008F7E8C /* PrototypeAPIConst.swift in Sources */,
 				353EAEB32B8F6906008F7E8C /* PrototypeAPIService.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
@@ -1360,7 +1376,7 @@
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YNN2UAMM79;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1390,7 +1406,7 @@
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YNN2UAMM79;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

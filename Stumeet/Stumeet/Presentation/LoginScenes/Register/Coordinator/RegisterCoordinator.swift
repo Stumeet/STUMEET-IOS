@@ -8,6 +8,8 @@
 import UIKit
 import PhotosUI
 
+import Moya
+
 class RegisterCoordinator: Coordinator {
     
     // TODO: 온보딩 Coordinator와 분리하거나 결합
@@ -26,7 +28,9 @@ class RegisterCoordinator: Coordinator {
     }
     
     func navigateToNickNameVC() {
-        let nicknameVC = NicknameViewController(viewModel: NicknameViewModel(), coordinator: self)
+        let provider = MoyaProvider<RegisterService>()
+        let useCase = DefaultNicknameUseCase(repository: DefaultNicknameRepository(provider: provider))
+        let nicknameVC = NicknameViewController(viewModel: NicknameViewModel(useCase: useCase), coordinator: self)
         navigationController.pushViewController(nicknameVC, animated: true)
     }
     

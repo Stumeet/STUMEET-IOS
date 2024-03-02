@@ -28,50 +28,41 @@ final class NicknameViewModel: ViewModelType {
     }
     
     // MARK: - Properties
-    
+    let useCase: NicknameUseCase
     
     // MARK: - Init
-    init() {
-        
+    init(useCase: NicknameUseCase) {
+        self.useCase = useCase
     }
     
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
         
-        // Input
         let isDuplicate = input.changeText
-            .map { $0 == "Guest" }
+            .flatMap(useCase.checkNicknameDuplicate)
             .eraseToAnyPublisher()
         
         let count = input.changeText
-            .filter { $0.count <= 10}
-            .map { $0.count }
+            .flatMap(useCase.setNicknameCount)
             .eraseToAnyPublisher()
         
         let isBiggerThanTen = input.changeText
-            .map { $0.count > 10 }
+            .flatMap(useCase.checkNicknameLonggestThanTen)
             .eraseToAnyPublisher()
         
         let navigateToSelectRegionVC = input.didTapNextButton
             
         
-        let isEnable = Publishers.CombineLatest(isDuplicate, count)
-            .map { isDuplicate, count in
-                if !isDuplicate {
-                    return count != 0
-                } else {
-                    return false
-                }
-            }
+        let isNextButtonEnable = Publishers.CombineLatest(isDuplicate, count)
+            .flatMap(useCase.setNextButtonEnable)
             .eraseToAnyPublisher()
         
-        // Output
         return Output(
             isDuplicate: isDuplicate,
             count: count,
             isBiggerThanTen: isBiggerThanTen,
-            isNextButtonEnable: isEnable,
+            isNextButtonEnable: isNextButtonEnable,
             navigateToSelectRegionVC: navigateToSelectRegionVC
         )
     }
