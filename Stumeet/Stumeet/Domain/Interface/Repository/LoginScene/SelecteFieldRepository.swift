@@ -8,9 +8,12 @@
 import Combine
 import Foundation
 
+import Moya
+
 protocol SelecteFieldRepository {
     func getFields() -> AnyPublisher<[Field], Never>
-    func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never>
-    func getSearchedField(text: String) -> AnyPublisher<[AddableField], Never>
-    func addField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never>
+    func fetchAddableFields() -> AnyPublisher<[Field], Never>
+    func updateField(fields: [Field])
+    func updateSearchedField(filteredFields: [Field])
+    func fetchSearchedField() -> AnyPublisher<[Field], Never>
 }

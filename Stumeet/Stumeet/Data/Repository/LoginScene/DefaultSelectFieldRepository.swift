@@ -8,49 +8,48 @@
 import Combine
 import Foundation
 
+import Moya
+
 final class DefaultSelectFieldRepository: SelecteFieldRepository {
     
-    private var fields: [Field] = Field.list
-    private var addableFields: [AddableField] = AddableField.list
-    private var searchedFields: [AddableField] = []
-    private var fieldSubject = CurrentValueSubject<[Field], Never>(Field.list)
-    private var searchedFieldSubject = CurrentValueSubject<[AddableField], Never>([])
+    private let fieldsSubject = CurrentValueSubject<[Field], Never>(Field.data)
+    private let addableFieldSubject = CurrentValueSubject<[Field], Never>([])
+    private let filteredFieldSubject = CurrentValueSubject<[Field], Never>([])
+    private let provider: MoyaProvider<RegisterService>
+    
+    init(provider: MoyaProvider<RegisterService>) {
+        self.provider = provider
+    }
     
     func getFields() -> AnyPublisher<[Field], Never> {
-        return fieldSubject.eraseToAnyPublisher()
+        return fieldsSubject.eraseToAnyPublisher()
     }
     
-    func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never> {
-        for index in fields.indices {
-            fields[index].isSelected = index == indexPath.row
+    func fetchAddableFields() -> AnyPublisher<[Field], Never> {
+        if addableFieldSubject.value.isEmpty {
+            return provider.requestPublisher(.fetchProfessionFields)
+                .map(FieldResponseDTO.self)
+                .map { [weak self] response -> [Field] in
+                    let addableFields = response.data.professions.map { $0.toDomain() }
+                    self?.addableFieldSubject.send(addableFields)
+                    return addableFields
+                }
+                .catch { _ in Just([]) }
+                .eraseToAnyPublisher()
+        } else {
+            return addableFieldSubject.eraseToAnyPublisher()
         }
-        fieldSubject.send(fields)
-        return fieldSubject.eraseToAnyPublisher()
+    }
+
+    func updateField(fields: [Field]) {
+        fieldsSubject.send(fields)
     }
     
-    func getSearchedField(text: String) -> AnyPublisher<[AddableField], Never> {
-        searchedFields = []
-        for field in addableFields where field.field.contains(text) {
-            searchedFields.append(AddableField(field: field.field))
-        }
-        searchedFieldSubject.send(searchedFields)
-        return searchedFieldSubject.eraseToAnyPublisher()
+    func updateSearchedField(filteredFields: [Field]) {
+        filteredFieldSubject.send(filteredFields)
     }
     
-    func addField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never> {
-        let selectedField = searchedFields[indexPath.row].field
-        guard !fields.contains(where: { $0.field == selectedField }) else {
-            return fieldSubject.eraseToAnyPublisher()
-        }
-        
-        let field = Field(field: selectedField, isSelected: true)
-        for index in fields.indices where fields[index].isSelected {
-            fields[index].isSelected = false
-        }
-        
-        fields.insert(field, at: 0)
-        fieldSubject.send(fields)
-        
-        return fieldSubject.eraseToAnyPublisher()
+    func fetchSearchedField() -> AnyPublisher<[Field], Never> {
+        return filteredFieldSubject.eraseToAnyPublisher()
     }
 }

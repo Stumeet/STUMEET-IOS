@@ -35,6 +35,8 @@
 		CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */; };
 		CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */; };
 		CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */; };
+		CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */; };
+		CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE42B9311D1009C07FD /* Field.swift */; };
 		CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CB2B863BB90090DD84 /* AppDelegate.swift */; };
 		CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CC2B863BB90090DD84 /* SceneDelegate.swift */; };
@@ -54,7 +56,7 @@
 		CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F02B863BB90090DD84 /* SelectRegionViewController.swift */; };
 		CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F12B863BB90090DD84 /* ChangeProfileViewController.swift */; };
 		CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F22B863BB90090DD84 /* NicknameViewController.swift */; };
-		CA6448422B863BB90090DD84 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F42B863BB90090DD84 /* Field.swift */; };
+		CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F42B863BB90090DD84 /* FieldSection.swift */; };
 		CA6448432B863BB90090DD84 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F52B863BB90090DD84 /* Region.swift */; };
 		CA6448442B863BB90090DD84 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F72B863BB90090DD84 /* TagCell.swift */; };
 		CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447F82B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift */; };
@@ -139,6 +141,8 @@
 		CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
 		CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestDTO.swift; sourceTree = "<group>"; };
 		CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable++Extension.swift"; sourceTree = "<group>"; };
+		CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldResponseDTO.swift; sourceTree = "<group>"; };
+		CA4E7EE42B9311D1009C07FD /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 		CA6447C82B863BB90090DD84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA6447C92B863BB90090DD84 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA6447CB2B863BB90090DD84 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,7 +168,7 @@
 		CA6447F02B863BB90090DD84 /* SelectRegionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRegionViewController.swift; sourceTree = "<group>"; };
 		CA6447F12B863BB90090DD84 /* ChangeProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeProfileViewController.swift; sourceTree = "<group>"; };
 		CA6447F22B863BB90090DD84 /* NicknameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
-		CA6447F42B863BB90090DD84 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		CA6447F42B863BB90090DD84 /* FieldSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldSection.swift; sourceTree = "<group>"; };
 		CA6447F52B863BB90090DD84 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CA6447F72B863BB90090DD84 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		CA6447F82B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
@@ -421,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */,
+				CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -486,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				CA6447D52B863BB90090DD84 /* .gitkeep */,
+				CA4E7EE42B9311D1009C07FD /* Field.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -610,7 +616,7 @@
 		CA6447F32B863BB90090DD84 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CA6447F42B863BB90090DD84 /* Field.swift */,
+				CA6447F42B863BB90090DD84 /* FieldSection.swift */,
 				CA6447F52B863BB90090DD84 /* Region.swift */,
 			);
 			path = Model;
@@ -1153,6 +1159,7 @@
 				353EAEBC2B8F6E81008F7E8C /* PrototypeUse.swift in Sources */,
 				353EAEC52B8F83F4008F7E8C /* LoginProtocol.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
+				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
 				CA6448572B863BB90090DD84 /* BaseViewController.swift in Sources */,
@@ -1161,6 +1168,7 @@
 				CA64483B2B863BB90090DD84 /* SelecteFieldViewModel.swift in Sources */,
 				CA64484A2B863BB90090DD84 /* ViewModelType.swift in Sources */,
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
+				CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */,
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
@@ -1176,7 +1184,7 @@
 				353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
 				CA6448352B863BB90090DD84 /* HomeViewController.swift in Sources */,
-				CA6448422B863BB90090DD84 /* Field.swift in Sources */,
+				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,

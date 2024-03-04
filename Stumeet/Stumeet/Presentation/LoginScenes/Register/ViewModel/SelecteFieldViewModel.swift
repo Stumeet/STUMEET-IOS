@@ -23,7 +23,7 @@ final class SelecteFieldViewModel: ViewModelType {
     
     struct Output {
         let fieldItems: AnyPublisher<[Field], Never>
-        let searchedItems: AnyPublisher<[AddableField], Never>
+        let searchedItems: AnyPublisher<[Field], Never>
         let isNextButtonEnabled: AnyPublisher<Bool, Never>
         let presentToTabBar: AnyPublisher<Void, Never>
     }
@@ -58,9 +58,9 @@ final class SelecteFieldViewModel: ViewModelType {
         
         let searchedItems = input.didSearchField
             .compactMap { $0 }
-            .flatMap { [weak self] text -> AnyPublisher<[AddableField], Never> in
+            .flatMap { [weak self] text -> AnyPublisher<[Field], Never> in
                 guard let self = self else { return Empty().eraseToAnyPublisher() }
-                return self.useCase.getSearchedField(text: text)
+                return self.useCase.fetchSearchedField(text: text)
             }
             .eraseToAnyPublisher()
         

@@ -43,8 +43,8 @@ class RegisterCoordinator: Coordinator {
     }
     
     func navigateToSelectFieldVC() {
-        
-        let useCase = DefaultSelectFieldUseCase(repository: DefaultSelectFieldRepository())
+        let provider = MoyaProvider<RegisterService>()
+        let useCase = DefaultSelectFieldUseCase(repository: DefaultSelectFieldRepository(provider: provider))
         let selectFieldVC = SelectFieldViewController(
             viewModel: SelecteFieldViewModel(useCase: useCase),
             coordinator: self)
