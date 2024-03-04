@@ -11,6 +11,7 @@ import Moya
 
 enum RegisterService {
     case checkDuplicateNickname(NicknameRequestDTO)
+    case fetchProfessionFields
 }
 
 extension RegisterService: TargetType {
@@ -23,12 +24,16 @@ extension RegisterService: TargetType {
         switch self {
         case .checkDuplicateNickname:
             return "/api/v1/members/validate-nickname"
+        case .fetchProfessionFields:
+            return "/api/v1/professions"
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .checkDuplicateNickname:
+            return .get
+        case .fetchProfessionFields:
             return .get
         }
     }
@@ -38,12 +43,15 @@ extension RegisterService: TargetType {
         case .checkDuplicateNickname(let nicknameRequestDTO):
             guard let dto = nicknameRequestDTO.toDictionary else { return .requestPlain}
             return .requestParameters(parameters: dto, encoding: URLEncoding.queryString)
+            
+        case .fetchProfessionFields:
+            return .requestPlain
         }
     }
     
     var headers: [String: String]? {
         return [
-            "Authorization": "Bearer \(PrototypeAPIConst.getSnsToken())",
+            "Authorization": "Bearer \(PrototypeAPIConst.getToken())",
             "Content-Type": "application/json"
         ]
     }
