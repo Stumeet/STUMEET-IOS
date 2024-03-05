@@ -14,7 +14,7 @@ enum PrototypeAPIService {
 }
 
 extension PrototypeAPIService: TargetType {
-    var baseURL: URL { return URL(string: "https://stumeet.shop")! }
+    var baseURL: URL { return URL(string: AppConfiguration.getApiBaseURL)! }
 
     var path: String {
         switch self {

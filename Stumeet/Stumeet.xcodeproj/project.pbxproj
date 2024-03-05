@@ -114,6 +114,8 @@
 		353EAEC12B8F839F008F7E8C /* AppleLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLogin.swift; sourceTree = "<group>"; };
 		353EAEC42B8F83F4008F7E8C /* LoginProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProtocol.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
+		35B3755B2B9760B600B82529 /* Config(debug).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
+		35B3755C2B97615C00B82529 /* Config(release).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewController.swift; sourceTree = "<group>"; };
 		35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
@@ -285,6 +287,15 @@
 				353EAEC42B8F83F4008F7E8C /* LoginProtocol.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		35B3755A2B97609600B82529 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				35B3755B2B9760B600B82529 /* Config(debug).xcconfig */,
+				35B3755C2B97615C00B82529 /* Config(release).xcconfig */,
+			);
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 		35BDF6F02B88CEFA000B6DCB /* AuthScenes */ = {
@@ -793,6 +804,7 @@
 		CAD495B92B863B6500AB61D9 = {
 			isa = PBXGroup;
 			children = (
+				35B3755A2B97609600B82529 /* Configurations */,
 				CAD495C42B863B6500AB61D9 /* Stumeet */,
 				CAD495DB2B863B6800AB61D9 /* StumeetTests */,
 				CAD495E52B863B6800AB61D9 /* StumeetUITests */,
@@ -1353,7 +1365,7 @@
 		};
 		CAD495ED2B863B6900AB61D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */;
+			baseConfigurationReference = 35B3755B2B9760B600B82529 /* Config(debug).xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1383,7 +1395,7 @@
 		};
 		CAD495EE2B863B6900AB61D9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */;
+			baseConfigurationReference = 35B3755C2B97615C00B82529 /* Config(release).xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
