@@ -22,15 +22,25 @@ class RegisterCoordinator: Coordinator {
     }
     
     func start() {
-        let changeVC = ChangeProfileViewController(viewModel: ChangeProfileViewModel(), coordinator: self)
+        let useCase = DefaultChangeProfileUseCase()
+        let changeVC = ChangeProfileViewController(
+            viewModel: ChangeProfileViewModel(useCase: useCase),
+            coordinator: self)
         childCoordinators.append(self)
         navigationController.pushViewController(changeVC, animated: true)
     }
     
-    func navigateToNickNameVC() {
+    func navigateToNickNameVC(image: Data) {
         let provider = MoyaProvider<RegisterService>()
+        let register = Register(
+            profileImage: image,
+            nickname: nil,
+            region: nil,
+            field: nil)
         let useCase = DefaultNicknameUseCase(repository: DefaultNicknameRepository(provider: provider))
-        let nicknameVC = NicknameViewController(viewModel: NicknameViewModel(useCase: useCase), coordinator: self)
+        let nicknameVC = NicknameViewController(
+            viewModel: NicknameViewModel(useCase: useCase, register: register),
+            coordinator: self)
         navigationController.pushViewController(nicknameVC, animated: true)
     }
     

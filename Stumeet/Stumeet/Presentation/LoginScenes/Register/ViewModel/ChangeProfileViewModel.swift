@@ -12,58 +12,56 @@ import Combine
 final class ChangeProfileViewModel: ViewModelType {
     
     // MARK: - Input
-    
     struct Input {
         let didTapChangeProfileButton: AnyPublisher<Void, Never>
         let didTapNextButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
-    
     struct Output {
-        let pushNickNameVC: AnyPublisher<Void, Never>
+        let navigateToNicknameVC: AnyPublisher<Data, Never>
         let showAlbum: AnyPublisher<Void, Never>
         let profileImage: AnyPublisher<UIImage, Never>
     }
     
     // MARK: - Properties
     let didSelectPhoto = PassthroughSubject<URL, Never>()
+    let useCase: ChangeProfileUseCase
+    let selectedPhoto = CurrentValueSubject<UIImage, Never>(UIImage(named: "changeProfileCharacter")!)
     
     // MARK: - Init
-    
-    init() {
-        
+    init(useCase: ChangeProfileUseCase) {
+        self.useCase = useCase
     }
     
     // MARK: - Transform
-    
     func transform(input: Input) -> Output {
         
         // Input
-        
-        let pushNickNameVC = input.didTapNextButton
-        
-        
         let showAlbum = input.didTapChangeProfileButton
         
-        
-        let selectedPhoto = didSelectPhoto
-            .map { url in
-                let targetSize = CGSize(width: 180, height: 180)
-                let cgManager = CoreGraphicManager()
-                let downsampledImageData = cgManager.downsample(imageAt: url, to: targetSize, scale: UIScreen.main.scale)
+        let profileImage = didSelectPhoto
+            .flatMap(useCase.downSampleImageData)
+            .compactMap { $0 }
+            .handleEvents(receiveOutput: { [weak self] downsampledImage in
+                self?.selectedPhoto.send(downsampledImage)
+            })
+            .eraseToAnyPublisher()
+        let navigateToNicknameVC = input.didTapNextButton
+            .flatMap { [weak self] _ -> AnyPublisher<Data?, Never> in
+                guard let self = self else { return Empty<Data?, Never>().eraseToAnyPublisher() }
                 
-                return downsampledImageData
+                return self.useCase.imageToData(image: self.selectedPhoto.value)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
         
-        // Output
         
+        // Output
         return Output(
-            pushNickNameVC: pushNickNameVC,
+            navigateToNicknameVC: navigateToNicknameVC,
             showAlbum: showAlbum,
-            profileImage: selectedPhoto
+            profileImage: profileImage
         )
     }
 }

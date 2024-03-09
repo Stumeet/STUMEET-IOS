@@ -88,6 +88,9 @@
 		CAD495DD2B863B6800AB61D9 /* StumeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495DC2B863B6800AB61D9 /* StumeetTests.swift */; };
 		CAD495E72B863B6800AB61D9 /* StumeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */; };
 		CAD495E92B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */; };
+		CAFBF3712B9C319200507047 /* RegisterRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBF3702B9C319200507047 /* RegisterRequestDTO.swift */; };
+		CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBF3722B9C347600507047 /* ChangeProfileUseCase.swift */; };
+		CAFBF3762B9C40A300507047 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBF3752B9C40A300507047 /* Register.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +208,9 @@
 		CAD495E22B863B6800AB61D9 /* StumeetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StumeetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITests.swift; sourceTree = "<group>"; };
 		CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CAFBF3702B9C319200507047 /* RegisterRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequestDTO.swift; sourceTree = "<group>"; };
+		CAFBF3722B9C347600507047 /* ChangeProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfileUseCase.swift; sourceTree = "<group>"; };
+		CAFBF3752B9C40A300507047 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stumeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA94054C7969C6E8C313C136 /* Pods-StumeetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StumeetTests.debug.xcconfig"; path = "Target Support Files/Pods-StumeetTests/Pods-StumeetTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -409,6 +415,7 @@
 				CA6447D92B863BB90090DD84 /* SelectRegionUseCase.swift */,
 				CA6447DA2B863BB90090DD84 /* SelectFieldUseCase.swift */,
 				CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */,
+				CAFBF3722B9C347600507047 /* ChangeProfileUseCase.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -426,6 +433,7 @@
 			children = (
 				CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */,
 				CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */,
+				CAFBF3702B9C319200507047 /* RegisterRequestDTO.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -490,8 +498,8 @@
 		CA6447D42B863BB90090DD84 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				CAFBF3742B9C409A00507047 /* Register */,
 				CA6447D52B863BB90090DD84 /* .gitkeep */,
-				CA4E7EE42B9311D1009C07FD /* Field.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -897,6 +905,15 @@
 			path = StumeetUITests;
 			sourceTree = "<group>";
 		};
+		CAFBF3742B9C409A00507047 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				CA4E7EE42B9311D1009C07FD /* Field.swift */,
+				CAFBF3752B9C40A300507047 /* Register.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		E4B1323A2D4A353F2BA124D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1162,6 +1179,7 @@
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
+				CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */,
 				CA6448572B863BB90090DD84 /* BaseViewController.swift in Sources */,
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
@@ -1172,6 +1190,7 @@
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
+				CAFBF3712B9C319200507047 /* RegisterRequestDTO.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
 				CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */,
@@ -1181,6 +1200,7 @@
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
+				CAFBF3762B9C40A300507047 /* Register.swift in Sources */,
 				353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
 				CA6448352B863BB90090DD84 /* HomeViewController.swift in Sources */,
@@ -1382,6 +1402,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1399,6 +1420,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1412,6 +1434,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1429,6 +1452,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -29,10 +29,12 @@ final class NicknameViewModel: ViewModelType {
     
     // MARK: - Properties
     let useCase: NicknameUseCase
+    let register: Register
     
     // MARK: - Init
-    init(useCase: NicknameUseCase) {
+    init(useCase: NicknameUseCase, register: Register) {
         self.useCase = useCase
+        self.register = register
     }
     
     // MARK: - Transform
