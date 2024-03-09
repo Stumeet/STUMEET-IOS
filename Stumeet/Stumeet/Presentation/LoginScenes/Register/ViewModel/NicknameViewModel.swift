@@ -24,12 +24,14 @@ final class NicknameViewModel: ViewModelType {
         let count: AnyPublisher<Int, Never>
         let isBiggerThanTen: AnyPublisher<Bool, Never>
         let isNextButtonEnable: AnyPublisher<Bool, Never>
-        let navigateToSelectRegionVC: AnyPublisher<Void, Never>
+        let navigateToSelectRegionVC: AnyPublisher<Register, Never>
     }
     
     // MARK: - Properties
     let useCase: NicknameUseCase
-    let register: Register
+    var register: Register
+    let nicknameSubject = CurrentValueSubject<String, Never>("")
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     init(useCase: NicknameUseCase, register: Register) {
@@ -40,6 +42,13 @@ final class NicknameViewModel: ViewModelType {
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
+        
+        // Input
+        input.changeText
+            .sink(receiveValue: { [weak self] nickname in
+                self?.nicknameSubject.send(nickname)
+            })
+            .store(in: &cancellables)
         
         let isDuplicate = input.changeText
             .flatMap(useCase.checkNicknameDuplicate)
@@ -54,12 +63,20 @@ final class NicknameViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let navigateToSelectRegionVC = input.didTapNextButton
+            .flatMap { [weak self] _ in
+                let nickname = self?.nicknameSubject.value
+                var register = self?.register
+                register?.nickname = nickname
+                return Just(register)
+            }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
             
-        
         let isNextButtonEnable = Publishers.CombineLatest(isDuplicate, count)
             .flatMap(useCase.setNextButtonEnable)
             .eraseToAnyPublisher()
         
+        // Ouptut
         return Output(
             isDuplicate: isDuplicate,
             count: count,

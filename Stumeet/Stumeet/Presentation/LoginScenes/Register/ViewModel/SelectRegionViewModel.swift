@@ -25,17 +25,18 @@ final class SelectRegionViewModel: ViewModelType {
     
     // MARK: - Properties
     private let useCase: SelectRegionUseCase
+    private let register: Register
     
     // MARK: - Init
-    init(useCase: SelectRegionUseCase) {
+    init(useCase: SelectRegionUseCase, register: Register) {
         self.useCase = useCase
+        self.register = register
     }
     
     // MARK: - Transform
     func transform(input: Input) -> Output {
         
-        // input
-        
+        // Input
         let regionItems = input.didSelectItem
             .flatMap { [weak self] indexPath -> AnyPublisher<[Region], Never> in
                 guard let self = self else { return Just([]).eraseToAnyPublisher() }
@@ -50,6 +51,7 @@ final class SelectRegionViewModel: ViewModelType {
             .map { $0.contains { $0.isSelected } }
             .eraseToAnyPublisher()
         
+        // Output
         return Output(
             regionItems: regionItems,
             isNextButtonEnabled: isNextButtonEnabled,

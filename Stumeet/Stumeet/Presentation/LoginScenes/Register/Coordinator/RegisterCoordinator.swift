@@ -44,10 +44,10 @@ class RegisterCoordinator: Coordinator {
         navigationController.pushViewController(nicknameVC, animated: true)
     }
     
-    func navigateToSelectRegionVC() {
+    func navigateToSelectRegionVC(register: Register) {
         let useCase = DefaultSelectRegionUseCase(repository: DefaultRegionRepository())
         let selectRegionVC = SelectRegionViewController(
-            viewModel: SelectRegionViewModel(useCase: useCase),
+            viewModel: SelectRegionViewModel(useCase: useCase, register: register),
             coordinator: self)
         navigationController.pushViewController(selectRegionVC, animated: true)
     }

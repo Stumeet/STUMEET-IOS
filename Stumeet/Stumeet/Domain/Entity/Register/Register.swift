@@ -9,7 +9,7 @@ import Foundation
 
 struct Register {
     let profileImage: Data
-    let nickname: String?
-    let region: String?
-    let field: String?
+    var nickname: String?
+    var region: String?
+    var field: String?
 }

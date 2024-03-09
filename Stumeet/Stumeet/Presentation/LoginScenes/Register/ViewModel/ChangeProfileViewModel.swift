@@ -27,7 +27,7 @@ final class ChangeProfileViewModel: ViewModelType {
     // MARK: - Properties
     let didSelectPhoto = PassthroughSubject<URL, Never>()
     let useCase: ChangeProfileUseCase
-    let selectedPhoto = CurrentValueSubject<UIImage, Never>(UIImage(named: "changeProfileCharacter")!)
+    let selectedPhotoSubject = CurrentValueSubject<UIImage, Never>(UIImage(named: "changeProfileCharacter")!)
     
     // MARK: - Init
     init(useCase: ChangeProfileUseCase) {
@@ -44,14 +44,15 @@ final class ChangeProfileViewModel: ViewModelType {
             .flatMap(useCase.downSampleImageData)
             .compactMap { $0 }
             .handleEvents(receiveOutput: { [weak self] downsampledImage in
-                self?.selectedPhoto.send(downsampledImage)
+                self?.selectedPhotoSubject.send(downsampledImage)
             })
             .eraseToAnyPublisher()
+        
         let navigateToNicknameVC = input.didTapNextButton
             .flatMap { [weak self] _ -> AnyPublisher<Data?, Never> in
                 guard let self = self else { return Empty<Data?, Never>().eraseToAnyPublisher() }
                 
-                return self.useCase.imageToData(image: self.selectedPhoto.value)
+                return self.useCase.imageToData(image: self.selectedPhotoSubject.value)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
