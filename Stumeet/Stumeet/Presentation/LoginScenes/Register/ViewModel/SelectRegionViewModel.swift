@@ -20,12 +20,14 @@ final class SelectRegionViewModel: ViewModelType {
     struct Output {
         let regionItems: AnyPublisher<[Region], Never>
         let isNextButtonEnabled: AnyPublisher<Bool, Never>
-        let navigateToSelectFieldVC: AnyPublisher<Void, Never>
+        let navigateToSelectFieldVC: AnyPublisher<Register, Never>
     }
     
     // MARK: - Properties
     private let useCase: SelectRegionUseCase
-    private let register: Register
+    private var register: Register
+    private let regionItemSubject = CurrentValueSubject<[Region], Never>([])
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     init(useCase: SelectRegionUseCase, register: Register) {
@@ -37,15 +39,30 @@ final class SelectRegionViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         
         // Input
-        let regionItems = input.didSelectItem
-            .flatMap { [weak self] indexPath -> AnyPublisher<[Region], Never> in
-                guard let self = self else { return Just([]).eraseToAnyPublisher() }
-                return self.useCase.selectRegion(at: indexPath)
-            }
-            .merge(with: useCase.getRegions())
-            .eraseToAnyPublisher()
+        let regionItems = regionItemSubject.eraseToAnyPublisher()
+        
+        useCase.getRegions()
+            .sink(receiveValue: regionItemSubject.send)
+            .store(in: &cancellables)
+
+        input.didSelectItem
+            .flatMap(useCase.selectRegion)
+            .sink(receiveValue: { [weak self] regions in
+                let region = regions.filter { $0.isSelected }
+                    .map { $0.region }
+                    .joined()
+                
+                self?.register.region = region
+                self?.regionItemSubject.send(regions)
+            })
+            .store(in: &cancellables)
         
         let navigateToField = input.didTapNextButton
+            .flatMap { [weak self] _ in
+                Just(self?.register)
+            }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
         
         let isNextButtonEnabled = regionItems
             .map { $0.contains { $0.isSelected } }

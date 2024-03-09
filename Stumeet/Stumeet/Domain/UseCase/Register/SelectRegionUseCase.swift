@@ -25,6 +25,16 @@ final class DefaultSelectRegionUseCase: SelectRegionUseCase {
     }
     
     func selectRegion(at indexPath: IndexPath) -> AnyPublisher<[Region], Never> {
-        return repository.selectRegion(at: indexPath)
+        return repository.fetchRegions()
+            .first()
+            .map { regions in
+                var updatedRegions = regions
+                for index in updatedRegions.indices {
+                    updatedRegions[index].isSelected = updatedRegions[index] == updatedRegions[indexPath.row]
+                }
+                self.repository.updateRegions(regions: updatedRegions)
+                return updatedRegions
+            }
+            .eraseToAnyPublisher()
     }
 }

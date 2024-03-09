@@ -30,11 +30,13 @@ final class SelecteFieldViewModel: ViewModelType {
     
     // MARK: - Properties
     let useCase: SelectFieldUseCase
+    let register: Register
     var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
-    init(useCase: SelectFieldUseCase) {
+    init(useCase: SelectFieldUseCase, register: Register) {
         self.useCase = useCase
+        self.register = register
     }
     
     // MARK: - Transform
@@ -43,6 +45,7 @@ final class SelecteFieldViewModel: ViewModelType {
         
         let addFieldItem = input.didSelectSearchedField
             .flatMap { [weak self] indexPath -> AnyPublisher<[Field], Never> in
+                print("44")
                 guard let self = self else { return Empty().eraseToAnyPublisher() }
                 return self.useCase.addField(at: indexPath)
             }
@@ -50,6 +53,7 @@ final class SelecteFieldViewModel: ViewModelType {
         let fieldItems =
         input.didSelectField
             .flatMap { [weak self] indexPath -> AnyPublisher<[Field], Never> in
+                print("33")
                 guard let self = self else { return Empty().eraseToAnyPublisher() }
                 return self.useCase.selectField(at: indexPath)
             }

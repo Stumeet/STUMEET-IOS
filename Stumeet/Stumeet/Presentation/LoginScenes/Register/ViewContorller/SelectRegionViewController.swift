@@ -147,9 +147,7 @@ class SelectRegionViewController: BaseViewController {
         // navigateToSelectFieldVC
         output.navigateToSelectFieldVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.coordinator.navigateToSelectFieldVC()
-            }
+            .sink(receiveValue: coordinator.navigateToSelectFieldVC)
             .store(in: &cancellables)
 
     }

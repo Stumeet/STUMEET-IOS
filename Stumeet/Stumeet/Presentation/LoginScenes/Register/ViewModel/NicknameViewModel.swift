@@ -45,9 +45,7 @@ final class NicknameViewModel: ViewModelType {
         
         // Input
         input.changeText
-            .sink(receiveValue: { [weak self] nickname in
-                self?.nicknameSubject.send(nickname)
-            })
+            .sink(receiveValue: nicknameSubject.send)
             .store(in: &cancellables)
         
         let isDuplicate = input.changeText

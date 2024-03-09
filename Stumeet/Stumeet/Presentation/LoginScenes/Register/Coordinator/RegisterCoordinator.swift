@@ -52,11 +52,11 @@ class RegisterCoordinator: Coordinator {
         navigationController.pushViewController(selectRegionVC, animated: true)
     }
     
-    func navigateToSelectFieldVC() {
+    func navigateToSelectFieldVC(register: Register) {
         let provider = MoyaProvider<RegisterService>()
         let useCase = DefaultSelectFieldUseCase(repository: DefaultSelectFieldRepository(provider: provider))
         let selectFieldVC = SelectFieldViewController(
-            viewModel: SelecteFieldViewModel(useCase: useCase),
+            viewModel: SelecteFieldViewModel(useCase: useCase, register: register),
             coordinator: self)
         navigationController.pushViewController(selectFieldVC, animated: true)
     }

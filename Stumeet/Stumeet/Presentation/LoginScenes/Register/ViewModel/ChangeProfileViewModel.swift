@@ -43,9 +43,7 @@ final class ChangeProfileViewModel: ViewModelType {
         let profileImage = didSelectPhoto
             .flatMap(useCase.downSampleImageData)
             .compactMap { $0 }
-            .handleEvents(receiveOutput: { [weak self] downsampledImage in
-                self?.selectedPhotoSubject.send(downsampledImage)
-            })
+            .handleEvents(receiveOutput: selectedPhotoSubject.send)
             .eraseToAnyPublisher()
         
         let navigateToNicknameVC = input.didTapNextButton
