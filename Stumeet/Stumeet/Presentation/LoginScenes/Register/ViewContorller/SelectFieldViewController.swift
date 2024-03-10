@@ -75,12 +75,14 @@ class SelectFieldViewController: BaseViewController {
     }()
     
     // MARK: - Properties
+    
     private let viewModel: SelecteFieldViewModel
     private let coordinator: RegisterCoordinator
     private var tagDatasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
     private var fieldDataSource: UITableViewDiffableDataSource<FieldSection, Field>?
     
     // MARK: - Init
+    
     init(viewModel: SelecteFieldViewModel, coordinator: RegisterCoordinator) {
         self.coordinator = coordinator
         self.viewModel = viewModel
@@ -185,7 +187,6 @@ class SelectFieldViewController: BaseViewController {
                 var snapshot = NSDiffableDataSourceSnapshot<FieldSection, Field>()
                 snapshot.appendSections([.main])
                 snapshot.appendItems(item)
-                
                 guard let datasource = self?.tagDatasource else { return }
                 datasource.apply(snapshot, animatingDifferences: false)
             }
@@ -210,17 +211,22 @@ class SelectFieldViewController: BaseViewController {
                 var snapshot = NSDiffableDataSourceSnapshot<FieldSection, Field>()
                 snapshot.appendSections([.main])
                 snapshot.appendItems(item)
-                
                 guard let datasource = self?.fieldDataSource else { return }
                 datasource.apply(snapshot, animatingDifferences: false)
             }
             .store(in: &cancellables)
         
-        output.presentToTabBar
+        // 시작하기VC로 present
+        output.presentToStartVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.coordinator.presentToTabBar()
-            }
+            .sink(receiveValue: { [weak self] register in
+                let layer = self?.progressBar.layer.sublayers?.last
+                layer?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 4)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self?.coordinator.presentToStartVC(register: register)
+                }
+            })
             .store(in: &cancellables)
 
     }
@@ -266,5 +272,16 @@ extension SelectFieldViewController {
             
             return cell
         })
+    }
+}
+
+// MARK: - Animation
+
+extension SelectFieldViewController: UIViewControllerTransitioningDelegate {
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return FadeOutAnimator()
     }
 }

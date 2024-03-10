@@ -25,15 +25,18 @@ final class SelecteFieldViewModel: ViewModelType {
         let fieldItems: AnyPublisher<[Field], Never>
         let searchedItems: AnyPublisher<[Field], Never>
         let isNextButtonEnabled: AnyPublisher<Bool, Never>
-        let presentToTabBar: AnyPublisher<Void, Never>
+        let presentToStartVC: AnyPublisher<Register, Never>
     }
     
     // MARK: - Properties
+    
     let useCase: SelectFieldUseCase
-    let register: Register
-    var cancellables = Set<AnyCancellable>()
+    var register: Register
+    private var cancellables = Set<AnyCancellable>()
+    private let fieldItemSubject = CurrentValueSubject<[Field], Never>([])
     
     // MARK: - Init
+    
     init(useCase: SelectFieldUseCase, register: Register) {
         self.useCase = useCase
         self.register = register
@@ -43,42 +46,47 @@ final class SelecteFieldViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let addFieldItem = input.didSelectSearchedField
-            .flatMap { [weak self] indexPath -> AnyPublisher<[Field], Never> in
-                print("44")
-                guard let self = self else { return Empty().eraseToAnyPublisher() }
-                return self.useCase.addField(at: indexPath)
-            }
+        let fieldItems = fieldItemSubject.eraseToAnyPublisher()
         
-        let fieldItems =
+        useCase.getFields()
+            .sink(receiveValue: fieldItemSubject.send)
+            .store(in: &cancellables)
+        
+        input.didSelectSearchedField
+            .flatMap(useCase.addField)
+            .sink(receiveValue: fieldItemSubject.send)
+            .store(in: &cancellables)
+        
         input.didSelectField
-            .flatMap { [weak self] indexPath -> AnyPublisher<[Field], Never> in
-                print("33")
-                guard let self = self else { return Empty().eraseToAnyPublisher() }
-                return self.useCase.selectField(at: indexPath)
-            }
-            .merge(with: useCase.getFields(), addFieldItem)
-            .eraseToAnyPublisher()
+            .flatMap(useCase.selectField)
+            .sink(receiveValue: { [weak self] fields in
+                let field = fields.filter { $0.isSelected }
+                    .map { $0.name }
+                    .joined()
+                
+                self?.register.field = field
+                self?.fieldItemSubject.send(fields)
+            })
+            .store(in: &cancellables)
         
         let searchedItems = input.didSearchField
             .compactMap { $0 }
-            .flatMap { [weak self] text -> AnyPublisher<[Field], Never> in
-                guard let self = self else { return Empty().eraseToAnyPublisher() }
-                return self.useCase.fetchSearchedField(text: text)
-            }
+            .flatMap(useCase.fetchSearchedField)
             .eraseToAnyPublisher()
         
         let isNextButtonEnable = fieldItems
             .map { $0.contains { $0.isSelected } }
             .eraseToAnyPublisher()
         
-        let presentToTabBar = input.didTapNextButton
+        let presentToStartVC = input.didTapNextButton
+            .flatMap { Just(self.register) }
+            .eraseToAnyPublisher()
         
         return Output(
             fieldItems: fieldItems,
             searchedItems: searchedItems,
             isNextButtonEnabled: isNextButtonEnable,
-            presentToTabBar: presentToTabBar
+            presentToStartVC: presentToStartVC
         )
     }
 }

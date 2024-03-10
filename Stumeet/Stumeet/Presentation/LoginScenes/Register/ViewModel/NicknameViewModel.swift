@@ -28,12 +28,14 @@ final class NicknameViewModel: ViewModelType {
     }
     
     // MARK: - Properties
+    
     let useCase: NicknameUseCase
     var register: Register
     let nicknameSubject = CurrentValueSubject<String, Never>("")
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
+    
     init(useCase: NicknameUseCase, register: Register) {
         self.useCase = useCase
         self.register = register

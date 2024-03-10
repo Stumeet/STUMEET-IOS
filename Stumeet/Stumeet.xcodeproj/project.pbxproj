@@ -88,6 +88,7 @@
 		CAD495DD2B863B6800AB61D9 /* StumeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495DC2B863B6800AB61D9 /* StumeetTests.swift */; };
 		CAD495E72B863B6800AB61D9 /* StumeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */; };
 		CAD495E92B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */; };
+		CAF533512B9DA6EC00A7B8B2 /* FadeOutAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF533502B9DA6EC00A7B8B2 /* FadeOutAnimator.swift */; };
 		CAFBF3712B9C319200507047 /* RegisterRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBF3702B9C319200507047 /* RegisterRequestDTO.swift */; };
 		CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBF3722B9C347600507047 /* ChangeProfileUseCase.swift */; };
 		CAFBF3762B9C40A300507047 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBF3752B9C40A300507047 /* Register.swift */; };
@@ -208,6 +209,7 @@
 		CAD495E22B863B6800AB61D9 /* StumeetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StumeetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITests.swift; sourceTree = "<group>"; };
 		CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CAF533502B9DA6EC00A7B8B2 /* FadeOutAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeOutAnimator.swift; sourceTree = "<group>"; };
 		CAFBF3702B9C319200507047 /* RegisterRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequestDTO.swift; sourceTree = "<group>"; };
 		CAFBF3722B9C347600507047 /* ChangeProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfileUseCase.swift; sourceTree = "<group>"; };
 		CAFBF3752B9C40A300507047 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 		CA6448022B863BB90090DD84 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CAF5334F2B9DA6D900A7B8B2 /* Animation */,
 				35DB2EE42B8B361100F7C8A9 /* Component */,
 				CA6448032B863BB90090DD84 /* ViewModel */,
 				CA6448052B863BB90090DD84 /* Coordinator */,
@@ -903,6 +906,14 @@
 				CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */,
 			);
 			path = StumeetUITests;
+			sourceTree = "<group>";
+		};
+		CAF5334F2B9DA6D900A7B8B2 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				CAF533502B9DA6EC00A7B8B2 /* FadeOutAnimator.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		CAFBF3742B9C409A00507047 /* Register */ = {
@@ -1161,6 +1172,7 @@
 				35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */,
 				353EAEB92B8F6CB1008F7E8C /* PrototypeLoginManager.swift in Sources */,
 				CA6448432B863BB90090DD84 /* Region.swift in Sources */,
+				CAF533512B9DA6EC00A7B8B2 /* FadeOutAnimator.swift in Sources */,
 				CA6448372B863BB90090DD84 /* StudyListViewController.swift in Sources */,
 				CA64484B2B863BB90090DD84 /* Coordinator.swift in Sources */,
 				35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */,

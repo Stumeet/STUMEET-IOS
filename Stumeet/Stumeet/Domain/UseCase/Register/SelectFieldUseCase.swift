@@ -68,6 +68,7 @@ final class DefaultSelectFieldUseCase: SelectFieldUseCase {
 }
 
 // MARK: - Function
+
 extension DefaultSelectFieldUseCase {
     private func updateSearchedFieldToField(selectedField: Field) -> AnyPublisher<[Field], Never> {
         return repository.getFields()
@@ -75,13 +76,16 @@ extension DefaultSelectFieldUseCase {
             .map { existingFields in
                 var updatedFields = existingFields
                 var newField = selectedField
+                
                 // 검색 리스트 중 1차 분야에 존재하는 분야를 선택했을 때
                 if existingFields.contains(where: { $0.id == selectedField.id }) {
-                    for index in updatedFields.indices where(updatedFields[index].isSelected) {
-                        updatedFields[index].isSelected = false
-                    }
                     updatedFields.removeAll(where: { $0.id == selectedField.id })
                 }
+                
+                for index in updatedFields.indices where(updatedFields[index].isSelected) {
+                    updatedFields[index].isSelected = false
+                }
+                
                 newField.isSelected = true
                 updatedFields.insert(newField, at: 0)
                 self.repository.updateField(fields: updatedFields)

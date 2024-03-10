@@ -34,7 +34,7 @@ final class DefaultSelectFieldRepository: SelecteFieldRepository {
                     self?.addableFieldSubject.send(addableFields)
                     return addableFields
                 }
-                .catch { _ in Just([]) }
+                .catch { _ in Empty() }
                 .eraseToAnyPublisher()
         } else {
             return addableFieldSubject.eraseToAnyPublisher()

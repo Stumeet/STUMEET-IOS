@@ -67,8 +67,11 @@ class RegisterCoordinator: Coordinator {
         navigationController.present(imagePicker, animated: true)
     }
     
-    func presentToTabBar() {
-        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
-        tabBarCoordinator.start()
+    func presentToStartVC(register: Register) {
+        guard let lastVC = navigationController.viewControllers.last as? SelectFieldViewController else { return }
+        let startVC = StartViewController()
+        startVC.transitioningDelegate = lastVC
+        startVC.modalPresentationStyle = .fullScreen
+        lastVC.present(startVC, animated: true)
     }
 }
