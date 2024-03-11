@@ -32,7 +32,6 @@ final class StartViewModel: ViewModelType {
     init(useCase: StartUseCase, register: Register) {
         self.useCase = useCase
         self.register = register
-        print(register)
     }
     
     func transform(input: Input) -> Output {

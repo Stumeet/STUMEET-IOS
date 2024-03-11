@@ -17,16 +17,14 @@ protocol NicknameUseCase {
 
 final class DefaultNicknameUseCase: NicknameUseCase {
     
-    let repository: NicknameRepository
+    private let repository: NicknameRepository
     
     init(repository: NicknameRepository) {
         self.repository = repository
     }
     
-    // TODO: Error 처리 어떻게 할지
-    
     func checkNicknameDuplicate(nickname: String) -> AnyPublisher<Bool, Never> {
-        repository.checkDuplicateNickname(nickname: nickname)
+       return repository.checkDuplicateNickname(nickname: nickname)
             .map { responseDTO -> Bool in
                 return responseDTO.message == "닉네임이 중복되었습니다."
             }

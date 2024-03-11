@@ -20,9 +20,6 @@ extension RegisterService: TargetType, AccessTokenAuthorizable {
         return .bearer
     }
     
-    
-    // TODO: - baseurl 숨기기
-    
     var baseURL: URL { return URL(string: "https://stumeet.shop")! }
     
     var path: String {

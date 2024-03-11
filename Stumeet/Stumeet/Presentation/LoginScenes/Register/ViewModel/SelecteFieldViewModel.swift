@@ -30,8 +30,8 @@ final class SelecteFieldViewModel: ViewModelType {
     
     // MARK: - Properties
     
-    let useCase: SelectFieldUseCase
-    var register: Register
+    private let useCase: SelectFieldUseCase
+    private var register: Register
     private var cancellables = Set<AnyCancellable>()
     private let fieldItemSubject = CurrentValueSubject<[Field], Never>([])
     
@@ -85,8 +85,9 @@ final class SelecteFieldViewModel: ViewModelType {
 }
 
 // MARK: - Function
+
 extension SelecteFieldViewModel {
-    func updateRegister(fields: [Field]) {
+    private func updateRegister(fields: [Field]) {
         let fieldId = fields.filter { $0.isSelected }
             .map { $0.id }.first!
         

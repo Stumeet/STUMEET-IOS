@@ -11,7 +11,8 @@ import Foundation
 import Moya
 
 final class DefualtStartRepository: StartRepository {
-    let provider: MoyaProvider<RegisterService>
+    
+    private let provider: MoyaProvider<RegisterService>
     
     init(provider: MoyaProvider<RegisterService>) {
         self.provider = provider
@@ -25,14 +26,8 @@ final class DefualtStartRepository: StartRepository {
         
         return provider.requestPublisher(.signUp(register.profileImage, requestDTO))
             .map(RegisterResponseDTO.self)
-            .map {
-                print($0)
-                return true
-            }
-            .catch { 
-                print($0)
-                return Just(false)
-            }
+            .map { _ in return true }
+            .catch { _ in Just(false) }
             .eraseToAnyPublisher()
     }
 }

@@ -14,7 +14,7 @@ protocol StartUseCase {
 
 final class DefaultStartUseCase: StartUseCase {
     
-    let repository: StartRepository
+    private let repository: StartRepository
     
     init(repository: StartRepository) {
         self.repository = repository

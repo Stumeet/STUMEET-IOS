@@ -17,7 +17,7 @@ protocol SelectFieldUseCase {
 
 final class DefaultSelectFieldUseCase: SelectFieldUseCase {
     
-    let repository: SelecteFieldRepository
+    private let repository: SelecteFieldRepository
     
     init(repository: SelecteFieldRepository) {
         self.repository = repository
@@ -28,7 +28,7 @@ final class DefaultSelectFieldUseCase: SelectFieldUseCase {
     }
     
     func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never> {
-        repository.getFields()
+        return repository.getFields()
             .first()
             .map { fields in
                 var updatedFields = fields

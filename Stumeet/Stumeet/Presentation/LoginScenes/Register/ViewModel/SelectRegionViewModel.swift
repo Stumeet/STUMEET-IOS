@@ -11,12 +11,14 @@ import Foundation
 final class SelectRegionViewModel: ViewModelType {
     
     // MARK: - Input
+    
     struct Input {
         let didSelectItem: AnyPublisher<IndexPath, Never>
         let didTapNextButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
+    
     struct Output {
         let regionItems: AnyPublisher<[Region], Never>
         let isNextButtonEnabled: AnyPublisher<Bool, Never>
@@ -24,12 +26,14 @@ final class SelectRegionViewModel: ViewModelType {
     }
     
     // MARK: - Properties
+    
     private let useCase: SelectRegionUseCase
     private var register: Register
     private let regionItemSubject = CurrentValueSubject<[Region], Never>([])
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
+    
     init(useCase: SelectRegionUseCase, register: Register) {
         self.useCase = useCase
         self.register = register

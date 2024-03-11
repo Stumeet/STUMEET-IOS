@@ -29,9 +29,9 @@ final class NicknameViewModel: ViewModelType {
     
     // MARK: - Properties
     
-    let useCase: NicknameUseCase
-    var register: Register
-    let nicknameSubject = CurrentValueSubject<String, Never>("")
+    private let useCase: NicknameUseCase
+    private var register: Register
+    private let nicknameSubject = CurrentValueSubject<String, Never>("")
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
@@ -65,9 +65,8 @@ final class NicknameViewModel: ViewModelType {
         let navigateToSelectRegionVC = input.didTapNextButton
             .flatMap { [weak self] _ in
                 let nickname = self?.nicknameSubject.value
-                var register = self?.register
-                register?.nickname = nickname
-                return Just(register)
+                self?.register.nickname = nickname
+                return Just(self?.register)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()

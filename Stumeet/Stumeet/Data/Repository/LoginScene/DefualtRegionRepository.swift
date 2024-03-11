@@ -10,7 +10,7 @@ import Foundation
 
 class DefaultRegionRepository: RegionRepository {
     
-    private var regionsSubject = CurrentValueSubject<[Region], Never>(Region.list)
+    private let regionsSubject = CurrentValueSubject<[Region], Never>(Region.list)
     
     func fetchRegions() -> AnyPublisher<[Region], Never> {
         return regionsSubject.eraseToAnyPublisher()
