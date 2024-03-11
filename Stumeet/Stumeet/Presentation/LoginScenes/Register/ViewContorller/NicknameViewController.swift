@@ -69,10 +69,12 @@ class NicknameViewController: BaseViewController {
     }()
     
     // MARK: - Properties
+    
     private let coordinator: RegisterCoordinator
     private let viewModel: NicknameViewModel
     
     // MARK: - Init
+    
     init(viewModel: NicknameViewModel, coordinator: RegisterCoordinator) {
         self.viewModel = viewModel
         self.coordinator = coordinator

@@ -20,4 +20,33 @@ extension UIButton {
         
         return self
     }
+    
+    /// UIButton에 디자인 시스템에서 정의한 스타일 적용
+    /// - Parameter style: 적용할 스타일을 정의한 ButtonStyle 열거형 값
+    func applyStyle(_ style: ButtonStyle) {
+        style.apply(to: self)
+    }
+}
+
+enum ButtonStyle {
+    case abled
+    case disabled
+    case pressed
+    
+    func apply(to button: UIButton) {
+        switch self {
+        case .abled:
+            button.backgroundColor = StumeetColor.primary700.color
+            button.setTitleColor(StumeetColor.gray50.color, for: .normal)
+        case .disabled:
+            button.backgroundColor = .lightGray
+            button.setTitleColor(.black, for: .normal)
+        case .pressed:
+            button.backgroundColor = .systemRed
+            button.setTitleColor(.white, for: .normal)
+        }
+        
+        button.layer.cornerRadius = 16
+        button.titleLabel?.font = StumeetFont.titleSemibold.font
+    }
 }

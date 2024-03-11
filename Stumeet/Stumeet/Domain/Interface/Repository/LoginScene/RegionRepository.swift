@@ -10,5 +10,5 @@ import Foundation
 
 protocol RegionRepository {
     func fetchRegions() -> AnyPublisher<[Region], Never>
-    func selectRegion(at indexPath: IndexPath) -> AnyPublisher<[Region], Never>
+    func updateRegions(regions: [Region])
 }

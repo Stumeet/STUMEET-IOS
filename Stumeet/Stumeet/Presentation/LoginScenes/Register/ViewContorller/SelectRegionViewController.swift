@@ -12,6 +12,7 @@ import UIKit
 class SelectRegionViewController: BaseViewController {
 
     // MARK: - UIComponents
+    
     private lazy var progressBar: UIView = {
         let view = UIView().makeProgressBar(percent: 0.6)
         
@@ -26,7 +27,6 @@ class SelectRegionViewController: BaseViewController {
         
         return label
     }()
-    
     
     private lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -44,11 +44,13 @@ class SelectRegionViewController: BaseViewController {
     }()
     
     // MARK: - Properties
+    
     private let coordinator: RegisterCoordinator
     private let viewModel: SelectRegionViewModel
     private var datasource: UICollectionViewDiffableDataSource<RegionSection, Region>?
     
     // MARK: - Init
+    
     init(viewModel: SelectRegionViewModel, coordinator: RegisterCoordinator) {
         self.coordinator = coordinator
         self.viewModel = viewModel
@@ -147,9 +149,7 @@ class SelectRegionViewController: BaseViewController {
         // navigateToSelectFieldVC
         output.navigateToSelectFieldVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.coordinator.navigateToSelectFieldVC()
-            }
+            .sink(receiveValue: coordinator.navigateToSelectFieldVC)
             .store(in: &cancellables)
 
     }
@@ -172,6 +172,7 @@ class SelectRegionViewController: BaseViewController {
 }
 
 // MARK: - Datasource
+
 extension SelectRegionViewController {
     private func configureDatasource() {
         datasource = UICollectionViewDiffableDataSource(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, item in
