@@ -12,7 +12,7 @@ import Moya
 
 class RegisterCoordinator: Coordinator {
     
-    // TODO: 온보딩 Coordinator와 분리하거나 결합
+    // TODO: 온보딩 Coordinator와 결합
     
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
@@ -69,9 +69,17 @@ class RegisterCoordinator: Coordinator {
     
     func presentToStartVC(register: Register) {
         guard let lastVC = navigationController.viewControllers.last as? SelectFieldViewController else { return }
-        let startVC = StartViewController()
+        let provider = MoyaProvider<RegisterService>()
+        let useCase = DefaultStartUseCase(repository: DefualtStartRepository(provider: provider))
+        let startVC = StartViewController(viewModel: StartViewModel(useCase: useCase, register: register), coordinator: self)
+        
         startVC.transitioningDelegate = lastVC
         startVC.modalPresentationStyle = .fullScreen
         lastVC.present(startVC, animated: true)
+    }
+    
+    func presentToTabBar() {
+        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
+        tabBarCoordinator.start()
     }
 }

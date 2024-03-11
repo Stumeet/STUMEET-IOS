@@ -7,6 +7,8 @@
 
 import UIKit
 
+import CombineCocoa
+
 class StartViewController: BaseViewController {
     
     // MARK: - UIComponents
@@ -43,6 +45,24 @@ class StartViewController: BaseViewController {
     
         return button
     }()
+    
+    // MARK: - Properties
+    
+    private let viewModel: StartViewModel
+    private let coordinator: RegisterCoordinator
+    
+    // MARK: - Init
+    
+    init(viewModel: StartViewModel, coordinator: RegisterCoordinator) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycles
     
@@ -84,4 +104,19 @@ class StartViewController: BaseViewController {
         }
         
     }
+    
+    override func bind() {
+        let input = StartViewModel.Input(
+            didTapStartButton: startButton.tapPublisher
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isNaviteToTabBar
+            .receive(on: RunLoop.main)
+            .map { _ in}
+            .sink(receiveValue: coordinator.presentToTabBar)
+            .store(in: &cancellables)
+    }
+    
 }

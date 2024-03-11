@@ -11,5 +11,5 @@ struct Register {
     let profileImage: Data
     var nickname: String?
     var region: String?
-    var field: String?
+    var field: Int?
 }

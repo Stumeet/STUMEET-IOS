@@ -8,8 +8,7 @@
 import Foundation
 
 struct RegisterRequestDTO: Encodable {
-    let image: Data
-    let nickname: String?
-    let region: String?
-    let profession: String?
+    let nickname: String
+    let region: String
+    let profession: Int
 }

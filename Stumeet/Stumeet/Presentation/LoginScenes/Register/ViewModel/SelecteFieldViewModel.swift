@@ -54,19 +54,12 @@ final class SelecteFieldViewModel: ViewModelType {
         
         input.didSelectSearchedField
             .flatMap(useCase.addField)
-            .sink(receiveValue: fieldItemSubject.send)
+            .sink(receiveValue: updateRegister)
             .store(in: &cancellables)
         
         input.didSelectField
             .flatMap(useCase.selectField)
-            .sink(receiveValue: { [weak self] fields in
-                let field = fields.filter { $0.isSelected }
-                    .map { $0.name }
-                    .joined()
-                
-                self?.register.field = field
-                self?.fieldItemSubject.send(fields)
-            })
+            .sink(receiveValue: updateRegister)
             .store(in: &cancellables)
         
         let searchedItems = input.didSearchField
@@ -88,5 +81,16 @@ final class SelecteFieldViewModel: ViewModelType {
             isNextButtonEnabled: isNextButtonEnable,
             presentToStartVC: presentToStartVC
         )
+    }
+}
+
+// MARK: - Function
+extension SelecteFieldViewModel {
+    func updateRegister(fields: [Field]) {
+        let fieldId = fields.filter { $0.isSelected }
+            .map { $0.id }.first!
+        
+        register.field = fieldId
+        fieldItemSubject.send(fields)
     }
 }
