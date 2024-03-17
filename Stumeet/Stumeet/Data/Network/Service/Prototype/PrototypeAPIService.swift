@@ -40,10 +40,13 @@ extension PrototypeAPIService: TargetType {
     var headers: [String: String]? {
         switch self {
         case .login:
-            return ["Authorization": "Bearer \(PrototypeAPIConst.getSnsToken())",
+            let json = ["Authorization": "Bearer \(PrototypeAPIConst.getSnsToken())",
                     "X-OAUTH-PROVIDER": "\(PrototypeAPIConst.getLoginType())",
                     "Content-Type": "application/x-www-form-urlencoded"
             ]
+            
+            print(json)
+            return json
         }
     }
 }

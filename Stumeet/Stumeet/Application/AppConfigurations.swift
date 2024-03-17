@@ -13,6 +13,7 @@ enum AppConfiguration {
     enum Keys {
         enum Plist {
             static let apiBaseURL = "ApiBaseURL"
+            static let kakaoNativeAppKey = "kakaoNativeAppKey"
         }
     }
     
@@ -30,5 +31,12 @@ enum AppConfiguration {
             fatalError("ApiBaseURL must not be empty in plist")
         }
         return url
+    }()
+    
+    static let getKakaoNativeAppKey: String = {
+        guard let key = infoDictionary[Keys.Plist.kakaoNativeAppKey] as? String else {
+            fatalError("kakaoNativeAppKey must not be empty in plist")
+        }
+        return key
     }()
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import KakaoSDKUser
 
 class SnsLoginViewController: BaseViewController {
     // MARK: - UIComponents
@@ -67,9 +68,9 @@ class SnsLoginViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private let viewModel: SnsLoginViewModel
     private weak var coordinator: AuthNavigation!
-    private let buttonTappedSubject = PassthroughSubject<LoginType, Never>()
+    private let viewModel: SnsLoginViewModel
+    private let loginTypeSubject = PassthroughSubject<LoginType, Never>()
     
     // MARK: - Init
     init(viewModel: SnsLoginViewModel,
@@ -86,7 +87,6 @@ class SnsLoginViewController: BaseViewController {
     
     override func setupStyles() {
         self.view.backgroundColor = .white
-        appleLoginButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
     override func setupAddView() {
@@ -106,6 +106,8 @@ class SnsLoginViewController: BaseViewController {
             buttonHStackViewContainer
         ].forEach { rootVStackView.addArrangedSubview($0) }
         
+        appleLoginButton.addTarget(self, action: #selector(buttonTappedApple), for: .touchUpInside)
+        kakaoLoginButton.addTarget(self, action: #selector(buttonTappedKakao), for: .touchUpInside)
     }
     
     override func setupConstaints() {
@@ -139,23 +141,35 @@ class SnsLoginViewController: BaseViewController {
     
     override func bind() {
         // MARK: - Input
-        let input = SnsLoginViewModel.Input (
-            didTapAppleButton: buttonTappedSubject.eraseToAnyPublisher()
+        let input = SnsLoginViewModel.Input(
+            loginType: loginTypeSubject.eraseToAnyPublisher()
         )
         
         // MARK: - Output
         let output = viewModel.transform(input: input)
         
-        output.signInOut
+        output.navigateToChangeProfileVC
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.viewModel.loginSnsManger?.signIn()
+                // TODO: 프로필 변경 화면으로 변경
+                self?.coordinator.goToOnboarding()
+            }
+            .store(in: &cancellables)
+        
+        output.showError
+            .receive(on: RunLoop.main)
+            .sink { errorMessage in
+                // TODO: 에러 관련 로직
+                print(errorMessage)
             }
             .store(in: &cancellables)
     }
     
-    @objc func buttonTapped() {
-        print("버튼이 눌렸습니다.")
-        buttonTappedSubject.send(.apple)
+    @objc func buttonTappedApple() {
+        loginTypeSubject.send(.apple)
+    }
+    
+    @objc func buttonTappedKakao() {
+        loginTypeSubject.send(.kakao)
     }
 }

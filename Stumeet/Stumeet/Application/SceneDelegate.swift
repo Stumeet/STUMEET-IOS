@@ -8,6 +8,7 @@
 import UIKit
 
 import PretendardKit
+import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -24,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
-        self.window = window        
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -55,5 +56,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url,
+              AuthApi.isKakaoTalkLoginUrl(url)
+        else { return }
+        _ = AuthController.handleOpenUrl(url: url)
+    }
 
 }
