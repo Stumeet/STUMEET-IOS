@@ -9,19 +9,18 @@ import AuthenticationServices
 import Combine
 
 final class AppleLoginService: NSObject, LoginService {
-    private var authCompletion: ((Result<Bool, Error>) -> Void)?
-    
-    func fetchAuthToken() -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            self.authCompletion = promise
-            
-            // Apple ID 인증 요청 구성 및 실행
+    private var authCompletion: ((Result<String, Error>) -> Void)?
+
+    func fetchAuthToken() -> AnyPublisher<String, Error> {
+        return Future<String, Error> { [weak self] promise in
+            self?.authCompletion = promise
+
             let provider = ASAuthorizationAppleIDProvider()
             let request = provider.createRequest()
-            request.requestedScopes = [.fullName, .email]
             
             let controller = ASAuthorizationController(authorizationRequests: [request])
             controller.delegate = self
+            controller.presentationContextProvider = self
             controller.performRequests()
         }
         .eraseToAnyPublisher()
@@ -42,19 +41,18 @@ extension AppleLoginService:
     
     // MARK: - ASAuthorizationControllerDelegate
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
-           let idTokenData = appleIDCredential.identityToken,
-           let idTokenString = String(data: idTokenData, encoding: .utf8) {
-            
-            // UserDefaults에 idToken 저장
-            UserDefaults.standard.set(idTokenString, forKey: "idToken")
-            authCompletion?(.success(true))
-        } else {
-            authCompletion?(.failure(NSError(domain: "AuthError", code: -1, userInfo: nil)))
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+              let idTokenData = appleIDCredential.identityToken,
+              let idTokenString = String(data: idTokenData, encoding: .utf8)
+        else {
+            self.authCompletion?(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to retrieve ID Token"])))
+            return
         }
+
+        self.authCompletion?(.success(idTokenString))
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        authCompletion?(.failure(error))
+        self.authCompletion?(.failure(error))
     }
 }

@@ -13,7 +13,11 @@ enum PrototypeAPIService {
     case login
 }
 
-extension PrototypeAPIService: TargetType {
+extension PrototypeAPIService:
+    TargetType,
+    AccessTokenAuthorizable {
+   
+    // MARK: - TargetType
     var baseURL: URL { return URL(string: AppConfiguration.getApiBaseURL)! }
 
     var path: String {
@@ -36,17 +40,20 @@ extension PrototypeAPIService: TargetType {
             return .requestPlain
         }
     }
-
+    
     var headers: [String: String]? {
         switch self {
         case .login:
-            let json = ["Authorization": "Bearer \(PrototypeAPIConst.getSnsToken())",
-                    "X-OAUTH-PROVIDER": "\(PrototypeAPIConst.getLoginType())",
-                    "Content-Type": "application/x-www-form-urlencoded"
-            ]
-            
-            print(json)
-            return json
+            return ["X-OAUTH-PROVIDER": PrototypeAPIConst.getLoginType(),
+                    "Content-Type": "application/x-www-form-urlencoded"]
+        }
+    }
+    
+    // MARK: - AccessTokenAuthorizable
+    var authorizationType: AuthorizationType? {
+        switch self {
+        case .login:
+            return .bearer
         }
     }
 }

@@ -4,8 +4,6 @@
 <dict>
 	<key>ApiBaseURL</key>
 	<string>$(API_BASE_URL)</string>
-	<key>kakaoNativeAppKey</key>
-	<string>$(KAKAO_NATIVE_APP_KEY)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -13,7 +11,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakaoe$(KAKAO_NATIVE_APP_KEY)</string>
+				<string>kakao$(KAKAO_NATIVE_APP_KEY)</string>
 			</array>
 		</dict>
 	</array>
@@ -39,5 +37,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>kakaoNativeAppKey</key>
+	<string>$(KAKAO_NATIVE_APP_KEY)</string>
 </dict>
 </plist>

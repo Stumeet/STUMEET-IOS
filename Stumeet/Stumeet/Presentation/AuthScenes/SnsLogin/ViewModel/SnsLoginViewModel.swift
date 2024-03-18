@@ -26,6 +26,12 @@ final class SnsLoginViewModel: ViewModelType {
     // MARK: - Properties
     private let showErrorSubject = PassthroughSubject<String, Never>()
     private var useCase: AuthUseCase!
+    private var repository: LoginRepository
+    
+    // MARK: - Init
+    init(repository: LoginRepository) {
+        self.repository = repository
+    }
     
     // MARK: - Transform
     func transform(input: Input) -> Output {
@@ -34,13 +40,14 @@ final class SnsLoginViewModel: ViewModelType {
                 guard let self = self
                 else { return Empty().eraseToAnyPublisher() }
                 let service: LoginService = self.service(for: type)
-                self.useCase = DefaultLoginUseCase(service: service)
+                self.useCase = DefaultLoginUseCase(service: service, repository: repository)
                 
-                return useCase.singIn()}
+                return useCase.signIn()}
             .catch { [weak self] error -> AnyPublisher<Bool, Never> in
                 guard let self = self
                 else { return Just(false).eraseToAnyPublisher() }
                 print("Login error: \(error)")
+                // TODO: 에러 케이스는 모아서 정리 필요
                 self.showErrorSubject.send(error.localizedDescription)
                 
                 return Just(false).eraseToAnyPublisher()
@@ -58,8 +65,10 @@ final class SnsLoginViewModel: ViewModelType {
     private func service(for type: LoginType) -> LoginService {
         switch type {
         case .apple:
+            UserDefaults.standard.setValue(type.english, forKey: PrototypeAPIConst.loginType)
             return AppleLoginService()
         case .kakao:
+            UserDefaults.standard.setValue(type.english, forKey: PrototypeAPIConst.loginType)
             return KakaoLoginService()
         }
     }

@@ -29,6 +29,8 @@
 		35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */; };
 		35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7142B8B2083000B6DCB /* BasePageControl.swift */; };
 		35C992972BA341FB003B0AE7 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C992962BA341FB003B0AE7 /* LoginService.swift */; };
+		35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C992992BA728DF003B0AE7 /* DefaultLoginRepository.swift */; };
+		35C9929D2BA73D04003B0AE7 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
 		CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
@@ -127,6 +129,8 @@
 		35BDF70B2B89078F000B6DCB /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		35BDF7142B8B2083000B6DCB /* BasePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePageControl.swift; sourceTree = "<group>"; };
 		35C992962BA341FB003B0AE7 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		35C992992BA728DF003B0AE7 /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
+		35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		49E13988B36BA4E051A3A83D /* Pods_StumeetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StumeetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7735D7930081AEFC4B4EB2 /* Pods-Stumeet-StumeetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.release.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7FCB7D7075B1E5E75906578A /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -388,6 +392,22 @@
 				35C992962BA341FB003B0AE7 /* LoginService.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		35C992982BA727DB003B0AE7 /* AuthScene */ = {
+			isa = PBXGroup;
+			children = (
+				35C992992BA728DF003B0AE7 /* DefaultLoginRepository.swift */,
+			);
+			path = AuthScene;
+			sourceTree = "<group>";
+		};
+		35C9929E2BA75A21003B0AE7 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		35DB2EE42B8B361100F7C8A9 /* Component */ = {
@@ -758,6 +778,7 @@
 		CA64481C2B863BB90090DD84 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				35C9929E2BA75A21003B0AE7 /* Managers */,
 				CA64481D2B863BB90090DD84 /* Repository */,
 				35446B142B9F4BC900252283 /* Service */,
 				CA6448222B863BB90090DD84 /* Network */,
@@ -768,6 +789,7 @@
 		CA64481D2B863BB90090DD84 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				35C992982BA727DB003B0AE7 /* AuthScene */,
 				CA64481E2B863BB90090DD84 /* .gitkeep */,
 				CA64481F2B863BB90090DD84 /* LoginScene */,
 			);
@@ -1188,6 +1210,7 @@
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
+				35C9929D2BA73D04003B0AE7 /* KeychainManager.swift in Sources */,
 				353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */,
 				35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
@@ -1217,6 +1240,7 @@
 				353EAEB32B8F6906008F7E8C /* PrototypeAPIService.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
+				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

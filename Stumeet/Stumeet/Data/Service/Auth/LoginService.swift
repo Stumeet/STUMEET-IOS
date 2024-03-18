@@ -8,5 +8,5 @@
 import Combine
 
 protocol LoginService {
-    func fetchAuthToken() -> AnyPublisher<Bool, Error>
+    func fetchAuthToken() -> AnyPublisher<String, Error>
 }
