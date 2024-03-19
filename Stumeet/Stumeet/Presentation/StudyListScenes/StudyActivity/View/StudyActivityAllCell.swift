@@ -38,7 +38,7 @@ class StudyActivityAllCell: BaseCollectionViewCell {
     
     private let timeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "clock")
+        imageView.image = UIImage(named: "clock")
         
         return imageView
     }()
@@ -49,7 +49,7 @@ class StudyActivityAllCell: BaseCollectionViewCell {
     
     private let placeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "bookmark.circle")
+        imageView.image = UIImage(named: "marker")
         
         return imageView
     }()

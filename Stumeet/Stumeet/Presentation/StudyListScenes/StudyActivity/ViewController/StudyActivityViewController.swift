@@ -25,8 +25,8 @@ class StudyActivityViewController: BaseViewController {
     
     private let floatingButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = StumeetColor.primaryInfo.color
-        button.layer.cornerRadius = 36
+        button.setImage(UIImage(named: "addFloatingButton"), for: .normal)
+        //button.layer.cornerRadius = 36
         
         return button
     }()
@@ -75,7 +75,10 @@ class StudyActivityViewController: BaseViewController {
     
     override func bind() {
         
-        let input = StudyActivityViewModel.Input()
+        let input = StudyActivityViewModel.Input(
+            didTapCreateButton: floatingButton.tapPublisher
+        )
+        
         let output = viewModel.transform(input: input)
         
         // collectionview 아이템 바인딩
@@ -118,6 +121,18 @@ class StudyActivityViewController: BaseViewController {
                 self?.headerView?.allButton.isSelected = isSelecteds[0]
                 self?.headerView?.groupButton.isSelected = isSelecteds[1]
                 self?.headerView?.taskButton.isSelected = isSelecteds[2]
+            }
+            .store(in: &cancellables)
+        
+        
+        // TODO: - Coordinator 적용
+        
+        output.presentToCreateActivityVC
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                let createActivityVC = CreateActivityViewController()
+                createActivityVC.modalPresentationStyle = .fullScreen
+                self?.present(createActivityVC, animated: true)
             }
             .store(in: &cancellables)
     }

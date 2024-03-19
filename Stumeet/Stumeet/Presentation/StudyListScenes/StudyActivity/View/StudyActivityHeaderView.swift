@@ -18,7 +18,7 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
     
     let xButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.setImage(UIImage(named: "xMark"), for: .normal)
         
         return button
     }()

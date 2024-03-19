@@ -73,6 +73,7 @@
 		CAD495DD2B863B6800AB61D9 /* StumeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495DC2B863B6800AB61D9 /* StumeetTests.swift */; };
 		CAD495E72B863B6800AB61D9 /* StumeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */; };
 		CAD495E92B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */; };
+		CAE62E342BA80BF300AAD44A /* CreateActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,7 @@
 		CAD495E22B863B6800AB61D9 /* StumeetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StumeetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD495E62B863B6800AB61D9 /* StumeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITests.swift; sourceTree = "<group>"; };
 		CAD495E82B863B6800AB61D9 /* StumeetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityViewController.swift; sourceTree = "<group>"; };
 		D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stumeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA94054C7969C6E8C313C136 /* Pods-StumeetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StumeetTests.debug.xcconfig"; path = "Target Support Files/Pods-StumeetTests/Pods-StumeetTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -653,6 +655,7 @@
 			isa = PBXGroup;
 			children = (
 				CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */,
+				CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1057,6 +1060,7 @@
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
+				CAE62E342BA80BF300AAD44A /* CreateActivityViewController.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
 				CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
@@ -1265,7 +1269,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WBG9V97XP4;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1294,7 +1298,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WBG9V97XP4;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
