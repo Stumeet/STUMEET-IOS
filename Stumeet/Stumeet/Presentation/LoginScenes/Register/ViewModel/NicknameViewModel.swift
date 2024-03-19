@@ -24,15 +24,21 @@ final class NicknameViewModel: ViewModelType {
         let count: AnyPublisher<Int, Never>
         let isBiggerThanTen: AnyPublisher<Bool, Never>
         let isNextButtonEnable: AnyPublisher<Bool, Never>
-        let navigateToSelectRegionVC: AnyPublisher<Void, Never>
+        let navigateToSelectRegionVC: AnyPublisher<Register, Never>
     }
     
     // MARK: - Properties
     
+    private let useCase: NicknameUseCase
+    private var register: Register
+    private let nicknameSubject = CurrentValueSubject<String, Never>("")
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
-    init() {
-        
+    
+    init(useCase: NicknameUseCase, register: Register) {
+        self.useCase = useCase
+        self.register = register
     }
     
     // MARK: - Transform
@@ -40,38 +46,41 @@ final class NicknameViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         
         // Input
+        input.changeText
+            .sink(receiveValue: nicknameSubject.send)
+            .store(in: &cancellables)
+        
         let isDuplicate = input.changeText
-            .map { $0 == "Guest" }
+            .flatMap(useCase.checkNicknameDuplicate)
             .eraseToAnyPublisher()
         
         let count = input.changeText
-            .filter { $0.count <= 10}
-            .map { $0.count }
+            .flatMap(useCase.setNicknameCount)
             .eraseToAnyPublisher()
         
         let isBiggerThanTen = input.changeText
-            .map { $0.count > 10 }
+            .flatMap(useCase.checkNicknameLonggestThanTen)
             .eraseToAnyPublisher()
         
         let navigateToSelectRegionVC = input.didTapNextButton
-            
-        
-        let isEnable = Publishers.CombineLatest(isDuplicate, count)
-            .map { isDuplicate, count in
-                if !isDuplicate {
-                    return count != 0
-                } else {
-                    return false
-                }
+            .flatMap { [weak self] _ in
+                let nickname = self?.nicknameSubject.value
+                self?.register.nickname = nickname
+                return Just(self?.register)
             }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+            
+        let isNextButtonEnable = Publishers.CombineLatest(isDuplicate, count)
+            .flatMap(useCase.setNextButtonEnable)
             .eraseToAnyPublisher()
         
-        // Output
+        // Ouptut
         return Output(
             isDuplicate: isDuplicate,
             count: count,
             isBiggerThanTen: isBiggerThanTen,
-            isNextButtonEnable: isEnable,
+            isNextButtonEnable: isNextButtonEnable,
             navigateToSelectRegionVC: navigateToSelectRegionVC
         )
     }

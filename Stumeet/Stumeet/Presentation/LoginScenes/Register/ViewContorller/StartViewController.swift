@@ -7,17 +7,14 @@
 
 import UIKit
 
-class StartViewController: BaseViewController {
+import CombineCocoa
 
-    // TODO: - Image 변경, constraint 재 설정
+class StartViewController: BaseViewController {
     
     // MARK: - UIComponents
     
     private let titleLabel: UILabel = {
-        let label = UILabel()
-        
-        label.text = "스터밋에 오신걸 환영해요!"
-        label.font = .boldSystemFont(ofSize: 20)
+        let label = UILabel().setLabelProperty(text: "스터밋에 오신걸 환영해요!", font: StumeetFont.headingBold.font, color: nil)
         
         let attributeString = NSMutableAttributedString(string: label.text!)
         attributeString.addAttribute(
@@ -32,8 +29,8 @@ class StartViewController: BaseViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        
-        imageView.image = UIImage(systemName: "apple.logo")
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "changeProfileCharacter")
         
         return imageView
     }()
@@ -48,6 +45,24 @@ class StartViewController: BaseViewController {
     
         return button
     }()
+    
+    // MARK: - Properties
+    
+    private let viewModel: StartViewModel
+    private let coordinator: RegisterCoordinator
+    
+    // MARK: - Init
+    
+    init(viewModel: StartViewModel, coordinator: RegisterCoordinator) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycles
     
@@ -79,7 +94,7 @@ class StartViewController: BaseViewController {
         imageView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
             make.width.equalTo(362)
-            make.height.equalTo(485)
+            make.height.equalTo(300)
         }
         
         startButton.snp.makeConstraints { make in
@@ -89,4 +104,19 @@ class StartViewController: BaseViewController {
         }
         
     }
+    
+    override func bind() {
+        let input = StartViewModel.Input(
+            didTapStartButton: startButton.tapPublisher
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isNaviteToTabBar
+            .receive(on: RunLoop.main)
+            .map { _ in}
+            .sink(receiveValue: coordinator.presentToTabBar)
+            .store(in: &cancellables)
+    }
+    
 }

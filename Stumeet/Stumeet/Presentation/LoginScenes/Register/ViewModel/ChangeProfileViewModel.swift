@@ -21,49 +21,49 @@ final class ChangeProfileViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
-        let pushNickNameVC: AnyPublisher<Void, Never>
+        let navigateToNicknameVC: AnyPublisher<Data, Never>
         let showAlbum: AnyPublisher<Void, Never>
         let profileImage: AnyPublisher<UIImage, Never>
     }
     
     // MARK: - Properties
+    
     let didSelectPhoto = PassthroughSubject<URL, Never>()
+    private let useCase: ChangeProfileUseCase
+    private let selectedPhotoSubject = CurrentValueSubject<UIImage, Never>(UIImage(named: "changeProfileCharacter")!)
     
     // MARK: - Init
     
-    init() {
-        
+    init(useCase: ChangeProfileUseCase) {
+        self.useCase = useCase
     }
     
     // MARK: - Transform
-    
     func transform(input: Input) -> Output {
         
         // Input
-        
-        let pushNickNameVC = input.didTapNextButton
-        
-        
         let showAlbum = input.didTapChangeProfileButton
         
+        let profileImage = didSelectPhoto
+            .flatMap(useCase.downSampleImageData)
+            .compactMap { $0 }
+            .handleEvents(receiveOutput: selectedPhotoSubject.send)
+            .eraseToAnyPublisher()
         
-        let selectedPhoto = didSelectPhoto
-            .map { url in
-                let targetSize = CGSize(width: 180, height: 180)
-                let cgManager = CoreGraphicManager()
-                let downsampledImageData = cgManager.downsample(imageAt: url, to: targetSize, scale: UIScreen.main.scale)
-                
-                return downsampledImageData
+        let navigateToNicknameVC = input.didTapNextButton
+            .flatMap { [weak self] _ -> AnyPublisher<Data?, Never> in
+                guard let self = self else { return Empty().eraseToAnyPublisher() }
+                return self.useCase.imageToData(image: self.selectedPhotoSubject.value)
             }
             .compactMap { $0 }
             .eraseToAnyPublisher()
         
-        // Output
         
+        // Output
         return Output(
-            pushNickNameVC: pushNickNameVC,
+            navigateToNicknameVC: navigateToNicknameVC,
             showAlbum: showAlbum,
-            profileImage: selectedPhoto
+            profileImage: profileImage
         )
     }
 }

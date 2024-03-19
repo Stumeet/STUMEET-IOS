@@ -62,7 +62,6 @@ class SelectFieldViewController: BaseViewController {
 
     private lazy var tagCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        collectionView.isScrollEnabled = false
         collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
         
         return collectionView
@@ -76,12 +75,14 @@ class SelectFieldViewController: BaseViewController {
     }()
     
     // MARK: - Properties
+    
     private let viewModel: SelecteFieldViewModel
     private let coordinator: RegisterCoordinator
     private var tagDatasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
-    private var fieldDataSource: UITableViewDiffableDataSource<FieldSection, AddableField>?
+    private var fieldDataSource: UITableViewDiffableDataSource<FieldSection, Field>?
     
     // MARK: - Init
+    
     init(viewModel: SelecteFieldViewModel, coordinator: RegisterCoordinator) {
         self.coordinator = coordinator
         self.viewModel = viewModel
@@ -144,7 +145,7 @@ class SelectFieldViewController: BaseViewController {
         tagCollectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(searchTextField.snp.bottom).offset(32)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(nextButton.snp.top)
         }
         
         fieldTableView.snp.makeConstraints { make in
@@ -183,11 +184,9 @@ class SelectFieldViewController: BaseViewController {
                 if !(self?.fieldTableView.isHidden)! {
                     self?.fieldTableView.isHidden = true
                 }
-                
                 var snapshot = NSDiffableDataSourceSnapshot<FieldSection, Field>()
                 snapshot.appendSections([.main])
                 snapshot.appendItems(item)
-                
                 guard let datasource = self?.tagDatasource else { return }
                 datasource.apply(snapshot, animatingDifferences: false)
             }
@@ -209,21 +208,25 @@ class SelectFieldViewController: BaseViewController {
             .sink { [weak self] item in
                 
                 self?.fieldTableView.isHidden = item.isEmpty
-                
-                var snapshot = NSDiffableDataSourceSnapshot<FieldSection, AddableField>()
+                var snapshot = NSDiffableDataSourceSnapshot<FieldSection, Field>()
                 snapshot.appendSections([.main])
                 snapshot.appendItems(item)
-                
                 guard let datasource = self?.fieldDataSource else { return }
                 datasource.apply(snapshot, animatingDifferences: false)
             }
             .store(in: &cancellables)
         
-        output.presentToTabBar
+        // 시작하기VC로 present
+        output.presentToStartVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.coordinator.presentToTabBar()
-            }
+            .sink(receiveValue: { [weak self] register in
+                let layer = self?.progressBar.layer.sublayers?.last
+                layer?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 4)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self?.coordinator.presentToStartVC(register: register)
+                }
+            })
             .store(in: &cancellables)
 
     }
@@ -255,19 +258,30 @@ extension SelectFieldViewController {
             
             cell.backgroundColor = item.isSelected ? StumeetColor.primaryInfo.color : StumeetColor.primary50.color
             cell.tagLabel.textColor = item.isSelected ? .white : .black
-            cell.tagLabel.text = item.field
+            cell.tagLabel.text = item.name
             return cell
         })
         
         fieldDataSource = UITableViewDiffableDataSource(tableView: fieldTableView, cellProvider: { tableView, indexPath, item in
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
             
-            cell.textLabel?.text = item.field
+            cell.textLabel?.text = item.name
             cell.textLabel?.font = StumeetFont.bodyMedium16.font
             cell.textLabel?.textColor = StumeetColor.gray400.color
             cell.selectionStyle = .none
             
             return cell
         })
+    }
+}
+
+// MARK: - Animation
+
+extension SelectFieldViewController: UIViewControllerTransitioningDelegate {
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return FadeOutAnimator()
     }
 }

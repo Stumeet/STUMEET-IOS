@@ -34,6 +34,7 @@ class ChangeProfileViewController: BaseViewController {
         button.setImage(UIImage(named: "changeProfileCharacter"), for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 90
+        button.imageView?.contentMode = .scaleAspectFill
         
         return button
     }()
@@ -150,11 +151,9 @@ class ChangeProfileViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         // navigate To NickNameVC
-        output.pushNickNameVC
+        output.navigateToNicknameVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.coordinator.navigateToNickNameVC()
-            }
+            .sink(receiveValue: coordinator.navigateToNickNameVC)
             .store(in: &cancellables)
         
         // present To PHPickerView
