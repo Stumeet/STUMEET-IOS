@@ -45,7 +45,8 @@ extension AppleLoginService:
               let idTokenData = appleIDCredential.identityToken,
               let idTokenString = String(data: idTokenData, encoding: .utf8)
         else {
-            self.authCompletion?(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to retrieve ID Token"])))
+            self.authCompletion?(.failure(NSError(domain: "AuthError", code: -1,
+                                                  userInfo: [NSLocalizedDescriptionKey: "Unable to retrieve ID Token"])))
             return
         }
 

@@ -13,9 +13,7 @@
 		353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */; };
 		353EAEB32B8F6906008F7E8C /* PrototypeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEB22B8F6906008F7E8C /* PrototypeAPIService.swift */; };
 		353EAEB52B8F6A79008F7E8C /* PrototypeAPIConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEB42B8F6A79008F7E8C /* PrototypeAPIConst.swift */; };
-		353EAEB72B8F6B28008F7E8C /* PrototypeAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEB62B8F6B28008F7E8C /* PrototypeAPIManager.swift */; };
-		353EAEB92B8F6CB1008F7E8C /* PrototypeLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEB82B8F6CB1008F7E8C /* PrototypeLoginManager.swift */; };
-		353EAEBC2B8F6E81008F7E8C /* PrototypeUse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEBB2B8F6E81008F7E8C /* PrototypeUse.swift */; };
+		353EAEBC2B8F6E81008F7E8C /* PrototypeOauth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEBB2B8F6E81008F7E8C /* PrototypeOauth.swift */; };
 		353EAEBE2B8F78F1008F7E8C /* PrototypeAPIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEBD2B8F78F1008F7E8C /* PrototypeAPIData.swift */; };
 		35446B0E2B9DB20B00252283 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 35446B0D2B9DB20B00252283 /* KakaoSDK */; };
 		35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B122B9F4B2000252283 /* LoginUseCase.swift */; };
@@ -111,9 +109,7 @@
 		353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		353EAEB22B8F6906008F7E8C /* PrototypeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeAPIService.swift; sourceTree = "<group>"; };
 		353EAEB42B8F6A79008F7E8C /* PrototypeAPIConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeAPIConst.swift; sourceTree = "<group>"; };
-		353EAEB62B8F6B28008F7E8C /* PrototypeAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeAPIManager.swift; sourceTree = "<group>"; };
-		353EAEB82B8F6CB1008F7E8C /* PrototypeLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeLoginManager.swift; sourceTree = "<group>"; };
-		353EAEBB2B8F6E81008F7E8C /* PrototypeUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeUse.swift; sourceTree = "<group>"; };
+		353EAEBB2B8F6E81008F7E8C /* PrototypeOauth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeOauth.swift; sourceTree = "<group>"; };
 		353EAEBD2B8F78F1008F7E8C /* PrototypeAPIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeAPIData.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
 		35446B122B9F4B2000252283 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -266,8 +262,6 @@
 				353EAEBA2B8F6E79008F7E8C /* Model */,
 				353EAEB22B8F6906008F7E8C /* PrototypeAPIService.swift */,
 				353EAEB42B8F6A79008F7E8C /* PrototypeAPIConst.swift */,
-				353EAEB62B8F6B28008F7E8C /* PrototypeAPIManager.swift */,
-				353EAEB82B8F6CB1008F7E8C /* PrototypeLoginManager.swift */,
 			);
 			path = Prototype;
 			sourceTree = "<group>";
@@ -275,7 +269,7 @@
 		353EAEBA2B8F6E79008F7E8C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				353EAEBB2B8F6E81008F7E8C /* PrototypeUse.swift */,
+				353EAEBB2B8F6E81008F7E8C /* PrototypeOauth.swift */,
 				353EAEBD2B8F78F1008F7E8C /* PrototypeAPIData.swift */,
 			);
 			path = Model;
@@ -1179,18 +1173,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */,
-				353EAEB92B8F6CB1008F7E8C /* PrototypeLoginManager.swift in Sources */,
 				CA6448432B863BB90090DD84 /* Region.swift in Sources */,
 				CA6448372B863BB90090DD84 /* StudyListViewController.swift in Sources */,
 				CA64484B2B863BB90090DD84 /* Coordinator.swift in Sources */,
 				35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */,
-				353EAEB72B8F6B28008F7E8C /* PrototypeAPIManager.swift in Sources */,
 				CA6448332B863BB90090DD84 /* SelectFieldUseCase.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
 				353EAEA72B8E109C008F7E8C /* CoordinatorTest.swift in Sources */,
 				CA6448472B863BB90090DD84 /* TabBarViewController.swift in Sources */,
-				353EAEBC2B8F6E81008F7E8C /* PrototypeUse.swift in Sources */,
+				353EAEBC2B8F6E81008F7E8C /* PrototypeOauth.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,

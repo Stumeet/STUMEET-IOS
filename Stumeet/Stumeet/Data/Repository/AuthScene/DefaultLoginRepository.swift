@@ -23,7 +23,7 @@ class DefaultLoginRepository: LoginRepository {
     func requestLogin() -> AnyPublisher<PrototypeAPIData<PrototypeOauth>, MoyaError> {
         return provider.requestPublisher(.login)
             .map(PrototypeAPIData<PrototypeOauth>.self)
-            .catch { error -> AnyPublisher<PrototypeAPIData<PrototypeOauth>, MoyaError> in                
+            .catch { error -> AnyPublisher<PrototypeAPIData<PrototypeOauth>, MoyaError> in
                 print("Error: \(error)")
                 return Fail(error: error).eraseToAnyPublisher()
             }

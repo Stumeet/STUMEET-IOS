@@ -1,5 +1,5 @@
 //
-//  PrototypeUse.swift
+//  PrototypeOauth.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/02/28.
