@@ -15,7 +15,6 @@ final class AppCoordinator: CoordinatorTest {
     var navigationController: UINavigationController
     
     func start() {
-        print("앱코디네이터시작")
         makeAuthCoordinator()
     }
     
@@ -29,9 +28,5 @@ final class AppCoordinator: CoordinatorTest {
         onboardingCoordinator.parentCoordinator = self
         children.append(onboardingCoordinator)
         onboardingCoordinator.start()
-    }
-    
-    deinit {
-        print("앱코디네이터해제")
     }
 }

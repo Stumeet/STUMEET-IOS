@@ -2,44 +2,74 @@
 //  SnsLoginViewModel.swift
 //  Stumeet
 //
-//  Created by 조웅희 on 2024/02/27.
+//  Created by 조웅희 on 2024/03/11.
 //
 
+import Foundation
 import Combine
 
+typealias AuthUseCase = LoginUseCase
+
 final class SnsLoginViewModel: ViewModelType {
-    var loginSnsManger: LoginProtocol?
+    
     // MARK: - Input
     struct Input {
-        let didTapAppleButton: AnyPublisher<LoginType, Never>
-    }
-
-    // MARK: - Output
-    struct Output {
-        let signInOut: AnyPublisher<Void, Never>
+        let loginType: AnyPublisher<LoginType, Never>
     }
     
+    // MARK: - Output
+    struct Output {
+        let navigateToChangeProfileVC: AnyPublisher<Void, Never>
+        let showError: AnyPublisher<String, Never>
+    }
+    
+    // MARK: - Properties
+    private let showErrorSubject = PassthroughSubject<String, Never>()
+    private var useCase: AuthUseCase!
+    private var repository: LoginRepository
+    
+    // MARK: - Init
+    init(repository: LoginRepository) {
+        self.repository = repository
+    }
+    
+    // MARK: - Transform
     func transform(input: Input) -> Output {
-        let signIn = input.didTapAppleButton
-            .map { [weak self] type in
-                guard let self = self else { return }
-                self.loginSnsManger = self.setDelegate(type)
+        let navigateToChangeProfileVC = input.loginType
+            .flatMap { [weak self] type -> AnyPublisher<Bool, Error> in
+                guard let self = self
+                else { return Empty().eraseToAnyPublisher() }
+                let service: LoginService = self.service(for: type)
+                self.useCase = DefaultLoginUseCase(service: service, repository: repository)
+                
+                return useCase.signIn()}
+            .catch { [weak self] error -> AnyPublisher<Bool, Never> in
+                guard let self = self
+                else { return Just(false).eraseToAnyPublisher() }
+                print("Login error: \(error)")
+                // TODO: 에러 케이스는 모아서 정리 필요
+                self.showErrorSubject.send(error.localizedDescription)
+                
+                return Just(false).eraseToAnyPublisher()
             }
+            .filter { $0 == true }
+            .map { _ in }
             .eraseToAnyPublisher()
         
         return Output(
-            signInOut: signIn
+            navigateToChangeProfileVC: navigateToChangeProfileVC,
+            showError: showErrorSubject.eraseToAnyPublisher()
         )
     }
-    
-    private func setDelegate(_ loginType: LoginType) -> LoginProtocol? {
-        switch loginType {
+
+    private func service(for type: LoginType) -> LoginService {
+        switch type {
         case .apple:
-            return AppleLogin()
+            UserDefaults.standard.setValue(type.english, forKey: PrototypeAPIConst.loginType)
+            return AppleLoginService()
         case .kakao:
-            return AppleLogin()
-        default:
-            return nil
+            UserDefaults.standard.setValue(type.english, forKey: PrototypeAPIConst.loginType)
+            return KakaoLoginService()
         }
     }
 }
@@ -47,7 +77,6 @@ final class SnsLoginViewModel: ViewModelType {
 enum LoginType {
     case apple
     case kakao
-    case none
     
     var korean: String {
         switch self {
@@ -55,8 +84,6 @@ enum LoginType {
             return "애플"
         case .kakao:
             return "카카오"
-        default:
-            return ""
         }
     }
     
@@ -66,8 +93,6 @@ enum LoginType {
             return "apple"
         case .kakao:
             return "kakao"
-        default:
-            return ""
         }
     }
 }
