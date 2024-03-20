@@ -1006,6 +1006,7 @@
 				CAD495BE2B863B6500AB61D9 /* Sources */,
 				CAD495BF2B863B6500AB61D9 /* Frameworks */,
 				CAD495C02B863B6500AB61D9 /* Resources */,
+				4A068940852E63F2CBF92172 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1051,6 +1052,7 @@
 				CAD495DE2B863B6800AB61D9 /* Sources */,
 				CAD495DF2B863B6800AB61D9 /* Frameworks */,
 				CAD495E02B863B6800AB61D9 /* Resources */,
+				0F8EB84865E28A673C07AF6F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1095,10 +1097,10 @@
 			);
 			mainGroup = CAD495B92B863B6500AB61D9;
 			packageReferences = (
-				CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit" */,
-				CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya" */,
-				CA6448672B863CD90090DD84 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit.git" */,
+				CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya.git" */,
+				CA6448672B863CD90090DD84 /* XCRemoteSwiftPackageReference "SnapKit.git" */,
+				CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa.git" */,
 				35446B0C2B9DB20B00252283 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = CAD495C32B863B6500AB61D9 /* Products */;
@@ -1139,6 +1141,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0F8EB84865E28A673C07AF6F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3EF29C9CFAB404459FD6FB00 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1159,6 +1178,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A068940852E63F2CBF92172 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		73782BE96362D1195D46C257 /* [CP] Check Pods Manifest.lock */ = {
@@ -1245,11 +1281,8 @@
 				CA6448472B863BB90090DD84 /* TabBarViewController.swift in Sources */,
 				353EAEBC2B8F6E81008F7E8C /* PrototypeOauth.swift in Sources */,
 				CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */,
-				353EAEB02B8E19CF008F7E8C /* SnsLoginViewModel.swift in Sources */,
 				CA6448472B863BB90090DD84 /* TabBarViewController.swift in Sources */,
-				353EAEC22B8F839F008F7E8C /* AppleLogin.swift in Sources */,
-				353EAEBC2B8F6E81008F7E8C /* PrototypeUse.swift in Sources */,
-				353EAEC52B8F83F4008F7E8C /* LoginProtocol.swift in Sources */,
+				353EAEBC2B8F6E81008F7E8C /* PrototypeOauth.swift in Sources */,
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
@@ -1490,7 +1523,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1503,7 +1536,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet2;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1522,7 +1555,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1535,7 +1568,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet2;
+				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1670,7 +1703,7 @@
 				minimumVersion = 2.21.0;
 			};
 		};
-		CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit" */ = {
+		CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/wookeon/PretendardKit.git";
 			requirement = {
@@ -1678,7 +1711,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya" */ = {
+		CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
 			requirement = {
@@ -1686,7 +1719,7 @@
 				minimumVersion = 15.0.3;
 			};
 		};
-		CA6448672B863CD90090DD84 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		CA6448672B863CD90090DD84 /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -1694,7 +1727,7 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
+		CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
 			requirement = {
@@ -1712,27 +1745,27 @@
 		};
 		CA6448602B863CBE0090DD84 /* PretendardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit" */;
+			package = CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit.git" */;
 			productName = PretendardKit;
 		};
 		CA6448632B863CCB0090DD84 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya" */;
+			package = CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya.git" */;
 			productName = CombineMoya;
 		};
 		CA6448652B863CCB0090DD84 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya" */;
+			package = CA6448622B863CCB0090DD84 /* XCRemoteSwiftPackageReference "Moya.git" */;
 			productName = Moya;
 		};
 		CA6448682B863CD90090DD84 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CA6448672B863CD90090DD84 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = CA6448672B863CD90090DD84 /* XCRemoteSwiftPackageReference "SnapKit.git" */;
 			productName = SnapKit;
 		};
 		CA64486B2B863CE20090DD84 /* CombineCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			package = CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa.git" */;
 			productName = CombineCocoa;
 		};
 /* End XCSwiftPackageProductDependency section */
