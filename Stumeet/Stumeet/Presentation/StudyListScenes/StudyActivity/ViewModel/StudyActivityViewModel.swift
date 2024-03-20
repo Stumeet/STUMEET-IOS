@@ -13,6 +13,7 @@ final class StudyActivityViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
+        let didTapCreateButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -20,6 +21,7 @@ final class StudyActivityViewModel: ViewModelType {
     struct Output {
         let items: AnyPublisher<[StudyActivityItem], Never>
         let isSelected: AnyPublisher<[Bool], Never>
+        let presentToCreateActivityVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -77,7 +79,12 @@ final class StudyActivityViewModel: ViewModelType {
             )
             .eraseToAnyPublisher()
         
-        return Output(items: items, isSelected: isSelected)
+        let presentToCreateAcitivityVC = input.didTapCreateButton.eraseToAnyPublisher()
+        
+        return Output(
+            items: items,
+            isSelected: isSelected,
+            presentToCreateActivityVC: presentToCreateAcitivityVC)
     }
 
 }
