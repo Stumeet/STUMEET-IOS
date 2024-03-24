@@ -92,7 +92,7 @@ final class CreateActivityViewController: BaseViewController {
     private let noticeSwitch = UISwitch()
     
     // MARK: - Properties
-    
+    let viewModel = CreateActivityViewModel()
     // MARK: - Init
     
     init() {
@@ -181,13 +181,11 @@ final class CreateActivityViewController: BaseViewController {
             make.leading.trailing.equalToSuperview().inset(24)
             make.height.equalTo(22)
         }
-        
         contentTextView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(titleTextField.snp.bottom).offset(16)
             make.height.equalTo(520)
         }
-        
         bottomView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(contentTextView.snp.bottom)
@@ -208,9 +206,37 @@ final class CreateActivityViewController: BaseViewController {
         }
     }
     
-    // MARK: - Bind
     
     override func bind() {
+        
+        // MARK: - Input
+        
+        let input = CreateActivityViewModel.Input(
+            didChangeTitle: titleTextField.textPublisher.eraseToAnyPublisher(),
+            didChangeContent: contentTextView.textPublisher.eraseToAnyPublisher(),
+            didBeginEditing: contentTextView.didBeginEditingPublisher.eraseToAnyPublisher()
+        )
+        
+        // MARK: - Output
+        
+        let output = viewModel.transform(input: input)
+        
+        // textview placeholder 지우기
+        output.isBeginEditing
+            .filter { $0 }
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.contentTextView.text = ""
+                self?.contentTextView.textColor = .black
+            }
+            .store(in: &cancellables)
+        
+        // 다음 버튼 enable 설정
+        output.isEnableNextButton
+            .receive(on: RunLoop.main)
+            .assign(to: \.isEnabled, on: nextButton)
+            .store(in: &cancellables)
         
     }
 }

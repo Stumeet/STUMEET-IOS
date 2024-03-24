@@ -65,6 +65,8 @@
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
 		CA86DC472B8DCBF20044DB6C /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC462B8DCBF20044DB6C /* Region.swift */; };
 		CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */; };
+		CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */; };
+		CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958522BB010C000884615 /* UITextView++Extension.swift */; };
 		CA9AB2142B8C6A480027072E /* StudyActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB2132B8C6A480027072E /* StudyActivityViewModel.swift */; };
 		CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */; };
 		CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */; };
@@ -164,6 +166,8 @@
 		CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		CA86DC462B8DCBF20044DB6C /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivity.swift; sourceTree = "<group>"; };
+		CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityViewModel.swift; sourceTree = "<group>"; };
+		CA9958522BB010C000884615 /* UITextView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView++Extension.swift"; sourceTree = "<group>"; };
 		CA9AB2132B8C6A480027072E /* StudyActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityViewModel.swift; sourceTree = "<group>"; };
 		CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityUseCase.swift; sourceTree = "<group>"; };
 		CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityRepository.swift; sourceTree = "<group>"; };
@@ -541,6 +545,7 @@
 				CA6448122B863BB90090DD84 /* UIButton++Extension.swift */,
 				CA6448132B863BB90090DD84 /* UIVIew++Extension.swift */,
 				CA6448142B863BB90090DD84 /* UIViewController++Extension.swift */,
+				CA9958522BB010C000884615 /* UITextView++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -664,6 +669,7 @@
 			isa = PBXGroup;
 			children = (
 				CA9AB2132B8C6A480027072E /* StudyActivityViewModel.swift */,
+				CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1076,6 +1082,8 @@
 				CA86DC472B8DCBF20044DB6C /* Region.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */,
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,
+				CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */,
+				CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */,
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
 				CA64483D2B863BB90090DD84 /* SelectFieldViewController.swift in Sources */,
