@@ -18,6 +18,7 @@ final class CreateActivityViewModel: ViewModelType {
         let didBeginEditing: AnyPublisher<Void, Never>
         let didTapCategoryButton: AnyPublisher<Void, Never>
         let didTapCategoryItem: AnyPublisher<ActivityCategory, Never>
+        let didTapXButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -27,6 +28,8 @@ final class CreateActivityViewModel: ViewModelType {
         let isEnableNextButton: AnyPublisher<Bool, Never>
         let showCategoryStackView: AnyPublisher<Void, Never>
         let selectedCategory: AnyPublisher<ActivityCategory, Never>
+        let isShowMaxLengthContentAlert: AnyPublisher<Bool, Never>
+        let dismiss: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -48,6 +51,10 @@ final class CreateActivityViewModel: ViewModelType {
         let content = input.didChangeContent
             .compactMap { $0 }
         
+        let isShowAlert = content
+            .flatMap(useCase.setIsShowMaxLengthAlert)
+            .eraseToAnyPublisher()
+        
         let title = input.didChangeTitle
             .compactMap { $0 }
 
@@ -68,12 +75,16 @@ final class CreateActivityViewModel: ViewModelType {
             .sink(receiveValue: currentCategorySubject.send)
             .store(in: &cancellables)
         
+        let dismiss = input.didTapXButton
+            .eraseToAnyPublisher()
+        
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
             showCategoryStackView: showCategoryStackView,
-            selectedCategory: selectedCategory
+            selectedCategory: selectedCategory,
+            isShowMaxLengthContentAlert: isShowAlert,
+            dismiss: dismiss
         )
-            
     }
 }

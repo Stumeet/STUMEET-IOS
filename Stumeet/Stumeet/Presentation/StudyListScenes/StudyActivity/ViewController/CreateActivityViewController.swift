@@ -274,7 +274,8 @@ final class CreateActivityViewController: BaseViewController {
             didChangeContent: contentTextView.textPublisher,
             didBeginEditing: contentTextView.didBeginEditingPublisher,
             didTapCategoryButton: categoryButton.tapPublisher,
-            didTapCategoryItem: categoryButtonTaps.eraseToAnyPublisher()
+            didTapCategoryItem: categoryButtonTaps.eraseToAnyPublisher(),
+            didTapXButton: xButton.tapPublisher
         )
         
         // MARK: - Output
@@ -314,6 +315,32 @@ final class CreateActivityViewController: BaseViewController {
                 self?.categoryStackViewContainer.isHidden = true
                 self?.categoryButton.configuration?.attributedTitle = AttributedString(selectedCategory.title)
             }
+            .store(in: &cancellables)
+        
+        // 500자 이상일 경우 alert 표시
+        output.isShowMaxLengthContentAlert
+            .removeDuplicates()
+            .filter { $0 }
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.contentTextView.text = String(self?.contentTextView.text?.dropLast() ?? "")
+                self?.showAlert(
+                    title: "글자 수 제한",
+                    message: "500자 이하로 써주세요",
+                    buttonTitle1: "확인",
+                    buttonTitle2: nil,
+                    action1: nil,
+                    action2: nil
+                )
+            }
+            .store(in: &cancellables)
+        
+        // dismiss
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.dismiss(animated: true)
+            })
             .store(in: &cancellables)
     }
 }

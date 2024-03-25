@@ -10,10 +10,17 @@ import Foundation
 
 protocol ActivityCreateUseCase {
     func setEnableNextButton(content: String, title: String) -> AnyPublisher<Bool, Never>
+    func setIsShowMaxLengthAlert(content: String) -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultActivityCreateUseCase: ActivityCreateUseCase {
+    
     func setEnableNextButton(content: String, title: String) -> AnyPublisher<Bool, Never> {
         return Just(!content.isEmpty && !title.isEmpty).eraseToAnyPublisher()
     }
+    
+    func setIsShowMaxLengthAlert(content: String) -> AnyPublisher<Bool, Never> {
+        return Just(content.count > 500).eraseToAnyPublisher()
+    }
+    
 }
