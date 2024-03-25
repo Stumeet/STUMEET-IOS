@@ -157,7 +157,7 @@ class OnboardingViewController: BaseViewController {
         output.navigateToSnsLoginVC
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.coordinator.goToSnsLogin()
+                self?.coordinator.goToSnsLoginVC()
             }
             .store(in: &cancellables)
     }

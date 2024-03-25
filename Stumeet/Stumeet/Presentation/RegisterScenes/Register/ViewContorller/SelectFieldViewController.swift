@@ -77,13 +77,13 @@ class SelectFieldViewController: BaseViewController {
     // MARK: - Properties
     
     private let viewModel: SelecteFieldViewModel
-    private let coordinator: RegisterCoordinator
+    private weak var coordinator: RegisterNavigation!
     private var tagDatasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
     private var fieldDataSource: UITableViewDiffableDataSource<FieldSection, Field>?
     
     // MARK: - Init
     
-    init(viewModel: SelecteFieldViewModel, coordinator: RegisterCoordinator) {
+    init(viewModel: SelecteFieldViewModel, coordinator: RegisterNavigation) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -225,6 +225,7 @@ class SelectFieldViewController: BaseViewController {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self?.coordinator.presentToStartVC(register: register)
+//                    self?.coordinator.goToHomeVC()
                 }
             })
             .store(in: &cancellables)

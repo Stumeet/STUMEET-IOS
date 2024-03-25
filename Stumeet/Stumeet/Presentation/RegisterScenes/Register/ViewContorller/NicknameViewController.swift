@@ -70,12 +70,12 @@ class NicknameViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let coordinator: RegisterCoordinator
+    private weak var coordinator: RegisterNavigation!
     private let viewModel: NicknameViewModel
     
     // MARK: - Init
     
-    init(viewModel: NicknameViewModel, coordinator: RegisterCoordinator) {
+    init(viewModel: NicknameViewModel, coordinator: RegisterNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -207,7 +207,8 @@ class NicknameViewController: BaseViewController {
         // 지역 선택VC로 push
         output.navigateToSelectRegionVC
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.navigateToSelectRegionVC)
+            .sink(receiveValue: coordinator.goToSelectRegionVC)
+//            .sink(receiveValue: { [weak self] data in self?.coordinator.goToSelectRegionVC(register: data)})
             .store(in: &cancellables)
     }
 }

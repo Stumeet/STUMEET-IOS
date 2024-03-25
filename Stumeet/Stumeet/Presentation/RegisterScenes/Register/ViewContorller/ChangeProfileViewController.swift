@@ -57,10 +57,10 @@ class ChangeProfileViewController: BaseViewController {
     // MARK: - Properties
     
     private let viewModel: ChangeProfileViewModel
-    private let coordinator: RegisterCoordinator
+    private weak var coordinator: RegisterNavigation!
     
     // MARK: - Init
-    init(viewModel: ChangeProfileViewModel, coordinator: RegisterCoordinator) {
+    init(viewModel: ChangeProfileViewModel, coordinator: RegisterNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -153,7 +153,7 @@ class ChangeProfileViewController: BaseViewController {
         // navigate To NickNameVC
         output.navigateToNicknameVC
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.navigateToNickNameVC)
+            .sink(receiveValue: coordinator.goToNickNameVC)
             .store(in: &cancellables)
         
         // present To PHPickerView

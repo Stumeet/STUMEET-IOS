@@ -158,7 +158,7 @@ class SnsLoginViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 // TODO: 프로필 변경 화면으로 변경
-                self?.coordinator.goToOnboarding()
+                self?.coordinator.goToRegisterVC()
             }
             .store(in: &cancellables)
         
