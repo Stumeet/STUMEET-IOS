@@ -224,13 +224,13 @@ final class CreateActivityViewController: BaseViewController {
         contentTextView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(titleTextField.snp.bottom).offset(16)
+            make.bottom.equalToSuperview()
             make.height.equalTo(520)
         }
         
         bottomView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalTo(contentTextView.snp.bottom)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
             make.height.equalTo(64)
         }
         
