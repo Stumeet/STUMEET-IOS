@@ -16,6 +16,8 @@ final class CreateActivityViewModel: ViewModelType {
         let didChangeTitle: AnyPublisher<String?, Never>
         let didChangeContent: AnyPublisher<String?, Never>
         let didBeginEditing: AnyPublisher<Void, Never>
+        let didTapCategoryButton: AnyPublisher<Void, Never>
+        let didTapCategoryItem: AnyPublisher<ActivityCategory, Never>
     }
     
     // MARK: - Output
@@ -23,15 +25,20 @@ final class CreateActivityViewModel: ViewModelType {
     struct Output {
         let isBeginEditing: AnyPublisher<Bool, Never>
         let isEnableNextButton: AnyPublisher<Bool, Never>
+        let showCategoryStackView: AnyPublisher<Void, Never>
+        let selectedCategory: AnyPublisher<ActivityCategory, Never>
     }
     
     // MARK: - Properties
     
+    private let useCase: ActivityCreateUseCase
+    let currentCategorySubject = CurrentValueSubject<ActivityCategory, Never>(.freedom)
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
-    init() {
-        
+    init(useCase: ActivityCreateUseCase) {
+        self.useCase = useCase
     }
     
     // MARK: - Transform
@@ -45,18 +52,28 @@ final class CreateActivityViewModel: ViewModelType {
             .compactMap { $0 }
 
         let isEnableNextButton = Publishers.CombineLatest(content, title)
-            .map { content, title in
-                return !content.isEmpty && !title.isEmpty
-            }
+            .flatMap(useCase.setEnableNextButton)
             .eraseToAnyPublisher()
         
         let isBeginEditing = input.didBeginEditing
             .map { _ in true }
             .eraseToAnyPublisher()
         
+        let showCategoryStackView = input.didTapCategoryButton
+            .eraseToAnyPublisher()
+
+        let selectedCategory = currentCategorySubject.eraseToAnyPublisher()
+        
+        input.didTapCategoryItem
+            .sink(receiveValue: currentCategorySubject.send)
+            .store(in: &cancellables)
+        
         return Output(
             isBeginEditing: isBeginEditing,
-            isEnableNextButton: isEnableNextButton)
+            isEnableNextButton: isEnableNextButton,
+            showCategoryStackView: showCategoryStackView,
+            selectedCategory: selectedCategory
+        )
             
     }
 }

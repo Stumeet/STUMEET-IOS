@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 3/18/24.
 //
 
+import Combine
 import UIKit
 
 final class CreateActivityViewController: BaseViewController {
@@ -37,7 +38,7 @@ final class CreateActivityViewController: BaseViewController {
         button.setTitle("다음", for: .normal)
         button.isEnabled = false
         button.setTitleColor(StumeetColor.gray400.color, for: .disabled)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(StumeetColor.primary700.color, for: .normal)
         
         return button
     }()
@@ -46,9 +47,10 @@ final class CreateActivityViewController: BaseViewController {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         
-        config.attributedTitle = AttributedString("자유", attributes: AttributeContainer([.foregroundColor: UIColor.black]))
+        config.attributedTitle = AttributedString("자유")
         config.image = UIImage(named: "greenDownPolygon")
         config.imagePlacement = .trailing
+        config.baseForegroundColor = .black
         
         button.configuration = config
         button.layer.borderWidth = 1
@@ -57,6 +59,26 @@ final class CreateActivityViewController: BaseViewController {
         
         return button
     }()
+    
+    private lazy var categoryStackViewContainer: UIView = {
+        let containerView = UIView()
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 16
+        containerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        
+        containerView.addSubview(stackView)
+        containerView.isHidden = true
+        
+        return containerView
+    }()
+    
+    private lazy var freedomButton: UIButton = createCategoryItemButton(category: .freedom)
+    private lazy var meetingButton: UIButton = createCategoryItemButton(category: .meeting)
+    private lazy var homeWorkButton: UIButton = createCategoryItemButton(category: .homework)
     
     private let titleTextField: UITextField = {
         let textField = UITextField()
@@ -92,7 +114,9 @@ final class CreateActivityViewController: BaseViewController {
     private let noticeSwitch = UISwitch()
     
     // MARK: - Properties
-    let viewModel = CreateActivityViewModel()
+    
+    private let viewModel = CreateActivityViewModel(useCase: DefaultActivityCreateUseCase())
+    
     // MARK: - Init
     
     init() {
@@ -112,9 +136,14 @@ final class CreateActivityViewController: BaseViewController {
     // MARK: - SetUp
     
     override func viewDidLayoutSubviews() {
+        
         bottomView.layer.addBorder([.top, .bottom], color: StumeetColor.gray100.color, width: 1)
+        
         contentTextView.layer.addBorder([.top], color: StumeetColor.gray100.color, width: 1)
+        
         categoryButton.configuration?.imagePadding =  269 * categoryButton.frame.width / 380
+        
+        categoryStackViewContainer.layer.addBorder([.left, .right, .bottom], color: StumeetColor.gray100.color, width: 1)
     }
     
     override func setupStyles() {
@@ -123,6 +152,14 @@ final class CreateActivityViewController: BaseViewController {
     }
     
     override func setupAddView() {
+        
+        let stackView = categoryStackViewContainer.subviews.first as? UIStackView
+        
+        [
+            freedomButton,
+            meetingButton,
+            homeWorkButton
+        ]   .forEach { stackView?.addArrangedSubview($0) }
         
         [
             imageButton,
@@ -134,9 +171,10 @@ final class CreateActivityViewController: BaseViewController {
             xButton,
             topLabel,
             nextButton,
-            categoryButton,
             titleTextField,
             contentTextView,
+            categoryStackViewContainer,
+            categoryButton,
             bottomView
         ]   .forEach { contentView.addSubview($0) }
         
@@ -146,6 +184,7 @@ final class CreateActivityViewController: BaseViewController {
     }
     
     override func setupConstaints() {
+        
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -172,7 +211,7 @@ final class CreateActivityViewController: BaseViewController {
         
         categoryButton.snp.makeConstraints { make in
             make.top.equalTo(xButton.snp.bottom).offset(21)
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(56)
         }
         
@@ -181,40 +220,61 @@ final class CreateActivityViewController: BaseViewController {
             make.leading.trailing.equalToSuperview().inset(24)
             make.height.equalTo(22)
         }
+        
         contentTextView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(titleTextField.snp.bottom).offset(16)
             make.height.equalTo(520)
         }
+        
         bottomView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(contentTextView.snp.bottom)
             make.bottom.equalToSuperview()
             make.height.equalTo(64)
         }
+        
         imageButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
             make.centerY.equalToSuperview()
         }
+        
         noticeSwitch.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(24)
             make.centerY.equalToSuperview()
         }
+        
         noticeLabel.snp.makeConstraints { make in
             make.trailing.equalTo(noticeSwitch.snp.leading)
             make.centerY.equalToSuperview()
         }
+        
+        categoryStackViewContainer.snp.makeConstraints { make in
+            make.height.equalTo(168)
+            make.top.equalTo(categoryButton.snp.bottom).offset(-8)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        categoryStackViewContainer.subviews[0].snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
-    
     
     override func bind() {
         
         // MARK: - Input
         
+        let categoryButtonTaps = Publishers.Merge3(
+            freedomButton.tapPublisher.map { ActivityCategory.freedom },
+            meetingButton.tapPublisher.map { ActivityCategory.meeting },
+            homeWorkButton.tapPublisher.map { ActivityCategory.homework })
+        
         let input = CreateActivityViewModel.Input(
-            didChangeTitle: titleTextField.textPublisher.eraseToAnyPublisher(),
-            didChangeContent: contentTextView.textPublisher.eraseToAnyPublisher(),
-            didBeginEditing: contentTextView.didBeginEditingPublisher.eraseToAnyPublisher()
+            didChangeTitle: titleTextField.textPublisher,
+            didChangeContent: contentTextView.textPublisher,
+            didBeginEditing: contentTextView.didBeginEditingPublisher,
+            didTapCategoryButton: categoryButton.tapPublisher,
+            didTapCategoryItem: categoryButtonTaps.eraseToAnyPublisher()
         )
         
         // MARK: - Output
@@ -238,5 +298,63 @@ final class CreateActivityViewController: BaseViewController {
             .assign(to: \.isEnabled, on: nextButton)
             .store(in: &cancellables)
         
+        // 다음 버튼 enable 설정)
+        output.showCategoryStackView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.categoryStackViewContainer.isHidden = false
+                self?.updateCategoryItemTitleColor()
+            }
+            .store(in: &cancellables)
+        
+        // 선택한 category UI binding
+        output.selectedCategory
+            .receive(on: RunLoop.main)
+            .sink { [weak self] selectedCategory in
+                self?.categoryStackViewContainer.isHidden = true
+                self?.categoryButton.configuration?.attributedTitle = AttributedString(selectedCategory.title)
+            }
+            .store(in: &cancellables)
+    }
+}
+
+
+// MARK: UpdateUI
+
+extension CreateActivityViewController {
+    
+    private func createCategoryItemButton(category: ActivityCategory) -> UIButton {
+        
+        var config = UIButton.Configuration.plain()
+        config.title = category.title
+        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 22.8, bottom: 0, trailing: 0)
+        
+        if case .freedom = category {
+            config.baseForegroundColor = StumeetColor.primary700.color
+        } else { config.baseForegroundColor = StumeetColor.gray400.color}
+
+        let button = UIButton()
+        button.configuration = config
+        button.contentHorizontalAlignment = .leading
+        return button
+    }
+    
+    private func updateCategoryItemTitleColor() {
+        
+        let categoryButtons: [ActivityCategory: UIButton?] = [
+            .freedom: freedomButton,
+            .meeting: meetingButton,
+            .homework: homeWorkButton
+        ]
+        
+        let selectedCategory = viewModel.currentCategorySubject.value
+                
+        categoryButtons.forEach { category, button in
+            if category == selectedCategory {
+                button?.configuration?.baseForegroundColor = StumeetColor.primary700.color
+            } else {
+                button?.configuration?.baseForegroundColor = .black
+            }
+        }
     }
 }
