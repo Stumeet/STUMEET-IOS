@@ -8,6 +8,13 @@
 import UIKit
 import Moya
 
+protocol AuthNavigation: AnyObject {
+    func goToSnsLoginVC()
+    func goToOnboardingVC()
+    func goToHomeVC()
+    func goToRegisterVC()
+}
+
 final class AuthCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
@@ -56,11 +63,4 @@ extension AuthCoordinator: AuthNavigation {
         appCoordinator.startRegisterCoordinator()
         appCoordinator.childDidFinish(self)
     }
-}
-
-protocol AuthNavigation: AnyObject {
-    func goToSnsLoginVC()
-    func goToOnboardingVC()
-    func goToHomeVC()
-    func goToRegisterVC()
 }

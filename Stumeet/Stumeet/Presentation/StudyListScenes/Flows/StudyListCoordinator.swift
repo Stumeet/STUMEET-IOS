@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol StudyListNavigation: AnyObject {
+    func goToStudyList()
+}
+
 final class StudyListCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
@@ -26,8 +30,4 @@ extension StudyListCoordinator: StudyListNavigation {
         let studyListVC = StudyListViewController(coordinator: self)
         navigationController.pushViewController(studyListVC, animated: true)
     }
-}
-
-protocol StudyListNavigation: AnyObject {
-    func goToStudyList()
 }

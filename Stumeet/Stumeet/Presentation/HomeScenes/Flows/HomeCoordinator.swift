@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol HomeNavigation: AnyObject {
+    func goToHome()
+}
+
 final class HomeCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
@@ -26,8 +30,4 @@ extension HomeCoordinator: HomeNavigation {
         let homeVC = HomeViewController(coordinator: self)
         navigationController.pushViewController(homeVC, animated: true)
     }
-}
-
-protocol HomeNavigation: AnyObject {
-    func goToHome()
 }

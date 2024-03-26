@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol MyPageNavigation: AnyObject {
+    func goToMyPage()
+}
+
 final class MyPageCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
@@ -27,8 +31,3 @@ extension MyPageCoordinator: MyPageNavigation {
         navigationController.pushViewController(myPageVC, animated: true)
     }
 }
-
-protocol MyPageNavigation: AnyObject {
-    func goToMyPage()
-}
-

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CalendarNavigation: AnyObject {
+    func goToCalendar()
+}
+
 final class CalendarCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
@@ -26,8 +30,4 @@ extension CalendarCoordinator: CalendarNavigation {
         let calendarVC = CalendarViewController(coordinator: self)
         navigationController.pushViewController(calendarVC, animated: true)
     }
-}
-
-protocol CalendarNavigation: AnyObject {
-    func goToCalendar()
 }

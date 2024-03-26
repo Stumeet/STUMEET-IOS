@@ -9,6 +9,16 @@ import UIKit
 import PhotosUI
 import Moya
 
+protocol RegisterNavigation: AnyObject {
+    func goToChangeProfileVC()
+    func goToNickNameVC(image: Data)
+    func goToSelectRegionVC(register: Register)
+    func goToSelectFieldVC(register: Register)
+    func goToHomeVC()
+    func presentPHPickerView(pickerVC: PHPickerViewController)
+    func presentToStartVC(register: Register)
+}
+
 final class RegisterCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
@@ -102,14 +112,4 @@ extension RegisterCoordinator: RegisterNavigation {
         startVC.modalPresentationStyle = .fullScreen
         lastVC.present(startVC, animated: true)
     }
-}
-
-protocol RegisterNavigation: AnyObject {
-    func goToChangeProfileVC()
-    func goToNickNameVC(image: Data)
-    func goToSelectRegionVC(register: Register)
-    func goToSelectFieldVC(register: Register)
-    func goToHomeVC()
-    func presentPHPickerView(pickerVC: PHPickerViewController)
-    func presentToStartVC(register: Register)
 }
