@@ -8,9 +8,16 @@
 import UIKit
 import Moya
 
-final class AuthCoordinator: CoordinatorTest {
-    var parentCoordinator: CoordinatorTest?
-    var children: [CoordinatorTest] = []
+protocol AuthNavigation: AnyObject {
+    func goToSnsLoginVC()
+    func goToOnboardingVC()
+    func goToHomeVC()
+    func goToRegisterVC()
+}
+
+final class AuthCoordinator: Coordinator {
+    var parentCoordinator: Coordinator?
+    var children: [Coordinator] = []
     var navigationController: UINavigationController
     
     private let accessTokenPlugin = AccessTokenPlugin { _ in
@@ -23,26 +30,37 @@ final class AuthCoordinator: CoordinatorTest {
     }
     
     func start() {
-        goToOnboarding()
+        goToOnboardingVC()
+    }
+    
+    deinit {
+        print("AuthCoordinator - 코디네이터 해제")
     }
 }
 
 extension AuthCoordinator: AuthNavigation {
-    func goToSnsLogin() {
+    func goToSnsLoginVC() {
         let repository = DefaultLoginRepository(provider: MoyaProvider<PrototypeAPIService>(plugins: [accessTokenPlugin]))
         let viewModel = SnsLoginViewModel(repository: repository)
         let registerVC = SnsLoginViewController(viewModel: viewModel, coordinator: self)
         navigationController.pushViewController(registerVC, animated: true)
     }
     
-    func goToOnboarding() {
+    func goToOnboardingVC() {
         let viewModel = OnboardingViewModel()
         let onboardingVC = OnboardingViewController(viewModel: viewModel, coordinator: self)
         navigationController.pushViewController(onboardingVC, animated: true)
     }
-}
 
-protocol AuthNavigation: AnyObject {
-    func goToSnsLogin()
-    func goToOnboarding()
+    func goToHomeVC() {
+        let appCoordinator = parentCoordinator as! AppCoordinator
+        appCoordinator.startTabbarCoordinator()
+        appCoordinator.childDidFinish(self)
+    }
+    
+    func goToRegisterVC() {
+        let appCoordinator = parentCoordinator as! AppCoordinator
+        appCoordinator.startRegisterCoordinator()
+        appCoordinator.childDidFinish(self)
+    }
 }

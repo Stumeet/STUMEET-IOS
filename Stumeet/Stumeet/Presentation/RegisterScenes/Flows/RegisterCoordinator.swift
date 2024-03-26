@@ -2,35 +2,52 @@
 //  RegisterCoordinator.swift
 //  Stumeet
 //
-//  Created by 정지훈 on 2/14/24.
+//  Created by 조웅희 on 2024/03/24.
 //
 
 import UIKit
 import PhotosUI
-
 import Moya
 
-class RegisterCoordinator: Coordinator {
-    
-    // TODO: 온보딩 Coordinator와 결합
-    
+protocol RegisterNavigation: AnyObject {
+    func goToChangeProfileVC()
+    func goToNickNameVC(image: Data)
+    func goToSelectRegionVC(register: Register)
+    func goToSelectFieldVC(register: Register)
+    func goToHomeVC()
+    func presentPHPickerView(pickerVC: PHPickerViewController)
+    func presentToStartVC(register: Register)
+}
+
+final class RegisterCoordinator: Coordinator {
+    var parentCoordinator: Coordinator?
+    var children: [Coordinator] = []
     var navigationController: UINavigationController
-    var childCoordinators: [Coordinator] = []
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
     func start() {
+        goToChangeProfileVC()
+    }
+    
+    deinit {
+        print("RegisterCoordinator - 코디네이터 해제")
+    }
+}
+
+extension RegisterCoordinator: RegisterNavigation {
+
+    func goToChangeProfileVC() {
         let useCase = DefaultChangeProfileUseCase()
         let changeVC = ChangeProfileViewController(
             viewModel: ChangeProfileViewModel(useCase: useCase),
             coordinator: self)
-        childCoordinators.append(self)
         navigationController.pushViewController(changeVC, animated: true)
     }
     
-    func navigateToNickNameVC(image: Data) {
+    func goToNickNameVC(image: Data) {
         let provider = MoyaProvider<RegisterService>()
         let register = Register(
             profileImage: image,
@@ -44,7 +61,7 @@ class RegisterCoordinator: Coordinator {
         navigationController.pushViewController(nicknameVC, animated: true)
     }
     
-    func navigateToSelectRegionVC(register: Register) {
+    func goToSelectRegionVC(register: Register) {
         let useCase = DefaultSelectRegionUseCase(repository: DefaultRegionRepository())
         let selectRegionVC = SelectRegionViewController(
             viewModel: SelectRegionViewModel(useCase: useCase, register: register),
@@ -52,13 +69,31 @@ class RegisterCoordinator: Coordinator {
         navigationController.pushViewController(selectRegionVC, animated: true)
     }
     
-    func navigateToSelectFieldVC(register: Register) {
+    func goToSelectFieldVC(register: Register) {
         let provider = MoyaProvider<RegisterService>()
         let useCase = DefaultSelectFieldUseCase(repository: DefaultSelectFieldRepository(provider: provider))
         let selectFieldVC = SelectFieldViewController(
             viewModel: SelecteFieldViewModel(useCase: useCase, register: register),
             coordinator: self)
         navigationController.pushViewController(selectFieldVC, animated: true)
+    }
+    
+    func goToHomeVC() {
+        // !IMP: StartVC의 경우 modal이기에 일단은 dismiss로 모달을 닫고 홈으로 넘어 가게 만들었지만 동작이 어색하기에
+        // 로직 수정이 필요할 것으로 보임
+        let appCoordinator = parentCoordinator as! AppCoordinator
+        
+        let completion = {
+            appCoordinator.startTabbarCoordinator()
+            appCoordinator.childDidFinish(self)
+        }
+        
+        if let presentedViewController = navigationController.presentedViewController {
+            presentedViewController.dismiss(animated: true, completion: completion)
+        } else {
+            completion()
+        }
+        
     }
     
     func presentPHPickerView(pickerVC: PHPickerViewController) {
@@ -76,10 +111,5 @@ class RegisterCoordinator: Coordinator {
         startVC.transitioningDelegate = lastVC
         startVC.modalPresentationStyle = .fullScreen
         lastVC.present(startVC, animated: true)
-    }
-    
-    func presentToTabBar() {
-        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
-        tabBarCoordinator.start()
     }
 }

@@ -8,7 +8,20 @@
 import UIKit
 
 class MyPageViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    private weak var coordinator: MyPageNavigation!
+    
+    // MARK: - Init
+    init( coordinator: MyPageNavigation ) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

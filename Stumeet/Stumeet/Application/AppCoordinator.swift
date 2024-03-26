@@ -7,26 +7,40 @@
 
 import UIKit
 
-final class AppCoordinator: CoordinatorTest {
-    var parentCoordinator: CoordinatorTest?
-    
-    var children: [CoordinatorTest] = []
-    
+final class AppCoordinator: Coordinator {
+    var parentCoordinator: Coordinator?
+    var children: [Coordinator] = []    
     var navigationController: UINavigationController
     
     func start() {
-        makeAuthCoordinator()
+        startAuthCoordinator()
     }
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
-    func makeAuthCoordinator() {
+    func startAuthCoordinator() {
         let onboardingCoordinator = AuthCoordinator(navigationController: navigationController)
         children.removeAll()
         onboardingCoordinator.parentCoordinator = self
         children.append(onboardingCoordinator)
         onboardingCoordinator.start()
     }
+    
+    func startRegisterCoordinator() {
+        let registerCoordinator = RegisterCoordinator(navigationController: navigationController)
+        children.removeAll()
+        registerCoordinator.parentCoordinator = self
+        children.append(registerCoordinator)
+        registerCoordinator.start()
+    }
+    
+    func startTabbarCoordinator() {
+        let tabbarCoordinator = TabBarCoordinator(navigationController: navigationController)
+        children.removeAll()
+        tabbarCoordinator.parentCoordinator = self
+        tabbarCoordinator.start()
+    }
+    
 }

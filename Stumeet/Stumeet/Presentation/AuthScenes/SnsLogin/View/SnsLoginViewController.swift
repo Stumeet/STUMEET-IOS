@@ -7,7 +7,6 @@
 
 import UIKit
 import Combine
-import KakaoSDKUser
 
 class SnsLoginViewController: BaseViewController {
     // MARK: - UIComponents
@@ -70,7 +69,6 @@ class SnsLoginViewController: BaseViewController {
     // MARK: - Properties
     private weak var coordinator: AuthNavigation!
     private let viewModel: SnsLoginViewModel
-    private let loginTypeSubject = PassthroughSubject<LoginType, Never>()
     
     // MARK: - Init
     init(viewModel: SnsLoginViewModel,
@@ -105,9 +103,6 @@ class SnsLoginViewController: BaseViewController {
             titleLabelContainer,
             buttonHStackViewContainer
         ].forEach { rootVStackView.addArrangedSubview($0) }
-        
-        appleLoginButton.addTarget(self, action: #selector(buttonTappedApple), for: .touchUpInside)
-        kakaoLoginButton.addTarget(self, action: #selector(buttonTappedKakao), for: .touchUpInside)
     }
     
     override func setupConstaints() {
@@ -140,9 +135,20 @@ class SnsLoginViewController: BaseViewController {
     }
     
     override func bind() {
+        
+        let loginTapPublisher = Publishers.Merge(
+            appleLoginButton.tapPublisher
+                .map { LoginType.apple }
+                .eraseToAnyPublisher(),
+            kakaoLoginButton.tapPublisher
+                .map { LoginType.kakao }
+                .eraseToAnyPublisher()
+        ).eraseToAnyPublisher()
+        
+            
         // MARK: - Input
         let input = SnsLoginViewModel.Input(
-            loginType: loginTypeSubject.eraseToAnyPublisher()
+            loginType: loginTapPublisher
         )
         
         // MARK: - Output
@@ -152,7 +158,7 @@ class SnsLoginViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 // TODO: 프로필 변경 화면으로 변경
-                self?.coordinator.goToOnboarding()
+                self?.coordinator.goToRegisterVC()
             }
             .store(in: &cancellables)
         
@@ -163,13 +169,5 @@ class SnsLoginViewController: BaseViewController {
                 print(errorMessage)
             }
             .store(in: &cancellables)
-    }
-    
-    @objc func buttonTappedApple() {
-        loginTypeSubject.send(.apple)
-    }
-    
-    @objc func buttonTappedKakao() {
-        loginTypeSubject.send(.kakao)
     }
 }

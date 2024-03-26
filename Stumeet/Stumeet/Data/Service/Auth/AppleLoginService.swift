@@ -49,7 +49,8 @@ extension AppleLoginService:
                                                   userInfo: [NSLocalizedDescriptionKey: "Unable to retrieve ID Token"])))
             return
         }
-
+        // TODO: 임시코드 삭제 예정
+        UserDefaults.standard.setValue(idTokenString, forKey: PrototypeAPIConst.accessToken)
         self.authCompletion?(.success(idTokenString))
     }
     

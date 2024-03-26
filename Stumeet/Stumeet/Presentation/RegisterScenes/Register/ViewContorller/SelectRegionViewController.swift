@@ -45,13 +45,13 @@ class SelectRegionViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let coordinator: RegisterCoordinator
+    private weak var coordinator: RegisterNavigation!
     private let viewModel: SelectRegionViewModel
     private var datasource: UICollectionViewDiffableDataSource<RegionSection, Region>?
     
     // MARK: - Init
     
-    init(viewModel: SelectRegionViewModel, coordinator: RegisterCoordinator) {
+    init(viewModel: SelectRegionViewModel, coordinator: RegisterNavigation) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -149,7 +149,8 @@ class SelectRegionViewController: BaseViewController {
         // navigateToSelectFieldVC
         output.navigateToSelectFieldVC
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.navigateToSelectFieldVC)
+            .sink(receiveValue: coordinator.goToSelectFieldVC)
+//            .sink(receiveValue: { [weak self] data in self?.coordinator.goToSelectFieldVC(register: data) })
             .store(in: &cancellables)
 
     }

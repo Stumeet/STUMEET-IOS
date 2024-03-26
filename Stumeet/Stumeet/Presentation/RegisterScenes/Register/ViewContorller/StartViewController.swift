@@ -49,11 +49,11 @@ class StartViewController: BaseViewController {
     // MARK: - Properties
     
     private let viewModel: StartViewModel
-    private let coordinator: RegisterCoordinator
+    private weak var coordinator: RegisterNavigation!
     
     // MARK: - Init
     
-    init(viewModel: StartViewModel, coordinator: RegisterCoordinator) {
+    init(viewModel: StartViewModel, coordinator: RegisterNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         
@@ -115,7 +115,7 @@ class StartViewController: BaseViewController {
         output.isNaviteToTabBar
             .receive(on: RunLoop.main)
             .map { _ in}
-            .sink(receiveValue: coordinator.presentToTabBar)
+            .sink(receiveValue: coordinator.goToHomeVC)
             .store(in: &cancellables)
     }
     
