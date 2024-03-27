@@ -51,7 +51,7 @@ final class StudyActivitySettingViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private let viewModel: StudyActivitySettingViewModel
+    private let viewModel = StudyActivitySettingViewModel()
     
     // MARK: - Init
     
@@ -111,7 +111,7 @@ final class StudyActivitySettingViewController: BaseViewController {
         
         postButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(34)
-            make.leading.trailing.equalTo(16)
+            make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(72)
         }
     }
@@ -120,8 +120,31 @@ final class StudyActivitySettingViewController: BaseViewController {
     
     override func bind() {
         
+        // Input
+        let input = StudyActivitySettingViewModel.Input(
+            didTapStartDateButton: startDateButton.tapPublisher,
+            didTapEndDateButton: endDateButton.tapPublisher,
+            didTapPlaceButton: placeButton.tapPublisher,
+            didTapMemeberButton: memberButton.tapPublisher,
+            didTapPostButton: postButton.tapPublisher)
+        
+        let output = viewModel.transform(input: input)
+        
+        // Output
+        
+        // CalendarBottomSheet으로 present
+        output.showCalendar
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                let calendarVC = BottomSheetCalendarViewController()
+                calendarVC.modalPresentationStyle = .overFullScreen
+                self?.present(calendarVC, animated: false)
+            }
+            .store(in: &cancellables)
     }
 }
+
+// MARK: - UpdateUI
 
 extension StudyActivitySettingViewController {
     func createActivitySettingButton(title: String, subTitle: String, subTitleColor: StumeetColor) -> UIButton {
