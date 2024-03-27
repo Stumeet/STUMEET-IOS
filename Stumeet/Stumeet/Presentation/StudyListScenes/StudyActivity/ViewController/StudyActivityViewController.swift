@@ -129,7 +129,8 @@ class StudyActivityViewController: BaseViewController {
         output.presentToCreateActivityVC
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                let navigationController = UINavigationController(rootViewController: CreateActivityViewController())
+                let createActivityVC = CreateActivityViewController()
+                let navigationController = UINavigationController(rootViewController: createActivityVC)
                 navigationController.modalPresentationStyle = .fullScreen
                 self?.present(navigationController, animated: true)
             }

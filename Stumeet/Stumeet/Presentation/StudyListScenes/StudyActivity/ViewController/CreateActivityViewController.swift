@@ -131,6 +131,7 @@ final class CreateActivityViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = true
     }
     
     // MARK: - SetUp
@@ -147,7 +148,6 @@ final class CreateActivityViewController: BaseViewController {
     }
     
     override func setupStyles() {
-        self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .white
         noticeSwitch.transform = CGAffineTransform(scaleX: 36 / 51, y: 20 / 31)
     }
@@ -197,7 +197,7 @@ final class CreateActivityViewController: BaseViewController {
         
         xButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().offset(71)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
         }
         
         topLabel.snp.makeConstraints { make in
