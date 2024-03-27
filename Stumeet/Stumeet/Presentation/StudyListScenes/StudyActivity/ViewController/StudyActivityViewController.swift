@@ -26,7 +26,6 @@ class StudyActivityViewController: BaseViewController {
     private let floatingButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "addFloatingButton"), for: .normal)
-        //button.layer.cornerRadius = 36
         
         return button
     }()
@@ -130,9 +129,9 @@ class StudyActivityViewController: BaseViewController {
         output.presentToCreateActivityVC
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                let createActivityVC = CreateActivityViewController()
-                createActivityVC.modalPresentationStyle = .fullScreen
-                self?.present(createActivityVC, animated: true)
+                let navigationController = UINavigationController(rootViewController: CreateActivityViewController())
+                navigationController.modalPresentationStyle = .fullScreen
+                self?.present(navigationController, animated: true)
             }
             .store(in: &cancellables)
     }

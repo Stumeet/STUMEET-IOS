@@ -147,6 +147,7 @@ final class CreateActivityViewController: BaseViewController {
     }
     
     override func setupStyles() {
+        self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .white
         noticeSwitch.transform = CGAffineTransform(scaleX: 36 / 51, y: 20 / 31)
     }
@@ -261,7 +262,7 @@ final class CreateActivityViewController: BaseViewController {
     }
     
     override func bind() {
-        
+    
         // MARK: - Input
         
         let categoryButtonTaps = Publishers.Merge3(
@@ -275,7 +276,8 @@ final class CreateActivityViewController: BaseViewController {
             didBeginEditing: contentTextView.didBeginEditingPublisher,
             didTapCategoryButton: categoryButton.tapPublisher,
             didTapCategoryItem: categoryButtonTaps.eraseToAnyPublisher(),
-            didTapXButton: xButton.tapPublisher
+            didTapXButton: xButton.tapPublisher,
+            didTapNextButton: nextButton.tapPublisher
         )
         
         // MARK: - Output
@@ -340,6 +342,14 @@ final class CreateActivityViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.dismiss(animated: true)
+            })
+            .store(in: &cancellables)
+        
+        output.navigateToActivitySettingVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] _ in
+                let settingVC = StudyActivitySettingViewController()
+                self?.navigationController?.pushViewController(settingVC, animated: true)
             })
             .store(in: &cancellables)
     }

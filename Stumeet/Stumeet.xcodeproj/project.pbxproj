@@ -69,6 +69,7 @@
 		CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958522BB010C000884615 /* UITextView++Extension.swift */; };
 		CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958542BB018CB00884615 /* ActivityCategory.swift */; };
 		CA9958572BB055BD00884615 /* ActivityCreateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958562BB055BD00884615 /* ActivityCreateUseCase.swift */; };
+		CA9958592BB3EBF000884615 /* StudyActivitySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */; };
 		CA9AB2142B8C6A480027072E /* StudyActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB2132B8C6A480027072E /* StudyActivityViewModel.swift */; };
 		CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */; };
 		CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */; };
@@ -172,6 +173,7 @@
 		CA9958522BB010C000884615 /* UITextView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView++Extension.swift"; sourceTree = "<group>"; };
 		CA9958542BB018CB00884615 /* ActivityCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCategory.swift; sourceTree = "<group>"; };
 		CA9958562BB055BD00884615 /* ActivityCreateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCreateUseCase.swift; sourceTree = "<group>"; };
+		CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySettingViewController.swift; sourceTree = "<group>"; };
 		CA9AB2132B8C6A480027072E /* StudyActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityViewModel.swift; sourceTree = "<group>"; };
 		CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityUseCase.swift; sourceTree = "<group>"; };
 		CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityRepository.swift; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 			children = (
 				CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */,
 				CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */,
+				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1111,6 +1114,7 @@
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA9958572BB055BD00884615 /* ActivityCreateUseCase.swift in Sources */,
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
+				CA9958592BB3EBF000884615 /* StudyActivitySettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1285,7 +1289,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WBG9V97XP4;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1314,7 +1318,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WBG9V97XP4;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

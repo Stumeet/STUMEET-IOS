@@ -19,6 +19,7 @@ final class CreateActivityViewModel: ViewModelType {
         let didTapCategoryButton: AnyPublisher<Void, Never>
         let didTapCategoryItem: AnyPublisher<ActivityCategory, Never>
         let didTapXButton: AnyPublisher<Void, Never>
+        let didTapNextButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -30,6 +31,7 @@ final class CreateActivityViewModel: ViewModelType {
         let selectedCategory: AnyPublisher<ActivityCategory, Never>
         let isShowMaxLengthContentAlert: AnyPublisher<Bool, Never>
         let dismiss: AnyPublisher<Void, Never>
+        let navigateToActivitySettingVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -78,13 +80,16 @@ final class CreateActivityViewModel: ViewModelType {
         let dismiss = input.didTapXButton
             .eraseToAnyPublisher()
         
+        let navigateToActivitySettingVC = input.didTapNextButton.eraseToAnyPublisher()
+        
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
             showCategoryStackView: showCategoryStackView,
             selectedCategory: selectedCategory,
             isShowMaxLengthContentAlert: isShowAlert,
-            dismiss: dismiss
+            dismiss: dismiss,
+            navigateToActivitySettingVC: navigateToActivitySettingVC
         )
     }
 }
