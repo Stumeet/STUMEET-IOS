@@ -9,21 +9,18 @@ import Moya
 import CombineMoya
 import Combine
 
-protocol LoginRepository {
-    func requestLogin() -> AnyPublisher<PrototypeAPIData<PrototypeOauth>, MoyaError>
-}
-
 class DefaultLoginRepository: LoginRepository {
-    private let provider: MoyaProvider<PrototypeAPIService>
-    
-    init(provider: MoyaProvider<PrototypeAPIService>) {
+    private let provider: MoyaProvider<AuthService>
+        
+    init(provider: MoyaProvider<AuthService>) {
         self.provider = provider
     }
     
-    func requestLogin() -> AnyPublisher<PrototypeAPIData<PrototypeOauth>, MoyaError> {
+    func requestLogin() -> AnyPublisher<SessionTokens, MoyaError> {
         return provider.requestPublisher(.login)
-            .map(PrototypeAPIData<PrototypeOauth>.self)
-            .catch { error -> AnyPublisher<PrototypeAPIData<PrototypeOauth>, MoyaError> in
+            .map(ResponseWithDataDTO<SessionTokensDTO>.self)
+            .map{ $0.data.toDomain()}
+            .catch { error -> AnyPublisher<SessionTokens, MoyaError> in
                 print("Error: \(error)")
                 return Fail(error: error).eraseToAnyPublisher()
             }

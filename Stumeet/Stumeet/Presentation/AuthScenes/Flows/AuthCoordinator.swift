@@ -19,12 +19,7 @@ final class AuthCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
-    
-    private let accessTokenPlugin = AccessTokenPlugin { _ in
-        // TODO: nil인경우 재발급 등 추가 로직 필요
-        KeychainManager.shared.getToken(for: PrototypeAPIConst.loginSnsToken) ?? ""
-    }
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -40,8 +35,10 @@ final class AuthCoordinator: Coordinator {
 
 extension AuthCoordinator: AuthNavigation {
     func goToSnsLoginVC() {
-        let repository = DefaultLoginRepository(provider: MoyaProvider<PrototypeAPIService>(plugins: [accessTokenPlugin]))
-        let viewModel = SnsLoginViewModel(repository: repository)
+        let keychainManager = KeychainManager()
+        let networkServiceProvider = NetworkServiceProvider(keychainManager: keychainManager)
+        let repository = DefaultLoginRepository(provider: networkServiceProvider.makeProvider())
+        let viewModel = SnsLoginViewModel(repository: repository, keychainManager: keychainManager)
         let registerVC = SnsLoginViewController(viewModel: viewModel, coordinator: self)
         navigationController.pushViewController(registerVC, animated: true)
     }

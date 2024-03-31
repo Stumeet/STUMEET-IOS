@@ -1,24 +1,19 @@
 //
-//  PrototypeAPIService.swift
+//  AuthService.swift
 //  Stumeet
 //
-//  Created by 조웅희 on 2024/02/28.
+//  Created by 조웅희 on 2024/03/26.
 //
 
 import Moya
-import Foundation
 
-
-enum PrototypeAPIService {
+enum AuthService {
     case login
 }
 
-extension PrototypeAPIService:
-    TargetType,
+extension AuthService:
+    BaseTargetType,
     AccessTokenAuthorizable {
-   
-    // MARK: - TargetType
-    var baseURL: URL { return URL(string: AppConfiguration.getApiBaseURL)! }
 
     var path: String {
         switch self {
@@ -27,7 +22,7 @@ extension PrototypeAPIService:
         }
     }
     
-    var method: Moya.Method {
+    var method: Method {
         switch self {
         case .login:
             return .post
@@ -38,14 +33,6 @@ extension PrototypeAPIService:
         switch self {
         case .login:
             return .requestPlain
-        }
-    }
-    
-    var headers: [String: String]? {
-        switch self {
-        case .login:
-            return ["X-OAUTH-PROVIDER": PrototypeAPIConst.getLoginType(),
-                    "Content-Type": "application/x-www-form-urlencoded"]
         }
     }
     

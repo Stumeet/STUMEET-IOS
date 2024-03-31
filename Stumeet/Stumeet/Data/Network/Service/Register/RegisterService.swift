@@ -68,11 +68,11 @@ extension RegisterService: TargetType, AccessTokenAuthorizable {
         case .signUp:
             return [
                 "Content-type": "multipart/form-data",
-                "Authorization": "Bearer \(PrototypeAPIConst.getToken())"
+                "Authorization": "Bearer \(APIConst.getToken())"
             ]
         default:
             return [
-                "Authorization": "Bearer \(PrototypeAPIConst.getToken())",
+                "Authorization": "Bearer \(APIConst.getToken())",
                 "Content-Type": "application/json"
             ]
         }

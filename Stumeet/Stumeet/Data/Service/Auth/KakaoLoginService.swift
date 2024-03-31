@@ -33,7 +33,7 @@ class KakaoLoginService: LoginService {
         } else if let oauthToken = oauthToken {
             
             // TODO: 임시코드 삭제 예정
-            UserDefaults.standard.setValue(oauthToken.accessToken, forKey: PrototypeAPIConst.accessToken)
+            UserDefaults.standard.setValue(oauthToken.accessToken, forKey: APIConst.accessToken)
             
             promise(.success(oauthToken.accessToken))
         } else {

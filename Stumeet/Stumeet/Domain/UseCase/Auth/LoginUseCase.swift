@@ -15,12 +15,15 @@ protocol LoginUseCase {
 final class DefaultLoginUseCase: LoginUseCase {
     private let service: LoginService
     private let repository: LoginRepository
+    private var keychainManager: KeychainManageable
     
     init(service: LoginService,
-         repository: LoginRepository
+         repository: LoginRepository,
+         keychainManager: KeychainManageable
     ) {
         self.service = service
         self.repository = repository
+        self.keychainManager = keychainManager
     }
 
     func signIn() -> AnyPublisher<Bool, Error> {
@@ -31,7 +34,7 @@ final class DefaultLoginUseCase: LoginUseCase {
                 }
                 
                 // SNS 토큰을 Keychain에 저장
-                let isTokenSaved = KeychainManager.shared.saveToken(snsToken, for: PrototypeAPIConst.loginSnsToken)
+                let isTokenSaved = self.keychainManager.saveToken(snsToken, for: APIConst.loginSnsToken)
                 guard isTokenSaved else {
                     return Empty().eraseToAnyPublisher()
                 }
@@ -39,11 +42,8 @@ final class DefaultLoginUseCase: LoginUseCase {
                 // SNS 토큰 저장 성공 후 로그인 요청
                 return self.repository.requestLogin()
                     .map { data in
-                        guard let accessToken = data.data?.accessToken
-                        else { return false }
-                        
                         // AccessToken을 Keychain에 저장
-                        return KeychainManager.shared.saveToken(accessToken, for: PrototypeAPIConst.accessToken)
+                        return self.keychainManager.saveToken(data.accessToken, for: APIConst.accessToken)
                     }
                     .catch { error in
                         Fail(error: error).eraseToAnyPublisher()
