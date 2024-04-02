@@ -7,11 +7,10 @@
 
 import Foundation
 
-
 struct SessionTokensDTO: Decodable {
-    var accessToken: String
-    var refreshToken: String
-    var isFirstLogin: Bool
+    let accessToken: String
+    let refreshToken: String
+    let isFirstLogin: Bool
 }
 
 extension SessionTokensDTO {

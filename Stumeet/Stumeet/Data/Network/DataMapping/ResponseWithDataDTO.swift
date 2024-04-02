@@ -10,5 +10,5 @@ import Foundation
 struct ResponseWithDataDTO<T: Decodable>: Decodable {
     let code: Int
     let message: String
-    let data: T
+    let data: T?
 }

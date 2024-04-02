@@ -8,7 +8,7 @@
 import Foundation
 
 struct SessionTokens {
-    var accessToken: String
-    var refreshToken: String
-    var isFirstLogin: Bool
+    let accessToken: String
+    let refreshToken: String
+    let isFirstLogin: Bool
 }

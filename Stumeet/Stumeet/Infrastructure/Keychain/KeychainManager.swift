@@ -9,9 +9,9 @@ import Foundation
 import Security
 
 protocol KeychainManageable {
-func saveToken(_ token: String, for key: String) -> Bool
-func removeToken(for key: String) -> Bool
-func getToken(for key: String) -> String?
+    func saveToken(_ token: String, for key: String) -> Bool
+    func removeToken(for key: String) -> Bool
+    func getToken(for key: String) -> String?
 }
 
 final class KeychainManager: KeychainManageable {

@@ -36,7 +36,18 @@ final class AuthCoordinator: Coordinator {
 extension AuthCoordinator: AuthNavigation {
     func goToSnsLoginVC() {
         let keychainManager = KeychainManager()
-        let networkServiceProvider = NetworkServiceProvider(keychainManager: keychainManager)
+        // TODO: - 리프레쉬 토큰 로직 정리 필요
+        let tokenNetworkServiceProvider = NetworkServiceProvider(keychainManager: keychainManager,
+                                                                 isAccessTokenPlugin: false,
+                                                                 pluginTypes: [NetworkLoggerPlugin()])
+        let tokenRepository = DefaultUserTokenRepository(provider: tokenNetworkServiceProvider.makeProvider())
+        let tokenUseCase = DefaultTokenUseCase(repository: tokenRepository, keychainManager: keychainManager)
+        let authInterceptor = AuthInterceptor(keychainManager: keychainManager,
+                                              useCase: tokenUseCase)
+        
+        let networkServiceProvider = NetworkServiceProvider(keychainManager: keychainManager,
+                                                            interceptor: authInterceptor,
+                                                            pluginTypes: [NetworkLoggerPlugin()])
         let repository = DefaultLoginRepository(provider: networkServiceProvider.makeProvider())
         let viewModel = SnsLoginViewModel(repository: repository, keychainManager: keychainManager)
         let registerVC = SnsLoginViewController(viewModel: viewModel, coordinator: self)

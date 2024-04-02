@@ -7,21 +7,31 @@
 
 import Moya
 
-class NetworkServiceProvider {
-    private let accessTokenPlugin: AccessTokenPlugin
-    private let loggerPlugin: NetworkLoggerPlugin
+final class NetworkServiceProvider {
+    private var pluginTypes: [PluginType]
     private let keychainManager: KeychainManageable
+    private let interceptor: RequestInterceptor?
 
-    init(keychainManager: KeychainManageable) {
+    init(keychainManager: KeychainManageable,
+         isAccessTokenPlugin: Bool = true,
+         interceptor: RequestInterceptor? = nil,
+         pluginTypes: [PluginType] = []
+    ) {
         self.keychainManager = keychainManager
-        self.accessTokenPlugin = AccessTokenPlugin { _ in
-            // TODO: - 키체인 에러 케이스 로직 필요
-            keychainManager.getToken(for: APIConst.loginSnsToken) ?? ""
-        }
-        self.loggerPlugin = NetworkLoggerPlugin()
+        self.interceptor = interceptor
+        self.pluginTypes = pluginTypes
+        
+        guard isAccessTokenPlugin else { return }
+        // TODO: - 키체인 에러 케이스 로직 필요
+        self.pluginTypes.append(AccessTokenPlugin { _ in keychainManager.getToken(for: APIConst.loginSnsToken) ?? "" })
     }
 
     func makeProvider<Target: TargetType>() -> MoyaProvider<Target> {
-        return MoyaProvider<Target>(plugins: [accessTokenPlugin, loggerPlugin])
+        guard let interceptor = interceptor else {
+            return MoyaProvider<Target>(plugins: pluginTypes)
+        }
+        
+        return MoyaProvider<Target>(session: Session(interceptor: interceptor),
+                                    plugins: pluginTypes)
     }
 }

@@ -43,7 +43,8 @@ final class DefaultLoginUseCase: LoginUseCase {
                 return self.repository.requestLogin()
                     .map { data in
                         // AccessToken을 Keychain에 저장
-                        return self.keychainManager.saveToken(data.accessToken, for: APIConst.accessToken)
+                        return self.keychainManager.saveToken(data.accessToken, for: APIConst.accessToken) &&
+                        self.keychainManager.saveToken(data.refreshToken, for: APIConst.refreshToken)
                     }
                     .catch { error in
                         Fail(error: error).eraseToAnyPublisher()

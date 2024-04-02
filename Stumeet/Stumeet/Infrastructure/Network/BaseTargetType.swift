@@ -14,6 +14,7 @@ protocol BaseTargetType: TargetType {
     var method: Moya.Method {get}
     var task: Task {get}
     var headers: [String: String]? {get}
+    var validationType: ValidationType {get}
 }
 
 extension BaseTargetType {
@@ -21,5 +22,9 @@ extension BaseTargetType {
     var headers: [String: String]? {
         return ["X-OAUTH-PROVIDER": APIConst.getLoginType(),
                 "Content-Type": "application/x-www-form-urlencoded"]
+    }
+
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

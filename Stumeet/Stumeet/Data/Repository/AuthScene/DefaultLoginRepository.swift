@@ -19,7 +19,7 @@ class DefaultLoginRepository: LoginRepository {
     func requestLogin() -> AnyPublisher<SessionTokens, MoyaError> {
         return provider.requestPublisher(.login)
             .map(ResponseWithDataDTO<SessionTokensDTO>.self)
-            .map{ $0.data.toDomain()}
+            .compactMap { $0.data?.toDomain()}
             .catch { error -> AnyPublisher<SessionTokens, MoyaError> in
                 print("Error: \(error)")
                 return Fail(error: error).eraseToAnyPublisher()

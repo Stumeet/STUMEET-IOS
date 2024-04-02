@@ -114,14 +114,12 @@ class SelectRegionViewController: BaseViewController {
     override func bind() {
         
         // MARK: - Input
-        
         let input = SelectRegionViewModel.Input(
             didSelectItem: tagCollectionView.didSelectItemPublisher,
             didTapNextButton: nextButton.tapPublisher
         )
         
         // MARK: - Output
-        
         let output = viewModel.transform(input: input)
         
         // collectiionview snapshot
