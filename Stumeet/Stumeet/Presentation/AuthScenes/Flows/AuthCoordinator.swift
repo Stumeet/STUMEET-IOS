@@ -40,8 +40,8 @@ extension AuthCoordinator: AuthNavigation {
         let tokenNetworkServiceProvider = NetworkServiceProvider(keychainManager: keychainManager,
                                                                  isAccessTokenPlugin: false,
                                                                  pluginTypes: [NetworkLoggerPlugin()])
-        let tokenRepository = DefaultUserTokenRepository(provider: tokenNetworkServiceProvider.makeProvider())
-        let tokenUseCase = DefaultTokenUseCase(repository: tokenRepository, keychainManager: keychainManager)
+        let tokenRepository = DefaultUserTokenRepository(provider: tokenNetworkServiceProvider.makeProvider(), keychainManager: keychainManager)
+        let tokenUseCase = DefaultTokenUseCase(repository: tokenRepository)
         let authInterceptor = AuthInterceptor(keychainManager: keychainManager,
                                               useCase: tokenUseCase)
         

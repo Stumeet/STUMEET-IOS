@@ -13,24 +13,15 @@ protocol TokenUseCase {
 }
 
 final class DefaultTokenUseCase: TokenUseCase {
-    
     private let repository: UserTokenRepository
-    private let keychainManager: KeychainManageable
     
-    init(repository: UserTokenRepository,
-         keychainManager: KeychainManageable
+    init(repository: UserTokenRepository
     ) {
         self.repository = repository
-        self.keychainManager = keychainManager
     }
-
     
     func refreshToken(accessToken: String, refreshToken: String) -> AnyPublisher<Bool, Never> {
         return repository.updateAccessToken(accessToken: accessToken, refreshToken: refreshToken)
-            .map { [weak self] result in
-                guard let self = self else { return false}
-                return self.keychainManager.saveToken(result.accessToken, for: APIConst.accessToken)
-            }
             .catch { _ in Just(false).eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }
