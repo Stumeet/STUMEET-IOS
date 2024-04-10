@@ -46,8 +46,7 @@ final class AppDIContainer {
     
     func makeRegisterSceneDIContainer() -> RegisterSceneDIContainer {
         let dependencies = RegisterSceneDIContainer.Dependencies(
-            provider: networkServiceProvider,
-            keychainManager: keychainManager
+            provider: networkServiceProvider
         )
         return RegisterSceneDIContainer(dependencies: dependencies)
     }

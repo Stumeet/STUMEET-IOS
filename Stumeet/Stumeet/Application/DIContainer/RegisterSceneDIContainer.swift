@@ -13,7 +13,6 @@ final class RegisterSceneDIContainer: RegisterCoordinatorDependencies {
     
     struct Dependencies {
         let provider: NetworkServiceProvider
-        let keychainManager: KeychainManageable
     }
     
     let dependencies: Dependencies

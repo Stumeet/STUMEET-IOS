@@ -10,6 +10,5 @@ import Foundation
 struct APIConst {
     static let accessToken = "ACCESS_TOKEN"
     static let refreshToken = "REFRESH_TOKEN"
-    static let loginType = "LOGIN_TYPE"
     static let loginSnsToken = "LOGIN_SNS_TOKEN"
 }
