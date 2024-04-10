@@ -16,8 +16,8 @@ class DefaultLoginRepository: LoginRepository {
         self.provider = provider
     }
     
-    func requestLogin() -> AnyPublisher<SessionTokens, MoyaError> {
-        return provider.requestPublisher(.login)
+    func requestLogin(loginType: LoginType) -> AnyPublisher<SessionTokens, MoyaError> {
+        return provider.requestPublisher(.login(loginType))
             .map(ResponseWithDataDTO<SessionTokensDTO>.self)
             .compactMap { $0.data?.toDomain()}
             .catch { error -> AnyPublisher<SessionTokens, MoyaError> in

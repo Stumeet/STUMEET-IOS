@@ -8,7 +8,7 @@
 import Moya
 
 enum AuthService {
-    case login
+    case login(LoginType)
 }
 
 extension AuthService: BaseTargetType {
@@ -35,7 +35,10 @@ extension AuthService: BaseTargetType {
     }
     
     var headers: [String: String]? {
-        return ["X-OAUTH-PROVIDER": APIConst.getLoginType(),
-                "Content-Type": "application/x-www-form-urlencoded"]
+        switch self {
+        case .login(let loginType):
+            return ["X-OAUTH-PROVIDER": loginType.english,
+                    "Content-Type": "application/x-www-form-urlencoded"]
+        }
     }
 }

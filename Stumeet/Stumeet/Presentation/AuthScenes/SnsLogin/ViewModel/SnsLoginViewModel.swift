@@ -45,7 +45,7 @@ final class SnsLoginViewModel: ViewModelType {
                 let service: LoginService = self.service(for: type)
                 self.useCase = DefaultLoginUseCase(service: service, repository: self.repository, keychainManager: self.keychainManager)
                 
-                return useCase.signIn()}
+                return useCase.signIn(loginType: type)}
             .catch { [weak self] error -> AnyPublisher<Bool, Never> in
                 guard let self = self
                 else { return Just(false).eraseToAnyPublisher() }
@@ -66,12 +66,9 @@ final class SnsLoginViewModel: ViewModelType {
     }
 
     private func service(for type: LoginType) -> LoginService {
-        UserDefaults.standard.setValue(type.english, forKey: APIConst.loginType)
         switch type {
-        case .apple:            
-            return AppleLoginService()
-        case .kakao:
-            return KakaoLoginService()
+        case .apple: return AppleLoginService()
+        case .kakao: return KakaoLoginService()
         }
     }
 }

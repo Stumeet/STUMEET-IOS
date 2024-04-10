@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol LoginUseCase {
-    func signIn() -> AnyPublisher<Bool, Error>
+    func signIn(loginType: LoginType) -> AnyPublisher<Bool, Error>
 }
 
 final class DefaultLoginUseCase: LoginUseCase {
@@ -26,7 +26,7 @@ final class DefaultLoginUseCase: LoginUseCase {
         self.keychainManager = keychainManager
     }
 
-    func signIn() -> AnyPublisher<Bool, Error> {
+    func signIn(loginType: LoginType) -> AnyPublisher<Bool, Error> {
         return service.fetchAuthToken()
             .flatMap { [weak self] snsToken -> AnyPublisher<Bool, Error> in
                 guard let self = self else {
@@ -40,7 +40,7 @@ final class DefaultLoginUseCase: LoginUseCase {
                 }
                 
                 // SNS 토큰 저장 성공 후 로그인 요청
-                return self.repository.requestLogin()
+                return self.repository.requestLogin(loginType: loginType)
                     .map { data in
                         // AccessToken을 Keychain에 저장
                         return self.keychainManager.saveToken(data.accessToken, for: APIConst.accessToken) &&
