@@ -9,6 +9,14 @@ import UIKit
 import PhotosUI
 import Moya
 
+protocol RegisterCoordinatorDependencies {
+    func makeChangeProfileViewController(coordinator: RegisterNavigation) -> ChangeProfileViewController
+    func makeNicknameViewController(image: Data, coordinator: RegisterNavigation) -> NicknameViewController
+    func makeSelectRegionViewController(register: Register, coordinator: RegisterNavigation) -> SelectRegionViewController
+    func makeSelectFieldViewController(register: Register, coordinator: RegisterNavigation) -> SelectFieldViewController
+    func makeStartViewController(register: Register, coordinator: RegisterNavigation) -> StartViewController
+}
+
 protocol RegisterNavigation: AnyObject {
     func goToChangeProfileVC()
     func goToNickNameVC(image: Data)
@@ -23,9 +31,12 @@ final class RegisterCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
+    private let dependencies: RegisterCoordinatorDependencies
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         dependencies: RegisterCoordinatorDependencies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
     
     func start() {
@@ -40,41 +51,22 @@ final class RegisterCoordinator: Coordinator {
 extension RegisterCoordinator: RegisterNavigation {
 
     func goToChangeProfileVC() {
-        let useCase = DefaultChangeProfileUseCase()
-        let changeVC = ChangeProfileViewController(
-            viewModel: ChangeProfileViewModel(useCase: useCase),
-            coordinator: self)
+        let changeVC = dependencies.makeChangeProfileViewController(coordinator: self)
         navigationController.pushViewController(changeVC, animated: true)
     }
     
     func goToNickNameVC(image: Data) {
-        let provider = MoyaProvider<RegisterService>()
-        let register = Register(
-            profileImage: image,
-            nickname: nil,
-            region: nil,
-            field: nil)
-        let useCase = DefaultNicknameUseCase(repository: DefaultNicknameRepository(provider: provider))
-        let nicknameVC = NicknameViewController(
-            viewModel: NicknameViewModel(useCase: useCase, register: register),
-            coordinator: self)
+        let nicknameVC = dependencies.makeNicknameViewController(image: image, coordinator: self)
         navigationController.pushViewController(nicknameVC, animated: true)
     }
     
     func goToSelectRegionVC(register: Register) {
-        let useCase = DefaultSelectRegionUseCase(repository: DefaultRegionRepository())
-        let selectRegionVC = SelectRegionViewController(
-            viewModel: SelectRegionViewModel(useCase: useCase, register: register),
-            coordinator: self)
+        let selectRegionVC = dependencies.makeSelectRegionViewController(register: register, coordinator: self)
         navigationController.pushViewController(selectRegionVC, animated: true)
     }
     
     func goToSelectFieldVC(register: Register) {
-        let provider = MoyaProvider<RegisterService>()
-        let useCase = DefaultSelectFieldUseCase(repository: DefaultSelectFieldRepository(provider: provider))
-        let selectFieldVC = SelectFieldViewController(
-            viewModel: SelecteFieldViewModel(useCase: useCase, register: register),
-            coordinator: self)
+        let selectFieldVC = dependencies.makeSelectFieldViewController(register: register, coordinator: self)
         navigationController.pushViewController(selectFieldVC, animated: true)
     }
     
@@ -104,9 +96,8 @@ extension RegisterCoordinator: RegisterNavigation {
     
     func presentToStartVC(register: Register) {
         guard let lastVC = navigationController.viewControllers.last as? SelectFieldViewController else { return }
-        let provider = MoyaProvider<RegisterService>()
-        let useCase = DefaultStartUseCase(repository: DefualtStartRepository(provider: provider))
-        let startVC = StartViewController(viewModel: StartViewModel(useCase: useCase, register: register), coordinator: self)
+
+        let startVC = dependencies.makeStartViewController(register: register, coordinator: self)
         
         startVC.transitioningDelegate = lastVC
         startVC.modalPresentationStyle = .fullScreen

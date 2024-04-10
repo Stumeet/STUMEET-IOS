@@ -8,6 +8,11 @@
 import UIKit
 import Moya
 
+protocol AuthCoordinatorDependencies {
+    func makeSnsLoginViewController(coordinator: AuthNavigation) -> SnsLoginViewController
+    func makeOnboardingViewController(coordinator: AuthNavigation) -> OnboardingViewController
+}
+
 protocol AuthNavigation: AnyObject {
     func goToSnsLoginVC()
     func goToOnboardingVC()
@@ -19,9 +24,12 @@ final class AuthCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
+    private let dependencies: AuthCoordinatorDependencies
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         dependencies: AuthCoordinatorDependencies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
     
     func start() {
@@ -35,28 +43,12 @@ final class AuthCoordinator: Coordinator {
 
 extension AuthCoordinator: AuthNavigation {
     func goToSnsLoginVC() {
-        let keychainManager = KeychainManager()
-        // TODO: - 리프레쉬 토큰 로직 정리 필요
-        let tokenNetworkServiceProvider = NetworkServiceProvider(keychainManager: keychainManager,
-                                                                 isAccessTokenPlugin: false,
-                                                                 pluginTypes: [NetworkLoggerPlugin()])
-        let tokenRepository = DefaultUserTokenRepository(provider: tokenNetworkServiceProvider.makeProvider(), keychainManager: keychainManager)
-        let tokenUseCase = DefaultTokenUseCase(repository: tokenRepository)
-        let authInterceptor = AuthInterceptor(keychainManager: keychainManager,
-                                              useCase: tokenUseCase)
-        
-        let networkServiceProvider = NetworkServiceProvider(keychainManager: keychainManager,
-                                                            interceptor: authInterceptor,
-                                                            pluginTypes: [NetworkLoggerPlugin()])
-        let repository = DefaultLoginRepository(provider: networkServiceProvider.makeProvider())
-        let viewModel = SnsLoginViewModel(repository: repository, keychainManager: keychainManager)
-        let registerVC = SnsLoginViewController(viewModel: viewModel, coordinator: self)
-        navigationController.pushViewController(registerVC, animated: true)
+        let snsLoginVC = dependencies.makeSnsLoginViewController(coordinator: self)
+        navigationController.pushViewController(snsLoginVC, animated: true)
     }
     
     func goToOnboardingVC() {
-        let viewModel = OnboardingViewModel()
-        let onboardingVC = OnboardingViewController(viewModel: viewModel, coordinator: self)
+        let onboardingVC = dependencies.makeOnboardingViewController(coordinator: self)
         navigationController.pushViewController(onboardingVC, animated: true)
     }
 

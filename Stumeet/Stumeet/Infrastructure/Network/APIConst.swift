@@ -20,13 +20,4 @@ struct APIConst {
         }
         return ""
     }
-    
-    // TODO: - 임시 코드 삭제 예정
-    static func getToken() -> String {
-        if let token = UserDefaults.standard.value(forKey: APIConst.accessToken) as? String {
-            print("accessToken \(token)")
-            return token
-        }
-        return ""
-    }
 }

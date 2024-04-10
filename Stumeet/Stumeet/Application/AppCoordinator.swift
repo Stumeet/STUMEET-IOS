@@ -9,31 +9,36 @@ import UIKit
 
 final class AppCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
-    var children: [Coordinator] = []    
+    var children: [Coordinator] = []
     var navigationController: UINavigationController
+    private let appDIContainer: AppDIContainer
     
     func start() {
         startAuthCoordinator()
     }
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         appDIContainer: AppDIContainer ) {
         self.navigationController = navigationController
+        self.appDIContainer = appDIContainer
     }
 
     func startAuthCoordinator() {
-        let onboardingCoordinator = AuthCoordinator(navigationController: navigationController)
+        let authSceneDIContainer = appDIContainer.makeAuthSceneDIContainer()
+        let flow = authSceneDIContainer.makeAuthCoordinator(navigationController: navigationController)
         children.removeAll()
-        onboardingCoordinator.parentCoordinator = self
-        children.append(onboardingCoordinator)
-        onboardingCoordinator.start()
+        flow.parentCoordinator = self
+        children.append(flow)
+        flow.start()
     }
     
     func startRegisterCoordinator() {
-        let registerCoordinator = RegisterCoordinator(navigationController: navigationController)
+        let registerSceneDIContainer = appDIContainer.makeRegisterSceneDIContainer()
+        let flow = registerSceneDIContainer.makeRegisterCoordinator(navigationController: navigationController)
         children.removeAll()
-        registerCoordinator.parentCoordinator = self
-        children.append(registerCoordinator)
-        registerCoordinator.start()
+        flow.parentCoordinator = self
+        children.append(flow)
+        flow.start()
     }
     
     func startTabbarCoordinator() {

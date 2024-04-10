@@ -11,8 +11,7 @@ enum UserTokenService {
     case tokens(TokensRequestDTO)
 }
 
-extension UserTokenService:
-    BaseTargetType {
+extension UserTokenService: BaseTargetType {
 
     var path: String {
         switch self {

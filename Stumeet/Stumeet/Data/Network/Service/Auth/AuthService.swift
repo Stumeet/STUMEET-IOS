@@ -11,9 +11,7 @@ enum AuthService {
     case login
 }
 
-extension AuthService:
-    BaseTargetType,
-    AccessTokenAuthorizable {
+extension AuthService: BaseTargetType {
 
     var path: String {
         switch self {
@@ -36,11 +34,8 @@ extension AuthService:
         }
     }
     
-    // MARK: - AccessTokenAuthorizable
-    var authorizationType: AuthorizationType? {
-        switch self {
-        case .login:
-            return .bearer
-        }
+    var headers: [String: String]? {
+        return ["X-OAUTH-PROVIDER": APIConst.getLoginType(),
+                "Content-Type": "application/x-www-form-urlencoded"]
     }
 }
