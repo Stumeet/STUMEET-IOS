@@ -27,10 +27,13 @@ final class SnsLoginViewModel: ViewModelType {
     private let showErrorSubject = PassthroughSubject<String, Never>()
     private var useCase: AuthUseCase!
     private var repository: LoginRepository
+    private var keychainManager: KeychainManageable
     
     // MARK: - Init
-    init(repository: LoginRepository) {
+    init(repository: LoginRepository,
+         keychainManager: KeychainManageable) {
         self.repository = repository
+        self.keychainManager = keychainManager
     }
     
     // MARK: - Transform
@@ -40,9 +43,9 @@ final class SnsLoginViewModel: ViewModelType {
                 guard let self = self
                 else { return Empty().eraseToAnyPublisher() }
                 let service: LoginService = self.service(for: type)
-                self.useCase = DefaultLoginUseCase(service: service, repository: repository)
+                self.useCase = DefaultLoginUseCase(service: service, repository: self.repository, keychainManager: self.keychainManager)
                 
-                return useCase.signIn()}
+                return useCase.signIn(loginType: type)}
             .catch { [weak self] error -> AnyPublisher<Bool, Never> in
                 guard let self = self
                 else { return Just(false).eraseToAnyPublisher() }
@@ -64,12 +67,8 @@ final class SnsLoginViewModel: ViewModelType {
 
     private func service(for type: LoginType) -> LoginService {
         switch type {
-        case .apple:
-            UserDefaults.standard.setValue(type.english, forKey: PrototypeAPIConst.loginType)
-            return AppleLoginService()
-        case .kakao:
-            UserDefaults.standard.setValue(type.english, forKey: PrototypeAPIConst.loginType)
-            return KakaoLoginService()
+        case .apple: return AppleLoginService()
+        case .kakao: return KakaoLoginService()
         }
     }
 }

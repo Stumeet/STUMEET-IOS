@@ -15,13 +15,7 @@ enum RegisterService {
     case signUp(Data, RegisterRequestDTO)
 }
 
-extension RegisterService: TargetType, AccessTokenAuthorizable {
-    var authorizationType: AuthorizationType? {
-        return .bearer
-    }
-    
-    var baseURL: URL { return URL(string: "https://stumeet.shop")! }
-    
+extension RegisterService: BaseTargetType {
     var path: String {
         switch self {
         case .checkDuplicateNickname:
@@ -66,15 +60,9 @@ extension RegisterService: TargetType, AccessTokenAuthorizable {
     var headers: [String: String]? {
         switch self {
         case .signUp:
-            return [
-                "Content-type": "multipart/form-data",
-                "Authorization": "Bearer \(PrototypeAPIConst.getToken())"
-            ]
+            return ["Content-type": "multipart/form-data"]
         default:
-            return [
-                "Authorization": "Bearer \(PrototypeAPIConst.getToken())",
-                "Content-Type": "application/json"
-            ]
+            return ["Content-Type": "application/json"]
         }
     }
 }

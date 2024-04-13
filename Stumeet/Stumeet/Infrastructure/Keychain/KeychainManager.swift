@@ -8,11 +8,13 @@
 import Foundation
 import Security
 
-final class KeychainManager {
-    static let shared = KeychainManager()
-    
-    private init() {}
-    
+protocol KeychainManageable {
+    func saveToken(_ token: String, for key: String) -> Bool
+    func removeToken(for key: String) -> Bool
+    func getToken(for key: String) -> String?
+}
+
+final class KeychainManager: KeychainManageable {
     func saveToken(_ token: String, for key: String) -> Bool {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
