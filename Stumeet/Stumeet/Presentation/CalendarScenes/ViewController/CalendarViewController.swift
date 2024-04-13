@@ -8,7 +8,20 @@
 import UIKit
 
 class CalendarViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    private weak var coordinator: CalendarNavigation!
+    
+    // MARK: - Init
+    init( coordinator: CalendarNavigation ) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
