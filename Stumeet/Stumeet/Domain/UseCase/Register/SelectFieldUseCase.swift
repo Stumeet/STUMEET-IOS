@@ -28,6 +28,7 @@ final class DefaultSelectFieldUseCase: SelectFieldUseCase {
     }
     
     func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never> {
+
         return repository.getFields()
             .first()
             .map { fields in
