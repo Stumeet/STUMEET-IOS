@@ -35,21 +35,21 @@
 		35C9929D2BA73D04003B0AE7 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
-		CA1C92C62BC91A0200ECF835 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */; };
-		CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C72BC91AF700ECF835 /* CalendarView.swift */; };
-		CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */; };
-		CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */; };
-		CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */; };
-		CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */; };
 		CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */; };
 		CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEC2B918F99009D4064 /* NicknameRepository.swift */; };
 		CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */; };
 		CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF02B919341009D4064 /* RegisterService.swift */; };
 		CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */; };
+		CA1C92C62BC91A0200ECF835 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */; };
+		CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C72BC91AF700ECF835 /* CalendarView.swift */; };
+		CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */; };
+		CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */; };
+		CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */; };
 		CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */; };
 		CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */; };
 		CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */; };
 		CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE42B9311D1009C07FD /* Field.swift */; };
+		CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */; };
 		CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CB2B863BB90090DD84 /* AppDelegate.swift */; };
 		CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CC2B863BB90090DD84 /* SceneDelegate.swift */; };
@@ -183,21 +183,21 @@
 		7FCB7D7075B1E5E75906578A /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
-		CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
-		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
-		CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSection.swift; sourceTree = "<group>"; };
-		CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage++Extension.swift"; sourceTree = "<group>"; };
-		CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarUseCase.swift; sourceTree = "<group>"; };
 		CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUseCase.swift; sourceTree = "<group>"; };
 		CA0A0AEC2B918F99009D4064 /* NicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRepository.swift; sourceTree = "<group>"; };
 		CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNicknameRepository.swift; sourceTree = "<group>"; };
 		CA0A0AF02B919341009D4064 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
+		CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
+		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
+		CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSection.swift; sourceTree = "<group>"; };
+		CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage++Extension.swift"; sourceTree = "<group>"; };
 		CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestDTO.swift; sourceTree = "<group>"; };
 		CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable++Extension.swift"; sourceTree = "<group>"; };
 		CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldResponseDTO.swift; sourceTree = "<group>"; };
 		CA4E7EE42B9311D1009C07FD /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarUseCase.swift; sourceTree = "<group>"; };
 		CA6447C82B863BB90090DD84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA6447C92B863BB90090DD84 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA6447CB2B863BB90090DD84 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -542,6 +542,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CA0A0AE92B918E0A009D4064 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				CA6447D92B863BB90090DD84 /* SelectRegionUseCase.swift */,
+				CA6447DA2B863BB90090DD84 /* SelectFieldUseCase.swift */,
+				CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */,
+				CAFBF3722B9C347600507047 /* ChangeProfileUseCase.swift */,
+				CAF533552B9EB5EE00A7B8B2 /* StartUseCase.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		CA1C92C92BC92E2D00ECF835 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,16 +568,6 @@
 				CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */,
 			);
 			path = Model;
-		CA0A0AE92B918E0A009D4064 /* Register */ = {
-			isa = PBXGroup;
-			children = (
-				CA6447D92B863BB90090DD84 /* SelectRegionUseCase.swift */,
-				CA6447DA2B863BB90090DD84 /* SelectFieldUseCase.swift */,
-				CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */,
-				CAFBF3722B9C347600507047 /* ChangeProfileUseCase.swift */,
-				CAF533552B9EB5EE00A7B8B2 /* StartUseCase.swift */,
-			);
-			path = Register;
 			sourceTree = "<group>";
 		};
 		CA4E7EDA2B9307C4009C07FD /* Register */ = {
@@ -1063,14 +1065,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		CA86DC432B8DCBBD0044DB6C /* Register */ = {
-			isa = PBXGroup;
-			children = (
-				CA86DC462B8DCBF20044DB6C /* Region.swift */,
-			);
-			path = Register;
-			sourceTree = "<group>";
-		};
 		CA86DC442B8DCBC40044DB6C /* StudyActivity */ = {
 			isa = PBXGroup;
 			children = (
@@ -1078,15 +1072,6 @@
 				CA9958542BB018CB00884615 /* ActivityCategory.swift */,
 			);
 			path = StudyActivity;
-			sourceTree = "<group>";
-		};
-		CA9AB2172B8C7B770027072E /* Register */ = {
-			isa = PBXGroup;
-			children = (
-				CA6447D92B863BB90090DD84 /* SelectRegionUseCase.swift */,
-				CA6447DA2B863BB90090DD84 /* SelectFieldUseCase.swift */,
-			);
-			path = Register;
 			sourceTree = "<group>";
 		};
 		CA9AB2182B8C7B890027072E /* StudyActivity */ = {
@@ -1211,7 +1196,6 @@
 				CAD495BE2B863B6500AB61D9 /* Sources */,
 				CAD495BF2B863B6500AB61D9 /* Frameworks */,
 				CAD495C02B863B6500AB61D9 /* Resources */,
-				4A068940852E63F2CBF92172 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1257,7 +1241,6 @@
 				CAD495DE2B863B6800AB61D9 /* Sources */,
 				CAD495DF2B863B6800AB61D9 /* Frameworks */,
 				CAD495E02B863B6800AB61D9 /* Resources */,
-				0F8EB84865E28A673C07AF6F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1346,23 +1329,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0F8EB84865E28A673C07AF6F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3EF29C9CFAB404459FD6FB00 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1383,23 +1349,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4A068940852E63F2CBF92172 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stumeet/Pods-Stumeet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		73782BE96362D1195D46C257 /* [CP] Check Pods Manifest.lock */ = {
@@ -1563,7 +1512,6 @@
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
 				CA9AB2142B8C6A480027072E /* StudyActivityViewModel.swift in Sources */,
 				CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */,
-				CA64483C2B863BB90090DD84 /* RegisterCoordinator.swift in Sources */,
 				35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */,
 				357D1B902BB07D1D0079DCE6 /* MyPageCoordinator.swift in Sources */,
 				CA6448442B863BB90090DD84 /* TagCell.swift in Sources */,
