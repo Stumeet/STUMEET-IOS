@@ -9,9 +9,28 @@ import UIKit
 
 class StudyListViewController: BaseViewController {
 
+    // MARK: - UIComponents
+    
     let button: UIButton = {
         return UIButton().makeRegisterBottomButton(text: "활동", color: .black)
     }()
+    
+    // MARK: - Properties
+    
+    private let coordinator: StudyListCoordinator
+    
+    // MARK: - Init
+    
+    init(coordinator: StudyListCoordinator) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

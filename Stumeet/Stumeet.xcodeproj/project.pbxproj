@@ -40,6 +40,8 @@
 		CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */; };
 		CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF02B919341009D4064 /* RegisterService.swift */; };
 		CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */; };
+		CA194E902BCA60A50090E97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
+		CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA194E912BCA619C0090E97C /* RegionSection.swift */; };
 		CA1C92C62BC91A0200ECF835 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */; };
 		CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C72BC91AF700ECF835 /* CalendarView.swift */; };
 		CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */; };
@@ -50,7 +52,6 @@
 		CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */; };
 		CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE42B9311D1009C07FD /* Field.swift */; };
 		CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */; };
-		CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CB2B863BB90090DD84 /* AppDelegate.swift */; };
 		CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CC2B863BB90090DD84 /* SceneDelegate.swift */; };
 		CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447D22B863BB90090DD84 /* RegionRepository.swift */; };
@@ -101,7 +102,6 @@
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
-		CA86DC472B8DCBF20044DB6C /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC462B8DCBF20044DB6C /* Region.swift */; };
 		CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */; };
 		CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */; };
 		CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958522BB010C000884615 /* UITextView++Extension.swift */; };
@@ -167,8 +167,6 @@
 		357D1B892BB07BA20079DCE6 /* StudyListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListCoordinator.swift; sourceTree = "<group>"; };
 		357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
 		357D1B8F2BB07D1D0079DCE6 /* MyPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCoordinator.swift; sourceTree = "<group>"; };
-		35B3755B2B9760B600B82529 /* Config(debug).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
-		35B3755C2B97615C00B82529 /* Config(release).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewController.swift; sourceTree = "<group>"; };
 		35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
@@ -188,6 +186,7 @@
 		CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNicknameRepository.swift; sourceTree = "<group>"; };
 		CA0A0AF02B919341009D4064 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
+		CA194E912BCA619C0090E97C /* RegionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSection.swift; sourceTree = "<group>"; };
 		CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
 		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
@@ -407,15 +406,6 @@
 				357D1B8F2BB07D1D0079DCE6 /* MyPageCoordinator.swift */,
 			);
 			path = Flows;
-			sourceTree = "<group>";
-		};
-		35B3755A2B97609600B82529 /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-				35B3755B2B9760B600B82529 /* Config(debug).xcconfig */,
-				35B3755C2B97615C00B82529 /* Config(release).xcconfig */,
-			);
-			path = Configurations;
 			sourceTree = "<group>";
 		};
 		35BDF6F02B88CEFA000B6DCB /* AuthScenes */ = {
@@ -776,6 +766,7 @@
 		CA6447F32B863BB90090DD84 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CA194E912BCA619C0090E97C /* RegionSection.swift */,
 				CA6447F42B863BB90090DD84 /* FieldSection.swift */,
 				CA6447F52B863BB90090DD84 /* Region.swift */,
 			);
@@ -1100,16 +1091,24 @@
 			path = StudyActivity;
 			sourceTree = "<group>";
 		};
+		CAD338052BCA5E11001DB8BE /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				CA86DC462B8DCBF20044DB6C /* Region.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		CAD495B92B863B6500AB61D9 = {
 			isa = PBXGroup;
 			children = (
-				35B3755A2B97609600B82529 /* Configurations */,
 				CAD495C42B863B6500AB61D9 /* Stumeet */,
 				CAD495DB2B863B6800AB61D9 /* StumeetTests */,
 				CAD495E52B863B6800AB61D9 /* StumeetUITests */,
 				CAD495C32B863B6500AB61D9 /* Products */,
 				3729421BD57B2BEAA52C2593 /* Pods */,
 				E4B1323A2D4A353F2BA124D9 /* Frameworks */,
+				CAD338052BCA5E11001DB8BE /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1307,8 +1306,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA194E902BCA60A50090E97C /* Assets.xcassets in Resources */,
 				CAD495D22B863B6800AB61D9 /* LaunchScreen.storyboard in Resources */,
-				CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1486,7 +1485,6 @@
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
-				CA86DC472B8DCBF20044DB6C /* Region.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */,
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,
 				CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */,
@@ -1529,6 +1527,7 @@
 				357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */,
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
+				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1697,7 +1696,7 @@
 		};
 		CAD495ED2B863B6900AB61D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35B3755B2B9760B600B82529 /* Config(debug).xcconfig */;
+			baseConfigurationReference = 849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1729,7 +1728,7 @@
 		};
 		CAD495EE2B863B6900AB61D9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35B3755C2B97615C00B82529 /* Config(release).xcconfig */;
+			baseConfigurationReference = C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
