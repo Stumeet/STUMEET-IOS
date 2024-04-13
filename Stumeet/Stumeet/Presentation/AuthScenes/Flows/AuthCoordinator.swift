@@ -8,6 +8,11 @@
 import UIKit
 import Moya
 
+protocol AuthCoordinatorDependencies {
+    func makeSnsLoginViewController(coordinator: AuthNavigation) -> SnsLoginViewController
+    func makeOnboardingViewController(coordinator: AuthNavigation) -> OnboardingViewController
+}
+
 protocol AuthNavigation: AnyObject {
     func goToSnsLoginVC()
     func goToOnboardingVC()
@@ -19,14 +24,12 @@ final class AuthCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
-    
-    private let accessTokenPlugin = AccessTokenPlugin { _ in
-        // TODO: nil인경우 재발급 등 추가 로직 필요
-        KeychainManager.shared.getToken(for: PrototypeAPIConst.loginSnsToken) ?? ""
-    }
-    
-    init(navigationController: UINavigationController) {
+    private let dependencies: AuthCoordinatorDependencies
+
+    init(navigationController: UINavigationController,
+         dependencies: AuthCoordinatorDependencies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
     
     func start() {
@@ -40,15 +43,12 @@ final class AuthCoordinator: Coordinator {
 
 extension AuthCoordinator: AuthNavigation {
     func goToSnsLoginVC() {
-        let repository = DefaultLoginRepository(provider: MoyaProvider<PrototypeAPIService>(plugins: [accessTokenPlugin]))
-        let viewModel = SnsLoginViewModel(repository: repository)
-        let registerVC = SnsLoginViewController(viewModel: viewModel, coordinator: self)
-        navigationController.pushViewController(registerVC, animated: true)
+        let snsLoginVC = dependencies.makeSnsLoginViewController(coordinator: self)
+        navigationController.pushViewController(snsLoginVC, animated: true)
     }
     
     func goToOnboardingVC() {
-        let viewModel = OnboardingViewModel()
-        let onboardingVC = OnboardingViewController(viewModel: viewModel, coordinator: self)
+        let onboardingVC = dependencies.makeOnboardingViewController(coordinator: self)
         navigationController.pushViewController(onboardingVC, animated: true)
     }
 

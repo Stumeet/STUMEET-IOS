@@ -31,10 +31,6 @@ class KakaoLoginService: LoginService {
         if let error = error {
             promise(.failure(error))
         } else if let oauthToken = oauthToken {
-            
-            // TODO: 임시코드 삭제 예정
-            UserDefaults.standard.setValue(oauthToken.accessToken, forKey: PrototypeAPIConst.accessToken)
-            
             promise(.success(oauthToken.accessToken))
         } else {
             promise(.failure(NSError(domain: "KakaoLoginError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unknown login error"])))

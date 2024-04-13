@@ -13,6 +13,8 @@ import KakaoSDKAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
+    let appDIContainer = AppDIContainer()
+    var appCoordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -20,8 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
 
         PretendardKit.register()
-        let appCoordinator = AppCoordinator(navigationController: navigationController)
-        appCoordinator.start()
+        appCoordinator = AppCoordinator(
+            navigationController: navigationController,
+            appDIContainer: appDIContainer
+        )
+        appCoordinator?.start()
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
