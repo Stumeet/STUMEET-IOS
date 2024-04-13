@@ -29,6 +29,9 @@ class BottomSheetCalendarViewController: BaseViewController {
         return view
     }()
     
+    
+    private let dragIndicatorContainerView = UIView()
+    
     private let dragIndicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
@@ -37,11 +40,61 @@ class BottomSheetCalendarViewController: BaseViewController {
         
     }()
     
-    private let dragIndicatorContainerView = UIView()
+    private let calendarButton: UIButton = {
+        let button = UIButton()
+        var config = UIButton.Configuration.plain()
+        
+        config.image = UIImage(named: "calendar")
+        config.imagePadding = 4
+        config.attributedTitle = .init(
+            "2024. 1. 29 월요일",
+            attributes: AttributeContainer([
+                .font: StumeetFont.bodyMedium15.font
+            ]))
+        config.baseForegroundColor = StumeetColor.primary700.color
+        config.contentInsets = .init(top: 0, leading: 19, bottom: 0, trailing: 19)
+        
+        button.configuration = config
+        button.layer.borderWidth = 1
+        button.layer.borderColor = StumeetColor.primary700.color.cgColor
+        button.layer.cornerRadius = 16
+        
+        return button
+    }()
+    
+    private let dateButton: UIButton = {
+        let button = UIButton()
+        var config = UIButton.Configuration.plain()
+        
+        config.image = UIImage(named: "clock")?.resized(to: .init(width: 24, height: 24))
+        config.imagePadding = 4
+        config.attributedTitle = .init(
+            "시간 선택...",
+            attributes: AttributeContainer([
+                .font: StumeetFont.bodyMedium15.font
+            ]))
+        config.baseForegroundColor = StumeetColor.gray400.color
+        config.contentInsets = .init(top: 0, leading: 19.5, bottom: 0, trailing: 19.5)
+        
+        button.configuration = config
+        button.layer.borderWidth = 1
+        button.layer.borderColor = StumeetColor.gray75.color.cgColor
+        button.layer.cornerRadius = 16
+        
+        return button
+    }()
+    
+    
+    private let completeButton: UIButton = {
+        return UIButton().makeRegisterBottomButton(text: "완료", color: StumeetColor.primary700.color)
+    }()
+    
+    private let calendarView = CalendarView()
     
     // MARK: - Properties
     
     private let viewModel = BottomSheetCalendarViewModel(useCase: DefualtBottomSheetCalendarUseCase())
+    private var datasource: UICollectionViewDiffableDataSource<CalendarSection, CalendarSectionItem>?
     
     // MARK: - Init
     
@@ -57,6 +110,7 @@ class BottomSheetCalendarViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDatasource()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,7 +121,6 @@ class BottomSheetCalendarViewController: BaseViewController {
     // MARK: - SetUp
     
     override func setupStyles() {
-        
     }
     
     override func setupAddView() {
@@ -78,7 +131,11 @@ class BottomSheetCalendarViewController: BaseViewController {
         
         
         [
-            dragIndicatorContainerView
+            dragIndicatorContainerView,
+            calendarButton,
+            dateButton,
+            calendarView,
+            completeButton
         ]   .forEach { bottomSheetView.addSubview($0) }
         
         [
@@ -115,13 +172,41 @@ class BottomSheetCalendarViewController: BaseViewController {
             make.top.equalToSuperview()
             make.height.equalTo(8)
         }
+        
+        calendarButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(24)
+            make.top.equalTo(dragIndicatorView.snp.bottom).offset(24)
+            make.height.equalTo(56)
+        }
+        
+        dateButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(24)
+            make.top.equalTo(dragIndicatorView.snp.bottom).offset(24)
+            make.height.equalTo(56)
+        }
+        
+        calendarView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(40)
+            make.top.equalTo(dateButton.snp.bottom).offset(25)
+            make.height.equalTo(261)
+        }
+        
+        completeButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalTo(calendarButton.snp.bottom).offset(318)
+            make.height.equalTo(72)
+        }
     }
     
     // MARK: - Bind
-    
+
     override func bind() {
+        
         let input = BottomSheetCalendarViewModel.Input(
-            didTapBackgroundButton: backgroundButton.tapPublisher)
+            didTapBackgroundButton: backgroundButton.tapPublisher,
+            didTapCalendarButton: calendarButton.tapPublisher,
+            didTapDateButton: dateButton.tapPublisher
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -150,6 +235,64 @@ class BottomSheetCalendarViewController: BaseViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        // calendar 날짜 binding
+        output.calendarItem
+            .receive(on: RunLoop.main)
+            .sink { [weak self] calendarDay in
+                guard let datasource = self?.datasource else { return }
+                var snapshot = NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem>()
+                
+                snapshot.appendSections([.week, .day])
+                snapshot.appendItems(calendarDay.weeks.map { .weekCell($0) }, toSection: .week)
+                snapshot.appendItems(calendarDay.days.map { .dayCell($0) }, toSection: .day)
+                
+                datasource.apply(snapshot)
+            }
+            .store(in: &cancellables)
+        
+//        output.showCalendar
+//            .receive(on: RunLoop.main)
+//            .sink { [weak self] _ in
+//                self?.
+//            }
+//            .store(in: &cancellables)
+//        
+//        output.showDate
+//            .receive(on: RunLoop.main)
+//            .sink { [weak self] _ in
+//                <#code#>
+//            }
+//            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Datasource
+
+extension BottomSheetCalendarViewController {
+    func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource(
+            collectionView: calendarView.calendarCollectionView) { collectionView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .weekCell(let week):
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CalendarCell.identifier,
+                    for: indexPath) as? CalendarCell
+                else { return UICollectionViewCell() }
+                cell.configureWeekCell(text: week)
+                
+                return cell
+                
+            case .dayCell(let day):
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CalendarCell.identifier,
+                    for: indexPath) as? CalendarCell
+                else { return UICollectionViewCell() }
+                cell.configureDayCell(text: day)
+                
+                return cell
+            }
+        }
     }
 }
 

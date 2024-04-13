@@ -28,7 +28,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
     
     struct Input {
         let didTapBackgroundButton: AnyPublisher<Void, Never>
-        
+        let didTapCalendarButton: AnyPublisher<Void, Never>
+        let didTapDateButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -37,17 +38,23 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let dismiss: AnyPublisher<Void, Never>
         let adjustHeight: AnyPublisher<CGFloat, Never>
         let isRestoreBottomSheetView: AnyPublisher<Bool, Never>
+        let showCalendar: AnyPublisher<Void, Never>
+        let showDate: AnyPublisher<Void, Never>
+        let calendarItem: AnyPublisher<CalendarDay, Never>
     }
     
     // MARK: - Properties
     
     let dragEventSubject = PassthroughSubject<DragInfo, Never>()
     let useCase: BottomSheetCalendarUseCase
+    let calendarItem: AnyPublisher<CalendarDay, Never>
+    
     
     // MARK: - Init
     
     init(useCase: BottomSheetCalendarUseCase) {
         self.useCase = useCase
+        calendarItem = useCase.setCalendarItem()
     }
     
     // MARK: - Transform
@@ -68,10 +75,19 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .flatMap(useCase.setIsRestoreBottomSheetView)
             .eraseToAnyPublisher()
         
+        let showCalendar = input.didTapCalendarButton
+            .eraseToAnyPublisher()
+        
+        let showDate = input.didTapDateButton
+            .eraseToAnyPublisher()
+        
         return Output(
             dismiss: dismiss,
             adjustHeight: adjustHeight,
-            isRestoreBottomSheetView: isRestoreBottomSheetView
+            isRestoreBottomSheetView: isRestoreBottomSheetView,
+            showCalendar: showCalendar,
+            showDate: showDate,
+            calendarItem: calendarItem
         )
     }
 }

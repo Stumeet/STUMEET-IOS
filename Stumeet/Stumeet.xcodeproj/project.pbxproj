@@ -10,6 +10,11 @@
 		21E8736A5585D8BC637EA0E8 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E13988B36BA4E051A3A83D /* Pods_StumeetTests.framework */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
+		CA1C92C62BC91A0200ECF835 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */; };
+		CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C72BC91AF700ECF835 /* CalendarView.swift */; };
+		CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */; };
+		CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */; };
+		CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */; };
 		CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */; };
 		CA6448292B863BB90090DD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CB2B863BB90090DD84 /* AppDelegate.swift */; };
@@ -110,6 +115,11 @@
 		7FCB7D7075B1E5E75906578A /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
+		CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
+		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
+		CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSection.swift; sourceTree = "<group>"; };
+		CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage++Extension.swift"; sourceTree = "<group>"; };
 		CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarUseCase.swift; sourceTree = "<group>"; };
 		CA6447C82B863BB90090DD84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA6447C92B863BB90090DD84 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -244,6 +254,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CA1C92C92BC92E2D00ECF835 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		CA1C92CC2BC92EE200ECF835 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CA6447C72B863BB90090DD84 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +328,7 @@
 		CA6447D42B863BB90090DD84 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				CA1C92C92BC92E2D00ECF835 /* Calendar */,
 				CA86DC442B8DCBC40044DB6C /* StudyActivity */,
 				CA86DC432B8DCBBD0044DB6C /* Register */,
 				CA6447D52B863BB90090DD84 /* .gitkeep */,
@@ -490,6 +517,7 @@
 		CA6448022B863BB90090DD84 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CA1C92CC2BC92EE200ECF835 /* Model */,
 				CA6FADED2B873266008BCEF7 /* View */,
 				CA6448032B863BB90090DD84 /* ViewModel */,
 				CA6448052B863BB90090DD84 /* Coordinator */,
@@ -560,6 +588,7 @@
 				CA6448132B863BB90090DD84 /* UIVIew++Extension.swift */,
 				CA6448142B863BB90090DD84 /* UIViewController++Extension.swift */,
 				CA9958522BB010C000884615 /* UITextView++Extension.swift */,
+				CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -713,6 +742,8 @@
 			isa = PBXGroup;
 			children = (
 				CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */,
+				CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */,
+				CA1C92C72BC91AF700ECF835 /* CalendarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1094,6 +1125,7 @@
 				CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
 				CA6448502B863BB90090DD84 /* UILabel++Extension.swift in Sources */,
+				CA1C92C62BC91A0200ECF835 /* CalendarViewCell.swift in Sources */,
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
 				CA6FADE22B8717C6008BCEF7 /* StudyActivityViewController.swift in Sources */,
@@ -1110,8 +1142,11 @@
 				CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */,
 				CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */,
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
+				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
+				CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */,
 				CA64483D2B863BB90090DD84 /* SelectFieldViewController.swift in Sources */,
+				CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */,
 				CA6448582B863BB90090DD84 /* BaseCollectionViewCell.swift in Sources */,
 				CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
@@ -1121,6 +1156,7 @@
 				CA6448552B863BB90090DD84 /* StumeetColor.swift in Sources */,
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
 				CA9AB2142B8C6A480027072E /* StudyActivityViewModel.swift in Sources */,
+				CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */,
 				CA64483C2B863BB90090DD84 /* RegisterCoordinator.swift in Sources */,
 				CA6448442B863BB90090DD84 /* TagCell.swift in Sources */,
 				CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */,
@@ -1305,7 +1341,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WBG9V97XP4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1334,7 +1370,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WBG9V97XP4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
