@@ -30,6 +30,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let didTapBackgroundButton: AnyPublisher<Void, Never>
         let didTapCalendarButton: AnyPublisher<Void, Never>
         let didTapDateButton: AnyPublisher<Void, Never>
+        let didTapNextMonthButton: AnyPublisher<Void, Never>
+        let didTapBackMonthButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -41,20 +43,34 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let showCalendar: AnyPublisher<Void, Never>
         let showDate: AnyPublisher<Void, Never>
         let calendarItem: AnyPublisher<CalendarDay, Never>
+        let selectedDay: AnyPublisher<AttributedString?, Never>
     }
     
     // MARK: - Properties
     
     let dragEventSubject = PassthroughSubject<DragInfo, Never>()
     let useCase: BottomSheetCalendarUseCase
-    let calendarItem: AnyPublisher<CalendarDay, Never>
-    
+    let cal: Calendar = Calendar.current
+    lazy var monthDateFormatter: DateFormatter = makeMonthDateFormmater()
+    lazy var dayDateFormatter: DateFormatter = makeDayDateFormatter()
+    lazy var components: DateComponents = makeComponents()
+    let calendarItemSubject = CurrentValueSubject<CalendarDay?, Never>(nil)
+    let selectedDay = CurrentValueSubject<AttributedString?, Never>(nil)
+    var cancellable = Set<AnyCancellable>()
     
     // MARK: - Init
     
     init(useCase: BottomSheetCalendarUseCase) {
         self.useCase = useCase
-        calendarItem = useCase.setCalendarItem()
+        
+        useCase.setCalendarItem(cal: cal, dateFormatter: monthDateFormatter, components: components)
+            .sink(receiveValue: calendarItemSubject.send)
+            .store(in: &cancellable)
+        
+        useCase.setSelectedDay(dateFormatter: dayDateFormatter)
+            .sink(receiveValue: selectedDay.send)
+            .store(in: &cancellable)
+        
     }
     
     // MARK: - Transform
@@ -81,13 +97,72 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let showDate = input.didTapDateButton
             .eraseToAnyPublisher()
         
+        input.didTapNextMonthButton
+            .compactMap { [weak self] _ -> DateComponents? in
+                guard let self = self else { return nil }
+                var components = self.components
+                components.month! += 1
+                self.components = components
+                return components
+            }
+            .flatMap { [weak self] components -> AnyPublisher<CalendarDay, Never> in
+                guard let self = self else { return Empty().eraseToAnyPublisher() }
+                return self.useCase.setCalendarItem(cal: self.cal, dateFormatter: self.monthDateFormatter, components: components)
+            }
+            .sink(receiveValue: calendarItemSubject.send)
+            .store(in: &cancellable)
+        
+        input.didTapBackMonthButton
+            .compactMap { [weak self] _ -> DateComponents? in
+                guard let self = self else { return nil }
+                var components = self.components
+                components.month! -= 1
+                self.components = components
+                return components
+            }
+            .flatMap { [weak self] components -> AnyPublisher<CalendarDay, Never> in
+                guard let self = self else { return Empty().eraseToAnyPublisher() }
+                return self.useCase.setCalendarItem(cal: self.cal, dateFormatter: self.monthDateFormatter, components: components)
+            }
+            .sink(receiveValue: calendarItemSubject.send)
+            .store(in: &cancellable)
+        
+        
+        let calendarItem = calendarItemSubject.compactMap { $0 }.eraseToAnyPublisher()
+        
         return Output(
             dismiss: dismiss,
             adjustHeight: adjustHeight,
             isRestoreBottomSheetView: isRestoreBottomSheetView,
             showCalendar: showCalendar,
             showDate: showDate,
-            calendarItem: calendarItem
+            calendarItem: calendarItem,
+            selectedDay: selectedDay.eraseToAnyPublisher()
         )
+    }
+    
+    // MARK: - Function
+    
+    func makeMonthDateFormmater() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 M월"
+        return dateFormatter
+    }
+    
+    func makeDayDateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .init(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy. M. d EEE"
+        return dateFormatter
+    }
+
+    func makeComponents() -> DateComponents {
+        var component = DateComponents()
+        let now = Date()
+        component.year = cal.component(.year, from: now)
+        component.month = cal.component(.month, from: now)
+        component.day = 1
+        
+        return component
     }
 }

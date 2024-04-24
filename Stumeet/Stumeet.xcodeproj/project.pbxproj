@@ -6,8 +6,7 @@
 	objectVersion = 56;
 	objects = {
 
-/* Begin PBXBuildFile section 
-*/
+/* Begin PBXBuildFile section */
 		21E8736A5585D8BC637EA0E8 /* Pods_StumeetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E13988B36BA4E051A3A83D /* Pods_StumeetTests.framework */; };
 		352885EF2BB9BA8300EFC0F6 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885EE2BB9BA8300EFC0F6 /* AuthInterceptor.swift */; };
 		352885F22BB9C79600EFC0F6 /* UserTokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885F12BB9C79600EFC0F6 /* UserTokenService.swift */; };
@@ -200,8 +199,6 @@
 		357D1BA52BB809B40079DCE6 /* ResponseWithDataDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseWithDataDTO.swift; sourceTree = "<group>"; };
 		357D1BA82BB8119E0079DCE6 /* SessionTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTokens.swift; sourceTree = "<group>"; };
 		357D1BAC2BB81B0F0079DCE6 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
-		35B3755B2B9760B600B82529 /* Config(debug).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
-		35B3755C2B97615C00B82529 /* Config(release).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewController.swift; sourceTree = "<group>"; };
 		35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
@@ -529,15 +526,6 @@
 			path = Keychain;
 			sourceTree = "<group>";
 		};
-		35B3755A2B97609600B82529 /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-				35B3755B2B9760B600B82529 /* Config(debug).xcconfig */,
-				35B3755C2B97615C00B82529 /* Config(release).xcconfig */,
-			);
-			path = Configurations;
-			sourceTree = "<group>";
-		};
 		35BDF6F02B88CEFA000B6DCB /* AuthScenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -744,7 +732,6 @@
 			isa = PBXGroup;
 			children = (
 				CA9AB21C2B8C7EAD0027072E /* StudyActivity */,
-				CA6447D02B863BB90090DD84 /* .gitkeep */,
 				352885F62BB9C9D900EFC0F6 /* UserToken */,
 				357D1BAB2BB81AF00079DCE6 /* AuthScene */,
 				CA6447D12B863BB90090DD84 /* LoginScene */,

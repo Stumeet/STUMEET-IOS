@@ -11,7 +11,8 @@ import Foundation
 protocol BottomSheetCalendarUseCase {
     func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never>
     func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat) -> AnyPublisher<Bool, Never>
-    func setCalendarItem() -> AnyPublisher<CalendarDay, Never>
+    func setCalendarItem(cal: Calendar, dateFormatter: DateFormatter, components: DateComponents) -> AnyPublisher<CalendarDay, Never>
+    func setSelectedDay(dateFormatter: DateFormatter) -> AnyPublisher<AttributedString?, Never>
 }
 
 final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
@@ -25,40 +26,33 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
         return Just((velocityY > 1500 || bottomSheetHeight < 268)).eraseToAnyPublisher()
     }
     
-    func setCalendarItem() -> AnyPublisher<CalendarDay, Never> {
-        let cal = Calendar.current
-        let dateFormatter: DateFormatter = {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy년M월"
-            return dateFormatter
-        }()
+    func setCalendarItem(cal: Calendar, dateFormatter: DateFormatter, components: DateComponents) -> AnyPublisher<CalendarDay, Never> {
         
-        var components: DateComponents {
-            var component = DateComponents()
-            let now = Date()
-            component.year = cal.component(.year, from: now)
-            component.month = cal.component(.month, from: now)
-            component.day = 1
-            
-            return component
-        }
-        
-        var calendarDay: CalendarDay = CalendarDay(day: "", days: [])
+        var calendarDay: CalendarDay = CalendarDay(day: "", month: String(components.month!), days: [])
         
         let firstDayOfMonth = cal.date(from: components)
         let firstWeekday = cal.component(.weekday, from: firstDayOfMonth!)
         let daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
-        let weekdayAdding = 2 - firstWeekday
+        let adjustedFirstWeekday = firstWeekday == 1 ? 7 : firstWeekday - 1
+        
+        // 첫 주의 빈 칸 계산 (1 = 월요일이므로 0 빈 칸, 7 = 일요일이므로 6 빈 칸)
+        let emptyDays = adjustedFirstWeekday - 1
         
         calendarDay.day = dateFormatter.string(from: firstDayOfMonth!)
-        
-        for day in weekdayAdding...daysCountInMonth {
-            if day < 1 {
-                calendarDay.days.append("")
-            } else {
-                calendarDay.days.append(String(day))
+        for i in 0..<emptyDays {
+                calendarDay.days.append(String(i * -1))
             }
+
+        // 실제 날짜 채우기
+        for day in 1...daysCountInMonth {
+            calendarDay.days.append(String(day))
         }
+        
         return Just(calendarDay).eraseToAnyPublisher()
+    }
+    
+    func setSelectedDay(dateFormatter: DateFormatter) -> AnyPublisher<AttributedString?, Never> {
+        let selectedDay = dateFormatter.string(from: Date())
+        return Just(AttributedString(selectedDay)).eraseToAnyPublisher()
     }
 }

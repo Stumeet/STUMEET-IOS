@@ -9,6 +9,7 @@ import Foundation
 
 struct CalendarDay: Hashable {
     var day: String
+    let month: String
     let weeks: [String] = ["월", "화", "수", "목", "금", "토", "일"]
     var days: [String]
 }

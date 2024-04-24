@@ -44,15 +44,12 @@ class BottomSheetCalendarViewController: BaseViewController {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         
+        config.attributedTitle?.font = StumeetFont.bodyMedium15.font
         config.image = UIImage(named: "calendar")
         config.imagePadding = 4
-        config.attributedTitle = .init(
-            "2024. 1. 29 월요일",
-            attributes: AttributeContainer([
-                .font: StumeetFont.bodyMedium15.font
-            ]))
         config.baseForegroundColor = StumeetColor.primary700.color
         config.contentInsets = .init(top: 0, leading: 19, bottom: 0, trailing: 19)
+        config.attributedTitle = AttributedString()
         
         button.configuration = config
         button.layer.borderWidth = 1
@@ -68,11 +65,9 @@ class BottomSheetCalendarViewController: BaseViewController {
         
         config.image = UIImage(named: "clock")?.resized(to: .init(width: 24, height: 24))
         config.imagePadding = 4
-        config.attributedTitle = .init(
-            "시간 선택...",
-            attributes: AttributeContainer([
-                .font: StumeetFont.bodyMedium15.font
-            ]))
+        config.attributedTitle?.font = StumeetFont.bodyMedium15.font
+        config.attributedTitle = .init("시간 선택...")
+        
         config.baseForegroundColor = StumeetColor.gray400.color
         config.contentInsets = .init(top: 0, leading: 19.5, bottom: 0, trailing: 19.5)
         
@@ -205,7 +200,9 @@ class BottomSheetCalendarViewController: BaseViewController {
         let input = BottomSheetCalendarViewModel.Input(
             didTapBackgroundButton: backgroundButton.tapPublisher,
             didTapCalendarButton: calendarButton.tapPublisher,
-            didTapDateButton: dateButton.tapPublisher
+            didTapDateButton: dateButton.tapPublisher,
+            didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher,
+            didTapBackMonthButton: calendarView.backMonthButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -246,9 +243,14 @@ class BottomSheetCalendarViewController: BaseViewController {
                 snapshot.appendSections([.week, .day])
                 snapshot.appendItems(calendarDay.weeks.map { .weekCell($0) }, toSection: .week)
                 snapshot.appendItems(calendarDay.days.map { .dayCell($0) }, toSection: .day)
-                
-                datasource.apply(snapshot)
+                datasource.apply(snapshot, animatingDifferences: false)
+                self?.calendarView.yearMonthButton.setTitle(calendarDay.day, for: .normal)
             }
+            .store(in: &cancellables)
+        
+        output.selectedDay
+            .receive(on: RunLoop.main)
+            .assign(to: \.configuration!.attributedTitle, on: calendarButton)
             .store(in: &cancellables)
         
 //        output.showCalendar
@@ -288,8 +290,9 @@ extension BottomSheetCalendarViewController {
                     withReuseIdentifier: CalendarCell.identifier,
                     for: indexPath) as? CalendarCell
                 else { return UICollectionViewCell() }
-                cell.configureDayCell(text: day)
-                
+                if Int(day)! > 0 {
+                    cell.configureDayCell(text: day)
+                } else { cell.configureDayCell(text: "") }
                 return cell
             }
         }
