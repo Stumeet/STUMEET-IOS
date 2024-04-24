@@ -14,7 +14,7 @@ final class AppCoordinator: Coordinator {
     private let appDIContainer: AppDIContainer
     
     func start() {
-        startAuthCoordinator()
+        startTabbarCoordinator() // !IMP: 임시 코드
     }
     
     init(navigationController: UINavigationController,

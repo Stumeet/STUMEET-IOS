@@ -145,6 +145,7 @@ class StudyListViewController: BaseViewController {
         }
         
         let menuHeight = contextMenu.bounds.size.height
+        let menuWidth = contextMenu.bounds.size.width
         let buttonFrame = studyGroupTableView.convert(button.frame, from: button.superview)
         let bottomCoordinate = buttonFrame.origin.y + menuHeight
         
@@ -157,7 +158,7 @@ class StudyListViewController: BaseViewController {
         contextMenu.snp.remakeConstraints {
             // !IMP: anchorPoint: (x: 0.5, y: 0.5) -> (x: 1.0, y: 0)
             $0.top.equalTo(button.snp.top).offset(-(menuHeight / 2))
-            $0.trailing.equalTo(button.snp.leading).offset((menuHeight / 2) + 8)
+            $0.trailing.equalTo(button.snp.leading).offset((menuWidth / 2) + 8)
         }
 
         contextMenu.isVisiblyHidden = false
