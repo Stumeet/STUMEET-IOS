@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tabler_message-report.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

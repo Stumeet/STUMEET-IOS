@@ -25,4 +25,18 @@ extension UIView {
         
         return view
     }
+    
+    /// 그림자 추가
+    /// - Parameters:
+    ///   - color: 컬러
+    ///   - opacity: 선명도
+    ///   - radius: 둥글기
+    ///   - offset: 위치
+    func setShadow(_ color: UIColor = .black, opacity: Float = 0.1, radius: CGFloat = 10, offset: CGSize = CGSize(width: 0, height: 0)) {
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = opacity
+        layer.shadowRadius = radius
+        layer.shadowOffset = offset
+        layer.masksToBounds = false
+    }
 }
