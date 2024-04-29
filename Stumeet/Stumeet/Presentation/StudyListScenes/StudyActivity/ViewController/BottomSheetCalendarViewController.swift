@@ -62,7 +62,7 @@ class BottomSheetCalendarViewController: BaseViewController {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         
-        config.image = UIImage(named: "clock")?.resized(to: .init(width: 24, height: 24))
+        config.image = UIImage(named: "clock")
         config.imagePadding = 4
         config.attributedTitle?.font = StumeetFont.bodyMedium15.font
         config.attributedTitle = .init("시간 선택...")
@@ -84,6 +84,12 @@ class BottomSheetCalendarViewController: BaseViewController {
     }()
     
     private let calendarView = CalendarView()
+    private let timeView: TimeView = {
+        let view = TimeView()
+        view.isHidden = true
+        
+        return view
+    }()
     
     // MARK: - Properties
     
@@ -129,6 +135,7 @@ class BottomSheetCalendarViewController: BaseViewController {
             calendarButton,
             dateButton,
             calendarView,
+            timeView,
             completeButton
         ]   .forEach { bottomSheetView.addSubview($0) }
         
@@ -184,6 +191,12 @@ class BottomSheetCalendarViewController: BaseViewController {
             make.leading.trailing.equalToSuperview().inset(40)
             make.top.equalTo(dateButton.snp.bottom).offset(25)
             make.height.equalTo(261)
+        }
+        
+        timeView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(dateButton.snp.bottom).offset(24)
+            make.height.equalTo(267)
         }
         
         completeButton.snp.makeConstraints { make in
@@ -286,19 +299,36 @@ class BottomSheetCalendarViewController: BaseViewController {
             })
             .store(in: &cancellables)
         
-//        output.showCalendar
-//            .receive(on: RunLoop.main)
-//            .sink { [weak self] _ in
-//                self?.
-//            }
-//            .store(in: &cancellables)
-//        
-//        output.showDate
-//            .receive(on: RunLoop.main)
-//            .sink { [weak self] _ in
-//                <#code#>
-//            }
-//            .store(in: &cancellables)
+        output.showCalendar
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.calendarView.isHidden = false
+                self?.calendarButton.configuration?.baseForegroundColor = StumeetColor.primary700.color
+                self?.calendarButton.configuration?.image = UIImage(named: "calendar")
+                self?.calendarButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+                
+                self?.dateButton.configuration?.baseForegroundColor = StumeetColor.gray400.color
+                self?.dateButton.layer.borderColor = StumeetColor.gray75.color.cgColor
+                self?.dateButton.configuration?.image = UIImage(named: "clock")
+                self?.timeView.isHidden = true
+            }
+            .store(in: &cancellables)
+        
+        output.showDate
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.calendarView.isHidden = true
+                self?.timeView.isHidden = false
+                self?.dateButton.configuration?.baseForegroundColor = StumeetColor.primary700.color
+                self?.dateButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+                self?.dateButton.configuration?.image = UIImage(named: "clock")?.withTintColor(StumeetColor.primary700.color)
+                
+                self?.calendarButton.configuration?.baseForegroundColor = StumeetColor.gray400.color
+                self?.calendarButton.layer.borderColor = StumeetColor.gray75.color.cgColor
+                self?.calendarButton.configuration?.image = UIImage(named: "calendar")?.withTintColor(StumeetColor.gray400.color)
+                
+            }
+            .store(in: &cancellables)
     }
 }
 

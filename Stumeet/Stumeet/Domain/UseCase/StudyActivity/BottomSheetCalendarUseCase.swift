@@ -57,11 +57,21 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
         for date in 1...daysCountInMonth {
             components.day = date
             let compareDate = cal.date(from: components)!
-            if compareDate < Date() {
+            if cal.isDateInToday(compareDate) {
+                // 오늘 날짜인 경우
+                if let selectedDate = selectedDate, cal.isDate(selectedDate, inSameDayAs: compareDate) {
+                    calendarDates.append(CalendarDate(date: String(date), isSelected: true))
+                } else {
+                    calendarDates.append(CalendarDate(date: String(date))) // 오늘 날짜를 특별한 상태 없이 추가
+                }
+            } else if compareDate < Date() {
+                // 과거 날짜인 경우
                 calendarDates.append(CalendarDate(date: String(date), isPast: true))
             } else if let selectedDate = selectedDate, cal.isDate(selectedDate, inSameDayAs: compareDate) {
+                // 선택된 날짜인 경우
                 calendarDates.append(CalendarDate(date: String(date), isSelected: true))
             } else {
+                // 그 외의 경우
                 calendarDates.append(CalendarDate(date: String(date)))
             }
         }
