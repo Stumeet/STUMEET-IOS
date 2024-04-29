@@ -48,7 +48,6 @@ class BottomSheetCalendarViewController: BaseViewController {
         config.image = UIImage(named: "calendar")
         config.imagePadding = 4
         config.baseForegroundColor = StumeetColor.primary700.color
-        config.contentInsets = .init(top: 0, leading: 19, bottom: 0, trailing: 19)
         config.attributedTitle = AttributedString()
         
         button.configuration = config
@@ -172,6 +171,7 @@ class BottomSheetCalendarViewController: BaseViewController {
             make.leading.equalToSuperview().inset(24)
             make.top.equalTo(dragIndicatorView.snp.bottom).offset(24)
             make.height.equalTo(56)
+            make.width.equalTo(191)
         }
         
         dateButton.snp.makeConstraints { make in
@@ -196,13 +196,14 @@ class BottomSheetCalendarViewController: BaseViewController {
     // MARK: - Bind
 
     override func bind() {
-        
+        let didSelectedItemPublisher = calendarView.calendarCollectionView.didSelectItemPublisher.filter { $0.section == 1 }
         let input = BottomSheetCalendarViewModel.Input(
             didTapBackgroundButton: backgroundButton.tapPublisher,
             didTapCalendarButton: calendarButton.tapPublisher,
             didTapDateButton: dateButton.tapPublisher,
             didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher,
-            didTapBackMonthButton: calendarView.backMonthButton.tapPublisher
+            didTapBackMonthButton: calendarView.backMonthButton.tapPublisher,
+            didSelectedCalendarCell: didSelectedItemPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -233,24 +234,56 @@ class BottomSheetCalendarViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
-        // calendar 날짜 binding
-        output.calendarItem
+        // calendar 요일 binding
+        output.calendarSectionItems
             .receive(on: RunLoop.main)
-            .sink { [weak self] calendarDay in
+            .sink { [weak self] items in
                 guard let datasource = self?.datasource else { return }
                 var snapshot = NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem>()
                 
                 snapshot.appendSections([.week, .day])
-                snapshot.appendItems(calendarDay.weeks.map { .weekCell($0) }, toSection: .week)
-                snapshot.appendItems(calendarDay.days.map { .dayCell($0) }, toSection: .day)
+                items.forEach {
+                    switch $0 {
+                    case .weekCell(let week):
+                        snapshot.appendItems([.weekCell(week)], toSection: .week)
+                    case .dayCell(let item):
+                        snapshot.appendItems([.dayCell(item)], toSection: .day)
+                    }
+                }
+                
                 datasource.apply(snapshot, animatingDifferences: false)
-                self?.calendarView.yearMonthButton.setTitle(calendarDay.day, for: .normal)
             }
             .store(in: &cancellables)
         
-        output.selectedDay
+        // calendar 이전 달 버튼 enable 설정
+        output.calendarSectionItems
+            .map { $0[1].isPast }
+            .compactMap { $0 }
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isPast in
+                if isPast {
+                    self?.calendarView.backMonthButton.isEnabled = false
+                    self?.calendarView.backMonthButton.tintColor = StumeetColor.gray300.color
+                } else {
+                    self?.calendarView.backMonthButton.isEnabled = true
+                    self?.calendarView.backMonthButton.tintColor = StumeetColor.gray800.color
+                }
+            }
+            .store(in: &cancellables)
+        
+        // 선택된 날짜 binding
+        output.selectedDate
             .receive(on: RunLoop.main)
             .assign(to: \.configuration!.attributedTitle, on: calendarButton)
+            .store(in: &cancellables)
+        
+        // 연도, 월 binding
+        output.yearMonthTitle
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] title in
+                self?.calendarView.yearMonthButton.setTitle(title, for: .normal)
+            })
             .store(in: &cancellables)
         
 //        output.showCalendar
@@ -281,18 +314,18 @@ extension BottomSheetCalendarViewController {
                     withReuseIdentifier: CalendarCell.identifier,
                     for: indexPath) as? CalendarCell
                 else { return UICollectionViewCell() }
-                cell.configureWeekCell(text: week)
                 
+                cell.configureWeekCell(text: week)
                 return cell
                 
-            case .dayCell(let day):
+            case .dayCell(let calendarDate):
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CalendarCell.identifier,
                     for: indexPath) as? CalendarCell
                 else { return UICollectionViewCell() }
-                if Int(day)! > 0 {
-                    cell.configureDayCell(text: day)
-                } else { cell.configureDayCell(text: "") }
+                
+                cell.configureDayCell(item: calendarDate)
+                
                 return cell
             }
         }

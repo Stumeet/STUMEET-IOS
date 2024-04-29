@@ -32,6 +32,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let didTapDateButton: AnyPublisher<Void, Never>
         let didTapNextMonthButton: AnyPublisher<Void, Never>
         let didTapBackMonthButton: AnyPublisher<Void, Never>
+        let didSelectedCalendarCell: AnyPublisher<IndexPath, Never>
     }
     
     // MARK: - Output
@@ -42,33 +43,32 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let isRestoreBottomSheetView: AnyPublisher<Bool, Never>
         let showCalendar: AnyPublisher<Void, Never>
         let showDate: AnyPublisher<Void, Never>
-        let calendarItem: AnyPublisher<CalendarDay, Never>
-        let selectedDay: AnyPublisher<AttributedString?, Never>
+        let calendarSectionItems: AnyPublisher<[CalendarSectionItem], Never>
+        let selectedDate: AnyPublisher<AttributedString?, Never>
+        let yearMonthTitle: AnyPublisher<String, Never>
     }
     
     // MARK: - Properties
     
-    let dragEventSubject = PassthroughSubject<DragInfo, Never>()
     let useCase: BottomSheetCalendarUseCase
     let cal: Calendar = Calendar.current
-    lazy var monthDateFormatter: DateFormatter = makeMonthDateFormmater()
-    lazy var dayDateFormatter: DateFormatter = makeDayDateFormatter()
-    lazy var components: DateComponents = makeComponents()
-    let calendarItemSubject = CurrentValueSubject<CalendarDay?, Never>(nil)
-    let selectedDay = CurrentValueSubject<AttributedString?, Never>(nil)
     var cancellable = Set<AnyCancellable>()
+    
+    // MARK: - Subject
+    
+    let dragEventSubject = PassthroughSubject<DragInfo, Never>()
+    let calendarDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
+    let selectedDateSubject = CurrentValueSubject<Date?, Never>(Date())
+    lazy var componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
     
     // MARK: - Init
     
     init(useCase: BottomSheetCalendarUseCase) {
         self.useCase = useCase
         
-        useCase.setCalendarItem(cal: cal, dateFormatter: monthDateFormatter, components: components)
-            .sink(receiveValue: calendarItemSubject.send)
-            .store(in: &cancellable)
-        
-        useCase.setSelectedDay(dateFormatter: dayDateFormatter)
-            .sink(receiveValue: selectedDay.send)
+        useCase.setCalendarItem(cal: cal, components: componentsSubject.value, selectedDate: nil)
+            .map { $0.data }
+            .sink(receiveValue: calendarDateItemSubject.send)
             .store(in: &cancellable)
         
     }
@@ -79,12 +79,14 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         
         let dismiss = input.didTapBackgroundButton
         
+        // bottomSheetView 높이 조정
         let adjustHeight = dragEventSubject
             .filter { $0.state == .changed }
             .map { ($0.bottomSheetViewHeight, $0.translationY)}
             .flatMap(useCase.setAdjustHeight)
             .eraseToAnyPublisher()
         
+        // bottomSheetView 높이 되돌리기
         let isRestoreBottomSheetView = dragEventSubject
             .filter { $0.state == .ended || $0.state == .cancelled }
             .map { ($0.velocityY, $0.bottomSheetViewHeight)}
@@ -98,37 +100,67 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         input.didTapNextMonthButton
-            .compactMap { [weak self] _ -> DateComponents? in
-                guard let self = self else { return nil }
-                var components = self.components
-                components.month! += 1
-                self.components = components
-                return components
+            .compactMap { [weak self] _ -> (DateComponents?, Date?) in
+                var components = self?.componentsSubject.value
+                components?.month! += 1
+                let selectedDate = self?.selectedDateSubject.value
+                return (components, selectedDate)
             }
-            .flatMap { [weak self] components -> AnyPublisher<CalendarDay, Never> in
+            .flatMap { [weak self] components, selectedDate -> AnyPublisher<CalendarData, Never> in
                 guard let self = self else { return Empty().eraseToAnyPublisher() }
-                return self.useCase.setCalendarItem(cal: self.cal, dateFormatter: self.monthDateFormatter, components: components)
+                self.componentsSubject.send(components!)
+                return self.useCase.setCalendarItem(cal: self.cal, components: components!, selectedDate: selectedDate)
             }
-            .sink(receiveValue: calendarItemSubject.send)
+            .map { $0.data }
+            .sink(receiveValue: calendarDateItemSubject.send)
             .store(in: &cancellable)
         
         input.didTapBackMonthButton
-            .compactMap { [weak self] _ -> DateComponents? in
-                guard let self = self else { return nil }
-                var components = self.components
-                components.month! -= 1
-                self.components = components
-                return components
+            .compactMap { [weak self] _ -> (DateComponents?, Date?) in
+                var components = self?.componentsSubject.value
+                components?.month! -= 1
+                let selectedDate = self?.selectedDateSubject.value
+                return (components, selectedDate)
             }
-            .flatMap { [weak self] components -> AnyPublisher<CalendarDay, Never> in
+            .flatMap { [weak self] components, selectedDate -> AnyPublisher<CalendarData, Never> in
                 guard let self = self else { return Empty().eraseToAnyPublisher() }
-                return self.useCase.setCalendarItem(cal: self.cal, dateFormatter: self.monthDateFormatter, components: components)
+                self.componentsSubject.send(components!)
+                return self.useCase.setCalendarItem(cal: self.cal, components: components!, selectedDate: selectedDate)
             }
-            .sink(receiveValue: calendarItemSubject.send)
+            .map { $0.data }
+            .sink(receiveValue: calendarDateItemSubject.send)
             .store(in: &cancellable)
         
+        input.didSelectedCalendarCell
+            .map {
+                return ($0, self.calendarDateItemSubject.value, self.componentsSubject.value, self.cal)
+            }
+            .flatMap(useCase.setSelectedCalendarCell)
+            .sink(receiveValue: { [weak self] data in
+                self?.selectedDateSubject.send(data.selectedDate)
+                self?.calendarDateItemSubject.send(data.data)
+            })
+            .store(in: &cancellable)
         
-        let calendarItem = calendarItemSubject.compactMap { $0 }.eraseToAnyPublisher()
+        let calendarSectionItems = calendarDateItemSubject
+            .map { dateItem in
+                var items: [CalendarSectionItem] = []
+                items.append(contentsOf: dateItem.map { .dayCell($0) })
+                items.append(contentsOf: CalendarWeek.weeks.map { .weekCell($0) })
+                return items
+            }
+            .eraseToAnyPublisher()
+        
+        let yearMonthTitle = componentsSubject
+            .map { (self.cal, $0) }
+            .flatMap(useCase.setYearMonthTitle)
+            .eraseToAnyPublisher()
+        
+        let selectedDateText =
+        selectedDateSubject
+            .compactMap { $0 }
+            .flatMap(useCase.setSelectedDateText)
+            .eraseToAnyPublisher()
         
         return Output(
             dismiss: dismiss,
@@ -136,25 +168,13 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             isRestoreBottomSheetView: isRestoreBottomSheetView,
             showCalendar: showCalendar,
             showDate: showDate,
-            calendarItem: calendarItem,
-            selectedDay: selectedDay.eraseToAnyPublisher()
+            calendarSectionItems: calendarSectionItems,
+            selectedDate: selectedDateText,
+            yearMonthTitle: yearMonthTitle
         )
     }
     
     // MARK: - Function
-    
-    func makeMonthDateFormmater() -> DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy년 M월"
-        return dateFormatter
-    }
-    
-    func makeDayDateFormatter() -> DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = .init(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy. M. d EEE"
-        return dateFormatter
-    }
 
     func makeComponents() -> DateComponents {
         var component = DateComponents()

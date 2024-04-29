@@ -11,11 +11,22 @@ import Foundation
 protocol BottomSheetCalendarUseCase {
     func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never>
     func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat) -> AnyPublisher<Bool, Never>
-    func setCalendarItem(cal: Calendar, dateFormatter: DateFormatter, components: DateComponents) -> AnyPublisher<CalendarDay, Never>
-    func setSelectedDay(dateFormatter: DateFormatter) -> AnyPublisher<AttributedString?, Never>
+    func setCalendarItem(cal: Calendar, components: DateComponents, selectedDate: Date?) -> AnyPublisher<CalendarData, Never>
+    func setSelectedDateText(date: Date) -> AnyPublisher<AttributedString?, Never>
+    func setSelectedCalendarCell(
+        indexPath: IndexPath,
+        item: [CalendarDate],
+        components: DateComponents,
+        cal: Calendar) -> AnyPublisher<CalendarData, Never>
+    func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never>
 }
 
 final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
+    
+    // MARK: - Properties
+    
+    private lazy var monthDateFormatter = makeMonthDateFormmater()
+    private lazy var dayDateFormatter = makeDayDateFormatter()
     
     func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never> {
         return Just(max(0, min(536, bottomSheetHeight - translationY)))
@@ -26,33 +37,97 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
         return Just((velocityY > 1500 || bottomSheetHeight < 268)).eraseToAnyPublisher()
     }
     
-    func setCalendarItem(cal: Calendar, dateFormatter: DateFormatter, components: DateComponents) -> AnyPublisher<CalendarDay, Never> {
+    func setCalendarItem(cal: Calendar, components: DateComponents, selectedDate: Date?) -> AnyPublisher<CalendarData, Never> {
         
-        var calendarDay: CalendarDay = CalendarDay(day: "", month: String(components.month!), days: [])
+        var calendarDates: [CalendarDate] = []
         
         let firstDayOfMonth = cal.date(from: components)
         let firstWeekday = cal.component(.weekday, from: firstDayOfMonth!)
         let daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
         let adjustedFirstWeekday = firstWeekday == 1 ? 7 : firstWeekday - 1
         
-        // 첫 주의 빈 칸 계산 (1 = 월요일이므로 0 빈 칸, 7 = 일요일이므로 6 빈 칸)
         let emptyDays = adjustedFirstWeekday - 1
         
-        calendarDay.day = dateFormatter.string(from: firstDayOfMonth!)
-        for i in 0..<emptyDays {
-                calendarDay.days.append(String(i * -1))
-            }
-
-        // 실제 날짜 채우기
-        for day in 1...daysCountInMonth {
-            calendarDay.days.append(String(day))
+        for idx in 0..<emptyDays {
+            let date = String(idx * -1)
+            calendarDates.append(CalendarDate(date: date))
         }
-        
-        return Just(calendarDay).eraseToAnyPublisher()
+
+        var components = components
+        for date in 1...daysCountInMonth {
+            components.day = date
+            let compareDate = cal.date(from: components)!
+            if compareDate < Date() {
+                calendarDates.append(CalendarDate(date: String(date), isPast: true))
+            } else if let selectedDate = selectedDate, cal.isDate(selectedDate, inSameDayAs: compareDate) {
+                calendarDates.append(CalendarDate(date: String(date), isSelected: true))
+            } else {
+                calendarDates.append(CalendarDate(date: String(date)))
+            }
+        }
+        let calendarData = CalendarData(selectedDate: selectedDate, data: calendarDates)
+        return Just(calendarData).eraseToAnyPublisher()
     }
     
-    func setSelectedDay(dateFormatter: DateFormatter) -> AnyPublisher<AttributedString?, Never> {
-        let selectedDay = dateFormatter.string(from: Date())
-        return Just(AttributedString(selectedDay)).eraseToAnyPublisher()
+    func setSelectedDateText(date: Date) -> AnyPublisher<AttributedString?, Never> {
+        let selectedDateText = dayDateFormatter.string(from: date)
+        return Just(AttributedString(selectedDateText)).eraseToAnyPublisher()
+    }
+    
+    func setSelectedCalendarCell(
+        indexPath: IndexPath,
+        item: [CalendarDate],
+        components: DateComponents,
+        cal: Calendar) -> AnyPublisher<CalendarData, Never> {
+        
+        let dateIndex = indexPath.item
+        var components = components
+        components.day = Int(item[dateIndex].date)!
+        var selectedDate: Date?
+        
+        var updatedItems = item
+        var selectedItem = updatedItems[dateIndex]
+        
+        selectedItem.isSelected.toggle()
+        updatedItems[dateIndex] = selectedItem
+        
+        if selectedItem.isSelected {
+            selectedDate = cal.date(from: components)
+            for index in updatedItems.indices where updatedItems[index].isSelected && index != (dateIndex) {
+                updatedItems[index].isSelected = false
+            }
+        }
+        let calendarData = CalendarData(selectedDate: selectedDate, data: updatedItems)
+        return Just(calendarData).eraseToAnyPublisher()
+    }
+    
+    func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never> {
+        return Just(monthDateFormatter.string(from: cal.date(from: components)!)).eraseToAnyPublisher()
+    }
+}
+
+extension DefualtBottomSheetCalendarUseCase {
+    
+    func makeMonthDateFormmater() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 M월"
+        return dateFormatter
+    }
+    
+    func makeDayDateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .init(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy. M. d E요일"
+        return dateFormatter
+    }
+
+    func makeComponents(cal: Calendar) -> DateComponents {
+        var component = DateComponents()
+        let now = Date()
+        component.year = cal.component(.year, from: now)
+        component.month = cal.component(.month, from: now)
+        component.day = 1
+        
+        return component
     }
 }

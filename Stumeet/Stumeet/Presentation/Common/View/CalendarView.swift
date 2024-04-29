@@ -15,7 +15,6 @@ final class CalendarView: UIView {
     
     let yearMonthButton: UIButton = {
         let button = UIButton()
-        button.setTitle("2024년4월", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = StumeetFont.bodyMedium15.font
         

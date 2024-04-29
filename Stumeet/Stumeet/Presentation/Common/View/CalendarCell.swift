@@ -7,19 +7,27 @@
 
 import UIKit
 
-final class CalendarCell: UICollectionViewCell {
+final class CalendarCell: BaseCollectionViewCell {
     
     // MARK: - Identifier
     
     static let identifier = "CalendarCell"
     
     // MARK: - UIComponents
+    
     private let dayLabel: UILabel = {
         let label = UILabel()
         label.font = StumeetFont.bodyMedium14.font
         label.textAlignment = .center
         
         return label
+    }()
+    
+    private let backgroundRoundView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+    
+        return view
     }()
     
     // MARK: - Properties
@@ -40,22 +48,30 @@ final class CalendarCell: UICollectionViewCell {
     }
     
     // MARK: - SetUp
-    
-    func setupAddView() {
+
+    override func setupAddView() {
         [
+            backgroundRoundView,
             dayLabel
         ]   .forEach { addSubview($0) }
     }
     
-    func setupConstaints() {
+    override func setupConstaints() {
         dayLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
             make.width.height.equalTo(24)
         }
+        
+        backgroundRoundView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.width.height.equalTo(32)
+        }
     }
-    
-    // MARK: - Configure
-    
+}
+
+// MARK: - ConfigureCell
+
+extension CalendarCell {
     func configureWeekCell(text: String) {
         let font = StumeetFont.captionMedium12.font
         if font != lastFont {
@@ -66,15 +82,33 @@ final class CalendarCell: UICollectionViewCell {
         dayLabel.text = text
     }
     
-    func configureDayCell(text: String) {
-        dayLabel.text = text
+    func configureDayCell(item: CalendarDate) {
+        if Int(item.date)! <= 0 {
+            dayLabel.text = ""
+        } else {
+            dayLabel.text = item.date
+        }
+        
+        if item.isPast {
+            dayLabel.textColor = StumeetColor.gray300.color
+            isUserInteractionEnabled = false
+        } else {
+            isUserInteractionEnabled = true
+        }
+        
+        if item.isSelected {
+            backgroundRoundView.backgroundColor = StumeetColor.primary700.color
+            dayLabel.textColor = .white
+        } else if !item.isSelected && !item.isPast {
+            backgroundRoundView.backgroundColor = .white
+            dayLabel.textColor = .black
+        }
+        
         let font = StumeetFont.bodyMedium14.font
         if font != lastFont {
             dayLabel.font = font
             dayLabel.textColor = .black
             lastFont = font
         }
-        dayLabel.text = text
     }
-    
 }

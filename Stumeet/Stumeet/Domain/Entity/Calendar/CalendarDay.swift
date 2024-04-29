@@ -7,9 +7,17 @@
 
 import Foundation
 
-struct CalendarDay: Hashable {
-    var day: String
-    let month: String
-    let weeks: [String] = ["월", "화", "수", "목", "금", "토", "일"]
-    var days: [String]
+struct CalendarData {
+    let selectedDate: Date?
+    let data: [CalendarDate]
+}
+
+struct CalendarDate: Hashable {
+    let date: String
+    var isSelected: Bool = false
+    var isPast: Bool = false
+}
+
+struct CalendarWeek {
+    static let weeks = ["월", "화", "수", "목", "금", "토", "일"]
 }
