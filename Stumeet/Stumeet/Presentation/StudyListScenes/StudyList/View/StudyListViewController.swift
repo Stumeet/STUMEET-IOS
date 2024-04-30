@@ -20,9 +20,28 @@ struct StudyGroup: Hashable {
 class StudyListViewController: BaseViewController {
     
     // MARK: - UIComponents
-    private let navigationTitleLabel = UILabel()
-    private let studyGroupTableView = UITableView()
-    private var contextMenu = StudyGroupListContextMenuView()
+    private let navigationTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "내 스터디 그룹"
+        label.font = StumeetFont.titleMedium.font
+        label.textColor = StumeetColor.gray800.color
+        label.numberOfLines = 0
+        return label
+    }()
+    private let studyGroupTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
+        tableView.scrollsToTop = false
+        return tableView
+    }()
+    private let contextMenu: StudyGroupListContextMenuView = {
+        let menuView = StudyGroupListContextMenuView()
+        menuView.addItem(image: UIImage(named: "tabler_door-exit"), title: "나가기")
+        menuView.addItem(image: UIImage(named: "tabler_message-report"), title: "신고하기")
+        menuView.isHidden = true
+        return menuView
+    }()
     
     // MARK: - Properties
     private weak var coordinator: StudyListCoordinator!
@@ -40,20 +59,7 @@ class StudyListViewController: BaseViewController {
     
     override func setupStyles() {
         view.backgroundColor = .white
-        
-        navigationTitleLabel.text = "내 스터디 그룹"
-        navigationTitleLabel.font = StumeetFont.titleMedium.font
-        navigationTitleLabel.textColor = StumeetColor.gray800.color
-        navigationTitleLabel.numberOfLines = 0
-                
-        studyGroupTableView.separatorStyle = .none
-        studyGroupTableView.backgroundColor = .white
-        studyGroupTableView.scrollsToTop = false
-        
-        contextMenu.addItem(image: UIImage(named: "tabler_door-exit"), title: "나가기")
-        contextMenu.addItem(image: UIImage(named: "tabler_message-report"), title: "신고하기")
-        contextMenu.isHidden = true
-        
+
         // TODO: 네비 및 탭바 속성 설정 위치 재구성
         let naviBarAppearance = UINavigationBarAppearance()
         let tabBarAppearance = UITabBarAppearance()
@@ -194,7 +200,7 @@ extension StudyListViewController:
             cellProvider: { tableView, indexPath, item in
                 guard let cell = tableView.dequeue(StudyGroupListTableViewCell.self, for: indexPath)
                 else { return UITableViewCell() }
-                cell.configureCell()
+                cell.configureCell(item)
                 cell.delegate = self
                 return cell
             }

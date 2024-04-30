@@ -10,7 +10,11 @@ import SnapKit
 
 class StudyGroupListContextMenuView: UIView {
     // MARK: - UIComponents
-    private let rootVStackView = UIStackView()
+    private let rootVStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
+    }()
     
     // MARK: - Properties
     var isVisiblyHidden: Bool {
@@ -49,8 +53,6 @@ class StudyGroupListContextMenuView: UIView {
         layer.cornerRadius = 12
         
         setShadow()
-        
-        rootVStackView.axis = .vertical
     }
     
     private func setupAddView() {

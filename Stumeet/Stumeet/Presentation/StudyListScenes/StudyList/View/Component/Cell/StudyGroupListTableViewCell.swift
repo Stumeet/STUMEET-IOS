@@ -15,22 +15,69 @@ protocol StudyGroupListTableViewCellDelegate: AnyObject {
 class StudyGroupListTableViewCell: BaseTableViewCell {
     
     // MARK: - UIComponents
-    private let rootHStackView = UIStackView()
+    private let rootHStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        return stackView
+    }()
     
-    private let thumbnailImageView = UIImageView()
+    private let thumbnailImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 16
+        imageView.backgroundColor = .gray
+        return imageView
+    }()
     
     private let mainContentView = UIView()
-    private let mainDetailsVStackView = UIStackView()
+    private let mainDetailsVStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 9
+        return stackView
+    }()
     
-    private let mainDetailsInfoHStackView = UIStackView()
-    private let mainDetailsInfoTitleLabel = UILabel()
-    private let mainDetailsInfoSubTitleLabel = UILabel()
+    private let mainDetailsInfoHStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        return stackView
+    }()
+    private let mainDetailsInfoTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = StumeetColor.gray800.color
+        label.font = StumeetFont.bodyMedium16.font
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        return label
+    }()
+    private let mainDetailsInfoSubTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = StumeetColor.primary700.color
+        label.font = StumeetFont.bodyMedium16.font
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
     
-    private let mainDetailsPeriodLabel = UILabel()
+    private let mainDetailsPeriodLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = StumeetColor.gray400.color
+        label.font = StumeetFont.bodyMedium14.font
+        return label
+    }()
     
     private let moreButtonContainer = UIView()
-    private let moreButtonView = UIView()
-    private let moreButtonImageView = UIImageView()
+    private lazy var moreButtonView: UIView = {
+        let view = UIView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(moreButtonAction))
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+    private let moreButtonImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "tabler_dots-vertical")
+        return imageView
+    }()
     
     // MARK: - Properties
     weak var delegate: StudyGroupListTableViewCellDelegate?
@@ -39,35 +86,6 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
     override func setupStyles() {
         selectionStyle = .none
         backgroundColor = .white
-        
-        rootHStackView.axis = .horizontal
-        rootHStackView.spacing = 16
-        
-        thumbnailImageView.contentMode = .scaleAspectFill
-        thumbnailImageView.layer.cornerRadius = 16
-        thumbnailImageView.backgroundColor = .gray
-        
-        mainDetailsVStackView.axis = .vertical
-        mainDetailsVStackView.spacing = 9
-        
-        mainDetailsInfoHStackView.axis = .horizontal
-        mainDetailsInfoHStackView.spacing = 8
-        
-        mainDetailsInfoTitleLabel.textColor = StumeetColor.gray800.color
-        mainDetailsInfoTitleLabel.font = StumeetFont.bodyMedium16.font
-        mainDetailsInfoTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
-        
-        mainDetailsInfoSubTitleLabel.textColor = StumeetColor.primary700.color
-        mainDetailsInfoSubTitleLabel.font = StumeetFont.bodyMedium16.font
-        mainDetailsInfoSubTitleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        
-        mainDetailsPeriodLabel.textColor = StumeetColor.gray400.color
-        mainDetailsPeriodLabel.font = StumeetFont.bodyMedium14.font
-        
-        moreButtonImageView.image = UIImage(named: "tabler_dots-vertical")
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(moreButtonAction))
-        moreButtonView.addGestureRecognizer(tapGesture)
     }
 
     override func setupAddView() {
@@ -130,7 +148,7 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         delegate?.didTapMoreButton(button: button)
     }
     
-    func configureCell() {
+    func configureCell(_ item: Any) {
         mainDetailsInfoTitleLabel.text = "자바를 자바"
         mainDetailsInfoSubTitleLabel.text = "7"
         mainDetailsPeriodLabel.text = "2023.10.20 ~ 2024.01.10"
