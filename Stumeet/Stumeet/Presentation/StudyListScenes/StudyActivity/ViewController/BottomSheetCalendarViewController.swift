@@ -120,9 +120,6 @@ class BottomSheetCalendarViewController: BaseViewController {
     
     // MARK: - SetUp
     
-    override func setupStyles() {
-    }
-    
     override func setupAddView() {
         
         [
@@ -209,11 +206,14 @@ class BottomSheetCalendarViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
+        
         let didSelectedItemPublisher = calendarView.calendarCollectionView.didSelectItemPublisher.filter { $0.section == 1 }
+        
         let didTapHourButtonPublisher = Publishers.MergeMany(timeView.hourButtons.enumerated()
             .map { index, button in
                 button.tapPublisher.map { index }
             })
+        
         let didTapMinuteButtonPublisher = Publishers.MergeMany(timeView.minuteButtons.enumerated()
             .map { index, button in
                 button.tapPublisher.map { index }
@@ -250,31 +250,18 @@ class BottomSheetCalendarViewController: BaseViewController {
             .sink { [weak self] isRestore in
                 if isRestore {
                     self?.hideBottomSheet()
-                } else {
-                    self?.showBottomSheet()
-                }
+                } else { self?.showBottomSheet() }
             }
             .store(in: &cancellables)
         
-        // calendar 요일 binding
+        // calendar binding
         output.calendarSectionItems
             .receive(on: RunLoop.main)
-            .sink { [weak self] items in
+            .map(updateSnapshot)
+            .sink(receiveValue: { [weak self] snapshot in
                 guard let datasource = self?.datasource else { return }
-                var snapshot = NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem>()
-                
-                snapshot.appendSections([.week, .day])
-                items.forEach {
-                    switch $0 {
-                    case .weekCell(let week):
-                        snapshot.appendItems([.weekCell(week)], toSection: .week)
-                    case .dayCell(let item):
-                        snapshot.appendItems([.dayCell(item)], toSection: .day)
-                    }
-                }
-                
                 datasource.apply(snapshot, animatingDifferences: false)
-            }
+            })
             .store(in: &cancellables)
         
         // calendar 이전 달 버튼 enable 설정
@@ -294,10 +281,9 @@ class BottomSheetCalendarViewController: BaseViewController {
         
         // 연도, 월 binding
         output.yearMonthTitle
+            .map { ($0, UIControl.State.normal) }
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] title in
-                self?.calendarView.yearMonthButton.setTitle(title, for: .normal)
-            })
+            .sink(receiveValue: calendarView.yearMonthButton.setTitle)
             .store(in: &cancellables)
         
         // 선택된 날짜 binding
@@ -306,29 +292,25 @@ class BottomSheetCalendarViewController: BaseViewController {
             .assign(to: \.configuration!.attributedTitle, on: calendarButton)
             .store(in: &cancellables)
         
-        // 연도, 월 binding
-        output.yearMonthTitle
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] title in
-                self?.calendarView.yearMonthButton.setTitle(title, for: .normal)
-            })
-            .store(in: &cancellables)
-        
+        // 캘린더 뷰 보여주기
         output.showCalendar
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateShowCalendar)
             .store(in: &cancellables)
         
+        // 일시 선택 뷰 보여주기
         output.showDate
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateShowDate)
             .store(in: &cancellables)
         
+        // 시간 버튼 UI 업데이트
         output.isSelectedHours
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateHourButton)
             .store(in: &cancellables)
         
+        // 분 버튼 UI 업데이트
         output.isSelectedMinute
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateMinuteButton)
@@ -364,6 +346,22 @@ extension BottomSheetCalendarViewController {
             }
         }
     }
+    
+    private func updateSnapshot(items: [CalendarSectionItem]) -> NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem> {
+        var snapshot = NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem>()
+        snapshot.appendSections([.week, .day])
+        
+        items.forEach {
+            switch $0 {
+            case .weekCell(let week):
+                snapshot.appendItems([.weekCell(week)], toSection: .week)
+            case .dayCell(let item):
+                snapshot.appendItems([.dayCell(item)], toSection: .day)
+            }
+        }
+        
+        return snapshot
+    }
 }
 
 // MARK: - UI Update
@@ -378,7 +376,6 @@ extension BottomSheetCalendarViewController {
         self.view.layoutIfNeeded()
     }
     
-    // bottomSheetView 보이기
     private func showBottomSheet() {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.snp.updateConstraints { make in
