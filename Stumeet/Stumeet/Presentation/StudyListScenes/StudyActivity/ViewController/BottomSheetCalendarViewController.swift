@@ -265,12 +265,10 @@ class BottomSheetCalendarViewController: BaseViewController {
             .store(in: &cancellables)
         
         // calendar 이전 달 버튼 enable 설정
-        output.calendarSectionItems
-            .map { $0[1].isPast }
-            .compactMap { $0 }
+        output.isEnableBackMonthButton
             .removeDuplicates()
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateBackMonthButton)
+            .sink(receiveValue: setEnableBackMonthButton)
             .store(in: &cancellables)
         
         // 선택된 날짜 binding
@@ -402,14 +400,13 @@ extension BottomSheetCalendarViewController {
             })
     }
     
-    private func updateBackMonthButton(isPast: Bool) {
-        if isPast {
-            calendarView.backMonthButton.isEnabled = false
+    private func setEnableBackMonthButton(isEnable: Bool) {
+        if isEnable {
             calendarView.backMonthButton.tintColor = StumeetColor.gray300.color
         } else {
-            calendarView.backMonthButton.isEnabled = true
             calendarView.backMonthButton.tintColor = StumeetColor.gray800.color
         }
+        calendarView.backMonthButton.isEnabled = isEnable
     }
     
     private func updateHourButton(isSelecteds: [Bool]) {

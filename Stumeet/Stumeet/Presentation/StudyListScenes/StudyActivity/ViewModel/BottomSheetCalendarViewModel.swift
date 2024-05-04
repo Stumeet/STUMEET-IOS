@@ -50,6 +50,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let yearMonthTitle: AnyPublisher<String, Never>
         let isSelectedHours: AnyPublisher<[Bool], Never>
         let isSelectedMinute: AnyPublisher<[Bool], Never>
+        let isEnableBackMonthButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -106,40 +107,24 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         input.didTapNextMonthButton
-            .compactMap { [weak self] _ -> (DateComponents?, Date?) in
-                var components = self?.componentsSubject.value
-                components?.month! += 1
-                let selectedDate = self?.selectedDateSubject.value
-                return (components, selectedDate)
-            }
-            .flatMap { [weak self] components, selectedDate -> AnyPublisher<CalendarData, Never> in
-                guard let self = self else { return Empty().eraseToAnyPublisher() }
-                self.componentsSubject.send(components!)
-                return self.useCase.setCalendarItem(cal: self.cal, components: components!, selectedDate: selectedDate)
-            }
+            .map { +1 }
+            .map(updateComponentMonth)
+            .flatMap(useCase.setCalendarItem)
             .map { $0.data }
             .sink(receiveValue: calendarDateItemSubject.send)
             .store(in: &cancellable)
         
         input.didTapBackMonthButton
-            .compactMap { [weak self] _ -> (DateComponents?, Date?) in
-                var components = self?.componentsSubject.value
-                components?.month! -= 1
-                let selectedDate = self?.selectedDateSubject.value
-                return (components, selectedDate)
-            }
-            .flatMap { [weak self] components, selectedDate -> AnyPublisher<CalendarData, Never> in
-                guard let self = self else { return Empty().eraseToAnyPublisher() }
-                self.componentsSubject.send(components!)
-                return self.useCase.setCalendarItem(cal: self.cal, components: components!, selectedDate: selectedDate)
-            }
+            .map { -1 }
+            .map(updateComponentMonth)
+            .flatMap(useCase.setCalendarItem)
             .map { $0.data }
             .sink(receiveValue: calendarDateItemSubject.send)
             .store(in: &cancellable)
         
         input.didSelectedCalendarCell
-            .map {
-                return ($0, self.calendarDateItemSubject.value, self.componentsSubject.value, self.cal)
+            .map { indexPath in
+                return (indexPath, self.calendarDateItemSubject.value, self.componentsSubject.value, self.cal)
             }
             .flatMap(useCase.setSelectedCalendarCell)
             .sink(receiveValue: { [weak self] data in
@@ -149,12 +134,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .store(in: &cancellable)
         
         let calendarSectionItems = calendarDateItemSubject
-            .map { dateItem in
-                var items: [CalendarSectionItem] = []
-                items.append(contentsOf: dateItem.map { .dayCell($0) })
-                items.append(contentsOf: CalendarWeek.weeks.map { .weekCell($0) })
-                return items
-            }
+            .map(setSectionItems)
             .eraseToAnyPublisher()
         
         let yearMonthTitle = componentsSubject
@@ -184,6 +164,12 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         
         let isSelectedMinutes = isSelectedMinuteSubject.eraseToAnyPublisher()
         
+        let isEnableBackMonthButton = componentsSubject
+            .map { ($0, self.cal) }
+            .flatMap(useCase.setIsEnableBackMonthButton)
+            .eraseToAnyPublisher()
+        
+        
         return Output(
             dismiss: dismiss,
             adjustHeight: adjustHeight,
@@ -194,7 +180,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             selectedDate: selectedDateText,
             yearMonthTitle: yearMonthTitle,
             isSelectedHours: isSelectedHours,
-            isSelectedMinute: isSelectedMinutes
+            isSelectedMinute: isSelectedMinutes,
+            isEnableBackMonthButton: isEnableBackMonthButton
         )
     }
     
@@ -208,5 +195,20 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         component.day = 1
         
         return component
+    }
+    
+    func updateComponentMonth(increment: Int) -> (Calendar, DateComponents, Date?) {
+        var components = componentsSubject.value
+        components.month! += increment
+        let selectedDate = selectedDateSubject.value
+        componentsSubject.send(components)
+        return (cal, components, selectedDate)
+    }
+    
+    func setSectionItems(dateItems: [CalendarDate]) -> [CalendarSectionItem] {
+        var sectionItems: [CalendarSectionItem] = []
+        sectionItems.append(contentsOf: dateItems.map { .dayCell($0) })
+        sectionItems.append(contentsOf: CalendarWeek.weeks.map { .weekCell($0) })
+        return sectionItems
     }
 }
