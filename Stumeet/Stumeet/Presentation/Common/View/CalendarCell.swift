@@ -91,6 +91,7 @@ extension CalendarCell {
         
         if item.isPast {
             dayLabel.textColor = StumeetColor.gray300.color
+            backgroundRoundView.backgroundColor = .white
             isUserInteractionEnabled = false
         } else {
             isUserInteractionEnabled = true

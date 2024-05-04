@@ -33,6 +33,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let didTapNextMonthButton: AnyPublisher<Void, Never>
         let didTapBackMonthButton: AnyPublisher<Void, Never>
         let didSelectedCalendarCell: AnyPublisher<IndexPath, Never>
+        let didTapHourButton: AnyPublisher<Int, Never>
+        let didTapMinuteButton: AnyPublisher<Int, Never>
     }
     
     // MARK: - Output
@@ -46,6 +48,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let calendarSectionItems: AnyPublisher<[CalendarSectionItem], Never>
         let selectedDate: AnyPublisher<AttributedString?, Never>
         let yearMonthTitle: AnyPublisher<String, Never>
+        let isSelectedHours: AnyPublisher<[Bool], Never>
+        let isSelectedMinute: AnyPublisher<[Bool], Never>
     }
     
     // MARK: - Properties
@@ -60,6 +64,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
     let calendarDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
     let selectedDateSubject = CurrentValueSubject<Date?, Never>(Date())
     lazy var componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
+    let isSelectedHoursSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
+    let isSelectedMinuteSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
     
     // MARK: - Init
     
@@ -162,6 +168,22 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .flatMap(useCase.setSelectedDateText)
             .eraseToAnyPublisher()
         
+        input.didTapHourButton
+            .map { ($0, self.isSelectedHoursSubject.value) }
+            .flatMap(useCase.setSelectedTimeButton)
+            .sink(receiveValue: isSelectedHoursSubject.send)
+            .store(in: &cancellable)
+        
+        let isSelectedHours = isSelectedHoursSubject.eraseToAnyPublisher()
+        
+        input.didTapMinuteButton
+            .map { ($0, self.isSelectedMinuteSubject.value) }
+            .flatMap(useCase.setSelectedTimeButton)
+            .sink(receiveValue: isSelectedMinuteSubject.send)
+            .store(in: &cancellable)
+        
+        let isSelectedMinutes = isSelectedMinuteSubject.eraseToAnyPublisher()
+        
         return Output(
             dismiss: dismiss,
             adjustHeight: adjustHeight,
@@ -170,7 +192,9 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             showDate: showDate,
             calendarSectionItems: calendarSectionItems,
             selectedDate: selectedDateText,
-            yearMonthTitle: yearMonthTitle
+            yearMonthTitle: yearMonthTitle,
+            isSelectedHours: isSelectedHours,
+            isSelectedMinute: isSelectedMinutes
         )
     }
     

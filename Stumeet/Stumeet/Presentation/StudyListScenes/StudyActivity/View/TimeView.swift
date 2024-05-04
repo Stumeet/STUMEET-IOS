@@ -66,9 +66,11 @@ class TimeView: UIView {
         bottomRow.distribution = .fillEqually
         
         for idx in 1...12 {
-            let button = UIButton(type: .system)
+            let button = UIButton()
             button.setTitle(String(idx), for: .normal)
             button.setTitleColor(StumeetColor.gray400.color, for: .normal)
+            button.setTitleColor(.white, for: .selected)
+            button.titleLabel?.font = StumeetFont.bodyMedium14.font
             button.backgroundColor = StumeetColor.gray75.color
             button.layer.cornerRadius = 8
             if idx <= 6 {
@@ -108,10 +110,12 @@ class TimeView: UIView {
         bottomRow.distribution = .fillEqually
         
         for idx in 0...11 {
-            let button = UIButton(type: .system)
+            let button = UIButton()
             let title = idx * 5 <= 5 ? "0\(idx * 5)" : String(idx * 5)
             button.setTitle(title, for: .normal)
             button.setTitleColor(StumeetColor.gray400.color, for: .normal)
+            button.setTitleColor(.white, for: .selected)
+            button.titleLabel?.font = StumeetFont.bodyMedium14.font
             button.backgroundColor = StumeetColor.gray75.color
             button.layer.cornerRadius = 8
             if idx < 6 {

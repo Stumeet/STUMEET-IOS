@@ -19,6 +19,7 @@ protocol BottomSheetCalendarUseCase {
         components: DateComponents,
         cal: Calendar) -> AnyPublisher<CalendarData, Never>
     func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never>
+    func setSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
 }
 
 final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
@@ -53,25 +54,18 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
             calendarDates.append(CalendarDate(date: date))
         }
 
+        let now = Date()
         var components = components
         for date in 1...daysCountInMonth {
             components.day = date
             let compareDate = cal.date(from: components)!
-            if cal.isDateInToday(compareDate) {
-                // 오늘 날짜인 경우
-                if let selectedDate = selectedDate, cal.isDate(selectedDate, inSameDayAs: compareDate) {
-                    calendarDates.append(CalendarDate(date: String(date), isSelected: true))
-                } else {
-                    calendarDates.append(CalendarDate(date: String(date))) // 오늘 날짜를 특별한 상태 없이 추가
-                }
-            } else if compareDate < Date() {
-                // 과거 날짜인 경우
+            if cal.isDate(compareDate, inSameDayAs: now) {
+                calendarDates.append(CalendarDate(date: String(date)))
+            } else if compareDate < now {
                 calendarDates.append(CalendarDate(date: String(date), isPast: true))
             } else if let selectedDate = selectedDate, cal.isDate(selectedDate, inSameDayAs: compareDate) {
-                // 선택된 날짜인 경우
                 calendarDates.append(CalendarDate(date: String(date), isSelected: true))
             } else {
-                // 그 외의 경우
                 calendarDates.append(CalendarDate(date: String(date)))
             }
         }
@@ -113,6 +107,19 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
     
     func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never> {
         return Just(monthDateFormatter.string(from: cal.date(from: components)!)).eraseToAnyPublisher()
+    }
+    
+    func setSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never> {
+        var updatedTimeSelecteds = timeSelecteds
+        updatedTimeSelecteds[selectedIndex].toggle()
+        
+        if updatedTimeSelecteds[selectedIndex] {
+            for index in updatedTimeSelecteds.indices where updatedTimeSelecteds[index] && index != (selectedIndex) {
+                updatedTimeSelecteds[index] = false
+            }
+        }
+        
+        return Just(updatedTimeSelecteds).eraseToAnyPublisher()
     }
 }
 
