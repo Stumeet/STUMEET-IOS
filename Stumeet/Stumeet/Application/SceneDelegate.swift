@@ -13,20 +13,20 @@ import KakaoSDKAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    let appDIContainer = AppDIContainer()
-    var tabBarCoordinator: Coordinator?
+        let appDIContainer = AppDIContainer()
+        var appCoordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         let navigationController = UINavigationController()
-
+        
         PretendardKit.register()
-        // TODO: - 회원가입 유무 구현 시 AppCoordinator로 바꾸기
-        tabBarCoordinator = TabBarCoordinator(
-            navigationController: navigationController
+        appCoordinator = AppCoordinator(
+            navigationController: navigationController,
+            appDIContainer: appDIContainer
         )
-        tabBarCoordinator?.start()
+        appCoordinator?.start()
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
