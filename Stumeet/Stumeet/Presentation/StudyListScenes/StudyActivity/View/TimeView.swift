@@ -24,9 +24,9 @@ class TimeView: UIView {
         let button = UIButton()
         button.setTitle("오전", for: .normal)
         button.setTitleColor(StumeetColor.primary700.color, for: .normal)
+        button.layer.borderColor = StumeetColor.primary700.color.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 16
-        button.layer.borderColor = StumeetColor.primary700.color.cgColor
         button.backgroundColor = .white
         
         return button

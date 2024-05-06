@@ -21,6 +21,7 @@ protocol BottomSheetCalendarUseCase {
     func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never>
     func setSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never>
+    func setIsEnableCompleteButton(date: Date?, hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
 }
 
 final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
@@ -127,6 +128,14 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
         let currentMonth = cal.component(.month, from: Date())
         let selectedMonth = components.month
         return Just(selectedMonth != currentMonth).eraseToAnyPublisher()
+    }
+    
+    func setIsEnableCompleteButton(date: Date?, hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never> {
+        
+        guard let _ = date, hours.contains(true), minutes.contains(true) else {
+            return Just(false).eraseToAnyPublisher()
+        }
+        return Just(true).eraseToAnyPublisher()
     }
 }
 

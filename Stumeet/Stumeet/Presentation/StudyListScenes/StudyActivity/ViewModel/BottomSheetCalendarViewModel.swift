@@ -35,6 +35,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let didSelectedCalendarCell: AnyPublisher<IndexPath, Never>
         let didTapHourButton: AnyPublisher<Int, Never>
         let didTapMinuteButton: AnyPublisher<Int, Never>
+        let didTapAmButtonTapPublisher: AnyPublisher<Void, Never>
+        let didTapPmButtonTapPublisher: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -51,22 +53,25 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let isSelectedHours: AnyPublisher<[Bool], Never>
         let isSelectedMinute: AnyPublisher<[Bool], Never>
         let isEnableBackMonthButton: AnyPublisher<Bool, Never>
+        let isSelectedAmButton: AnyPublisher<Bool, Never>
+        let isEnableCompleteButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
     
-    let useCase: BottomSheetCalendarUseCase
-    let cal: Calendar = Calendar.current
-    var cancellable = Set<AnyCancellable>()
+    private let useCase: BottomSheetCalendarUseCase
+    private let cal: Calendar = Calendar.current
+    private var cancellable = Set<AnyCancellable>()
     
     // MARK: - Subject
     
     let dragEventSubject = PassthroughSubject<DragInfo, Never>()
-    let calendarDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
-    let selectedDateSubject = CurrentValueSubject<Date?, Never>(Date())
-    lazy var componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
-    let isSelectedHoursSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
-    let isSelectedMinuteSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
+    private let calendarDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
+    private let selectedDateSubject = CurrentValueSubject<Date?, Never>(Date())
+    private lazy var componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
+    
+    private let isSelectedHoursSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
+    private let isSelectedMinuteSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
     
     // MARK: - Init
     
@@ -169,6 +174,16 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .flatMap(useCase.setIsEnableBackMonthButton)
             .eraseToAnyPublisher()
         
+        let isSelectedAmButton = Publishers.Merge(
+            input.didTapAmButtonTapPublisher.map { true },
+            input.didTapPmButtonTapPublisher.map { false }
+        )
+            .eraseToAnyPublisher()
+        
+        let isEnableCompleteButton = Publishers.CombineLatest3(selectedDateSubject, isSelectedHoursSubject, isSelectedMinuteSubject)
+            .flatMap(useCase.setIsEnableCompleteButton)
+            .eraseToAnyPublisher()
+
         
         return Output(
             dismiss: dismiss,
@@ -181,7 +196,9 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             yearMonthTitle: yearMonthTitle,
             isSelectedHours: isSelectedHours,
             isSelectedMinute: isSelectedMinutes,
-            isEnableBackMonthButton: isEnableBackMonthButton
+            isEnableBackMonthButton: isEnableBackMonthButton,
+            isSelectedAmButton: isSelectedAmButton,
+            isEnableCompleteButton: isEnableCompleteButton
         )
     }
     

@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
         let appDIContainer = AppDIContainer()
-        var appCoordinator: AppCoordinator?
+        var tabBarCoordinator: Coordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -22,11 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         
         PretendardKit.register()
-        appCoordinator = AppCoordinator(
-            navigationController: navigationController,
-            appDIContainer: appDIContainer
+        // TODO: - 회원가입 유무 구현 시 AppCoordinator로 바꾸기
+        tabBarCoordinator = TabBarCoordinator(
+            navigationController: navigationController
         )
-        appCoordinator?.start()
+        tabBarCoordinator?.start()
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
