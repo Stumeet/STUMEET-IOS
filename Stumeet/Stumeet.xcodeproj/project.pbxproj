@@ -55,7 +55,6 @@
 		35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */; };
 		35E4EA3E2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA3D2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift */; };
 		35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA3F2BCC2BF2003A10D4 /* BaseTableViewCell.swift */; };
-		35E4EA422BD38688003A10D4 /* StudyGroupListContextMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA412BD38688003A10D4 /* StudyGroupListContextMenuView.swift */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
 		CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */; };
@@ -221,7 +220,6 @@
 		35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView++Extension.swift"; sourceTree = "<group>"; };
 		35E4EA3D2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupListTableViewCell.swift; sourceTree = "<group>"; };
 		35E4EA3F2BCC2BF2003A10D4 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
-		35E4EA412BD38688003A10D4 /* StudyGroupListContextMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupListContextMenuView.swift; sourceTree = "<group>"; };
 		49E13988B36BA4E051A3A83D /* Pods_StumeetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StumeetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7735D7930081AEFC4B4EB2 /* Pods-Stumeet-StumeetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.release.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7FCB7D7075B1E5E75906578A /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -680,7 +678,6 @@
 			isa = PBXGroup;
 			children = (
 				35E4EA3C2BCC2B0F003A10D4 /* Cell */,
-				35E4EA412BD38688003A10D4 /* StudyGroupListContextMenuView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1651,7 +1648,6 @@
 			files = (
 				35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */,
 				CA6448432B863BB90090DD84 /* Region.swift in Sources */,
-				35E4EA422BD38688003A10D4 /* StudyGroupListContextMenuView.swift in Sources */,
 				CAF533512B9DA6EC00A7B8B2 /* FadeOutAnimator.swift in Sources */,
 				352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */,
 				CAF533582B9EB6D000A7B8B2 /* StartRepository.swift in Sources */,

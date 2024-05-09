@@ -8,10 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol StudyGroupListTableViewCellDelegate: AnyObject {
-    func didTapMoreButton(button: UIView)
-}
-
 class StudyGroupListTableViewCell: BaseTableViewCell {
     
     // MARK: - UIComponents
@@ -66,22 +62,6 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    private let moreButtonContainer = UIView()
-    private lazy var moreButtonView: UIView = {
-        let view = UIView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(moreButtonAction))
-        view.addGestureRecognizer(tapGesture)
-        return view
-    }()
-    private let moreButtonImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "tabler_dots-vertical")
-        return imageView
-    }()
-    
-    // MARK: - Properties
-    weak var delegate: StudyGroupListTableViewCellDelegate?
-    
     // MARK: - Init
     override func setupStyles() {
         selectionStyle = .none
@@ -93,8 +73,7 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         
         [
             thumbnailImageView,
-            mainContentView,
-            moreButtonContainer
+            mainContentView
         ].forEach { rootHStackView.addArrangedSubview($0) }
         
         mainContentView.addSubview(mainDetailsVStackView)
@@ -109,8 +88,6 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
             mainDetailsInfoSubTitleLabel
         ].forEach { mainDetailsInfoHStackView.addArrangedSubview($0) }
         
-        moreButtonContainer.addSubview(moreButtonView)
-        moreButtonView.addSubview(moreButtonImageView)
     }
     
     override func setupConstaints() {
@@ -128,25 +105,9 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         thumbnailImageView.snp.makeConstraints {
             $0.width.height.equalTo(64)
         }
-        
-        moreButtonView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
-            $0.horizontalEdges.equalToSuperview()
-            $0.width.height.equalTo(32)
-        }
-        
-        moreButtonImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(16)
-        }
     }
     
     // MARK: - Function
-    @objc func moreButtonAction(_ sender: UITapGestureRecognizer) {
-        guard let button = sender.view else { return }
-        delegate?.didTapMoreButton(button: button)
-    }
     
     func configureCell(_ item: Any) {
         mainDetailsInfoTitleLabel.text = "자바를 자바"

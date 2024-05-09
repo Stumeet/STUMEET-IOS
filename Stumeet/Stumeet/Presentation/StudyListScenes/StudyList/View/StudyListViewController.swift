@@ -35,13 +35,6 @@ class StudyListViewController: BaseViewController {
         tableView.scrollsToTop = false
         return tableView
     }()
-    private let contextMenu: StudyGroupListContextMenuView = {
-        let menuView = StudyGroupListContextMenuView()
-        menuView.addItem(image: UIImage(named: "tabler_door-exit"), title: "나가기")
-        menuView.addItem(image: UIImage(named: "tabler_message-report"), title: "신고하기")
-        menuView.isHidden = true
-        return menuView
-    }()
     
     // MARK: - Properties
     private weak var coordinator: StudyListCoordinator!
@@ -72,7 +65,6 @@ class StudyListViewController: BaseViewController {
     
     override func setupAddView() {
         view.addSubview(studyGroupTableView)
-        view.addSubview(contextMenu)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationTitleLabel)
         navigationItem.rightBarButtonItem = makeBarButtonItem("tabler_plus")
@@ -83,28 +75,17 @@ class StudyListViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
         }
-        
-        contextMenu.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview()
-        }
     }
     
     private func setupRegister() {
         studyGroupTableView.registerCell(StudyGroupListTableViewCell.self)
     }
-    
-    private func setupDelegate() {
-        studyGroupTableView.delegate = self
-    }
-        
+
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRegister()
         configureDatasource()
-        setupGesture()
-        setupDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,7 +109,6 @@ class StudyListViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        hideContextMenu()
     }
     
     // MARK: - Function
@@ -138,61 +118,9 @@ class StudyListViewController: BaseViewController {
         button.setImage(image, for: .normal)
         return UIBarButtonItem(customView: button)
     }
-    
-    private func hideContextMenu() {
-        guard !contextMenu.isVisiblyHidden else { return }
-        contextMenu.isVisiblyHidden = true
-    }
-    
-    private func toggleContextMenu(near button: UIView) {
-        guard contextMenu.isVisiblyHidden else {
-            hideContextMenu()
-            return
-        }
-        
-        let menuHeight = contextMenu.bounds.size.height
-        let menuWidth = contextMenu.bounds.size.width
-        let buttonFrame = studyGroupTableView.convert(button.frame, from: button.superview)
-        let bottomCoordinate = buttonFrame.origin.y + menuHeight
-        
-        if bottomCoordinate > studyGroupTableView.contentOffset.y + studyGroupTableView.bounds.size.height {
-            contextMenu.layer.anchorPoint = CGPoint(x: 1.0, y: 1)
-        } else {
-            contextMenu.layer.anchorPoint = CGPoint(x: 1.0, y: 0)
-        }
-        
-        contextMenu.snp.remakeConstraints {
-            // !IMP: anchorPoint: (x: 0.5, y: 0.5) -> (x: 1.0, y: 0)
-            $0.top.equalTo(button.snp.top).offset(-(menuHeight / 2))
-            $0.trailing.equalTo(button.snp.leading).offset((menuWidth / 2) + 8)
-        }
-
-        contextMenu.isVisiblyHidden = false
-    }
-    
-    private func setupGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
-        hideContextMenu()
-    }
 }
 
-extension StudyListViewController:
-    StudyGroupListTableViewCellDelegate,
-    UITableViewDelegate {
-    // MARK: - StudyGroupListTableViewCellDelegate
-    func didTapMoreButton(button: UIView) {
-        toggleContextMenu(near: button)
-    }
-    
-    // MARK: - UITableViewDelegate
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        hideContextMenu()
-    }
-    
+extension StudyListViewController {
     // MARK: - DataSource
     private func configureDatasource() {
         studyGroupDataSource = UITableViewDiffableDataSource(
@@ -201,7 +129,6 @@ extension StudyListViewController:
                 guard let cell = tableView.dequeue(StudyGroupListTableViewCell.self, for: indexPath)
                 else { return UITableViewCell() }
                 cell.configureCell(item)
-                cell.delegate = self
                 return cell
             }
         )
