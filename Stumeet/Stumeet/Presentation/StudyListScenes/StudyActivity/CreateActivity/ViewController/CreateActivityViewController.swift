@@ -115,11 +115,15 @@ final class CreateActivityViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = CreateActivityViewModel(useCase: DefaultActivityCreateUseCase())
+    private let viewModel: CreateActivityViewModel
+    private let coordinator: CreateActivityNavigation
     
     // MARK: - Init
     
-    init() {
+    init(viewModel: CreateActivityViewModel, coordinator: CreateActivityNavigation) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -137,7 +141,6 @@ final class CreateActivityViewController: BaseViewController {
     // MARK: - SetUp
     
     override func viewDidLayoutSubviews() {
-        
         bottomView.layer.addBorder([.top, .bottom], color: StumeetColor.gray100.color, width: 1)
         
         contentTextView.layer.addBorder([.top], color: StumeetColor.gray100.color, width: 1)
@@ -347,10 +350,7 @@ final class CreateActivityViewController: BaseViewController {
         
         output.navigateToActivitySettingVC
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] _ in
-                let settingVC = StudyActivitySettingViewController()
-                self?.navigationController?.pushViewController(settingVC, animated: true)
-            })
+            .sink(receiveValue: coordinator.goToStudyActivitySettingVC)
             .store(in: &cancellables)
     }
 }

@@ -51,11 +51,16 @@ final class StudyActivitySettingViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private let viewModel = StudyActivitySettingViewModel()
+    
+    private let viewModel: StudyActivitySettingViewModel
+    private let coordinator: CreateActivityNavigation
     
     // MARK: - Init
     
-    init() {
+    init(viewModel: StudyActivitySettingViewModel, coordinator: CreateActivityNavigation) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -135,11 +140,7 @@ final class StudyActivitySettingViewController: BaseViewController {
         // CalendarBottomSheet으로 present
         output.showCalendar
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                let calendarVC = BottomSheetCalendarViewController()
-                calendarVC.modalPresentationStyle = .overFullScreen
-                self?.present(calendarVC, animated: false)
-            }
+            .sink(receiveValue: coordinator.presentToBottomSheetCalendarVC)
             .store(in: &cancellables)
     }
 }

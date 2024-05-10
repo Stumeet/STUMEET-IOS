@@ -24,7 +24,7 @@ protocol BottomSheetCalendarUseCase {
     func setIsEnableCompleteButton(date: Date?, hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
 }
 
-final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
+final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
     
     // MARK: - Properties
     
@@ -139,7 +139,7 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
     }
 }
 
-extension DefualtBottomSheetCalendarUseCase {
+extension DefaultBottomSheetCalendarUseCase {
     
     func makeMonthDateFormmater() -> DateFormatter {
         let dateFormatter = DateFormatter()

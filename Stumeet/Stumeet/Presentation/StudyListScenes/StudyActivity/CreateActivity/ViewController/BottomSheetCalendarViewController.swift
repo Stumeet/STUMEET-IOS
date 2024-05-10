@@ -100,15 +100,18 @@ class BottomSheetCalendarViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = BottomSheetCalendarViewModel(useCase: DefualtBottomSheetCalendarUseCase())
+    private let viewModel: BottomSheetCalendarViewModel
+    private let coordinator: CreateActivityNavigation
     private var datasource: UICollectionViewDiffableDataSource<CalendarSection, CalendarSectionItem>?
     
     // MARK: - Init
     
-    init() {
+    init(viewModel: BottomSheetCalendarViewModel, coordinator: CreateActivityNavigation) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -421,7 +424,7 @@ extension BottomSheetCalendarViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.dismiss(animated: false)
+                self.coordinator.dismissBottomSheetCalendarVC()
             })
     }
     
