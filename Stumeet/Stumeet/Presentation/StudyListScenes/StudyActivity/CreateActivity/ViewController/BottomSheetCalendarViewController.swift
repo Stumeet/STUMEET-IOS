@@ -8,7 +8,6 @@ import Combine
 import UIKit
 
 class BottomSheetCalendarViewController: BaseViewController {
-    
     // MARK: - UIComponents
     
     private let backgroundButton: UIButton = {
@@ -242,7 +241,8 @@ class BottomSheetCalendarViewController: BaseViewController {
             didTapHourButton: didTapHourButtonPublisher.eraseToAnyPublisher(),
             didTapMinuteButton: didTapMinuteButtonPublisher.eraseToAnyPublisher(),
             didTapAmButtonTapPublisher: didTapAmButtonTapPublisher.eraseToAnyPublisher(),
-            didTapPmButtonTapPublisher: didTapPmButtonTapPublisher.eraseToAnyPublisher()
+            didTapPmButtonTapPublisher: didTapPmButtonTapPublisher.eraseToAnyPublisher(),
+            didTapCompleteButton: completeButton.tapPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -341,6 +341,11 @@ class BottomSheetCalendarViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateCompleteButton)
             .store(in: &cancellables)
+        
+        output.completeDate
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismissBottomSheetCalendarVC)
+            .store(in: &cancellables)
     }
 }
 
@@ -424,7 +429,7 @@ extension BottomSheetCalendarViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.coordinator.dismissBottomSheetCalendarVC()
+                self.coordinator.dismissBottomSheetCalendarVC(date: nil)
             })
     }
     

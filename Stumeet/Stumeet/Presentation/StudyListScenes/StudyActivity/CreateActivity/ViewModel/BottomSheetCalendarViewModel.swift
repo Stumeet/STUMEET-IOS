@@ -37,6 +37,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let didTapMinuteButton: AnyPublisher<Int, Never>
         let didTapAmButtonTapPublisher: AnyPublisher<Void, Never>
         let didTapPmButtonTapPublisher: AnyPublisher<Void, Never>
+        let didTapCompleteButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -55,6 +56,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let isEnableBackMonthButton: AnyPublisher<Bool, Never>
         let isSelectedAmButton: AnyPublisher<Bool, Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
+        let completeDate: AnyPublisher<String, Never>
     }
     
     // MARK: - Properties
@@ -69,7 +71,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
     private let calendarDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
     private let selectedDateSubject = CurrentValueSubject<Date?, Never>(Date())
     private lazy var componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
-    
+    private let isAmSubject = CurrentValueSubject<Bool, Never>(true)
     private let isSelectedHoursSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
     private let isSelectedMinuteSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
     
@@ -175,15 +177,23 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let isSelectedAmButton = Publishers.Merge(
-            input.didTapAmButtonTapPublisher.map { true },
-            input.didTapPmButtonTapPublisher.map { false }
+            input.didTapAmButtonTapPublisher.map { _ in true },
+            input.didTapPmButtonTapPublisher.map { _ in false }
         )
-            .eraseToAnyPublisher()
+            .handleEvents(receiveOutput: isAmSubject.send)
+        .eraseToAnyPublisher()
+
         
         let isEnableCompleteButton = Publishers.CombineLatest3(selectedDateSubject, isSelectedHoursSubject, isSelectedMinuteSubject)
             .flatMap(useCase.setIsEnableCompleteButton)
             .eraseToAnyPublisher()
-
+        
+        let completeDate = input.didTapCompleteButton
+            .map { _ in
+                (self.selectedDateSubject.value!, self.isAmSubject.value, self.isSelectedHoursSubject.value, self.isSelectedMinuteSubject.value)
+            }
+            .flatMap(useCase.setCompletedDateText)
+            .eraseToAnyPublisher()
         
         return Output(
             dismiss: dismiss,
@@ -198,7 +208,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             isSelectedMinute: isSelectedMinutes,
             isEnableBackMonthButton: isEnableBackMonthButton,
             isSelectedAmButton: isSelectedAmButton,
-            isEnableCompleteButton: isEnableCompleteButton
+            isEnableCompleteButton: isEnableCompleteButton,
+            completeDate: completeDate
         )
     }
     

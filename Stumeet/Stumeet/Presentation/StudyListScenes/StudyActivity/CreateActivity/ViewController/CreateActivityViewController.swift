@@ -9,14 +9,14 @@ import Combine
 import UIKit
 
 final class CreateActivityViewController: BaseViewController {
-
+    
     // MARK: - UIComponents
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
-    
+        
         return scrollView
     }()
     
@@ -93,7 +93,7 @@ final class CreateActivityViewController: BaseViewController {
         textView.text = "내용을 입력하세요"
         textView.textColor = StumeetColor.gray300.color
         textView.font = StumeetFont.bodyMedium15.font
-    
+        
         return textView
         
     }()
@@ -265,7 +265,7 @@ final class CreateActivityViewController: BaseViewController {
     }
     
     override func bind() {
-    
+        
         // MARK: - Input
         
         let categoryButtonTaps = Publishers.Merge3(

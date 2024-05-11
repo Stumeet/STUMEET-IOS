@@ -10,6 +10,7 @@ import UIKit
 protocol StudyListCoordinatorDependencies {
     func makeStudyListVC(coordinator: StudyListNavigation) -> StudyListViewController
     func makeStudyActivityListVC(coordinator: StudyListNavigation) -> StudyActivityListViewController
+    func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
 }
 
 protocol StudyListNavigation: AnyObject {
@@ -54,9 +55,8 @@ extension StudyListCoordinator: StudyListNavigation {
     }
     
     func startCreateActivityCoordinator() {
-        let createActivityDIContainer = appDIConatiner.makeCreateActivityListSceneDIContainer()
         let createActivityNVC = UINavigationController()
-        let flow = createActivityDIContainer.makeCreateActivityCoordinator(navigationController: createActivityNVC)
+        let flow = dependencies.makeCreateActivityCoordinator(navigationController: createActivityNVC)
         children.removeAll()
         flow.parentCoordinator = self
         children.append(flow)

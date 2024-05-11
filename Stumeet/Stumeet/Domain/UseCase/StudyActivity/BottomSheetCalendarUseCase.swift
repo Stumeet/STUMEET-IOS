@@ -22,6 +22,7 @@ protocol BottomSheetCalendarUseCase {
     func setSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never>
     func setIsEnableCompleteButton(date: Date?, hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
+    func setCompletedDateText(date: Date, isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never>
 }
 
 final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
@@ -137,6 +138,16 @@ final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
         }
         return Just(true).eraseToAnyPublisher()
     }
+    
+    func setCompletedDateText(date: Date, isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never> {
+        var date = makeCompletedDateFormatter().string(from: date)
+        let ampm = isAm ? "오전" : "오후"
+        let hour = hours.firstIndex(where: { $0 }).map { String($0 + 1) }
+        let minute = minutes.firstIndex(where: { $0 }).map { String($0 * 5)}
+        
+        let result = "\(date) \(ampm) \(hour!):\(minute!)"
+        return Just(result).eraseToAnyPublisher()
+    }
 }
 
 extension DefaultBottomSheetCalendarUseCase {
@@ -151,6 +162,13 @@ extension DefaultBottomSheetCalendarUseCase {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .init(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy. M. d E요일"
+        return dateFormatter
+    }
+    
+    func makeCompletedDateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .init(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy. M. d(E)"
         return dateFormatter
     }
 
