@@ -50,11 +50,4 @@ final class AppDIContainer {
         )
         return RegisterSceneDIContainer(dependencies: dependencies)
     }
-    
-    func makeCreateActivityListSceneDIContainer() -> CreateActivityDIContainer {
-        let dependencies = CreateActivityDIContainer.Dependencies(
-            provider: networkServiceProvider
-        )
-        return CreateActivityDIContainer(dependencies: dependencies)
-    }
 }

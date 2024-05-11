@@ -83,12 +83,4 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
             coordinator: coordinator
         )
     }
-    
-    // MARK: - Flow Coordinators
-    func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator {
-        CreateActivityCoordinator(
-            navigationController: navigationController,
-            dependencies: self
-        )
-    }
 }

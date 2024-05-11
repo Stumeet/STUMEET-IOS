@@ -47,4 +47,18 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
             viewModel: makeStudyActivityListVM(),
             coordinator: coordinator)
     }
+    
+    // MARK: - DIContainer
+    func makeCreateActivityDIContainer() -> CreateActivityDIContainer {
+        let dependencies = CreateActivityDIContainer.Dependencies(provider: nil)
+        return CreateActivityDIContainer(dependencies: dependencies)
+    }
+    
+    // MARK: - Flow Coordinators
+    func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator {
+        return CreateActivityCoordinator(
+            navigationController: navigationController,
+            dependencies: makeCreateActivityDIContainer()
+        )
+    }
 }
