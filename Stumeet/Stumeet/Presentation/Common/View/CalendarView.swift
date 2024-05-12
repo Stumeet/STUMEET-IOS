@@ -127,3 +127,17 @@ extension CalendarView {
         }
     }
 }
+
+// MARK: - UIUpdate
+
+extension CalendarView {
+    
+    func setEnableBackMonthButton(isEnable: Bool) {
+        backMonthButton.tintColor = isEnable ? StumeetColor.gray300.color : StumeetColor.gray800.color
+        backMonthButton.isEnabled = isEnable
+    }
+    
+    func setYearMonthButtonTitle(title: String) {
+        yearMonthButton.setTitle(title, for: .normal)
+    }
+}

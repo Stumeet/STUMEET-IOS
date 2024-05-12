@@ -200,3 +200,13 @@ class TimeView: UIView {
         }
     }
 }
+
+// MARK: - UIUpdate
+extension TimeView {
+    func updateHourButton(isSelecteds: [Bool]) {
+        for index in isSelecteds.indices {
+            hourButtons[index].isSelected = isSelecteds[index]
+            hourButtons[index].backgroundColor = isSelecteds[index] ? StumeetColor.primary700.color : StumeetColor.gray75.color
+        }
+    }
+}
