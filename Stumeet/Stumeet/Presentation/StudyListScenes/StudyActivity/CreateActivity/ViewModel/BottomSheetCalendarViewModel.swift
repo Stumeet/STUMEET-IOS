@@ -56,7 +56,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
         let isEnableBackMonthButton: AnyPublisher<Bool, Never>
         let isSelectedAmButton: AnyPublisher<Bool, Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
-        let completeDate: AnyPublisher<String, Never>
+        let completeDate: AnyPublisher<(String, Bool), Never>
     }
     
     // MARK: - Properties
@@ -64,6 +64,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
     private let useCase: BottomSheetCalendarUseCase
     private let cal: Calendar = Calendar.current
     private var cancellable = Set<AnyCancellable>()
+    private let isStart: Bool
     
     // MARK: - Subject
     
@@ -77,8 +78,9 @@ final class BottomSheetCalendarViewModel: ViewModelType {
     
     // MARK: - Init
     
-    init(useCase: BottomSheetCalendarUseCase) {
+    init(useCase: BottomSheetCalendarUseCase, isStart: Bool) {
         self.useCase = useCase
+        self.isStart = isStart
         
         useCase.setCalendarItem(cal: cal, components: componentsSubject.value, selectedDate: nil)
             .map { $0.data }
@@ -193,6 +195,7 @@ final class BottomSheetCalendarViewModel: ViewModelType {
                 (self.selectedDateSubject.value!, self.isAmSubject.value, self.isSelectedHoursSubject.value, self.isSelectedMinuteSubject.value)
             }
             .flatMap(useCase.setCompletedDateText)
+            .map { ($0, self.isStart) }
             .eraseToAnyPublisher()
         
         return Output(

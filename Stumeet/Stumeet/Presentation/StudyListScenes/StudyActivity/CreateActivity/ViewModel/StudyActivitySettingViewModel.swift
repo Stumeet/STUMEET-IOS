@@ -23,7 +23,7 @@ final class StudyActivitySettingViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
-        let showCalendar: AnyPublisher<Void, Never>
+        let showCalendarIsStart: AnyPublisher<Bool, Never>
         let presentToPlaceVC: AnyPublisher<Void, Never>
         let presentToParticipatingMemberVC: AnyPublisher<Void, Never>
     }
@@ -39,12 +39,16 @@ final class StudyActivitySettingViewModel: ViewModelType {
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
-        let showCalendar = input.didTapStartDateButton
+        let showCalendarIsStart = Publishers.Merge(
+            input.didTapStartDateButton.map { true },
+            input.didTapEndDateButton.map { false }
+        )
+            .eraseToAnyPublisher()
         let presentToPlaceVC = input.didTapPlaceButton
         let presentToMemberVC = input.didTapMemeberButton
         
         return Output(
-            showCalendar: showCalendar,
+            showCalendarIsStart: showCalendarIsStart,
             presentToPlaceVC: presentToPlaceVC,
             presentToParticipatingMemberVC: presentToMemberVC)
     }

@@ -111,7 +111,7 @@ class TimeView: UIView {
         
         for idx in 0...11 {
             let button = UIButton()
-            let title = idx * 5 <= 5 ? "0\(idx * 5)" : String(idx * 5)
+            let title = String(format: "%02d", idx * 5)
             button.setTitle(title, for: .normal)
             button.setTitleColor(StumeetColor.gray400.color, for: .normal)
             button.setTitleColor(.white, for: .selected)

@@ -142,8 +142,12 @@ final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
     func setCompletedDateText(date: Date, isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never> {
         var date = makeCompletedDateFormatter().string(from: date)
         let ampm = isAm ? "오전" : "오후"
-        let hour = hours.firstIndex(where: { $0 }).map { String($0 + 1) }
-        let minute = minutes.firstIndex(where: { $0 }).map { String($0 * 5)}
+        let hour = hours
+            .firstIndex(where: { $0 })
+            .map { String(format: "%02d", $0 + 1) }
+        let minute = minutes
+            .firstIndex(where: { $0 })
+            .map { String(format: "%02d", $0 * 5)}
         
         let result = "\(date) \(ampm) \(hour!):\(minute!)"
         return Just(result).eraseToAnyPublisher()

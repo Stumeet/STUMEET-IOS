@@ -154,18 +154,23 @@ final class StudyActivitySettingViewController: BaseViewController {
         // Output
         
         // CalendarBottomSheet으로 present
-        output.showCalendar
+        output.showCalendarIsStart
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToBottomSheetCalendarVC)
             .store(in: &cancellables)
     }
 }
 
-// MARK: - Delegate
+// MARK: - CalendarDelegate
 
-extension StudyActivitySettingViewController: CreateActivityDelegate {
-    func didTapCompleteButton(date: String) {
+extension StudyActivitySettingViewController: CreateActivityCoordinatorDelegate {
+    
+    func didTapStartDateCompleteButton(date: String) {
         startDateLabel.text = date
+    }
+    
+    func didTapEndDateCompleteButton(date: String) {
+        endDateLabel.text = date
     }
 }
 

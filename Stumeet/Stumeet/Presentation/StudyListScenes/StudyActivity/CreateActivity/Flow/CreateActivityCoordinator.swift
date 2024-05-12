@@ -11,18 +11,20 @@ import UIKit
 protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
     func makeStudyActivitySettingViewController(coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
-    func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation) -> BottomSheetCalendarViewController
+    func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
 }
 
 protocol CreateActivityNavigation: AnyObject {
     func presentToCreateActivityVC()
     func goToStudyActivitySettingVC()
-    func presentToBottomSheetCalendarVC()
-    func dismissBottomSheetCalendarVC(date: String?)
+    func presentToBottomSheetCalendarVC(isStart: Bool)
+    func dismissStartDateCalendarVC(date: String?)
+    func dismissEndDateCalendarVC(date: String?)
 }
 
-protocol CreateActivityDelegate: AnyObject {
-    func didTapCompleteButton(date: String)
+protocol CreateActivityCoordinatorDelegate: AnyObject {
+    func didTapStartDateCompleteButton(date: String)
+    func didTapEndDateCompleteButton(date: String)
 }
 
 final class CreateActivityCoordinator: Coordinator {
@@ -30,7 +32,7 @@ final class CreateActivityCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
-    weak var delegate: CreateActivityDelegate?
+    weak var delegate: CreateActivityCoordinatorDelegate?
     
     private let dependencies: CreateActivityCoordinatorDependencies
     
@@ -42,10 +44,6 @@ final class CreateActivityCoordinator: Coordinator {
     
     func start() {
         presentToCreateActivityVC()
-    }
-    
-    deinit {
-        print("StudyActivityCoordinator - 코디네이터 해제")
     }
 }
 
@@ -65,16 +63,24 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
     }
 
     
-    func presentToBottomSheetCalendarVC() {
+    func presentToBottomSheetCalendarVC(isStart: Bool) {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        let bottomSheetCalendarVC = dependencies.makeBottomSheetCalendarViewController(coordinator: self)
+        let bottomSheetCalendarVC = dependencies.makeBottomSheetCalendarViewController(coordinator: self, isStart: isStart)
         bottomSheetCalendarVC.modalPresentationStyle = .overFullScreen
         lastVC.present(bottomSheetCalendarVC, animated: false)
     }
     
-    func dismissBottomSheetCalendarVC(date: String?) {
+    func dismissStartDateCalendarVC(date: String?) {
         if let date = date {
-            delegate?.didTapCompleteButton(date: date)
+            delegate?.didTapStartDateCompleteButton(date: date)
+        }
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        lastVC.dismiss(animated: true)
+    }
+    
+    func dismissEndDateCalendarVC(date: String?) {
+        if let date = date {
+            delegate?.didTapEndDateCompleteButton(date: date)
         }
         guard let lastVC = navigationController.viewControllers.last else { return }
         lastVC.dismiss(animated: true)

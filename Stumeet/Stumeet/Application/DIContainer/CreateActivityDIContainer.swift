@@ -73,13 +73,13 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     
     // MARK: - BottomSheetCalendar
     
-    func makeBottomSheetCalendarViewModel() -> BottomSheetCalendarViewModel {
-        BottomSheetCalendarViewModel(useCase: makeBottomSheetCalendarUseCase())
+    func makeBottomSheetCalendarViewModel(isStart: Bool) -> BottomSheetCalendarViewModel {
+        BottomSheetCalendarViewModel(useCase: makeBottomSheetCalendarUseCase(), isStart: isStart)
     }
     
-    func makeBottomSheetCalendarViewController(coordinator: Navigation) -> BottomSheetCalendarViewController {
+    func makeBottomSheetCalendarViewController(coordinator: Navigation, isStart: Bool) -> BottomSheetCalendarViewController {
         BottomSheetCalendarViewController(
-            viewModel: makeBottomSheetCalendarViewModel(),
+            viewModel: makeBottomSheetCalendarViewModel(isStart: isStart),
             coordinator: coordinator
         )
     }

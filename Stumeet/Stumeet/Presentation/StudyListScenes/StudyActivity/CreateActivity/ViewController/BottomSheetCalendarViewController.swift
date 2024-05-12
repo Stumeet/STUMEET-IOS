@@ -219,14 +219,10 @@ class BottomSheetCalendarViewController: BaseViewController {
         let didSelectedItemPublisher = calendarView.calendarCollectionView.didSelectItemPublisher.filter { $0.section == 1 }
         
         let didTapHourButtonPublisher = Publishers.MergeMany(timeView.hourButtons.enumerated()
-            .map { index, button in
-                button.tapPublisher.map { index }
-            })
+            .map { index, button in button.tapPublisher.map { index } })
         
         let didTapMinuteButtonPublisher = Publishers.MergeMany(timeView.minuteButtons.enumerated()
-            .map { index, button in
-                button.tapPublisher.map { index }
-            })
+            .map { index, button in button.tapPublisher.map { index } })
         
         let didTapAmButtonTapPublisher = timeView.amButton.tapPublisher
         let didTapPmButtonTapPublisher = timeView.pmButton.tapPublisher
@@ -344,7 +340,11 @@ class BottomSheetCalendarViewController: BaseViewController {
         
         output.completeDate
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.dismissBottomSheetCalendarVC)
+            .sink(receiveValue: { [weak self] date, isStart in
+                if isStart {
+                    self?.coordinator.dismissStartDateCalendarVC(date: date)
+                } else { self?.coordinator.dismissEndDateCalendarVC(date: date) }
+            })
             .store(in: &cancellables)
     }
 }
@@ -429,7 +429,7 @@ extension BottomSheetCalendarViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.coordinator.dismissBottomSheetCalendarVC(date: nil)
+                self.coordinator.dismissEndDateCalendarVC(date: nil)
             })
     }
     
