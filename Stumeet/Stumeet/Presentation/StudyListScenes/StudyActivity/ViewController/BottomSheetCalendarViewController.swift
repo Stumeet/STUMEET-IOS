@@ -4,7 +4,7 @@
 //
 //  Created by 정지훈 on 3/27/24.
 //
-
+import Combine
 import UIKit
 
 class BottomSheetCalendarViewController: BaseViewController {
@@ -44,15 +44,11 @@ class BottomSheetCalendarViewController: BaseViewController {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         
+        config.attributedTitle?.font = StumeetFont.bodyMedium15.font
         config.image = UIImage(named: "calendar")
         config.imagePadding = 4
-        config.attributedTitle = .init(
-            "2024. 1. 29 월요일",
-            attributes: AttributeContainer([
-                .font: StumeetFont.bodyMedium15.font
-            ]))
         config.baseForegroundColor = StumeetColor.primary700.color
-        config.contentInsets = .init(top: 0, leading: 19, bottom: 0, trailing: 19)
+        config.attributedTitle = AttributedString()
         
         button.configuration = config
         button.layer.borderWidth = 1
@@ -66,13 +62,11 @@ class BottomSheetCalendarViewController: BaseViewController {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         
-        config.image = UIImage(named: "clock")?.resized(to: .init(width: 24, height: 24))
+        config.image = UIImage(named: "clock")
         config.imagePadding = 4
-        config.attributedTitle = .init(
-            "시간 선택...",
-            attributes: AttributeContainer([
-                .font: StumeetFont.bodyMedium15.font
-            ]))
+        config.attributedTitle?.font = StumeetFont.bodyMedium15.font
+        config.attributedTitle = .init("시간 선택...")
+        
         config.baseForegroundColor = StumeetColor.gray400.color
         config.contentInsets = .init(top: 0, leading: 19.5, bottom: 0, trailing: 19.5)
         
@@ -90,6 +84,12 @@ class BottomSheetCalendarViewController: BaseViewController {
     }()
     
     private let calendarView = CalendarView()
+    private let timeView: TimeView = {
+        let view = TimeView()
+        view.isHidden = true
+        
+        return view
+    }()
     
     // MARK: - Properties
     
@@ -120,9 +120,6 @@ class BottomSheetCalendarViewController: BaseViewController {
     
     // MARK: - SetUp
     
-    override func setupStyles() {
-    }
-    
     override func setupAddView() {
         
         [
@@ -135,6 +132,7 @@ class BottomSheetCalendarViewController: BaseViewController {
             calendarButton,
             dateButton,
             calendarView,
+            timeView,
             completeButton
         ]   .forEach { bottomSheetView.addSubview($0) }
         
@@ -177,6 +175,7 @@ class BottomSheetCalendarViewController: BaseViewController {
             make.leading.equalToSuperview().inset(24)
             make.top.equalTo(dragIndicatorView.snp.bottom).offset(24)
             make.height.equalTo(56)
+            make.width.equalTo(191)
         }
         
         dateButton.snp.makeConstraints { make in
@@ -191,6 +190,12 @@ class BottomSheetCalendarViewController: BaseViewController {
             make.height.equalTo(261)
         }
         
+        timeView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(dateButton.snp.bottom).offset(24)
+            make.height.equalTo(267)
+        }
+        
         completeButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
             make.top.equalTo(calendarButton.snp.bottom).offset(318)
@@ -199,13 +204,30 @@ class BottomSheetCalendarViewController: BaseViewController {
     }
     
     // MARK: - Bind
-
+    
     override func bind() {
+        
+        let didSelectedItemPublisher = calendarView.calendarCollectionView.didSelectItemPublisher.filter { $0.section == 1 }
+        
+        let didTapHourButtonPublisher = Publishers.MergeMany(timeView.hourButtons.enumerated()
+            .map { index, button in
+                button.tapPublisher.map { index }
+            })
+        
+        let didTapMinuteButtonPublisher = Publishers.MergeMany(timeView.minuteButtons.enumerated()
+            .map { index, button in
+                button.tapPublisher.map { index }
+            })
         
         let input = BottomSheetCalendarViewModel.Input(
             didTapBackgroundButton: backgroundButton.tapPublisher,
             didTapCalendarButton: calendarButton.tapPublisher,
-            didTapDateButton: dateButton.tapPublisher
+            didTapDateButton: dateButton.tapPublisher,
+            didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher,
+            didTapBackMonthButton: calendarView.backMonthButton.tapPublisher,
+            didSelectedCalendarCell: didSelectedItemPublisher.eraseToAnyPublisher(),
+            didTapHourButton: didTapHourButtonPublisher.eraseToAnyPublisher(),
+            didTapMinuteButton: didTapMinuteButtonPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -219,9 +241,7 @@ class BottomSheetCalendarViewController: BaseViewController {
         // bottomSheet 높이 조정
         output.adjustHeight
             .receive(on: RunLoop.main)
-            .sink { [weak self] newHeight in
-                self?.adjustBottomSheetHeight(newHeight)
-            }
+            .sink(receiveValue: adjustBottomSheetHeight)
             .store(in: &cancellables)
         
         // bottomSheet 최대 높이로 되돌리기, 없애기
@@ -230,40 +250,68 @@ class BottomSheetCalendarViewController: BaseViewController {
             .sink { [weak self] isRestore in
                 if isRestore {
                     self?.hideBottomSheet()
-                } else {
-                    self?.showBottomSheet()
-                }
+                } else { self?.showBottomSheet() }
             }
             .store(in: &cancellables)
         
-        // calendar 날짜 binding
-        output.calendarItem
+        // calendar binding
+        output.calendarSectionItems
             .receive(on: RunLoop.main)
-            .sink { [weak self] calendarDay in
+            .map(updateSnapshot)
+            .sink(receiveValue: { [weak self] snapshot in
                 guard let datasource = self?.datasource else { return }
-                var snapshot = NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem>()
-                
-                snapshot.appendSections([.week, .day])
-                snapshot.appendItems(calendarDay.weeks.map { .weekCell($0) }, toSection: .week)
-                snapshot.appendItems(calendarDay.days.map { .dayCell($0) }, toSection: .day)
-                
-                datasource.apply(snapshot)
-            }
+                datasource.apply(snapshot, animatingDifferences: false)
+            })
             .store(in: &cancellables)
         
-//        output.showCalendar
-//            .receive(on: RunLoop.main)
-//            .sink { [weak self] _ in
-//                self?.
-//            }
-//            .store(in: &cancellables)
-//        
-//        output.showDate
-//            .receive(on: RunLoop.main)
-//            .sink { [weak self] _ in
-//                <#code#>
-//            }
-//            .store(in: &cancellables)
+        // calendar 이전 달 버튼 enable 설정
+        output.isEnableBackMonthButton
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: calendarView.setEnableBackMonthButton)
+            .store(in: &cancellables)
+        
+        // 선택된 날짜 binding
+        output.selectedDate
+            .receive(on: RunLoop.main)
+            .assign(to: \.configuration!.attributedTitle, on: calendarButton)
+            .store(in: &cancellables)
+        
+        // 연도, 월 binding
+        output.yearMonthTitle
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: calendarView.setYearMonthButtonTitle)
+            .store(in: &cancellables)
+        
+        // 선택된 날짜 binding
+        output.selectedDate
+            .receive(on: RunLoop.main)
+            .assign(to: \.configuration!.attributedTitle, on: calendarButton)
+            .store(in: &cancellables)
+        
+        // 캘린더 뷰 보여주기
+        output.showCalendar
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateShowCalendar)
+            .store(in: &cancellables)
+        
+        // 일시 선택 뷰 보여주기
+        output.showDate
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateShowDate)
+            .store(in: &cancellables)
+        
+        // 시간 버튼 UI 업데이트
+        output.isSelectedHours
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: timeView.updateHourButton)
+            .store(in: &cancellables)
+        
+        // 분 버튼 UI 업데이트
+        output.isSelectedMinute
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateMinuteButton)
+            .store(in: &cancellables)
     }
 }
 
@@ -279,20 +327,37 @@ extension BottomSheetCalendarViewController {
                     withReuseIdentifier: CalendarCell.identifier,
                     for: indexPath) as? CalendarCell
                 else { return UICollectionViewCell() }
-                cell.configureWeekCell(text: week)
                 
+                cell.configureWeekCell(text: week)
                 return cell
                 
-            case .dayCell(let day):
+            case .dayCell(let calendarDate):
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CalendarCell.identifier,
                     for: indexPath) as? CalendarCell
                 else { return UICollectionViewCell() }
-                cell.configureDayCell(text: day)
+                
+                cell.configureDayCell(item: calendarDate)
                 
                 return cell
             }
         }
+    }
+    
+    private func updateSnapshot(items: [CalendarSectionItem]) -> NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem> {
+        var snapshot = NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem>()
+        snapshot.appendSections([.week, .day])
+        
+        items.forEach {
+            switch $0 {
+            case .weekCell(let week):
+                snapshot.appendItems([.weekCell(week)], toSection: .week)
+            case .dayCell(let item):
+                snapshot.appendItems([.dayCell(item)], toSection: .day)
+            }
+        }
+        
+        return snapshot
     }
 }
 
@@ -308,7 +373,6 @@ extension BottomSheetCalendarViewController {
         self.view.layoutIfNeeded()
     }
     
-    // bottomSheetView 보이기
     private func showBottomSheet() {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.snp.updateConstraints { make in
@@ -333,6 +397,41 @@ extension BottomSheetCalendarViewController {
             completion: { _ in
                 self.dismiss(animated: false)
             })
+    }
+    
+    private func updateMinuteButton(isSelecteds: [Bool]) {
+        for index in isSelecteds.indices {
+            timeView.minuteButtons[index].isSelected = isSelecteds[index]
+            if isSelecteds[index] {
+                timeView.minuteButtons[index].backgroundColor = StumeetColor.primary700.color
+            } else {
+                timeView.minuteButtons[index].backgroundColor = StumeetColor.gray75.color
+            }
+        }
+    }
+    
+    private func updateShowDate() {
+        calendarView.isHidden = true
+        timeView.isHidden = false
+        dateButton.configuration?.baseForegroundColor = StumeetColor.primary700.color
+        dateButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+        dateButton.configuration?.image = UIImage(named: "clock")?.withTintColor(StumeetColor.primary700.color)
+        
+        calendarButton.configuration?.baseForegroundColor = StumeetColor.gray400.color
+        calendarButton.layer.borderColor = StumeetColor.gray75.color.cgColor
+        calendarButton.configuration?.image = UIImage(named: "calendar")?.withTintColor(StumeetColor.gray400.color)
+    }
+    
+    private func updateShowCalendar() {
+        calendarView.isHidden = false
+        calendarButton.configuration?.baseForegroundColor = StumeetColor.primary700.color
+        calendarButton.configuration?.image = UIImage(named: "calendar")
+        calendarButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+        
+        dateButton.configuration?.baseForegroundColor = StumeetColor.gray400.color
+        dateButton.layer.borderColor = StumeetColor.gray75.color.cgColor
+        dateButton.configuration?.image = UIImage(named: "clock")
+        timeView.isHidden = true
     }
 }
 

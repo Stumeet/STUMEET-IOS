@@ -14,5 +14,23 @@ enum CalendarSection: Int {
 
 enum CalendarSectionItem: Hashable {
     case weekCell(String)
-    case dayCell(String)
+    case dayCell(CalendarDate)
+}
+
+extension CalendarSectionItem {
+    var date: String {
+        switch self {
+        case .dayCell(let item):
+            return item.date
+        default: return ""
+        }
+    }
+    
+    var isPast: Bool? {
+        switch self {
+        case .dayCell(let item):
+            return item.isPast
+        default: return nil
+        }
+    }
 }
