@@ -23,6 +23,7 @@ final class StudyActivitySettingViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
+        let currentDate: AnyPublisher<String, Never>
         let showCalendarIsStart: AnyPublisher<Bool, Never>
         let presentToPlaceVC: AnyPublisher<Void, Never>
         let presentToParticipatingMemberVC: AnyPublisher<Void, Never>
@@ -39,6 +40,8 @@ final class StudyActivitySettingViewModel: ViewModelType {
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
+        
+        let currentDate = getCurrentFormattedDate()
         let showCalendarIsStart = Publishers.Merge(
             input.didTapStartDateButton.map { true },
             input.didTapEndDateButton.map { false }
@@ -48,8 +51,29 @@ final class StudyActivitySettingViewModel: ViewModelType {
         let presentToMemberVC = input.didTapMemeberButton
         
         return Output(
+            currentDate: currentDate,
             showCalendarIsStart: showCalendarIsStart,
             presentToPlaceVC: presentToPlaceVC,
             presentToParticipatingMemberVC: presentToMemberVC)
+    }
+}
+
+extension StudyActivitySettingViewModel {
+    func getCurrentFormattedDate() -> AnyPublisher<String, Never> {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy. M. d(EEE) a h:mm"
+        let now = Date()
+        let calendar = Calendar.current
+        let roundedMinutes = (calendar.component(.minute, from: now) + 4) / 5 * 5
+        let components = DateComponents(
+            year: calendar.component(.year, from: now),
+            month: calendar.component(.month, from: now),
+            day: calendar.component(.day, from: now),
+            hour: calendar.component(.hour, from: now),
+            minute: roundedMinutes
+        )
+        let roundedDate = calendar.date(from: components)!
+        return Just(dateFormatter.string(from: roundedDate)).eraseToAnyPublisher()
     }
 }

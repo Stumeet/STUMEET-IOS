@@ -31,7 +31,7 @@ final class StudyActivitySettingViewController: BaseViewController {
     }()
     
     private let startDateLabel: UILabel = {
-        return UILabel().setLabelProperty(text: "test", font: StumeetFont.bodyMedium15.font, color: .primary700)
+        return UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium15.font, color: .primary700)
     }()
     
     private lazy var startDateButton: UIButton = {
@@ -39,7 +39,7 @@ final class StudyActivitySettingViewController: BaseViewController {
     }()
     
     private let endDateLabel: UILabel = {
-        return UILabel().setLabelProperty(text: "test", font: StumeetFont.bodyMedium15.font, color: .primary700)
+        return UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium15.font, color: .primary700)
     }()
     
     private lazy var endDateButton: UIButton = {
@@ -158,6 +158,11 @@ final class StudyActivitySettingViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToBottomSheetCalendarVC)
             .store(in: &cancellables)
+        
+        output.currentDate
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: setCurrentDate)
+            .store(in: &cancellables)
     }
 }
 
@@ -196,5 +201,10 @@ extension StudyActivitySettingViewController {
         }
         
         return button
+    }
+    
+    func setCurrentDate(date: String) {
+        startDateLabel.text = date
+        endDateLabel.text = date
     }
 }
