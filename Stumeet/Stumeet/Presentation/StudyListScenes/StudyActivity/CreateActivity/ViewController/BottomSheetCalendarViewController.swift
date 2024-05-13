@@ -285,7 +285,7 @@ class BottomSheetCalendarViewController: BaseViewController {
         output.isEnableBackMonthButton
             .removeDuplicates()
             .receive(on: RunLoop.main)
-            .sink(receiveValue: setEnableBackMonthButton)
+            .sink(receiveValue: calendarView.setEnableBackMonthButton)
             .store(in: &cancellables)
         
         // 선택된 날짜 binding
@@ -296,9 +296,8 @@ class BottomSheetCalendarViewController: BaseViewController {
         
         // 연도, 월 binding
         output.yearMonthTitle
-            .map { ($0, UIControl.State.normal) }
             .receive(on: RunLoop.main)
-            .sink(receiveValue: calendarView.yearMonthButton.setTitle)
+            .sink(receiveValue: calendarView.setYearMonthButtonTitle)
             .store(in: &cancellables)
         
         // 선택된 날짜 binding
@@ -322,7 +321,7 @@ class BottomSheetCalendarViewController: BaseViewController {
         // 시간 버튼 UI 업데이트
         output.isSelectedHours
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateHourButton)
+            .sink(receiveValue: timeView.updateHourButton)
             .store(in: &cancellables)
         
         // 분 버튼 UI 업데이트
@@ -438,26 +437,6 @@ extension BottomSheetCalendarViewController {
             completion: { _ in
                 self.coordinator.dismissBottomSheetCalenderVC()
             })
-    }
-    
-    private func setEnableBackMonthButton(isEnable: Bool) {
-        if isEnable {
-            calendarView.backMonthButton.tintColor = StumeetColor.gray300.color
-        } else {
-            calendarView.backMonthButton.tintColor = StumeetColor.gray800.color
-        }
-        calendarView.backMonthButton.isEnabled = isEnable
-    }
-    
-    private func updateHourButton(isSelecteds: [Bool]) {
-        for index in isSelecteds.indices {
-            timeView.hourButtons[index].isSelected = isSelecteds[index]
-            if isSelecteds[index] {
-                timeView.hourButtons[index].backgroundColor = StumeetColor.primary700.color
-            } else {
-                timeView.hourButtons[index].backgroundColor = StumeetColor.gray75.color
-            }
-        }
     }
     
     private func updateMinuteButton(isSelecteds: [Bool]) {
