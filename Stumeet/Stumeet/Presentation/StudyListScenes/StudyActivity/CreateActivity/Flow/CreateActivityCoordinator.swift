@@ -12,12 +12,14 @@ protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
     func makeStudyActivitySettingViewController(coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
+    func makeActivityMemberSettingViewController(coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
 }
 
 protocol CreateActivityNavigation: AnyObject {
     func presentToCreateActivityVC()
     func goToStudyActivitySettingVC()
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
+    func presentToActivityMemberSettingViewController()
     func dismissBottomSheetCalenderVC()
 }
 
@@ -62,6 +64,13 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         bottomSheetCalendarVC.modalPresentationStyle = .overFullScreen
         bottomSheetCalendarVC.delegate = delegate
         lastVC.present(bottomSheetCalendarVC, animated: false)
+    }
+    
+    func presentToActivityMemberSettingViewController() {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let activityMemberSettingVC = dependencies.makeActivityMemberSettingViewController(coordinator: self)
+        activityMemberSettingVC.modalPresentationStyle = .fullScreen
+        lastVC.present(activityMemberSettingVC, animated: true)
     }
     
     func dismissBottomSheetCalenderVC() {
