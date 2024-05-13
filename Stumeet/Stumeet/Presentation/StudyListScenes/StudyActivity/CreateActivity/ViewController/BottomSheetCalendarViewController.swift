@@ -7,8 +7,12 @@
 import Combine
 import UIKit
 
+protocol CreateActivityDelegate: AnyObject {
+    func didTapStartDateCompleteButton(date: String)
+    func didTapEndDateCompleteButton(date: String)
+}
+
 class BottomSheetCalendarViewController: BaseViewController {
-    
     // MARK: - UIComponents
     
     private let backgroundButton: UIButton = {
@@ -80,7 +84,14 @@ class BottomSheetCalendarViewController: BaseViewController {
     
     
     private let completeButton: UIButton = {
-        return UIButton().makeRegisterBottomButton(text: "완료", color: StumeetColor.primary700.color)
+        let button = UIButton()
+        button.isEnabled = false
+        button.setTitle("완료", for: .normal)
+        button.setTitleColor(StumeetColor.gray50.color, for: .normal)
+        button.backgroundColor = StumeetColor.gray200.color
+        button.layer.cornerRadius = 16
+        
+        return button
     }()
     
     private let calendarView = CalendarView()
@@ -93,15 +104,19 @@ class BottomSheetCalendarViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = BottomSheetCalendarViewModel(useCase: DefualtBottomSheetCalendarUseCase())
+    private let viewModel: BottomSheetCalendarViewModel
+    private let coordinator: CreateActivityNavigation
     private var datasource: UICollectionViewDiffableDataSource<CalendarSection, CalendarSectionItem>?
+    weak var delegate: CreateActivityDelegate?
     
     // MARK: - Init
     
-    init() {
+    init(viewModel: BottomSheetCalendarViewModel, coordinator: CreateActivityNavigation) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -210,14 +225,13 @@ class BottomSheetCalendarViewController: BaseViewController {
         let didSelectedItemPublisher = calendarView.calendarCollectionView.didSelectItemPublisher.filter { $0.section == 1 }
         
         let didTapHourButtonPublisher = Publishers.MergeMany(timeView.hourButtons.enumerated()
-            .map { index, button in
-                button.tapPublisher.map { index }
-            })
+            .map { index, button in button.tapPublisher.map { index } })
         
         let didTapMinuteButtonPublisher = Publishers.MergeMany(timeView.minuteButtons.enumerated()
-            .map { index, button in
-                button.tapPublisher.map { index }
-            })
+            .map { index, button in button.tapPublisher.map { index } })
+        
+        let didTapAmButtonTapPublisher = timeView.amButton.tapPublisher
+        let didTapPmButtonTapPublisher = timeView.pmButton.tapPublisher
         
         let input = BottomSheetCalendarViewModel.Input(
             didTapBackgroundButton: backgroundButton.tapPublisher,
@@ -227,7 +241,10 @@ class BottomSheetCalendarViewController: BaseViewController {
             didTapBackMonthButton: calendarView.backMonthButton.tapPublisher,
             didSelectedCalendarCell: didSelectedItemPublisher.eraseToAnyPublisher(),
             didTapHourButton: didTapHourButtonPublisher.eraseToAnyPublisher(),
-            didTapMinuteButton: didTapMinuteButtonPublisher.eraseToAnyPublisher()
+            didTapMinuteButton: didTapMinuteButtonPublisher.eraseToAnyPublisher(),
+            didTapAmButtonTapPublisher: didTapAmButtonTapPublisher.eraseToAnyPublisher(),
+            didTapPmButtonTapPublisher: didTapPmButtonTapPublisher.eraseToAnyPublisher(),
+            didTapCompleteButton: completeButton.tapPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -312,6 +329,29 @@ class BottomSheetCalendarViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateMinuteButton)
             .store(in: &cancellables)
+        
+        output.isSelectedAmButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] isSelected in
+                self?.updateAmTimeView(isSelected: isSelected)
+                self?.updatePmTimeView(isSelected: isSelected)
+            })
+            .store(in: &cancellables)
+        
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCompleteButton)
+            .store(in: &cancellables)
+        
+        output.completeDate
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] date, isStart in
+                if isStart {
+                    self?.delegate?.didTapStartDateCompleteButton(date: date)
+                } else { self?.delegate?.didTapEndDateCompleteButton(date: date) }
+                self?.coordinator.dismissBottomSheetCalenderVC()
+            })
+            .store(in: &cancellables)
     }
 }
 
@@ -395,7 +435,7 @@ extension BottomSheetCalendarViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.dismiss(animated: false)
+                self.coordinator.dismissBottomSheetCalenderVC()
             })
     }
     
@@ -432,6 +472,37 @@ extension BottomSheetCalendarViewController {
         dateButton.layer.borderColor = StumeetColor.gray75.color.cgColor
         dateButton.configuration?.image = UIImage(named: "clock")
         timeView.isHidden = true
+    }
+                
+    private func updateAmTimeView(isSelected: Bool) {
+        if isSelected {
+            timeView.amButton.setTitleColor(StumeetColor.primary700.color, for: .normal)
+            timeView.amButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+            timeView.amButton.layer.borderWidth = 1
+            timeView.amButton.backgroundColor = .white
+        } else {
+            timeView.amButton.setTitleColor(StumeetColor.gray400.color, for: .normal)
+            timeView.amButton.backgroundColor = StumeetColor.gray75.color
+            timeView.amButton.layer.borderWidth = 0
+        }
+    }
+    
+    private func updatePmTimeView(isSelected: Bool) {
+        if isSelected {
+            timeView.pmButton.setTitleColor(StumeetColor.gray400.color, for: .normal)
+            timeView.pmButton.backgroundColor = StumeetColor.gray75.color
+            timeView.pmButton.layer.borderWidth = 0
+        } else {
+            timeView.pmButton.setTitleColor(StumeetColor.primary700.color, for: .normal)
+            timeView.pmButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+            timeView.pmButton.layer.borderWidth = 1
+            timeView.pmButton.backgroundColor = .white
+        }
+    }
+    
+    private func updateCompleteButton(isEnable: Bool) {
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
+        completeButton.isEnabled = isEnable
     }
 }
 

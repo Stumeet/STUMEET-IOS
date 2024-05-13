@@ -17,11 +17,11 @@ class StudyListViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let coordinator: StudyListCoordinator
+    private let coordinator: StudyListNavigation
     
     // MARK: - Init
     
-    init(coordinator: StudyListCoordinator) {
+    init(coordinator: StudyListNavigation) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -42,11 +42,7 @@ class StudyListViewController: BaseViewController {
         }
         
         button.tapPublisher
-            .sink { _ in
-                let studyActivityVC = StudyActivityViewController()
-                studyActivityVC.modalPresentationStyle = .fullScreen
-                self.present(studyActivityVC, animated: true)
-            }
+            .sink(receiveValue: coordinator.goToStudyActivityList)
             .store(in: &cancellables)
     }
     

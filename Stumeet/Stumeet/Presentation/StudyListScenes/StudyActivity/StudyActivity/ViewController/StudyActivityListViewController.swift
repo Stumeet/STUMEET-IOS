@@ -1,5 +1,5 @@
 //
-//  StudyActivityViewController.swift
+//  StudyActivityListViewController.swift
 //  Stumeet
 //
 //  Created by 정지훈 on 2/22/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StudyActivityViewController: BaseViewController {
+class StudyActivityListViewController: BaseViewController {
 
     // MARK: - UIComponents
     
@@ -32,9 +32,23 @@ class StudyActivityViewController: BaseViewController {
     
     // MARK: - Properties
     
-    let viewModel: StudyActivityViewModel = StudyActivityViewModel(useCase: DefaultStudyActivityUseCase(repository: DefaultStudyActivityRepository()))
-    var datasource: UICollectionViewDiffableDataSource<StudyActivitySection, StudyActivityItem>?
-    var headerView: StudyActivityHeaderView?
+    private let viewModel: StudyActivityViewModel
+    private let coordinator: StudyListNavigation
+    private var datasource: UICollectionViewDiffableDataSource<StudyActivitySection, StudyActivityItem>?
+    // TODO: - HeadrView 제거, subject로 연결
+    private var headerView: StudyActivityHeaderView?
+    
+    // MARK: - Init
+    init(viewModel: StudyActivityViewModel, coordinator: StudyListNavigation) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycle
     
@@ -47,6 +61,7 @@ class StudyActivityViewController: BaseViewController {
     
     override func setupStyles() {
         view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
     }
     
     override func setupAddView() {
@@ -123,24 +138,16 @@ class StudyActivityViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
-        
-        // TODO: - Coordinator 적용
-        
         output.presentToCreateActivityVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                let createActivityVC = CreateActivityViewController()
-                let navigationController = UINavigationController(rootViewController: createActivityVC)
-                navigationController.modalPresentationStyle = .fullScreen
-                self?.present(navigationController, animated: true)
-            }
+            .sink(receiveValue: coordinator.startCreateActivityCoordinator)
             .store(in: &cancellables)
     }
 }
 
 // MARK: - DataSource
 
-extension StudyActivityViewController {
+extension StudyActivityListViewController {
     func configureDatasource() {
         datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
             
@@ -187,7 +194,7 @@ extension StudyActivityViewController {
 
 // MARK: ConfigureLayout
 
-extension StudyActivityViewController {
+extension StudyActivityListViewController {
     
     private func createAllLayout(type: StudyActivityItem) -> UICollectionViewCompositionalLayout {
         var layout: UICollectionViewCompositionalLayout

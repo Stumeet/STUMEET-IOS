@@ -36,13 +36,13 @@ final class CreateActivityViewModel: ViewModelType {
     
     // MARK: - Properties
     
-    private let useCase: ActivityCreateUseCase
+    private let useCase: CreateActivityUseCase
     let currentCategorySubject = CurrentValueSubject<ActivityCategory, Never>(.freedom)
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
-    init(useCase: ActivityCreateUseCase) {
+    init(useCase: CreateActivityUseCase) {
         self.useCase = useCase
     }
     

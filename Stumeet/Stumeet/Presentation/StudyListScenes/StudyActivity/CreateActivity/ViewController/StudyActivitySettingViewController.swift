@@ -30,20 +30,36 @@ final class StudyActivitySettingViewController: BaseViewController {
         return stackView
     }()
     
+    private let startDateLabel: UILabel = {
+        return UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium15.font, color: .primary700)
+    }()
+    
     private lazy var startDateButton: UIButton = {
-        return createActivitySettingButton(title: "시작 일시", subTitle: "test", subTitleColor: .primary700)
+        return createActivitySettingButton(title: "시작 일시", subTitleLabel: startDateLabel)
+    }()
+    
+    private let endDateLabel: UILabel = {
+        return UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium15.font, color: .primary700)
     }()
     
     private lazy var endDateButton: UIButton = {
-        return createActivitySettingButton(title: "종료 일시", subTitle: "test", subTitleColor: .primary700)
+        return createActivitySettingButton(title: "종료 일시", subTitleLabel: endDateLabel)
+    }()
+    
+    private let placeLabel: UILabel = {
+        return UILabel().setLabelProperty(text: "장소를 선택해주세요", font: StumeetFont.bodyMedium15.font, color: .gray300)
     }()
     
     private lazy var placeButton: UIButton = {
-        return createActivitySettingButton(title: "장소", subTitle: "장소를 선택해주세요", subTitleColor: .gray300)
+        return createActivitySettingButton(title: "장소", subTitleLabel: placeLabel)
+    }()
+    
+    private let memberLabel: UILabel = {
+        return UILabel().setLabelProperty(text: "멤버를 선택해주세요", font: StumeetFont.bodyMedium15.font, color: .gray300)
     }()
     
     private lazy var memberButton: UIButton = {
-        return createActivitySettingButton(title: "멤버", subTitle: "멤버를 선택해주세요", subTitleColor: .gray300)
+        return createActivitySettingButton(title: "멤버", subTitleLabel: memberLabel)
     }()
     
     private lazy var postButton: UIButton = {
@@ -51,11 +67,16 @@ final class StudyActivitySettingViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private let viewModel = StudyActivitySettingViewModel()
+    
+    private let viewModel: StudyActivitySettingViewModel
+    private let coordinator: CreateActivityNavigation
     
     // MARK: - Init
     
-    init() {
+    init(viewModel: StudyActivitySettingViewModel, coordinator: CreateActivityNavigation) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -133,25 +154,39 @@ final class StudyActivitySettingViewController: BaseViewController {
         // Output
         
         // CalendarBottomSheet으로 present
-        output.showCalendar
+        output.showCalendarIsStart
+            .map { (self, $0)}
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                let calendarVC = BottomSheetCalendarViewController()
-                calendarVC.modalPresentationStyle = .overFullScreen
-                self?.present(calendarVC, animated: false)
-            }
+            .sink(receiveValue: coordinator.presentToBottomSheetCalendarVC)
             .store(in: &cancellables)
+        
+        output.currentDate
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: setCurrentDate)
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - CalendarDelegate
+
+extension StudyActivitySettingViewController: CreateActivityDelegate {
+    
+    func didTapStartDateCompleteButton(date: String) {
+        startDateLabel.text = date
+    }
+    
+    func didTapEndDateCompleteButton(date: String) {
+        endDateLabel.text = date
     }
 }
 
 // MARK: - UpdateUI
 
 extension StudyActivitySettingViewController {
-    func createActivitySettingButton(title: String, subTitle: String, subTitleColor: StumeetColor) -> UIButton {
+    func createActivitySettingButton(title: String, subTitleLabel: UILabel) -> UIButton {
         let button = UIButton()
         
         let titleLabel = UILabel().setLabelProperty(text: title, font: StumeetFont.bodyMedium16.font, color: nil)
-        let subTitleLabel = UILabel().setLabelProperty(text: subTitle, font: StumeetFont.bodyMedium15.font, color: subTitleColor)
         
         button.addSubview(titleLabel)
         button.addSubview(subTitleLabel)
@@ -167,5 +202,10 @@ extension StudyActivitySettingViewController {
         }
         
         return button
+    }
+    
+    func setCurrentDate(date: String) {
+        startDateLabel.text = date
+        endDateLabel.text = date
     }
 }

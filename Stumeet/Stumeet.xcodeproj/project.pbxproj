@@ -112,13 +112,16 @@
 		CA6448662B863CCB0090DD84 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448652B863CCB0090DD84 /* Moya */; };
 		CA6448692B863CD90090DD84 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448682B863CD90090DD84 /* SnapKit */; };
 		CA64486C2B863CE20090DD84 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA64486B2B863CE20090DD84 /* CombineCocoa */; };
-		CA6FADE22B8717C6008BCEF7 /* StudyActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */; };
+		CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */; };
 		CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */; };
 		CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */; };
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
 		CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */; };
+		CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */; };
+		CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */; };
+		CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */; };
 		CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */; };
 		CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958522BB010C000884615 /* UITextView++Extension.swift */; };
 		CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958542BB018CB00884615 /* ActivityCategory.swift */; };
@@ -280,7 +283,7 @@
 		CA6448242B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA6448262B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA64486E2B863DB60090DD84 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityViewController.swift; sourceTree = "<group>"; };
+		CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityListViewController.swift; sourceTree = "<group>"; };
 		CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityAllCell.swift; sourceTree = "<group>"; };
 		CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityHeaderView.swift; sourceTree = "<group>"; };
 		CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -288,6 +291,9 @@
 		CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		CA86DC462B8DCBF20044DB6C /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivity.swift; sourceTree = "<group>"; };
+		CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityDIContainer.swift; sourceTree = "<group>"; };
+		CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityCoordinator.swift; sourceTree = "<group>"; };
+		CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListDIContainer.swift; sourceTree = "<group>"; };
 		CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityViewModel.swift; sourceTree = "<group>"; };
 		CA9958522BB010C000884615 /* UITextView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView++Extension.swift"; sourceTree = "<group>"; };
 		CA9958542BB018CB00884615 /* ActivityCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCategory.swift; sourceTree = "<group>"; };
@@ -411,6 +417,8 @@
 				353393162BC2947E0021FDF9 /* AppDIContainer.swift */,
 				353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */,
 				3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */,
+				CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */,
+				CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -1123,10 +1131,8 @@
 		CA6FADDE2B8717A0008BCEF7 /* StudyActivity */ = {
 			isa = PBXGroup;
 			children = (
-				CA6FADEA2B8723ED008BCEF7 /* Model */,
-				CA6FADE32B871AE2008BCEF7 /* View */,
-				CA6FADE02B8717B4008BCEF7 /* ViewModel */,
-				CA6FADDF2B8717AD008BCEF7 /* ViewController */,
+				CA98F6B22BEE0BC900C36772 /* StudyActivity */,
+				CA98F6B12BEE0BB900C36772 /* CreateActivity */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1134,11 +1140,7 @@
 		CA6FADDF2B8717AD008BCEF7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */,
-				CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */,
-				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
-				CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */,
-				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
+				CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1147,8 +1149,6 @@
 			isa = PBXGroup;
 			children = (
 				CA9AB2132B8C6A480027072E /* StudyActivityViewModel.swift */,
-				CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */,
-				CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1158,7 +1158,6 @@
 			children = (
 				CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */,
 				CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */,
-				CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1188,6 +1187,72 @@
 				CA9958542BB018CB00884615 /* ActivityCategory.swift */,
 			);
 			path = StudyActivity;
+			sourceTree = "<group>";
+		};
+		CA98F6AE2BEE0ACF00C36772 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		CA98F6B12BEE0BB900C36772 /* CreateActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CA98F6AE2BEE0ACF00C36772 /* Flow */,
+				CA98F6B82BEE0C0400C36772 /* View */,
+				CA98F6B72BEE0BFF00C36772 /* ViewModel */,
+				CA98F6B62BEE0BF700C36772 /* ViewController */,
+			);
+			path = CreateActivity;
+			sourceTree = "<group>";
+		};
+		CA98F6B22BEE0BC900C36772 /* StudyActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CA98F6B32BEE0BD700C36772 /* Flow */,
+				CA6FADEA2B8723ED008BCEF7 /* Model */,
+				CA6FADE32B871AE2008BCEF7 /* View */,
+				CA6FADE02B8717B4008BCEF7 /* ViewModel */,
+				CA6FADDF2B8717AD008BCEF7 /* ViewController */,
+			);
+			path = StudyActivity;
+			sourceTree = "<group>";
+		};
+		CA98F6B32BEE0BD700C36772 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		CA98F6B62BEE0BF700C36772 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */,
+				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
+				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA98F6B72BEE0BFF00C36772 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */,
+				CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */,
+				CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CA98F6B82BEE0C0400C36772 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		CA9AB2182B8C7B890027072E /* StudyActivity */ = {
@@ -1570,6 +1635,7 @@
 				352885F82BB9C9E800EFC0F6 /* UserTokenRepository.swift in Sources */,
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
+				CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
 				CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */,
 				CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */,
@@ -1602,7 +1668,7 @@
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
 				352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
-				CA6FADE22B8717C6008BCEF7 /* StudyActivityViewController.swift in Sources */,
+				CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */,
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
@@ -1643,6 +1709,7 @@
 				CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
+				CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */,
 				357D1B9A2BB2FDBF0079DCE6 /* BaseTargetType.swift in Sources */,
@@ -1660,6 +1727,7 @@
 				353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */,
 				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				357D1BA92BB8119E0079DCE6 /* SessionTokens.swift in Sources */,
+				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,
 				353EAEB52B8F6A79008F7E8C /* APIConst.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA9958572BB055BD00884615 /* ActivityCreateUseCase.swift in Sources */,

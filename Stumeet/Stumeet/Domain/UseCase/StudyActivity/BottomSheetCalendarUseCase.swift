@@ -21,9 +21,11 @@ protocol BottomSheetCalendarUseCase {
     func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never>
     func setSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never>
+    func setIsEnableCompleteButton(date: Date?, hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
+    func setCompletedDateText(date: Date, isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never>
 }
 
-final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
+final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
     
     // MARK: - Properties
     
@@ -128,9 +130,31 @@ final class DefualtBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
         let selectedMonth = components.month
         return Just(selectedMonth != currentMonth).eraseToAnyPublisher()
     }
+    
+    func setIsEnableCompleteButton(date: Date?, hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never> {
+        
+        guard let _ = date, hours.contains(true), minutes.contains(true) else {
+            return Just(false).eraseToAnyPublisher()
+        }
+        return Just(true).eraseToAnyPublisher()
+    }
+    
+    func setCompletedDateText(date: Date, isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never> {
+        var date = makeCompletedDateFormatter().string(from: date)
+        let ampm = isAm ? "오전" : "오후"
+        let hour = hours
+            .firstIndex(where: { $0 })
+            .map { String(format: "%02d", $0 + 1) }
+        let minute = minutes
+            .firstIndex(where: { $0 })
+            .map { String(format: "%02d", $0 * 5)}
+        
+        let result = "\(date) \(ampm) \(hour!):\(minute!)"
+        return Just(result).eraseToAnyPublisher()
+    }
 }
 
-extension DefualtBottomSheetCalendarUseCase {
+extension DefaultBottomSheetCalendarUseCase {
     
     func makeMonthDateFormmater() -> DateFormatter {
         let dateFormatter = DateFormatter()
@@ -142,6 +166,13 @@ extension DefualtBottomSheetCalendarUseCase {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .init(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy. M. d E요일"
+        return dateFormatter
+    }
+    
+    func makeCompletedDateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .init(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy. M. d(E)"
         return dateFormatter
     }
 
