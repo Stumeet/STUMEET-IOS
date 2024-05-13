@@ -7,6 +7,11 @@
 import Combine
 import UIKit
 
+protocol CreateActivityDelegate: AnyObject {
+    func didTapStartDateCompleteButton(date: String)
+    func didTapEndDateCompleteButton(date: String)
+}
+
 class BottomSheetCalendarViewController: BaseViewController {
     // MARK: - UIComponents
     
@@ -102,6 +107,7 @@ class BottomSheetCalendarViewController: BaseViewController {
     private let viewModel: BottomSheetCalendarViewModel
     private let coordinator: CreateActivityNavigation
     private var datasource: UICollectionViewDiffableDataSource<CalendarSection, CalendarSectionItem>?
+    weak var delegate: CreateActivityDelegate?
     
     // MARK: - Init
     
@@ -342,8 +348,9 @@ class BottomSheetCalendarViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] date, isStart in
                 if isStart {
-                    self?.coordinator.dismissStartDateCalendarVC(date: date)
-                } else { self?.coordinator.dismissEndDateCalendarVC(date: date) }
+                    self?.delegate?.didTapStartDateCompleteButton(date: date)
+                } else { self?.delegate?.didTapEndDateCompleteButton(date: date) }
+                self?.coordinator.dismissBottomSheetCalenderVC()
             })
             .store(in: &cancellables)
     }
@@ -429,7 +436,7 @@ extension BottomSheetCalendarViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.coordinator.dismissEndDateCalendarVC(date: nil)
+                self.coordinator.dismissBottomSheetCalenderVC()
             })
     }
     

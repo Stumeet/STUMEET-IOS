@@ -17,22 +17,16 @@ protocol CreateActivityCoordinatorDependencies {
 protocol CreateActivityNavigation: AnyObject {
     func presentToCreateActivityVC()
     func goToStudyActivitySettingVC()
-    func presentToBottomSheetCalendarVC(isStart: Bool)
-    func dismissStartDateCalendarVC(date: String?)
-    func dismissEndDateCalendarVC(date: String?)
+    func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
+    func dismissBottomSheetCalenderVC()
 }
 
-protocol CreateActivityCoordinatorDelegate: AnyObject {
-    func didTapStartDateCompleteButton(date: String)
-    func didTapEndDateCompleteButton(date: String)
-}
 
 final class CreateActivityCoordinator: Coordinator {
     
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
-    weak var delegate: CreateActivityCoordinatorDelegate?
     
     private let dependencies: CreateActivityCoordinatorDependencies
     
@@ -58,30 +52,19 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
     
     func goToStudyActivitySettingVC() {
         let studyActivitySettingVC = dependencies.makeStudyActivitySettingViewController(coordinator: self)
-        delegate = studyActivitySettingVC
         navigationController.pushViewController(studyActivitySettingVC, animated: true)
     }
 
     
-    func presentToBottomSheetCalendarVC(isStart: Bool) {
+    func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool) {
         guard let lastVC = navigationController.viewControllers.last else { return }
         let bottomSheetCalendarVC = dependencies.makeBottomSheetCalendarViewController(coordinator: self, isStart: isStart)
         bottomSheetCalendarVC.modalPresentationStyle = .overFullScreen
+        bottomSheetCalendarVC.delegate = delegate
         lastVC.present(bottomSheetCalendarVC, animated: false)
     }
     
-    func dismissStartDateCalendarVC(date: String?) {
-        if let date = date {
-            delegate?.didTapStartDateCompleteButton(date: date)
-        }
-        guard let lastVC = navigationController.viewControllers.last else { return }
-        lastVC.dismiss(animated: true)
-    }
-    
-    func dismissEndDateCalendarVC(date: String?) {
-        if let date = date {
-            delegate?.didTapEndDateCompleteButton(date: date)
-        }
+    func dismissBottomSheetCalenderVC() {
         guard let lastVC = navigationController.viewControllers.last else { return }
         lastVC.dismiss(animated: true)
     }
