@@ -8,6 +8,12 @@
 import UIKit
 
 class ActivityMemberSettingViewController: BaseViewController {
+    
+    // MARK: - Typealias
+    
+    typealias Section = ActivityMemberSection
+    typealias SectionItem = ActivityMemberSectionItem
+    
     // MARK: - UIComponents
     
     private let xButton: UIButton = {
@@ -18,12 +24,15 @@ class ActivityMemberSettingViewController: BaseViewController {
     }()
     
     private let titleLabel: UILabel = {
-        return UILabel().setLabelProperty(text: "참여 멤버", font: StumeetFont.titleMedium.font, color: nil)
+        return UILabel().setLabelProperty(text: "참여 멤버", font: StumeetFont.titleMedium.font, color: .gray800)
     }()
     
     private let searchTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "멤버 이름 검색"
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "멤버 이름 검색",
+            attributes: [NSAttributedString.Key.foregroundColor: StumeetColor.gray400.color])
+
         textField.backgroundColor = StumeetColor.primary50.color
         textField.layer.cornerRadius = 10
         
@@ -58,8 +67,11 @@ class ActivityMemberSettingViewController: BaseViewController {
         return button
     }()
     
-    private let tableView: UITableView = {
+    private let memberTableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(ActivityMemberCell.self, forCellReuseIdentifier: ActivityMemberCell.identifier)
+        tableView.rowHeight = 72
+        tableView.separatorStyle = .none
         
         return tableView
     }()
@@ -71,6 +83,7 @@ class ActivityMemberSettingViewController: BaseViewController {
     // MARK: - Properties
     
     private let coordinator: CreateActivityNavigation
+    private var datasource: UITableViewDiffableDataSource<Section, SectionItem>?
     
     // MARK: - Init
     
@@ -87,6 +100,24 @@ class ActivityMemberSettingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureDatasource()
+        
+        // FIXME: - ViewModelBinding
+        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems([SectionItem.memberCell("홍길동1"),
+                              SectionItem.memberCell("홍길동2"),
+                              SectionItem.memberCell("홍길동3"),
+                              SectionItem.memberCell("홍길동4"),
+                              SectionItem.memberCell("홍길동5"),
+                              SectionItem.memberCell("홍길동6"),
+                              SectionItem.memberCell("홍길동7"),
+                              SectionItem.memberCell("홍길동8"),
+                              SectionItem.memberCell("홍길동9")])
+        
+        guard let datasource = self.datasource else { return }
+        datasource.apply(snapshot, animatingDifferences: false)
     }
     
     // MARK: - SetUp
@@ -101,7 +132,7 @@ class ActivityMemberSettingViewController: BaseViewController {
             titleLabel,
             searchTextField,
             allSelectButton,
-            tableView,
+            memberTableView,
             completeButton
         ]   .forEach { view.addSubview($0) }
     }
@@ -130,7 +161,7 @@ class ActivityMemberSettingViewController: BaseViewController {
             make.height.equalTo(84)
         }
         
-        tableView.snp.makeConstraints { make in
+        memberTableView.snp.makeConstraints { make in
             make.top.equalTo(allSelectButton.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(432)
@@ -146,6 +177,28 @@ class ActivityMemberSettingViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
-        
+
+    }
+    
+}
+
+// MARK: - Datasource
+
+extension ActivityMemberSettingViewController {
+    func configureDatasource() {
+        datasource = UITableViewDiffableDataSource(tableView: memberTableView, cellProvider: { tableView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .memberCell(let name):
+                guard let cell =
+                        tableView.dequeueReusableCell(
+                            withIdentifier: ActivityMemberCell.identifier,
+                            for: indexPath
+                        ) as? ActivityMemberCell
+                else { return UITableViewCell() }
+                cell.configureCell(name)
+                
+                return cell
+            }
+        })
     }
 }
