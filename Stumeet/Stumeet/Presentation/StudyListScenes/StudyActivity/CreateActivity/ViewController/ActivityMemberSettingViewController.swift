@@ -59,7 +59,7 @@ class ActivityMemberSettingViewController: BaseViewController {
         titleAttr.foregroundColor = StumeetColor.gray400.color
         config.attributedTitle = titleAttr
         
-        config.image = UIImage(named: "memberUnSelectedButton")
+        config.image = UIImage(named: "unSelectedMemberButton")
         config.imagePlacement = .leading
         config.imagePadding = 8
         button.configuration = config
@@ -150,7 +150,7 @@ class ActivityMemberSettingViewController: BaseViewController {
         }
         
         searchTextField.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.top.equalTo(titleLabel.snp.bottom).offset(28)
             make.height.equalTo(56)
         }
@@ -163,12 +163,12 @@ class ActivityMemberSettingViewController: BaseViewController {
         
         memberTableView.snp.makeConstraints { make in
             make.top.equalTo(allSelectButton.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
             make.height.equalTo(432)
         }
         
         completeButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(34)
             make.height.equalTo(72)
         }
