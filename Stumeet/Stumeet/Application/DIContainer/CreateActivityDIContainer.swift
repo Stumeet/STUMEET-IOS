@@ -83,4 +83,11 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
             coordinator: coordinator
         )
     }
+    
+    // MARK: - Member
+    
+    func makeActivityMemberSettingViewController(coordinator: Navigation) -> ActivityMemberSettingViewController {
+        ActivityMemberSettingViewController(coordinator: coordinator)
+    }
+    
 }

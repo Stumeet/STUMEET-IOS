@@ -118,6 +118,9 @@
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
+		CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */; };
+		CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */; };
+		CA8062F72BF20089009BE351 /* ActivityMemberSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */; };
 		CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */; };
 		CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */; };
 		CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */; };
@@ -289,6 +292,9 @@
 		CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySection.swift; sourceTree = "<group>"; };
 		CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewController.swift; sourceTree = "<group>"; };
+		CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberCell.swift; sourceTree = "<group>"; };
+		CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSection.swift; sourceTree = "<group>"; };
 		CA86DC462B8DCBF20044DB6C /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivity.swift; sourceTree = "<group>"; };
 		CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityDIContainer.swift; sourceTree = "<group>"; };
@@ -1180,6 +1186,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		CA8062F52BF2006E009BE351 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CA86DC442B8DCBC40044DB6C /* StudyActivity */ = {
 			isa = PBXGroup;
 			children = (
@@ -1200,6 +1214,7 @@
 		CA98F6B12BEE0BB900C36772 /* CreateActivity */ = {
 			isa = PBXGroup;
 			children = (
+				CA8062F52BF2006E009BE351 /* Model */,
 				CA98F6AE2BEE0ACF00C36772 /* Flow */,
 				CA98F6B82BEE0C0400C36772 /* View */,
 				CA98F6B72BEE0BFF00C36772 /* ViewModel */,
@@ -1233,6 +1248,7 @@
 				CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */,
 				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
 				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
+				CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1251,6 +1267,7 @@
 			isa = PBXGroup;
 			children = (
 				CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */,
+				CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1622,6 +1639,7 @@
 				CA6448332B863BB90090DD84 /* SelectFieldUseCase.swift in Sources */,
 				352885EF2BB9BA8300EFC0F6 /* AuthInterceptor.swift in Sources */,
 				CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */,
+				CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
 				CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */,
@@ -1644,6 +1662,7 @@
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
 				CAF5335C2B9EB7AC00A7B8B2 /* DefualtStartRepository.swift in Sources */,
+				CA8062F72BF20089009BE351 /* ActivityMemberSection.swift in Sources */,
 				CA64483B2B863BB90090DD84 /* SelecteFieldViewModel.swift in Sources */,
 				CA64484A2B863BB90090DD84 /* ViewModelType.swift in Sources */,
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
@@ -1722,6 +1741,7 @@
 				CA6448442B863BB90090DD84 /* TagCell.swift in Sources */,
 				CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */,
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
+				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
 				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
 				353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */,

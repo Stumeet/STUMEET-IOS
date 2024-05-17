@@ -160,9 +160,16 @@ final class StudyActivitySettingViewController: BaseViewController {
             .sink(receiveValue: coordinator.presentToBottomSheetCalendarVC)
             .store(in: &cancellables)
         
+        // 현재 시간 update
         output.currentDate
             .receive(on: RunLoop.main)
             .sink(receiveValue: setCurrentDate)
+            .store(in: &cancellables)
+        
+        // 멤버설정 VC present
+        output.presentToParticipatingMemberVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToActivityMemberSettingViewController)
             .store(in: &cancellables)
     }
 }
