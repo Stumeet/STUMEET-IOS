@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ActivityMemberSettingViewController: BaseViewController {
+final class ActivityMemberSettingViewController: BaseViewController {
     
     // MARK: - Typealias
     
@@ -83,12 +83,14 @@ class ActivityMemberSettingViewController: BaseViewController {
     // MARK: - Properties
     
     private let coordinator: CreateActivityNavigation
+    private let viewModel: ActivityMemberSettingViewModel
     private var datasource: UITableViewDiffableDataSource<Section, SectionItem>?
     
     // MARK: - Init
     
-    init(coordinator: CreateActivityNavigation) {
+    init(coordinator: CreateActivityNavigation, viewModel: ActivityMemberSettingViewModel) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -102,22 +104,6 @@ class ActivityMemberSettingViewController: BaseViewController {
         super.viewDidLoad()
         
         configureDatasource()
-        
-        // FIXME: - ViewModelBinding
-        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems([SectionItem.memberCell("홍길동1"),
-                              SectionItem.memberCell("홍길동2"),
-                              SectionItem.memberCell("홍길동3"),
-                              SectionItem.memberCell("홍길동4"),
-                              SectionItem.memberCell("홍길동5"),
-                              SectionItem.memberCell("홍길동6"),
-                              SectionItem.memberCell("홍길동7"),
-                              SectionItem.memberCell("홍길동8"),
-                              SectionItem.memberCell("홍길동9")])
-        
-        guard let datasource = self.datasource else { return }
-        datasource.apply(snapshot, animatingDifferences: false)
     }
     
     // MARK: - SetUp
@@ -177,7 +163,18 @@ class ActivityMemberSettingViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
-
+        let input = ActivityMemberSettingViewModel.Input()
+        
+        let output = viewModel.transform(input: input)
+        
+        output.members
+            .receive(on: RunLoop.main)
+            .map(updateSnapshot)
+            .sink { [weak self] snapshot in
+                guard let datasource = self?.datasource else { return }
+                datasource.apply(snapshot, animatingDifferences: false)
+            }
+            .store(in: &cancellables)
     }
     
 }
@@ -185,7 +182,7 @@ class ActivityMemberSettingViewController: BaseViewController {
 // MARK: - Datasource
 
 extension ActivityMemberSettingViewController {
-    func configureDatasource() {
+    private func configureDatasource() {
         datasource = UITableViewDiffableDataSource(tableView: memberTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
             case .memberCell(let name):
@@ -200,5 +197,13 @@ extension ActivityMemberSettingViewController {
                 return cell
             }
         })
+    }
+    
+    private func updateSnapshot(items: [String]) -> NSDiffableDataSourceSnapshot<Section, SectionItem> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
+        snapshot.appendSections([.main])
+        items.forEach { snapshot.appendItems([.memberCell($0)]) }
+        
+        return snapshot
     }
 }
