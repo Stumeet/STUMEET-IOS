@@ -163,7 +163,9 @@ final class ActivityMemberSettingViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
-        let input = ActivityMemberSettingViewModel.Input()
+        let input = ActivityMemberSettingViewModel.Input(
+            didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher()
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -175,8 +177,11 @@ final class ActivityMemberSettingViewController: BaseViewController {
                 datasource.apply(snapshot, animatingDifferences: false)
             }
             .store(in: &cancellables)
+        
+        output.selectionState
+               .sink(receiveValue: updateCellSelection)
+               .store(in: &cancellables)
     }
-    
 }
 
 // MARK: - Datasource
@@ -205,5 +210,13 @@ extension ActivityMemberSettingViewController {
         items.forEach { snapshot.appendItems([.memberCell($0)]) }
         
         return snapshot
+    }
+}
+
+// MARK: - UIUpdate
+extension ActivityMemberSettingViewController {
+    private func updateCellSelection(at indexPath: IndexPath, isSelected: Bool) {
+        guard let cell = memberTableView.cellForRow(at: indexPath) as? ActivityMemberCell else { return }
+        cell.updateSelectedCell(isSelected: isSelected)
     }
 }

@@ -26,6 +26,14 @@ class ActivityMemberCell: UITableViewCell {
         return imageView
     }()
     
+    private let checkMarkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "checkMark")
+        imageView.isHidden = true
+        
+        return imageView
+    }()
+    
     private let nameLabel: UILabel = {
         return UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium15.font, color: .gray800)
     }()
@@ -49,7 +57,8 @@ class ActivityMemberCell: UITableViewCell {
     func setUpAddView() {
         [
             profileImageView,
-            nameLabel
+            nameLabel,
+            checkMarkImageView
         ]   .forEach { addSubview($0) }
     }
     
@@ -65,12 +74,29 @@ class ActivityMemberCell: UITableViewCell {
             make.leading.equalTo(profileImageView.snp.trailing).offset(16)
             make.centerY.equalTo(profileImageView)
         }
+        
+        checkMarkImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(32)
+        }
     }
     
     // MARK: - Configure
     
     func configureCell(_ name: String) {
         nameLabel.text = name
+    }
+    
+    func updateSelectedCell(isSelected: Bool) {
+        if isSelected {
+            nameLabel.textColor = StumeetColor.primary700.color
+            backgroundColor = StumeetColor.primary50.color
+            checkMarkImageView.isHidden = false
+        } else {
+            nameLabel.textColor = StumeetColor.gray800.color
+            backgroundColor = .white
+            checkMarkImageView.isHidden = true
+        }
     }
     
 }

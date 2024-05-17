@@ -1,15 +1,11 @@
-//
-//  ActivityMemberSettingUseCase.swift
-//  Stumeet
-//
-//  Created by 정지훈 on 5/17/24.
-//
+// ActivityMemberSettingUseCase.swift
 
 import Combine
 import Foundation
 
 protocol ActivityMemberSettingUseCase {
     func getMembers() -> AnyPublisher<[String], Never>
+    func toggleSelection(in indexPaths: Set<IndexPath>, for selectedIndexPath: IndexPath) -> (Set<IndexPath>, IndexPath, Bool)
 }
 
 final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
@@ -23,4 +19,16 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
         return repository.fetchMembers()
     }
     
+    func toggleSelection(in indexPaths: Set<IndexPath>, for selectedIndexPath: IndexPath) -> (Set<IndexPath>, IndexPath, Bool) {
+        var indexPaths = indexPaths
+        let isSelected = !indexPaths.contains(selectedIndexPath)
+        
+        if isSelected {
+            indexPaths.insert(selectedIndexPath)
+        } else {
+            indexPaths.remove(selectedIndexPath)
+        }
+        
+        return (indexPaths, selectedIndexPath, isSelected)
+    }
 }
