@@ -27,6 +27,8 @@
 		35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B152B9F4BDA00252283 /* AppleLoginService.swift */; };
 		35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */; };
 		35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B192B9F506200252283 /* KakaoLoginService.swift */; };
+		355F51DD2BF89F9800782D17 /* StudyMainSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F51DC2BF89F9800782D17 /* StudyMainSideMenuViewController.swift */; };
+		355F51E12BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F51E02BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift */; };
 		357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B832BB06B2C0079DCE6 /* RegisterCoordinator.swift */; };
 		357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */; };
 		357D1B8A2BB07BA20079DCE6 /* StudyListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B892BB07BA20079DCE6 /* StudyListCoordinator.swift */; };
@@ -192,6 +194,8 @@
 		35446B152B9F4BDA00252283 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewModel.swift; sourceTree = "<group>"; };
 		35446B192B9F506200252283 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
+		355F51DC2BF89F9800782D17 /* StudyMainSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainSideMenuViewController.swift; sourceTree = "<group>"; };
+		355F51E02BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainMenuTableViewCell.swift; sourceTree = "<group>"; };
 		357D1B832BB06B2C0079DCE6 /* RegisterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCoordinator.swift; sourceTree = "<group>"; };
 		357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		357D1B892BB07BA20079DCE6 /* StudyListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListCoordinator.swift; sourceTree = "<group>"; };
@@ -449,6 +453,22 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		355F51DE2BF8BE6500782D17 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				355F51DF2BF8BE6D00782D17 /* Cell */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		355F51DF2BF8BE6D00782D17 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				355F51E02BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		357D1B802BB069990079DCE6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,8 +667,7 @@
 				35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */,
 				35E4EA302BCA878A003A10D4 /* Config(debug).xcconfig */,
 			);
-			name = Configurations;
-			path = ../Configurations;
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 		35E4EA332BCA8D88003A10D4 /* StudyMain */ = {
@@ -662,16 +681,11 @@
 		35E4EA342BCA8D93003A10D4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				355F51DE2BF8BE6500782D17 /* Component */,
 				35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */,
+				355F51DC2BF89F9800782D17 /* StudyMainSideMenuViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		35E4EA382BCC0C55003A10D4 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		35E4EA3B2BCC2B07003A10D4 /* Component */ = {
@@ -879,11 +893,10 @@
 		CA6447E02B863BB90090DD84 /* StudyListScenes */ = {
 			isa = PBXGroup;
 			children = (
-				35E4EA382BCC0C55003A10D4 /* New Group */,
+				357D1B852BB07A630079DCE6 /* Flows */,
 				35E4EA332BCA8D88003A10D4 /* StudyMain */,
 				CA6FADDE2B8717A0008BCEF7 /* StudyActivity */,
 				CA6FADDD2B871787008BCEF7 /* StudyList */,
-				357D1B852BB07A630079DCE6 /* Flows */,
 				CA6447E12B863BB90090DD84 /* .gitkeep */,
 			);
 			path = StudyListScenes;
@@ -1704,6 +1717,7 @@
 				352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
 				CA6FADE22B8717C6008BCEF7 /* StudyActivityViewController.swift in Sources */,
+				355F51DD2BF89F9800782D17 /* StudyMainSideMenuViewController.swift in Sources */,
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
 				35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */,
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
@@ -1769,6 +1783,7 @@
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA9958572BB055BD00884615 /* ActivityCreateUseCase.swift in Sources */,
 				CA9958592BB3EBF000884615 /* StudyActivitySettingViewController.swift in Sources */,
+				355F51E12BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift in Sources */,
 				357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */,
 				353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */,
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
