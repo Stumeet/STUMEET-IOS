@@ -5,8 +5,13 @@ import Foundation
 
 protocol ActivityMemberSettingUseCase {
     func getMembers() -> AnyPublisher<[ActivityMemberSectionItem], Never>
-    func toggleSelection(at indexPath: IndexPath, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem]), Never>
+    func toggleSelection(
+        indexPath: IndexPath,
+        members: [ActivityMemberSectionItem],
+        filterMembers: [ActivityMemberSectionItem]
+    ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem]), Never>
     func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never>
+    func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never>
 }
 
 final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
@@ -22,15 +27,32 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
             .eraseToAnyPublisher()
     }
     
-    func toggleSelection(at indexPath: IndexPath, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem]), Never> {
-        var toggleMembers = members
-        if case .memberCell(let name, let isSelected) = toggleMembers[indexPath.row] {
-            toggleMembers[indexPath.row] = .memberCell(name, !isSelected)
-            return Just(toggleMembers).eraseToAnyPublisher()
+    func toggleSelection(
+        indexPath: IndexPath,
+        members: [ActivityMemberSectionItem],
+        filterMembers: [ActivityMemberSectionItem]
+    ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem]), Never> {
+        
+        guard case .memberCell(let name, let isSelected) = filterMembers[indexPath.row] else {
+            return Empty().eraseToAnyPublisher()
         }
-        return Empty().eraseToAnyPublisher()
+        
+        let toggledMember = ActivityMemberSectionItem.memberCell(name, !isSelected)
+        
+        let allMembers = members.map { member -> ActivityMemberSectionItem in
+            if case .memberCell(let memberName, _) = member, memberName == name {
+                return toggledMember
+            }
+            return member
+        }
+        
+        var filteredMembers = filterMembers
+        filteredMembers[indexPath.row] = toggledMember
+        
+        return Just((allMembers, filteredMembers)).eraseToAnyPublisher()
     }
     
+
     func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never> {
         let updatedMembers = members.map { member -> ActivityMemberSectionItem in
             switch member {
@@ -39,5 +61,15 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
             }
         }
         return Just((updatedMembers, isSelected)).eraseToAnyPublisher()
+    }
+    
+    func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never> {
+        let filteredMembers = text.isEmpty ? members : members.filter {
+            if case .memberCell(let name, _) = $0 {
+                return name.contains(text)
+            }
+            return false
+        }
+        return Just(filteredMembers).eraseToAnyPublisher()
     }
 }

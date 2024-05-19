@@ -10,6 +10,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
     struct Input {
         let didSelectIndexPathPublisher: AnyPublisher<IndexPath, Never>
         let didTapAllSelectButton: AnyPublisher<Bool, Never>
+        let searchTextPublisher: AnyPublisher<String?, Never>
     }
     
     // MARK: - Output
@@ -17,7 +18,6 @@ final class ActivityMemberSettingViewModel: ViewModelType {
     struct Output {
         let members: AnyPublisher<[ActivityMemberSectionItem], Never>
         let isSelectedAll: AnyPublisher<Bool, Never>
-        let memberCount: AnyPublisher<Int, Never>
     }
     
     // MARK: - Properties
@@ -28,6 +28,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
     // MARK: - Subject
     
     private let memberSubject = CurrentValueSubject<[ActivityMemberSectionItem], Never>([])
+    private let filteredMemberSubject = CurrentValueSubject<[ActivityMemberSectionItem], Never>([])
     
     // MARK: - Init
     
@@ -35,34 +36,43 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         self.useCase = useCase
         
         useCase.getMembers()
+            .handleEvents(receiveOutput: filteredMemberSubject.send)
             .sink(receiveValue: memberSubject.send)
             .store(in: &cancellables)
     }
     
     func transform(input: Input) -> Output {
         
-        let members = memberSubject.eraseToAnyPublisher()
-        
-        let memberCount = members.map { $0.count }.eraseToAnyPublisher()
+        let members = filteredMemberSubject.eraseToAnyPublisher()
         
         input.didSelectIndexPathPublisher
-            .map { ($0, self.memberSubject.value) }
+            .map { ($0, self.memberSubject.value, self.filteredMemberSubject.value) }
             .flatMap(useCase.toggleSelection)
-            .sink(receiveValue: memberSubject.send)
+            .sink { [weak self] updatedMembers, updatedFilteredMembers in
+                self?.memberSubject.send(updatedMembers)
+                self?.filteredMemberSubject.send(updatedFilteredMembers)
+            }
             .store(in: &cancellables)
         
+        input.searchTextPublisher
+            .compactMap { $0 }
+            .combineLatest(memberSubject)
+            .flatMap(useCase.setFilterMembers)
+            .sink(receiveValue: filteredMemberSubject.send)
+            .store(in: &cancellables)
         
         let isSelectedAll = input.didTapAllSelectButton
             .map { (!$0, self.memberSubject.value) }
             .flatMap(useCase.setIsSelectedAll)
-            .handleEvents(receiveOutput: { members, _ in  self.memberSubject.send(members) })
-            .map { $1 }
+            .map { [weak self] members, isSelected in
+                self?.memberSubject.send(members)
+                return isSelected
+            }
             .eraseToAnyPublisher()
         
         return Output(
             members: members,
-            isSelectedAll: isSelectedAll,
-            memberCount: memberCount
+            isSelectedAll: isSelectedAll
         )
     }
 }

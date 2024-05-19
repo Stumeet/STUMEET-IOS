@@ -165,7 +165,8 @@ final class ActivityMemberSettingViewController: BaseViewController {
     override func bind() {
         let input = ActivityMemberSettingViewModel.Input(
             didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher(),
-            didTapAllSelectButton: allSelectButton.tapPublisher.map {self.allSelectButton.isSelected}.eraseToAnyPublisher()
+            didTapAllSelectButton: allSelectButton.tapPublisher.map {self.allSelectButton.isSelected}.eraseToAnyPublisher(),
+            searchTextPublisher: searchTextField.textPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
