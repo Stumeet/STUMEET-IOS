@@ -52,17 +52,8 @@ final class ActivityMemberSettingViewController: BaseViewController {
     
     private let allSelectButton: UIButton = {
         let button = UIButton()
-        var config = UIButton.Configuration.plain()
-        
-        var titleAttr = AttributedString.init("전체 선택")
-        titleAttr.font = StumeetFont.bodyMedium14.font
-        titleAttr.foregroundColor = StumeetColor.gray400.color
-        config.attributedTitle = titleAttr
-        
-        config.image = UIImage(named: "unSelectedMemberButton")
-        config.imagePlacement = .leading
-        config.imagePadding = 8
-        button.configuration = config
+        button.setImage(UIImage(named: "allUnSelectedButton"), for: .normal)
+        button.setImage(UIImage(named: "allSelectedButton"), for: .selected)
         
         return button
     }()
