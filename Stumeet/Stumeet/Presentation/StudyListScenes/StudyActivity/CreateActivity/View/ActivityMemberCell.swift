@@ -83,11 +83,7 @@ class ActivityMemberCell: UITableViewCell {
     
     // MARK: - Configure
     
-    func configureCell(_ name: String) {
-        nameLabel.text = name
-    }
-    
-    func updateSelectedCell(isSelected: Bool) {
+    func configureCell(_ name: String, _ isSelected: Bool) {
         if isSelected {
             nameLabel.textColor = StumeetColor.primary700.color
             backgroundColor = StumeetColor.primary50.color
@@ -97,6 +93,7 @@ class ActivityMemberCell: UITableViewCell {
             backgroundColor = .white
             checkMarkImageView.isHidden = true
         }
+        nameLabel.text = name
     }
     
 }

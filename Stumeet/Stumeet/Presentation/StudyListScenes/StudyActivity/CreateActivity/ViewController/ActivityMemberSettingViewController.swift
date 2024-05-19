@@ -164,23 +164,24 @@ final class ActivityMemberSettingViewController: BaseViewController {
     
     override func bind() {
         let input = ActivityMemberSettingViewModel.Input(
-            didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher()
+            didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher(),
+            didTapAllSelectButton: allSelectButton.tapPublisher.map {self.allSelectButton.isSelected}.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
         
+        // member binding
         output.members
             .receive(on: RunLoop.main)
-            .map(updateSnapshot)
-            .sink { [weak self] snapshot in
-                guard let datasource = self?.datasource else { return }
-                datasource.apply(snapshot, animatingDifferences: false)
-            }
+            .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
         
-        output.selectionState
-               .sink(receiveValue: updateCellSelection)
-               .store(in: &cancellables)
+        // 전체 선택
+        output.isSelectedAll
+            .receive(on: RunLoop.main)
+            .assign(to: \.isSelected, on: allSelectButton)
+            .store(in: &cancellables)
+        
     }
 }
 
@@ -190,33 +191,25 @@ extension ActivityMemberSettingViewController {
     private func configureDatasource() {
         datasource = UITableViewDiffableDataSource(tableView: memberTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .memberCell(let name):
+            case .memberCell(let name, let isSelected):
                 guard let cell =
                         tableView.dequeueReusableCell(
                             withIdentifier: ActivityMemberCell.identifier,
                             for: indexPath
                         ) as? ActivityMemberCell
                 else { return UITableViewCell() }
-                cell.configureCell(name)
+                cell.configureCell(name, isSelected)
                 
                 return cell
             }
         })
     }
     
-    private func updateSnapshot(items: [String]) -> NSDiffableDataSourceSnapshot<Section, SectionItem> {
+    private func updateSnapshot(items: [SectionItem]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
         snapshot.appendSections([.main])
-        items.forEach { snapshot.appendItems([.memberCell($0)]) }
-        
-        return snapshot
-    }
-}
-
-// MARK: - UIUpdate
-extension ActivityMemberSettingViewController {
-    private func updateCellSelection(at indexPath: IndexPath, isSelected: Bool) {
-        guard let cell = memberTableView.cellForRow(at: indexPath) as? ActivityMemberCell else { return }
-        cell.updateSelectedCell(isSelected: isSelected)
+        items.forEach { snapshot.appendItems([$0], toSection: .main) }
+        guard let datasource = self.datasource else { return }
+        datasource.apply(snapshot, animatingDifferences: false)
     }
 }

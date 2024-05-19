@@ -4,8 +4,9 @@ import Combine
 import Foundation
 
 protocol ActivityMemberSettingUseCase {
-    func getMembers() -> AnyPublisher<[String], Never>
-    func toggleSelection(in indexPaths: Set<IndexPath>, for selectedIndexPath: IndexPath) -> (Set<IndexPath>, IndexPath, Bool)
+    func getMembers() -> AnyPublisher<[ActivityMemberSectionItem], Never>
+    func toggleSelection(at indexPath: IndexPath, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem]), Never>
+    func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never>
 }
 
 final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
@@ -15,20 +16,28 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
         self.repository = repository
     }
     
-    func getMembers() -> AnyPublisher<[String], Never> {
+    func getMembers() -> AnyPublisher<[ActivityMemberSectionItem], Never> {
         return repository.fetchMembers()
+            .map { $0.map { ActivityMemberSectionItem.memberCell($0, false)} }
+            .eraseToAnyPublisher()
     }
     
-    func toggleSelection(in indexPaths: Set<IndexPath>, for selectedIndexPath: IndexPath) -> (Set<IndexPath>, IndexPath, Bool) {
-        var indexPaths = indexPaths
-        let isSelected = !indexPaths.contains(selectedIndexPath)
-        
-        if isSelected {
-            indexPaths.insert(selectedIndexPath)
-        } else {
-            indexPaths.remove(selectedIndexPath)
+    func toggleSelection(at indexPath: IndexPath, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem]), Never> {
+        var toggleMembers = members
+        if case .memberCell(let name, let isSelected) = toggleMembers[indexPath.row] {
+            toggleMembers[indexPath.row] = .memberCell(name, !isSelected)
+            return Just(toggleMembers).eraseToAnyPublisher()
         }
-        
-        return (indexPaths, selectedIndexPath, isSelected)
+        return Empty().eraseToAnyPublisher()
+    }
+    
+    func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never> {
+        let updatedMembers = members.map { member -> ActivityMemberSectionItem in
+            switch member {
+            case .memberCell(let name, _):
+                return .memberCell(name, isSelected)
+            }
+        }
+        return Just((updatedMembers, isSelected)).eraseToAnyPublisher()
     }
 }
