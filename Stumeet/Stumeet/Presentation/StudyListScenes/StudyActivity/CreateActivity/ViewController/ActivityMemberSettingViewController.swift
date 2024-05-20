@@ -68,7 +68,9 @@ final class ActivityMemberSettingViewController: BaseViewController {
     }()
     
     private let completeButton: UIButton = {
-        return UIButton().makeRegisterBottomButton(text: "완료", color: StumeetColor.gray200.color)
+        let button = UIButton().makeRegisterBottomButton(text: "완료", color: StumeetColor.gray200.color)
+        button.isEnabled = false
+        return button
     }()
     
     // MARK: - Properties
@@ -174,6 +176,11 @@ final class ActivityMemberSettingViewController: BaseViewController {
             .assign(to: \.isSelected, on: allSelectButton)
             .store(in: &cancellables)
         
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCompleteButtonUI)
+            .store(in: &cancellables)
+        
     }
 }
 
@@ -203,5 +210,14 @@ extension ActivityMemberSettingViewController {
         items.forEach { snapshot.appendItems([$0], toSection: .main) }
         guard let datasource = self.datasource else { return }
         datasource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+// MARK: - UIUpdate
+
+extension ActivityMemberSettingViewController {
+    func updateCompleteButtonUI(isEnable: Bool) {
+        completeButton.isEnabled = isEnable
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
     }
 }

@@ -12,6 +12,8 @@ protocol ActivityMemberSettingUseCase {
     ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem]), Never>
     func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never>
     func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never>
+    func setIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never>
+    
 }
 
 final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
@@ -71,5 +73,15 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
             return false
         }
         return Just(filteredMembers).eraseToAnyPublisher()
+    }
+    
+    func setIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never> {
+        let hasSelected = members.contains { member in
+            if case .memberCell(_, let isSelected) = member {
+                return isSelected
+            }
+            return false
+        }
+        return Just(hasSelected).eraseToAnyPublisher()
     }
 }

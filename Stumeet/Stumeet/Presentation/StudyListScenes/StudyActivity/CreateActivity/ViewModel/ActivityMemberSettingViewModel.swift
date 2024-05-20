@@ -18,6 +18,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
     struct Output {
         let members: AnyPublisher<[ActivityMemberSectionItem], Never>
         let isSelectedAll: AnyPublisher<Bool, Never>
+        let isEnableCompleteButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -70,9 +71,14 @@ final class ActivityMemberSettingViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
         
+        let isEnableCompleteButton = filteredMemberSubject
+            .flatMap(useCase.setIsEnableCompleteButton)
+            .eraseToAnyPublisher()
+
         return Output(
             members: members,
-            isSelectedAll: isSelectedAll
+            isSelectedAll: isSelectedAll,
+            isEnableCompleteButton: isEnableCompleteButton
         )
     }
 }
