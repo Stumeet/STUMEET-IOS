@@ -11,6 +11,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         let didSelectIndexPathPublisher: AnyPublisher<IndexPath, Never>
         let didTapAllSelectButton: AnyPublisher<Bool, Never>
         let searchTextPublisher: AnyPublisher<String?, Never>
+        let didTapCompleteButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -19,6 +20,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         let members: AnyPublisher<[ActivityMemberSectionItem], Never>
         let isSelectedAll: AnyPublisher<Bool, Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
+        let completeMember: AnyPublisher<[String], Never>
     }
     
     // MARK: - Properties
@@ -74,11 +76,17 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         let isEnableCompleteButton = filteredMemberSubject
             .flatMap(useCase.setIsEnableCompleteButton)
             .eraseToAnyPublisher()
+        
+        let completeMember = input.didTapCompleteButton
+            .map { _ in self.filteredMemberSubject.value }
+            .flatMap(useCase.completeMembers)
+            .eraseToAnyPublisher()
 
         return Output(
             members: members,
             isSelectedAll: isSelectedAll,
-            isEnableCompleteButton: isEnableCompleteButton
+            isEnableCompleteButton: isEnableCompleteButton,
+            completeMember: completeMember
         )
     }
 }

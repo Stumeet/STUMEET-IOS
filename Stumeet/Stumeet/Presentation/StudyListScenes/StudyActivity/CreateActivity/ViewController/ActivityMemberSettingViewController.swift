@@ -7,6 +7,12 @@
 
 import UIKit
 
+// TODO: - Netwokring 후 이미지로 변경
+
+protocol CreateActivityMemberDelegate: AnyObject {
+    func didTapCompleteButton(name: [String])
+}
+
 final class ActivityMemberSettingViewController: BaseViewController {
     
     // MARK: - Typealias
@@ -78,6 +84,7 @@ final class ActivityMemberSettingViewController: BaseViewController {
     private let coordinator: CreateActivityNavigation
     private let viewModel: ActivityMemberSettingViewModel
     private var datasource: UITableViewDiffableDataSource<Section, SectionItem>?
+    weak var delegate: CreateActivityMemberDelegate?
     
     // MARK: - Init
     
@@ -159,18 +166,17 @@ final class ActivityMemberSettingViewController: BaseViewController {
         let input = ActivityMemberSettingViewModel.Input(
             didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher(),
             didTapAllSelectButton: allSelectButton.tapPublisher.map {self.allSelectButton.isSelected}.eraseToAnyPublisher(),
-            searchTextPublisher: searchTextField.textPublisher.eraseToAnyPublisher()
+            searchTextPublisher: searchTextField.textPublisher.eraseToAnyPublisher(),
+            didTapCompleteButton: completeButton.tapPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
         
-        // member binding
         output.members
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
         
-        // 전체 선택
         output.isSelectedAll
             .receive(on: RunLoop.main)
             .assign(to: \.isSelected, on: allSelectButton)
@@ -179,6 +185,14 @@ final class ActivityMemberSettingViewController: BaseViewController {
         output.isEnableCompleteButton
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateCompleteButtonUI)
+            .store(in: &cancellables)
+        
+        output.completeMember
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] names in
+                self?.delegate?.didTapCompleteButton(name: names)
+                self?.coordinator.dismiss()
+            })
             .store(in: &cancellables)
         
     }
