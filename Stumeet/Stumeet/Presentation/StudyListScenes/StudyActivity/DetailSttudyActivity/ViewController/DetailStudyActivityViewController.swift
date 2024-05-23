@@ -61,7 +61,8 @@ final class DetailStudyActivityViewController: BaseViewController {
     
     override func setupConstaints() {
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.bottom.equalToSuperview()
         }
     }
     
@@ -70,9 +71,17 @@ final class DetailStudyActivityViewController: BaseViewController {
     
     override func bind() {
         configureDatasource()
-        let top = DetailStudyActivityTop(dayLeft: "", status: "", profileImageURL: "", name: "", date: "", title: "", content: "")
+        let top = DetailStudyActivityTop(
+            dayLeft: "18일 남음",
+            status: "미제출",
+            profileImageURL: "",
+            name: "홍길동",
+            date: "2024.01.01 23:58",
+            title: "캠스터디 교재 1장 2번까지 풀이",
+            content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고, 풀이 정리 후 정답, 오답 공유 후 질의 응답합니다!")
         let photo = DetailStudyActivityPhoto(imageURL: "")
         let bottom = DetailStudyActivityBottom(memberImageURL: [""], startDate: "", endDate: "", place: "")
+        
         let items: [SectionItem] = [
             .topCell(top),
             .photoCell(photo),
@@ -150,6 +159,7 @@ extension DetailStudyActivityViewController {
                     for: indexPath) as? DetailStudyActivityTopCell
                 else { return UICollectionViewCell() }
                 
+                cell.configureCell(item)
                 return cell
                 
             case .photoCell(let item):
