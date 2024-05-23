@@ -10,12 +10,14 @@ import UIKit
 protocol StudyListCoordinatorDependencies {
     func makeStudyListVC(coordinator: StudyListNavigation) -> StudyListViewController
     func makeStudyActivityListVC(coordinator: StudyListNavigation) -> StudyActivityListViewController
+    func makeDetailStudyActivityListVC(coordinator: StudyListNavigation) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
 }
 
 protocol StudyListNavigation: AnyObject {
     func goToStudyList()
     func goToStudyActivityList()
+    func goToDetailStudyActivityVC()
     func startCreateActivityCoordinator()
 }
 
@@ -52,6 +54,11 @@ extension StudyListCoordinator: StudyListNavigation {
         let studyActivityListVC = dependencies.makeStudyActivityListVC(coordinator: self)
         studyActivityListVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(studyActivityListVC, animated: true)
+    }
+    
+    func goToDetailStudyActivityVC() {
+        let detailStudyActivityVC = dependencies.makeDetailStudyActivityListVC(coordinator: self)
+        navigationController.pushViewController(detailStudyActivityVC, animated: true)
     }
     
     func startCreateActivityCoordinator() {

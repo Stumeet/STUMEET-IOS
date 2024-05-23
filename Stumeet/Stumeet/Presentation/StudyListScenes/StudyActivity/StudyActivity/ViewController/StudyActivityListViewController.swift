@@ -95,6 +95,13 @@ class StudyActivityListViewController: BaseViewController {
         
         let output = viewModel.transform(input: input)
         
+        // TODO: - ViewModel Biniding
+        collectionView.didSelectItemPublisher
+            .map { _ in }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
+            .store(in: &cancellables)
+        
         // collectionview 아이템 바인딩
         output.items
             .removeDuplicates()

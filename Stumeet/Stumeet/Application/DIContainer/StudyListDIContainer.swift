@@ -48,6 +48,11 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
             coordinator: coordinator)
     }
     
+    // MARK: - DetailStudyActivity
+    func makeDetailStudyActivityListVC(coordinator: any StudyListNavigation) -> DetailStudyActivityViewController {
+        DetailStudyActivityViewController(coordinator: coordinator)
+    }
+    
     // MARK: - DIContainer
     func makeCreateActivityDIContainer() -> CreateActivityDIContainer {
         let dependencies = CreateActivityDIContainer.Dependencies(provider: nil)
