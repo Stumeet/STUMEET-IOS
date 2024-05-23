@@ -36,9 +36,17 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
         DefaultBottomSheetCalendarUseCase()
     }
     
+    func makeActivityMemeberSettingUseCase() -> ActivityMemberSettingUseCase {
+        DefaultActivityMemberSettingUseCase(repository: makeActivityMemeberSettingRepository())
+    }
+    
     // MARK: - Repositories
     func makeStudyActivityRepository() -> StudyActivityRepository {
         DefaultStudyActivityRepository()
+    }
+    
+    func makeActivityMemeberSettingRepository() -> ActivityMemberSettingRepository {
+        DefaultActivityMemberSettingRepository()
     }
     
     // MARK: - StudyActivityList
@@ -83,4 +91,18 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
             coordinator: coordinator
         )
     }
+    
+    // MARK: - Member
+    
+    func makeActivityMemberSettingViewModel() -> ActivityMemberSettingViewModel {
+        ActivityMemberSettingViewModel(useCase: makeActivityMemeberSettingUseCase())
+    }
+    
+    func makeActivityMemberSettingViewController(coordinator: Navigation) -> ActivityMemberSettingViewController {
+        ActivityMemberSettingViewController(
+            coordinator: coordinator,
+            viewModel: makeActivityMemberSettingViewModel()
+        )
+    }
+    
 }
