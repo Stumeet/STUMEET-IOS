@@ -85,7 +85,11 @@ final class DetailStudyActivityViewController: BaseViewController {
         let photo3 = DetailStudyActivityPhoto(imageURL: "3")
         let photo4 = DetailStudyActivityPhoto(imageURL: "4")
         
-        let bottom = DetailStudyActivityBottom(memberImageURL: [""], startDate: "", endDate: "", place: "")
+        let bottom = DetailStudyActivityBottom(
+            memberImageURL: [""],
+            startDate: "2024. 1. 29(월) 오전 9:00",
+            endDate: "2024. 1. 29(월) 오전 9:00",
+            place: "서울여자대학교 학생누리관 7층")
         
         let items: [SectionItem] = [
             .topCell(top),
@@ -140,6 +144,7 @@ extension DetailStudyActivityViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 39, leading: 0, bottom: 0, trailing: 0)
 
         return section
     }
@@ -189,6 +194,7 @@ extension DetailStudyActivityViewController {
                     for: indexPath) as? DetailStudyActivityBottomCell
                 else { return UICollectionViewCell() }
                 
+                cell.configureCell(item)
                 return cell
             }
         })
