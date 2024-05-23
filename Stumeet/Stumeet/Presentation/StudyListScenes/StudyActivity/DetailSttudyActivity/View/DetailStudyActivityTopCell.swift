@@ -13,7 +13,7 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
     
     // MARK: - UIComponents
     
-    let dayLeftLabel: UILabel = {
+    private let dayLeftLabel: UILabel = {
         let label = PaddingLabel()
         label.setPadding(top: 4, bottom: 4, left: 12, right: 12)
         label.font = StumeetFont.bodyMedium15.font
@@ -25,7 +25,7 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
         return label
     }()
     
-    let statusLabel: UILabel = {
+    private let statusLabel: UILabel = {
         let label = PaddingLabel()
         label.setPadding(top: 4, bottom: 4, left: 12, right: 12)
         label.font = StumeetFont.bodyMedium15.font
@@ -37,7 +37,7 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
         return label
     }()
     
-    let profileImageView: UIImageView = {
+    private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20
@@ -46,26 +46,26 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
         return imageView
     }()
     
-    let nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         return UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium14.font, color: .gray800)
     }()
     
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         return UILabel().setLabelProperty(text: nil, font: StumeetFont.captionMedium12.font, color: .gray300)
     }()
     
-    let separationLine: UIView = {
+    private let separationLine: UIView = {
         let view = UIView()
         view.backgroundColor = StumeetColor.gray100.color
         
         return view
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         return UILabel().setLabelProperty(text: nil, font: StumeetFont.subTitleSemiBold.font, color: .gray800)
     }()
     
-    let contentLabel: UILabel = {
+    private let contentLabel: UILabel = {
         let label = UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium14.font, color: .gray600)
         label.numberOfLines = 0
         
