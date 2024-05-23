@@ -168,6 +168,7 @@ final class StudyActivitySettingViewController: BaseViewController {
         
         // 멤버설정 VC present
         output.presentToParticipatingMemberVC
+            .map { self }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToActivityMemberSettingViewController)
             .store(in: &cancellables)
@@ -184,6 +185,12 @@ extension StudyActivitySettingViewController: CreateActivityDelegate {
     
     func didTapEndDateCompleteButton(date: String) {
         endDateLabel.text = date
+    }
+}
+
+extension StudyActivitySettingViewController: CreateActivityMemberDelegate {
+    func didTapCompleteButton(name: [String]) {
+        print(name)
     }
 }
 

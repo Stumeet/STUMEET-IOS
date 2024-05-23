@@ -349,7 +349,7 @@ class BottomSheetCalendarViewController: BaseViewController {
                 if isStart {
                     self?.delegate?.didTapStartDateCompleteButton(date: date)
                 } else { self?.delegate?.didTapEndDateCompleteButton(date: date) }
-                self?.coordinator.dismissBottomSheetCalenderVC()
+                self?.coordinator.dismiss()
             })
             .store(in: &cancellables)
     }
@@ -435,7 +435,7 @@ extension BottomSheetCalendarViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.coordinator.dismissBottomSheetCalenderVC()
+                self.coordinator.dismiss()
             })
     }
     

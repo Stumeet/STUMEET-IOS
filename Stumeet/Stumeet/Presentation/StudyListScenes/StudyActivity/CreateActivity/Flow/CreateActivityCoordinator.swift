@@ -19,8 +19,8 @@ protocol CreateActivityNavigation: AnyObject {
     func presentToCreateActivityVC()
     func goToStudyActivitySettingVC()
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
-    func presentToActivityMemberSettingViewController()
-    func dismissBottomSheetCalenderVC()
+    func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
+    func dismiss()
 }
 
 
@@ -66,14 +66,15 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         lastVC.present(bottomSheetCalendarVC, animated: false)
     }
     
-    func presentToActivityMemberSettingViewController() {
+    func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate) {
         guard let lastVC = navigationController.viewControllers.last else { return }
         let activityMemberSettingVC = dependencies.makeActivityMemberSettingViewController(coordinator: self)
         activityMemberSettingVC.modalPresentationStyle = .fullScreen
+        activityMemberSettingVC.delegate = delegate
         lastVC.present(activityMemberSettingVC, animated: true)
     }
     
-    func dismissBottomSheetCalenderVC() {
+    func dismiss() {
         guard let lastVC = navigationController.viewControllers.last else { return }
         lastVC.dismiss(animated: true)
     }

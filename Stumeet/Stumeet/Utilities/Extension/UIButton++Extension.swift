@@ -15,6 +15,7 @@ extension UIButton {
     func makeRegisterBottomButton(text: String, color: UIColor) -> UIButton {
         self.setTitle(text, for: .normal)
         self.setTitleColor(StumeetColor.gray50.color, for: .normal)
+        self.titleLabel?.font = StumeetFont.titleSemibold.font
         self.backgroundColor = color
         self.layer.cornerRadius = 16
         

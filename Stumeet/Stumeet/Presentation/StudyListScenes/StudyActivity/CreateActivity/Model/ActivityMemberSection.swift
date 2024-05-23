@@ -7,12 +7,12 @@
 
 import Foundation
 
-// TODO: - 이미지 추가
+// TODO: - 이미지 추가, dto에 따른 모델 추가
 
 enum ActivityMemberSection {
     case main
 }
 
 enum ActivityMemberSectionItem: Hashable {
-    case memberCell(String)
+    case memberCell(String, Bool)
 }

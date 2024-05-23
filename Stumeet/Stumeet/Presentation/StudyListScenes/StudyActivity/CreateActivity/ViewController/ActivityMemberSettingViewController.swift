@@ -7,7 +7,13 @@
 
 import UIKit
 
-class ActivityMemberSettingViewController: BaseViewController {
+// TODO: - Netwokring 후 이미지로 변경
+
+protocol CreateActivityMemberDelegate: AnyObject {
+    func didTapCompleteButton(name: [String])
+}
+
+final class ActivityMemberSettingViewController: BaseViewController {
     
     // MARK: - Typealias
     
@@ -52,17 +58,8 @@ class ActivityMemberSettingViewController: BaseViewController {
     
     private let allSelectButton: UIButton = {
         let button = UIButton()
-        var config = UIButton.Configuration.plain()
-        
-        var titleAttr = AttributedString.init("전체 선택")
-        titleAttr.font = StumeetFont.bodyMedium14.font
-        titleAttr.foregroundColor = StumeetColor.gray400.color
-        config.attributedTitle = titleAttr
-        
-        config.image = UIImage(named: "unSelectedMemberButton")
-        config.imagePlacement = .leading
-        config.imagePadding = 8
-        button.configuration = config
+        button.setImage(UIImage(named: "allUnSelectedButton"), for: .normal)
+        button.setImage(UIImage(named: "allSelectedButton"), for: .selected)
         
         return button
     }()
@@ -77,18 +74,23 @@ class ActivityMemberSettingViewController: BaseViewController {
     }()
     
     private let completeButton: UIButton = {
-        return UIButton().makeRegisterBottomButton(text: "완료", color: StumeetColor.gray200.color)
+        let button = UIButton().makeRegisterBottomButton(text: "완료", color: StumeetColor.gray200.color)
+        button.isEnabled = false
+        return button
     }()
     
     // MARK: - Properties
     
     private let coordinator: CreateActivityNavigation
+    private let viewModel: ActivityMemberSettingViewModel
     private var datasource: UITableViewDiffableDataSource<Section, SectionItem>?
+    weak var delegate: CreateActivityMemberDelegate?
     
     // MARK: - Init
     
-    init(coordinator: CreateActivityNavigation) {
+    init(coordinator: CreateActivityNavigation, viewModel: ActivityMemberSettingViewModel) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -102,22 +104,6 @@ class ActivityMemberSettingViewController: BaseViewController {
         super.viewDidLoad()
         
         configureDatasource()
-        
-        // FIXME: - ViewModelBinding
-        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems([SectionItem.memberCell("홍길동1"),
-                              SectionItem.memberCell("홍길동2"),
-                              SectionItem.memberCell("홍길동3"),
-                              SectionItem.memberCell("홍길동4"),
-                              SectionItem.memberCell("홍길동5"),
-                              SectionItem.memberCell("홍길동6"),
-                              SectionItem.memberCell("홍길동7"),
-                              SectionItem.memberCell("홍길동8"),
-                              SectionItem.memberCell("홍길동9")])
-        
-        guard let datasource = self.datasource else { return }
-        datasource.apply(snapshot, animatingDifferences: false)
     }
     
     // MARK: - SetUp
@@ -177,28 +163,75 @@ class ActivityMemberSettingViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
-
+        let input = ActivityMemberSettingViewModel.Input(
+            didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher(),
+            didTapAllSelectButton: allSelectButton.tapPublisher.map {self.allSelectButton.isSelected}.eraseToAnyPublisher(),
+            searchTextPublisher: searchTextField.textPublisher.eraseToAnyPublisher(),
+            didTapCompleteButton: completeButton.tapPublisher.eraseToAnyPublisher()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.members
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.isSelectedAll
+            .receive(on: RunLoop.main)
+            .assign(to: \.isSelected, on: allSelectButton)
+            .store(in: &cancellables)
+        
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCompleteButtonUI)
+            .store(in: &cancellables)
+        
+        output.completeMember
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] names in
+                self?.delegate?.didTapCompleteButton(name: names)
+                self?.coordinator.dismiss()
+            })
+            .store(in: &cancellables)
+        
     }
-    
 }
 
 // MARK: - Datasource
 
 extension ActivityMemberSettingViewController {
-    func configureDatasource() {
+    private func configureDatasource() {
         datasource = UITableViewDiffableDataSource(tableView: memberTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .memberCell(let name):
+            case .memberCell(let name, let isSelected):
                 guard let cell =
                         tableView.dequeueReusableCell(
                             withIdentifier: ActivityMemberCell.identifier,
                             for: indexPath
                         ) as? ActivityMemberCell
                 else { return UITableViewCell() }
-                cell.configureCell(name)
+                cell.configureCell(name, isSelected)
                 
                 return cell
             }
         })
+    }
+    
+    private func updateSnapshot(items: [SectionItem]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
+        snapshot.appendSections([.main])
+        items.forEach { snapshot.appendItems([$0], toSection: .main) }
+        guard let datasource = self.datasource else { return }
+        datasource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+// MARK: - UIUpdate
+
+extension ActivityMemberSettingViewController {
+    func updateCompleteButtonUI(isEnable: Bool) {
+        completeButton.isEnabled = isEnable
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
     }
 }
