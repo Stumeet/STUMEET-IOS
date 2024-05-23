@@ -7,16 +7,42 @@
 
 import UIKit
 
-class DetailStudyActivityPhotoCell: UICollectionViewCell {
+class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
     static let identifer = "DetailStudyActivityPhotoCell"
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: - UIComponents
+    
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 16
+        imageView.backgroundColor = .systemCyan
         
-        backgroundColor = .green
+        return imageView
+    }()
+    
+    private let xButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "xMark"), for: .normal)
+        
+        return button
+    }()
+    
+    // MARK: - SetUp
+    
+    override func setupAddView() {
+        [
+            imageView,
+            xButton
+        ]   .forEach(addSubview)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func setupConstaints() {
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        xButton.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview().inset(12)
+        }
     }
 }

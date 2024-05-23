@@ -79,12 +79,20 @@ final class DetailStudyActivityViewController: BaseViewController {
             date: "2024.01.01 23:58",
             title: "캠스터디 교재 1장 2번까지 풀이",
             content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고, 풀이 정리 후 정답, 오답 공유 후 질의 응답합니다!")
-        let photo = DetailStudyActivityPhoto(imageURL: "")
+        
+        let photo1 = DetailStudyActivityPhoto(imageURL: "1")
+        let photo2 = DetailStudyActivityPhoto(imageURL: "2")
+        let photo3 = DetailStudyActivityPhoto(imageURL: "3")
+        let photo4 = DetailStudyActivityPhoto(imageURL: "4")
+        
         let bottom = DetailStudyActivityBottom(memberImageURL: [""], startDate: "", endDate: "", place: "")
         
         let items: [SectionItem] = [
             .topCell(top),
-            .photoCell(photo),
+            .photoCell(photo1),
+            .photoCell(photo2),
+            .photoCell(photo3),
+            .photoCell(photo4),
             .bottomCell(bottom)
         ]
         updateSnapshot(items: items)
@@ -111,12 +119,15 @@ extension DetailStudyActivityViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(160))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.44), heightDimension: .absolute(160))
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .estimated(0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = .fixed(16)
+    
         
         let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 16
         section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = .init(top: 24, leading: 16, bottom: 0, trailing: 0)
 
         return section
     }
@@ -147,6 +158,8 @@ extension DetailStudyActivityViewController {
         }
     }
 }
+
+// MARK: - Datasource
 
 extension DetailStudyActivityViewController {
     func configureDatasource() {
@@ -180,10 +193,20 @@ extension DetailStudyActivityViewController {
             }
         })
     }
+    
     private func updateSnapshot(items: [SectionItem]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
         snapshot.appendSections([.top, .photo, .bottom])
-        items.forEach { snapshot.appendItems([$0]) }
+        items.forEach {
+            switch $0 {
+            case .topCell(let item):
+                snapshot.appendItems([.topCell(item)], toSection: .top)
+            case .photoCell(let item):
+                snapshot.appendItems([.photoCell(item)], toSection: .photo)
+            case .bottomCell(let item):
+                snapshot.appendItems([.bottomCell(item)], toSection: .bottom)
+            }
+        }
         guard let datasource = self.datasource else { return }
         datasource.apply(snapshot, animatingDifferences: true)
     }
