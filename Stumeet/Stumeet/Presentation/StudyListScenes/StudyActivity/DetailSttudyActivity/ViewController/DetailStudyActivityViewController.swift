@@ -51,7 +51,6 @@ final class DetailStudyActivityViewController: BaseViewController {
     // MARK: - SetUp
     override func setupStyles() {
         view.backgroundColor = .white
-        navigationController?.isNavigationBarHidden = false
         configureBackButtonTitleNavigationBarItems(title: "과제")
     }
     

@@ -22,7 +22,7 @@ class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
     
     private let xButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "xMark"), for: .normal)
+        button.setImage(UIImage(resource: .xMark).withTintColor(StumeetColor.gray50.color), for: .normal)
         
         return button
     }()

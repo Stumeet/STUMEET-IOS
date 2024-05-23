@@ -19,8 +19,9 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
         label.font = StumeetFont.bodyMedium15.font
         label.textColor = StumeetColor.primary700.color
         label.backgroundColor = StumeetColor.primary50.color
-        label.layer.cornerRadius = 32
+        label.layer.cornerRadius = 13.5
         label.layer.masksToBounds = true
+        label.textAlignment = .center
         
         return label
     }()
@@ -31,8 +32,9 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
         label.font = StumeetFont.bodyMedium15.font
         label.textColor = StumeetColor.warning500.color
         label.backgroundColor = StumeetColor.warning50.color
-        label.layer.cornerRadius = 32
+        label.layer.cornerRadius = 13.5
         label.layer.masksToBounds = true
+        label.textAlignment = .center
         
         return label
     }()
@@ -99,7 +101,7 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
             make.leading.equalTo(dayLeftLabel.snp.trailing).offset(8)
             make.top.equalTo(dayLeftLabel.snp.top)
             make.height.equalTo(27)
-            make.width.equalTo(87)
+            make.width.equalTo(66)
         }
         
         profileImageView.snp.makeConstraints { make in

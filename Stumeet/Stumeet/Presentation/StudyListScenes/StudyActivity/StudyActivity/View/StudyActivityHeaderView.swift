@@ -46,23 +46,6 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
         return stackView
     }()
     
-    let sortButton: UIButton = {
-        let button = UIButton()
-        
-        var titleAttr = AttributedString.init("최신순")
-        titleAttr.font = StumeetFont.bodyMedium14.font
-        
-        var config = UIButton.Configuration.filled()
-        config.attributedTitle = titleAttr
-        config.imagePlacement = .trailing
-        config.image = UIImage(systemName: "chevron.down")
-        config.baseBackgroundColor = .white
-        config.baseForegroundColor = StumeetColor.gray300.color
-        button.configuration = config
-        
-        return button
-    }()
-    
     // MARK: - Property
     
     var cancellables = Set<AnyCancellable>()
@@ -86,8 +69,8 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
             taskButton
         ]   .forEach { buttonStackView.addArrangedSubview($0) }
         
-        [            buttonStackView,
-            sortButton
+        [
+            buttonStackView
         ]   .forEach { addSubview($0) }
     }
     
@@ -96,11 +79,6 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
         buttonStackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
             make.top.equalToSuperview().inset(12)
-        }
-        
-        sortButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
-            make.centerY.equalTo(buttonStackView)
         }
     }
 }
