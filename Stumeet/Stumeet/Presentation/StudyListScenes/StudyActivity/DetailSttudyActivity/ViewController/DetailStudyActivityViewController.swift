@@ -51,6 +51,8 @@ final class DetailStudyActivityViewController: BaseViewController {
     // MARK: - SetUp
     override func setupStyles() {
         view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = false
+        configureBackButtonTitleNavigationBarItems(title: "과제")
     }
     
     override func setupAddView() {
@@ -61,7 +63,7 @@ final class DetailStudyActivityViewController: BaseViewController {
     
     override func setupConstaints() {
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(8)
             make.horizontalEdges.bottom.equalToSuperview()
         }
     }

@@ -61,7 +61,7 @@ class StudyActivityListViewController: BaseViewController {
     
     override func setupStyles() {
         view.backgroundColor = .white
-        navigationController?.isNavigationBarHidden = true
+        configureXButtonTitleNavigationBarItems(title: "활동")
     }
     
     override func setupAddView() {
@@ -214,7 +214,7 @@ extension StudyActivityListViewController {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(156))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(104))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize
                 , elementKind: UICollectionView.elementKindSectionHeader,
@@ -233,7 +233,7 @@ extension StudyActivityListViewController {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(91))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(104))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize
                 , elementKind: UICollectionView.elementKindSectionHeader,
