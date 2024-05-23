@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+
+enum DetailStudyActivitySection {
+    case top
+    case photo
+    case bottom
+}
+
+enum DetailStudyActivitySectionItem: Hashable {
+    case topCell(DetailStudyActivityTop)
+    case photoCell(DetailStudyActivityPhoto)
+    case bottomCell(DetailStudyActivityBottom)
+}
