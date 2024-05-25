@@ -13,25 +13,48 @@ final class DetailActivityPhotoCell: BaseCollectionViewCell {
     
     // MARK: - UIComponents
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 3.0
+        scrollView.zoomScale = 1.0
+        return scrollView
+    }()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(resource: .changeProfileCharacter)
         imageView.contentMode = .scaleAspectFit
+        imageView.isUserInteractionEnabled = true
         
         return imageView
     }()
     
     
     override func setupAddView() {
-        [
-            imageView
-        ]   .forEach(addSubview)
+        scrollView.addSubview(imageView)
+        addSubview(scrollView)
     }
     
     override func setupConstaints() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         imageView.snp.makeConstraints { make in
+            make.width.equalTo(scrollView.snp.width)
+            make.height.equalTo(scrollView.snp.height)
             make.edges.equalToSuperview()
         }
     }
     
+}
+
+extension DetailActivityPhotoCell: UIScrollViewDelegate {
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
 }
