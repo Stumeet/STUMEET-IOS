@@ -75,13 +75,21 @@ final class DetailStudyActivityViewController: BaseViewController {
     
     override func bind() {
         
-        let input = DetailStudyActivityViewModel.Input()
+        let input = DetailStudyActivityViewModel.Input(
+            didSelectedCell: collectionView.didSelectItemPublisher.eraseToAnyPublisher()
+            
+        )
         
         let output = viewModel.transform(input: input)
         
         output.items
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.presentToPhotoListVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToDetailActivityPhotoListVC)
             .store(in: &cancellables)
     }
 }

@@ -61,6 +61,8 @@
 		CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */; };
 		CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */; };
 		CA01B27B2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */; };
+		CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */; };
+		CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */; };
 		CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */; };
 		CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */; };
 		CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */; };
@@ -244,6 +246,8 @@
 		CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityUseCase.swift; sourceTree = "<group>"; };
 		CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityRepository.swift; sourceTree = "<group>"; };
 		CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListViewController.swift; sourceTree = "<group>"; };
+		CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListViewModel.swift; sourceTree = "<group>"; };
 		CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewModel.swift; sourceTree = "<group>"; };
 		CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingUseCase.swift; sourceTree = "<group>"; };
 		CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultActivityMemberSettingRepository.swift; sourceTree = "<group>"; };
@@ -701,6 +705,7 @@
 			isa = PBXGroup;
 			children = (
 				CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */,
+				CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -709,6 +714,7 @@
 			isa = PBXGroup;
 			children = (
 				CA01B2742C01B36D00A01CEA /* DetailStudyActivityViewModel.swift */,
+				CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */,
 				CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */,
 			);
 			path = ViewModel;
@@ -1743,7 +1749,9 @@
 				CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */,
 				CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */,
 				CA6448572B863BB90090DD84 /* BaseViewController.swift in Sources */,
+				CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */,
 				CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */,
+				CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */,
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
 				CAF5335C2B9EB7AC00A7B8B2 /* DefualtStartRepository.swift in Sources */,

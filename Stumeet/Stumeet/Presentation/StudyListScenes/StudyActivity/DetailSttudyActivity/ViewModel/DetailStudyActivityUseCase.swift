@@ -10,6 +10,7 @@ import Foundation
 
 protocol DetailStudyActivityUseCase {
     func setDetailActivityItem() -> AnyPublisher<[DetailStudyActivitySectionItem], Never>
+    func setPresentedImage(indexPath: IndexPath, items: [DetailStudyActivitySectionItem]) -> AnyPublisher<([String], Int), Never>
 }
 
 
@@ -23,5 +24,16 @@ final class DefaultDetailStudyActivityUseCase: DetailStudyActivityUseCase {
     
     func setDetailActivityItem() -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
         return repository.fetchDetailActivityItems()
+    }
+    
+    func setPresentedImage(indexPath: IndexPath, items: [DetailStudyActivitySectionItem]) -> AnyPublisher<([String], Int), Never> {
+        let images = items
+            .compactMap { if case .photoCell(let item) = $0 { return item.imageURL }
+                return nil
+            }
+
+        let selectedRow = indexPath.item
+        
+        return Just((images, selectedRow)).eraseToAnyPublisher()
     }
 }

@@ -65,10 +65,23 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         DetailStudyActivityViewModel(useCase: makeDetailStudyActivityUseCase())
     }
     
-    func makeDetailStudyActivityListVC(coordinator: any StudyListNavigation) -> DetailStudyActivityViewController {
+    func makeDetailStudyActivityListVC(coordinator: Navigation) -> DetailStudyActivityViewController {
         DetailStudyActivityViewController(
             coordinator: coordinator,
             viewModel: makeDetailStudyActivityViewModel()
+        )
+    }
+    
+    // MARK: - DetailActivityPhotoList
+    
+    func makeDetailActivityPhotoListViewModel(with imageURLs: [String], selectedRow row: Int) -> DetailActivityPhotoListViewModel {
+        DetailActivityPhotoListViewModel(imageURLs: imageURLs, selectedRow: row)
+    }
+    
+    func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: Navigation) -> DetailActivityPhotoListViewController {
+        DetailActivityPhotoListViewController(
+            coordinator: coordinator,
+            viewModel: makeDetailActivityPhotoListViewModel(with: imageURLs, selectedRow: row)
         )
     }
     
