@@ -21,6 +21,7 @@ protocol StudyListNavigation: AnyObject {
     func goToDetailStudyActivityVC()
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
     func startCreateActivityCoordinator()
+    func dismiss()
 }
 
 final class StudyListCoordinator: Coordinator {
@@ -75,5 +76,10 @@ extension StudyListCoordinator: StudyListNavigation {
         let detailActivityPhotoListVC = dependencies.makeDetailActivityPhotoListVC(with: imageURLs, selectedRow: row, coordinator: self)
         detailActivityPhotoListVC.modalPresentationStyle = .overFullScreen
         lastVC.present(detailActivityPhotoListVC, animated: true)
+    }
+    
+    func dismiss() {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        lastVC.dismiss(animated: true)
     }
 }

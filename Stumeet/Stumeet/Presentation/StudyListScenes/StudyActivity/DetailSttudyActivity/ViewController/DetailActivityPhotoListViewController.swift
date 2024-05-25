@@ -123,14 +123,23 @@ final class DetailActivityPhotoListViewController: BaseViewController {
     
     override func bind() {
         configureDatasource()
-        let items: [SectionItem] = [
-            .photoCell("1"),
-            .photoCell("2"),
-            .photoCell("3"),
-            .photoCell("4")
-        ]
         
-        updateSnapshot(items: items)
+        let input = DetailActivityPhotoListViewModel.Input(
+            didTapXButton: xButton.tapPublisher.eraseToAnyPublisher(),
+            didTapDownLoadButton: downloadButton.tapPublisher.eraseToAnyPublisher()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.items
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
+            .store(in: &cancellables)
     }
 }
 
