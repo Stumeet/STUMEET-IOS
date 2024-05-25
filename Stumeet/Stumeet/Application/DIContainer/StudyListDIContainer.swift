@@ -22,13 +22,24 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     // MARK: - Repository
+    
     func makeStudyActivityRepository() -> StudyActivityRepository {
         DefaultStudyActivityRepository()
     }
     
+    func makeDetailsudyActivityRepository() -> DetailStudyActivityRepository {
+        // MARK: - TODO netwokring 후 Default로 교체
+        MockDetailStudyActivityRepository()
+    }
+    
     // MARK: - UseCase
+    
     func makeStudyActivityUseCase() -> StudyActivityUseCase {
         DefaultStudyActivityUseCase(repository: makeStudyActivityRepository())
+    }
+    
+    func makeDetailStudyActivityUseCase() -> DetailStudyActivityUseCase {
+        DefaultDetailStudyActivityUseCase(repository: makeDetailsudyActivityRepository())
     }
     
     // MARK: - StudyList
@@ -49,8 +60,16 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     // MARK: - DetailStudyActivity
+    
+    func makeDetailStudyActivityViewModel() -> DetailStudyActivityViewModel {
+        DetailStudyActivityViewModel(useCase: makeDetailStudyActivityUseCase())
+    }
+    
     func makeDetailStudyActivityListVC(coordinator: any StudyListNavigation) -> DetailStudyActivityViewController {
-        DetailStudyActivityViewController(coordinator: coordinator)
+        DetailStudyActivityViewController(
+            coordinator: coordinator,
+            viewModel: makeDetailStudyActivityViewModel()
+        )
     }
     
     // MARK: - DIContainer
