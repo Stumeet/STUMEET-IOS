@@ -145,5 +145,4 @@ class StudyMainExitPopupViewController: BaseViewController {
     @objc func dismissPopupView() {
         animateToCollapsedState()
     }
-
 }

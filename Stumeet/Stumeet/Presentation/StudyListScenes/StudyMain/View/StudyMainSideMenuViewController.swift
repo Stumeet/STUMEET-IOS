@@ -81,9 +81,10 @@ class StudyMainSideMenuViewController: BaseViewController {
         return stackView
     }()
     
-    private let addMemberButton: UIButton = {
+    private lazy var addMemberButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(resource: .usersPlus), for: .normal)
+        button.addTarget(self, action: #selector(invitationPopupButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -245,13 +246,18 @@ class StudyMainSideMenuViewController: BaseViewController {
             break
         }
     }
-
+    
+    // TODO: API 연동 시 수정
     @objc func dismissSideMenu() {
         animateToCollapsedState()
     }
     
     @objc func exitPopupButtonTapped(_ sender: UIButton) {
         coordinator.presentToExitPopup(from: self)
+    }
+    
+    @objc func invitationPopupButtonTapped(_ sender: UIButton) {
+        coordinator.presentToInvitationPopup(from: self)
     }
 }
 

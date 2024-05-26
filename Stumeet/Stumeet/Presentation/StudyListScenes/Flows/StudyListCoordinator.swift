@@ -12,6 +12,7 @@ protocol StudyListNavigation: AnyObject {
     func goToStudyMain()
     func presentToSideMenu(from viewController: UIViewController)
     func presentToExitPopup(from viewController: UIViewController)
+    func presentToInvitationPopup(from viewController: UIViewController)
 }
 
 final class StudyListCoordinator: Coordinator {
@@ -52,5 +53,12 @@ extension StudyListCoordinator: StudyListNavigation {
         exitPopupVC.modalPresentationStyle = .overFullScreen
         exitPopupVC.modalTransitionStyle = .crossDissolve
         viewController.present(exitPopupVC, animated: false, completion: nil)
+    }
+    
+    func presentToInvitationPopup(from viewController: UIViewController) {
+        let invitationPopupVC = StudyMainInvitationPopupViewController()
+        invitationPopupVC.modalPresentationStyle = .overFullScreen
+        invitationPopupVC.modalTransitionStyle = .crossDissolve
+        viewController.present(invitationPopupVC, animated: false, completion: nil)
     }
 }
