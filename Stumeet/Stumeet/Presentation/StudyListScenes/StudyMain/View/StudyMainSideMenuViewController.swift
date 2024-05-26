@@ -87,17 +87,29 @@ class StudyMainSideMenuViewController: BaseViewController {
         return button
     }()
     
-    private let exitStudyGroupButton: UIButton = {
+    private lazy var exitStudyGroupButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(resource: .doorEnter), for: .normal)
+        button.addTarget(self, action: #selector(exitPopupButtonTapped), for: .touchUpInside)
         return button
     }()
     
     // MARK: - Properties
+    private weak var coordinator: StudyListNavigation!
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var deviceWidthRatio = screenWidth * 0.7 // 디바이스 너비의 70%를 계산
     private var menuDataSource: UITableViewDiffableDataSource<StudyMainMenuSection, StudyMainMenu>?
-
+    
+    // MARK: - Init
+    init(coordinator: StudyListNavigation) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setupStyles() {
         view.backgroundColor = .black.withAlphaComponent(0)
         
@@ -236,6 +248,10 @@ class StudyMainSideMenuViewController: BaseViewController {
 
     @objc func dismissSideMenu() {
         animateToCollapsedState()
+    }
+    
+    @objc func exitPopupButtonTapped(_ sender: UIButton) {
+        coordinator.presentToExitPopup(from: self)
     }
 }
 
