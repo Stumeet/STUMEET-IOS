@@ -27,4 +27,19 @@ extension UILabel {
         
         return self
     }
+    
+    
+    /// 텍스트의 라인 간격을 설정
+    /// - Parameter lineSpacing: 라인 간격의 크기(포인트 단위)
+    func setLineSpacing(lineSpacing: CGFloat) {
+        guard let text = self.text else { return }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        
+        self.attributedText = attributedString
+    }
 }

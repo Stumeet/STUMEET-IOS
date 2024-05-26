@@ -39,4 +39,10 @@ extension UIView {
         layer.shadowOffset = offset
         layer.masksToBounds = false
     }
+    
+    /// 모서리 둥글게 설정
+    func setRoundCorner() {
+        self.layer.cornerRadius = self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height / 2
+    }
+
 }
