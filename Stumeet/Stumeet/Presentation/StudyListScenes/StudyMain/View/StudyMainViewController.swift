@@ -24,6 +24,22 @@ class StudyMainViewController: BaseViewController {
         return button
     }()
     
+    private let floatingContainerVStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        return stackView
+    }()
+    
+    private lazy var newActivityFloatingButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .floatingPlus), for: .normal)
+        button.setImage(UIImage(resource: .floatingPlus), for: .disabled)
+        button.backgroundColor = StumeetColor.primary700.color
+        button.setShadow()
+        return button
+    }()
+    
     private let headerView: UIView = {
         let view = UIView()
         view.backgroundColor = .blue
@@ -101,16 +117,22 @@ class StudyMainViewController: BaseViewController {
     }
     
     override func setupStyles() {
+        view.backgroundColor = .white
         navigationController?.setupBarAppearance(backgroundColor: .white.withAlphaComponent(0), backButtonColor: .white)
         tabBarController?.setupBarAppearance()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: menuOpenButton)
         
-        tableView.contentInset = UIEdgeInsets(top: tableHeaderHeight, left: 0, bottom: 0, right: 0) // headerView의 공간 확보를 위해 헤더 높이 만큼 inset 부여
+        tableView.contentInset = UIEdgeInsets(top: tableHeaderHeight, left: 0, bottom: 72, right: 0) // headerView의 공간 확보를 위해 헤더 높이 만큼 inset 부여
         tableView.contentOffset = CGPoint(x: 0, y: -tableHeaderHeight) // 첫 상단 스크롤 시작을 위해 inset 준만큼 위치 변경
     }
     
     override func setupAddView() {
         view.addSubview(tableView)
+        view.addSubview(floatingContainerVStackView)
+        
+        [
+            newActivityFloatingButton
+        ].forEach { floatingContainerVStackView.addArrangedSubview($0) }
         
         tableView.addSubview(headerView)
         headerView.addSubview(headerImageView)
@@ -121,9 +143,16 @@ class StudyMainViewController: BaseViewController {
     }
     
     override func setupConstaints() {
+        floatingContainerVStackView.snp.makeConstraints {
+            $0.trailing.bottom.equalToSuperview().inset(24)
+        }
+        
+        newActivityFloatingButton.snp.makeConstraints {
+            $0.size.equalTo(72)
+        }
+        
         tableView.snp.makeConstraints {
-            $0.top.horizontalEdges.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
         
         headerImageView.snp.makeConstraints {
@@ -152,9 +181,9 @@ class StudyMainViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        newActivityFloatingButton.setRoundCorner()
         // TODO: API 연동 시 수정
         dataSource = activityList
-        
     }
     
     // MARK: - Function
@@ -188,10 +217,24 @@ class StudyMainViewController: BaseViewController {
         })
     }
     
+    private func animateButtonAlpha(for button: UIButton, isHidden: Bool) {
+        button.isEnabled = false
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                button.alpha = isHidden ? 0 : 1
+            },
+            completion: { _ in
+                button.isEnabled = true
+            })
+    }
+    
     // TODO: API 연동 시 수정
     private func addNewItem() {
         dataSource = isActivity ? activityList : detailInfoList
         animateButtonImage(to: UIImage(resource: isActivity ? .iconArrowDown : .iconArrowUp), for: detailInfoOpenButton)
+        animateButtonAlpha(for: newActivityFloatingButton, isHidden: !isActivity)
+        
         detailInfoOpenButton.isEnabled = false
 
         var indexPaths = [IndexPath]()

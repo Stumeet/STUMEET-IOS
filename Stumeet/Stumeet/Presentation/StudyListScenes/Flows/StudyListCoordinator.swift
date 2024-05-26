@@ -35,6 +35,7 @@ extension StudyListCoordinator: StudyListNavigation {
     
     func goToStudyMain() {
         let studyMainVC = StudyMainViewController(coordinator: self)
+        studyMainVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(studyMainVC, animated: true)
     }
     
