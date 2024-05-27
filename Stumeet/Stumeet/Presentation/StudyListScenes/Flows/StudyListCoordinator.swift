@@ -13,6 +13,7 @@ protocol StudyListCoordinatorDependencies {
     func makeDetailStudyActivityListVC(coordinator: StudyListNavigation) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: StudyListNavigation) -> DetailActivityPhotoListViewController
+    func makeDetailActivityMemberListVC(coordinator: StudyListNavigation, names: [String]) -> DetailActivityMemberListViewController
 }
 
 protocol StudyListNavigation: AnyObject {
@@ -20,6 +21,7 @@ protocol StudyListNavigation: AnyObject {
     func goToStudyActivityList()
     func goToDetailStudyActivityVC()
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
+    func presentToDetailActivityMemberListVC(names: [String])
     func startCreateActivityCoordinator()
     func dismiss()
 }
@@ -68,6 +70,14 @@ extension StudyListCoordinator: StudyListNavigation {
         flow.parentCoordinator = self
         children.append(flow)
         flow.start()
+    }
+    
+    func presentToDetailActivityMemberListVC(names: [String]) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        
+        let memberListVC = dependencies.makeDetailActivityMemberListVC(coordinator: self, names: names)
+        memberListVC.modalPresentationStyle = .fullScreen
+        lastVC.present(memberListVC, animated: true)
     }
     
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int) {

@@ -14,6 +14,7 @@ final class DetailStudyActivityViewModel: ViewModelType {
     
     struct Input {
         let didSelectedCell: AnyPublisher<IndexPath, Never>
+        let didTapMemeberButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -21,6 +22,7 @@ final class DetailStudyActivityViewModel: ViewModelType {
     struct Output {
         let items: AnyPublisher<[DetailStudyActivitySectionItem], Never>
         let presentToPhotoListVC: AnyPublisher<([String], Int), Never>
+        let presentToMemeberListVC: AnyPublisher<[String], Never>
     }
     
     // MARK: - Properties
@@ -45,9 +47,16 @@ final class DetailStudyActivityViewModel: ViewModelType {
             .flatMap(useCase.setPresentedImage)
             .eraseToAnyPublisher()
         
+        let presentToMemeberListVC = input.didTapMemeberButton
+            .combineLatest(items)
+            .map { $1 }
+            .flatMap(useCase.setPresentedNames)
+            .eraseToAnyPublisher()
+        
         return Output(
             items: items,
-            presentToPhotoListVC: presentToPhotoListVC
+            presentToPhotoListVC: presentToPhotoListVC,
+            presentToMemeberListVC: presentToMemeberListVC
         )
     }
 }

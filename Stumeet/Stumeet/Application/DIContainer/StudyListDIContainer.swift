@@ -93,6 +93,19 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         )
     }
     
+    // MARK: - DetailActivityMemberList
+    
+    func makeDetailActivityMemberListViewModel(names: [String]) -> DetailActivityMemberListViewModel {
+        DetailActivityMemberListViewModel(names: names)
+    }
+    
+    func makeDetailActivityMemberListVC(coordinator: Navigation, names: [String]) -> DetailActivityMemberListViewController {
+        DetailActivityMemberListViewController(
+            coordinator: coordinator,
+            viewModel: makeDetailActivityMemberListViewModel(names: names)
+        )
+    }
+    
     // MARK: - DIContainer
     func makeCreateActivityDIContainer() -> CreateActivityDIContainer {
         let dependencies = CreateActivityDIContainer.Dependencies(provider: nil)

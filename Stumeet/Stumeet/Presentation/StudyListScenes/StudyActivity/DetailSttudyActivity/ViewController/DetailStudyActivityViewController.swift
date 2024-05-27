@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 5/23/24.
 //
 
+import Combine
 import UIKit
 
 final class DetailStudyActivityViewController: BaseViewController {
@@ -28,6 +29,10 @@ final class DetailStudyActivityViewController: BaseViewController {
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     private let coordinator: StudyListNavigation
     private let viewModel: DetailStudyActivityViewModel
+    
+    // MARK: - Subject
+    
+    private let memberButtonTapSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
     
@@ -76,8 +81,8 @@ final class DetailStudyActivityViewController: BaseViewController {
     override func bind() {
         
         let input = DetailStudyActivityViewModel.Input(
-            didSelectedCell: collectionView.didSelectItemPublisher.eraseToAnyPublisher()
-            
+            didSelectedCell: collectionView.didSelectItemPublisher.eraseToAnyPublisher(),
+            didTapMemeberButton: memberButtonTapSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -90,6 +95,11 @@ final class DetailStudyActivityViewController: BaseViewController {
         output.presentToPhotoListVC
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToDetailActivityPhotoListVC)
+            .store(in: &cancellables)
+        
+        output.presentToMemeberListVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToDetailActivityMemberListVC)
             .store(in: &cancellables)
     }
 }
@@ -185,6 +195,8 @@ extension DetailStudyActivityViewController {
                     for: indexPath) as? DetailStudyActivityBottomCell
                 else { return UICollectionViewCell() }
                 
+                cell.memberCountButton.tapPublisher.subscribe(self.memberButtonTapSubject)
+                    .store(in: &self.cancellables)
                 cell.configureCell(item)
                 return cell
             }
