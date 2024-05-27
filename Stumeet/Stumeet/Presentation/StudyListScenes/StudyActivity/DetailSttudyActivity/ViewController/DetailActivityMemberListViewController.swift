@@ -105,9 +105,16 @@ class DetailActivityMemberListViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
-        let input = DetailActivityMemberListViewModel.Input()
+        let input = DetailActivityMemberListViewModel.Input(
+            didTapXButton: xButton.tapPublisher.eraseToAnyPublisher()
+        )
         
         let output = viewModel.transform(input: input)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
+            .store(in: &cancellables)
         
         output.items
             .receive(on: RunLoop.main)

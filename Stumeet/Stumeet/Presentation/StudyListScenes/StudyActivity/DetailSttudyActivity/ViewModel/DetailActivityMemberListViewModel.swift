@@ -13,13 +13,14 @@ final class DetailActivityMemberListViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
-        
+        let didTapXButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
     
     struct Output {
         let items: AnyPublisher<[DetailActivityMemberSectionItem], Never>
+        let dismiss: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -38,8 +39,11 @@ final class DetailActivityMemberListViewModel: ViewModelType {
         
         let items = useCase.setMembers()
         
+        let dismiss = input.didTapXButton.eraseToAnyPublisher()
+        
         return Output(
-            items: items
+            items: items,
+            dismiss: dismiss
         )
     }
 }
