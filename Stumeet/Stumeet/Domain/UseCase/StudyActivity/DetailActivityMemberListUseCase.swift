@@ -10,6 +10,7 @@ import Foundation
 
 protocol DetailActivityMemberListUseCase {
     func setMembers() -> AnyPublisher<[DetailActivityMemberSectionItem], Never>
+    func setMemberCount(members: [DetailActivityMemberSectionItem]) -> AnyPublisher<String?, Never>
 }
 
 final class DefualtDetailActivityMemberListUseCase: DetailActivityMemberListUseCase {
@@ -24,5 +25,9 @@ final class DefualtDetailActivityMemberListUseCase: DetailActivityMemberListUseC
         return repository.fetchMembers()
             .map { $0.map { .memberCell($0) } }
             .eraseToAnyPublisher()
+    }
+    
+    func setMemberCount(members: [DetailActivityMemberSectionItem]) -> AnyPublisher<String?, Never> {
+        return Just(String(members.count)).eraseToAnyPublisher()
     }
 }

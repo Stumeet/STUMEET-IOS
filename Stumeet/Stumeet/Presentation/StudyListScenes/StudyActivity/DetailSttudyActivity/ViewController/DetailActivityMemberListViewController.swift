@@ -120,6 +120,11 @@ class DetailActivityMemberListViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
+        
+        output.memberCount
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: memberCountLabel)
+            .store(in: &cancellables)
     }
 
 }

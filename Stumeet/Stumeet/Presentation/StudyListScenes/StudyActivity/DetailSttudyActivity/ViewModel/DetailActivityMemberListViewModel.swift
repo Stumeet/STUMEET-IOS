@@ -20,6 +20,7 @@ final class DetailActivityMemberListViewModel: ViewModelType {
     
     struct Output {
         let items: AnyPublisher<[DetailActivityMemberSectionItem], Never>
+        let memberCount: AnyPublisher<String?, Never>
         let dismiss: AnyPublisher<Void, Never>
     }
     
@@ -39,10 +40,15 @@ final class DetailActivityMemberListViewModel: ViewModelType {
         
         let items = useCase.setMembers()
         
+        let memberCount = items
+            .flatMap(useCase.setMemberCount)
+            .eraseToAnyPublisher()
+        
         let dismiss = input.didTapXButton.eraseToAnyPublisher()
         
         return Output(
             items: items,
+            memberCount: memberCount,
             dismiss: dismiss
         )
     }
