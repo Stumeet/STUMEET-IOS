@@ -10,36 +10,57 @@ import Foundation
 
 final class DetailActivityPhotoListViewModel: ViewModelType {
     
+    // MARK: - Input
+    
     struct Input {
         let didTapXButton: AnyPublisher<Void, Never>
+        let currentPage: AnyPublisher<Int?, Never>
         let didTapDownLoadButton: AnyPublisher<Void, Never>
     }
     
+    // MARK: - Output
+    
     struct Output {
         let items: AnyPublisher<[DetailActivityPhotoSectionItem], Never>
+        let title: AnyPublisher<String, Never>
+        let firstItem: AnyPublisher<IndexPath, Never>
         let dismiss: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
     
+    private let useCase: DetailActivityPhotoListUseCase
     private let imageURLs: [String]
     private let selectedRow: Int
     
-    init(imageURLs: [String], selectedRow: Int) {
+    // MARK: - Init
+    
+    init(useCase: DetailActivityPhotoListUseCase, imageURLs: [String], selectedRow: Int) {
+        self.useCase = useCase
         self.imageURLs = imageURLs
         self.selectedRow = selectedRow
     }
     
+    // MARK: - Transform
+    
     func transform(input: Input) -> Output {
         
-        let items = Just(imageURLs.map { DetailActivityPhotoSectionItem.photoCell($0) })
+        let items = useCase.setPhotoItems(items: imageURLs)
+        
+        let title = input.currentPage
+            .map { (self.imageURLs, $0, self.selectedRow) }
+            .flatMap(useCase.setTitle)
             .eraseToAnyPublisher()
+        
+        let firstItem = useCase.setFirstItemIndexPath(selectedRow: selectedRow)
         
         let dismiss = input.didTapXButton
             .eraseToAnyPublisher()
         
         return Output(
             items: items,
+            title: title,
+            firstItem: firstItem,
             dismiss: dismiss
         )
     }

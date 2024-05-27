@@ -42,6 +42,10 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         DefaultDetailStudyActivityUseCase(repository: makeDetailsudyActivityRepository())
     }
     
+    func makeDetailActivityPhotoListUseCase() -> DetailActivityPhotoListUseCase {
+        DefualtDetailActivityPhotoListUseCase()
+    }
+    
     // MARK: - StudyList
     
     func makeStudyListVC(coordinator: Navigation) -> StudyListViewController {
@@ -75,7 +79,11 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     // MARK: - DetailActivityPhotoList
     
     func makeDetailActivityPhotoListViewModel(with imageURLs: [String], selectedRow row: Int) -> DetailActivityPhotoListViewModel {
-        DetailActivityPhotoListViewModel(imageURLs: imageURLs, selectedRow: row)
+        DetailActivityPhotoListViewModel(
+            useCase: makeDetailActivityPhotoListUseCase(),
+            imageURLs: imageURLs,
+            selectedRow: row
+        )
     }
     
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: Navigation) -> DetailActivityPhotoListViewController {

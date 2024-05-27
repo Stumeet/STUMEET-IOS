@@ -5,7 +5,7 @@
 //  Created by 정지훈 on 5/25/24.
 //
 
-import Foundation
+import Combine
 import UIKit
 
 final class DetailActivityPhotoListViewController: BaseViewController {
@@ -30,7 +30,7 @@ final class DetailActivityPhotoListViewController: BaseViewController {
     }()
     
     private let titleLabel: UILabel = {
-        UILabel().setLabelProperty(text: "5장 중 1번", font: StumeetFont.captionMedium13.font, color: .gray400)
+        return UILabel().setLabelProperty(text: nil, font: StumeetFont.captionMedium13.font, color: .gray400)
     }()
     
     private let downloadButton: UIButton = {
@@ -53,6 +53,11 @@ final class DetailActivityPhotoListViewController: BaseViewController {
     private let coordinator: StudyListNavigation
     private let viewModel: DetailActivityPhotoListViewModel
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
+    
+    // MARK: - Subject
+    
+    private let currentPageSubject = CurrentValueSubject<Int?, Never>(nil)
+    private let snapshotUpdateSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
     
@@ -121,21 +126,40 @@ final class DetailActivityPhotoListViewController: BaseViewController {
         }
     }
     
+    // MARK: - Bind
+    
     override func bind() {
         configureDatasource()
         
         let input = DetailActivityPhotoListViewModel.Input(
             didTapXButton: xButton.tapPublisher.eraseToAnyPublisher(),
+            currentPage: currentPageSubject.eraseToAnyPublisher(),
             didTapDownLoadButton: downloadButton.tapPublisher.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
         
+        // collectionview binding
         output.items
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
         
+        // title binding
+        output.title
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateTitleLabel)
+            .store(in: &cancellables)
+        
+        // 선택한 이미지로 scroll
+        snapshotUpdateSubject
+            .combineLatest(output.firstItem)
+            .map { ($1, UICollectionView.ScrollPosition.centeredHorizontally, false) }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: collectionView.scrollToItem)
+            .store(in: &cancellables)
+        
+        // dismiss
         output.dismiss
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.dismiss)
@@ -156,7 +180,10 @@ extension DetailActivityPhotoListViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        
+        section.visibleItemsInvalidationHandler = { [weak self] (_, offset, env) in
+            let currentPage = Int(max(0, round(offset.x / env.container.contentSize.width)))
+            self?.currentPageSubject.send(currentPage + 1)
+        }
         let layout = UICollectionViewCompositionalLayout(section: section)
     
         return layout
@@ -176,7 +203,6 @@ extension DetailActivityPhotoListViewController {
                     withReuseIdentifier: DetailActivityPhotoCell.identifier,
                     for: indexPath) as? DetailActivityPhotoCell
                 else { return UICollectionViewCell() }
-                
                 return cell
             }
         })
@@ -187,6 +213,24 @@ extension DetailActivityPhotoListViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
         guard let datasource = self.datasource else { return }
-        datasource.apply(snapshot, animatingDifferences: true)
+        datasource.apply(snapshot, animatingDifferences: true) {
+            self.snapshotUpdateSubject.send()
+        }
+    }
+}
+
+// MARK: - UIUpdate
+
+extension DetailActivityPhotoListViewController {
+    func updateTitleLabel(text: String) {
+        let attributeText = NSMutableAttributedString(string: text)
+        
+        let firstCharacterRange = NSRange(location: 0, length: 1)
+        attributeText.addAttribute(.foregroundColor, value: UIColor.white, range: firstCharacterRange)
+        
+        let sixthCharacterRange = NSRange(location: 5, length: 1)
+        attributeText.addAttribute(.foregroundColor, value: UIColor.white, range: sixthCharacterRange)
+        
+        titleLabel.attributedText = attributeText
     }
 }
