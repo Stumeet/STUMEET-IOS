@@ -19,23 +19,25 @@ final class DetailActivityMemberListViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
-        let items: AnyPublisher<[ActivityMemberSectionItem], Never>
+        let items: AnyPublisher<[DetailActivityMemberSectionItem], Never>
     }
     
     // MARK: - Properties
     
-    private let names: [String]
+    private let useCase: DetailActivityMemberListUseCase
     
     // MARK: - Init
     
-    init(names: [String]) {
-        self.names = names
+    init(useCase: DetailActivityMemberListUseCase) {
+        self.useCase = useCase
     }
-    
+
     // MARK: - Transform
+    
     func transform(input: Input) -> Output {
         
-        let items = Just(names.map { ActivityMemberSectionItem.memberCell($0, false) }).eraseToAnyPublisher()
+        let items = useCase.setMembers()
+        
         return Output(
             items: items
         )

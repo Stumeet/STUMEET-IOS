@@ -22,7 +22,7 @@ final class DetailStudyActivityViewModel: ViewModelType {
     struct Output {
         let items: AnyPublisher<[DetailStudyActivitySectionItem], Never>
         let presentToPhotoListVC: AnyPublisher<([String], Int), Never>
-        let presentToMemeberListVC: AnyPublisher<[String], Never>
+        let presentToMemeberListVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -48,9 +48,6 @@ final class DetailStudyActivityViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let presentToMemeberListVC = input.didTapMemeberButton
-            .combineLatest(items)
-            .map { $1 }
-            .flatMap(useCase.setPresentedNames)
             .eraseToAnyPublisher()
         
         return Output(

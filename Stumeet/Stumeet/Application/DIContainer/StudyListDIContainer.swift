@@ -32,6 +32,10 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         MockDetailStudyActivityRepository()
     }
     
+    func makeDetailActivityMemberRepository() -> DetailActivityMemberListRepository {
+        MockDetailActivityMemberListRepository()
+    }
+    
     // MARK: - UseCase
     
     func makeStudyActivityUseCase() -> StudyActivityUseCase {
@@ -44,6 +48,10 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     
     func makeDetailActivityPhotoListUseCase() -> DetailActivityPhotoListUseCase {
         DefualtDetailActivityPhotoListUseCase()
+    }
+    
+    func makeDetailActivityMemberListUseCase() -> DetailActivityMemberListUseCase {
+        DefualtDetailActivityMemberListUseCase(repository: makeDetailActivityMemberRepository())
     }
     
     // MARK: - StudyList
@@ -95,14 +103,14 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     
     // MARK: - DetailActivityMemberList
     
-    func makeDetailActivityMemberListViewModel(names: [String]) -> DetailActivityMemberListViewModel {
-        DetailActivityMemberListViewModel(names: names)
+    func makeDetailActivityMemberListViewModel() -> DetailActivityMemberListViewModel {
+        DetailActivityMemberListViewModel(useCase: makeDetailActivityMemberListUseCase())
     }
     
-    func makeDetailActivityMemberListVC(coordinator: Navigation, names: [String]) -> DetailActivityMemberListViewController {
+    func makeDetailActivityMemberListVC(coordinator: Navigation) -> DetailActivityMemberListViewController {
         DetailActivityMemberListViewController(
             coordinator: coordinator,
-            viewModel: makeDetailActivityMemberListViewModel(names: names)
+            viewModel: makeDetailActivityMemberListViewModel()
         )
     }
     

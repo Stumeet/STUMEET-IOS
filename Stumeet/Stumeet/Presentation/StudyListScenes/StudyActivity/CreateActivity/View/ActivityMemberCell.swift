@@ -114,10 +114,18 @@ class ActivityMemberCell: UITableViewCell {
         nameLabel.text = name
     }
     
-    func configureDetailMemeberCell(name: String) {
-        nameLabel.text = name
+    func configureDetailMemeberCell(item: ActivityMember) {
+        nameLabel.text = item.name
         stateLabel.isHidden = false
-        stateLabel.text = name
+        stateLabel.text = item.state
+        
+        if item.state == "수행" {
+            stateLabel.backgroundColor = StumeetColor.primary50.color
+            stateLabel.textColor = StumeetColor.primary700.color
+        } else {
+            stateLabel.backgroundColor = StumeetColor.danger50.color
+            stateLabel.textColor = StumeetColor.danger500.color
+        }
     }
     
 }

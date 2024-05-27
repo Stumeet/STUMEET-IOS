@@ -69,6 +69,9 @@
 		CA01B2872C0452DB00A01CEA /* DetailActivityMemberListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */; };
 		CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */; };
 		CA01B28B2C04614300A01CEA /* AcitivtyMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */; };
+		CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */; };
+		CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */; };
+		CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */; };
 		CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */; };
 		CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */; };
 		CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */; };
@@ -260,6 +263,9 @@
 		CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListViewController.swift; sourceTree = "<group>"; };
 		CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListViewModel.swift; sourceTree = "<group>"; };
 		CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcitivtyMember.swift; sourceTree = "<group>"; };
+		CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListUseCase.swift; sourceTree = "<group>"; };
+		CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
+		CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
 		CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewModel.swift; sourceTree = "<group>"; };
 		CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingUseCase.swift; sourceTree = "<group>"; };
 		CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultActivityMemberSettingRepository.swift; sourceTree = "<group>"; };
@@ -1380,6 +1386,7 @@
 				CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */,
 				CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */,
 				CA01B2842C043ED900A01CEA /* DetailActivityPhotoListUseCase.swift */,
+				CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1389,6 +1396,7 @@
 			children = (
 				CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */,
 				CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */,
+				CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */,
 				CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */,
 			);
 			path = StudyActivity;
@@ -1400,6 +1408,7 @@
 				CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */,
 				CA023A592BF75B5500E98103 /* ActivityMemberSettingRepository.swift */,
 				CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */,
+				CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1848,12 +1857,14 @@
 				CA6448582B863BB90090DD84 /* BaseCollectionViewCell.swift in Sources */,
 				CA01B2812C01D28D00A01CEA /* DetailActivityPhotoCell.swift in Sources */,
 				CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */,
+				CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */,
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
 				CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
+				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
 				CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */,
@@ -1885,6 +1896,7 @@
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
+				CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,7 +13,7 @@ protocol StudyListCoordinatorDependencies {
     func makeDetailStudyActivityListVC(coordinator: StudyListNavigation) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: StudyListNavigation) -> DetailActivityPhotoListViewController
-    func makeDetailActivityMemberListVC(coordinator: StudyListNavigation, names: [String]) -> DetailActivityMemberListViewController
+    func makeDetailActivityMemberListVC(coordinator: StudyListNavigation) -> DetailActivityMemberListViewController
 }
 
 protocol StudyListNavigation: AnyObject {
@@ -21,7 +21,7 @@ protocol StudyListNavigation: AnyObject {
     func goToStudyActivityList()
     func goToDetailStudyActivityVC()
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
-    func presentToDetailActivityMemberListVC(names: [String])
+    func presentToDetailActivityMemberListVC()
     func startCreateActivityCoordinator()
     func dismiss()
 }
@@ -72,10 +72,10 @@ extension StudyListCoordinator: StudyListNavigation {
         flow.start()
     }
     
-    func presentToDetailActivityMemberListVC(names: [String]) {
+    func presentToDetailActivityMemberListVC() {
         guard let lastVC = navigationController.viewControllers.last else { return }
         
-        let memberListVC = dependencies.makeDetailActivityMemberListVC(coordinator: self, names: names)
+        let memberListVC = dependencies.makeDetailActivityMemberListVC(coordinator: self)
         memberListVC.modalPresentationStyle = .fullScreen
         lastVC.present(memberListVC, animated: true)
     }

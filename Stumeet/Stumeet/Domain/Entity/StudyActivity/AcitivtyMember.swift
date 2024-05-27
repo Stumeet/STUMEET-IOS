@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ActivityMember {
+struct ActivityMember: Hashable {
     let name: String
     let state: String
 }

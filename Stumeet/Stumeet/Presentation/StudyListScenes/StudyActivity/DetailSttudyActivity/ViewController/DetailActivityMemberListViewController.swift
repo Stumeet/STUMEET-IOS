@@ -10,7 +10,7 @@ import UIKit
 class DetailActivityMemberListViewController: BaseViewController {
 
     typealias Section = ActivityMemberSection
-    typealias SectionItem = ActivityMemberSectionItem
+    typealias SectionItem = DetailActivityMemberSectionItem
     
     // MARK: - UIComponents
     
@@ -122,13 +122,13 @@ extension DetailActivityMemberListViewController {
     private func configureDatasource() {
         datasource = UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .memberCell(let name, _):
+            case .memberCell(let member):
                 guard let cell = tableView.dequeueReusableCell(
                     withIdentifier: ActivityMemberCell.identifier,
                     for: indexPath) as? ActivityMemberCell
                 else { return UITableViewCell() }
                 
-                cell.configureDetailMemeberCell(name: name)
+                cell.configureDetailMemeberCell(item: member)
                 return cell
             }
         })
