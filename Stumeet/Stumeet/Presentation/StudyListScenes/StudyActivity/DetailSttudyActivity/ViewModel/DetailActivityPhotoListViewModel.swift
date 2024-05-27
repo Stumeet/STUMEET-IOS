@@ -24,6 +24,7 @@ final class DetailActivityPhotoListViewModel: ViewModelType {
         let items: AnyPublisher<[DetailActivityPhotoSectionItem], Never>
         let title: AnyPublisher<String, Never>
         let firstItem: AnyPublisher<IndexPath, Never>
+        let checkPermission: AnyPublisher<Int, Never>
         let dismiss: AnyPublisher<Void, Never>
     }
     
@@ -48,11 +49,17 @@ final class DetailActivityPhotoListViewModel: ViewModelType {
         let items = useCase.setPhotoItems(items: imageURLs)
         
         let title = input.currentPage
+            .removeDuplicates()
             .map { (self.imageURLs, $0, self.selectedRow) }
             .flatMap(useCase.setTitle)
             .eraseToAnyPublisher()
         
         let firstItem = useCase.setFirstItemIndexPath(selectedRow: selectedRow)
+        
+        let checkPermission = input.didTapDownLoadButton
+            .zip(input.currentPage)
+            .map { $1 ?? self.selectedRow}
+            .eraseToAnyPublisher()
         
         let dismiss = input.didTapXButton
             .eraseToAnyPublisher()
@@ -61,6 +68,7 @@ final class DetailActivityPhotoListViewModel: ViewModelType {
             items: items,
             title: title,
             firstItem: firstItem,
+            checkPermission: checkPermission,
             dismiss: dismiss
         )
     }

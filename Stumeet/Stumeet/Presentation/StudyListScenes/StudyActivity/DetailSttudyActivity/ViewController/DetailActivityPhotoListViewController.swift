@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import Photos
 
 final class DetailActivityPhotoListViewController: BaseViewController {
     
@@ -159,6 +160,12 @@ final class DetailActivityPhotoListViewController: BaseViewController {
             .sink(receiveValue: collectionView.scrollToItem)
             .store(in: &cancellables)
         
+        output
+            .checkPermission
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: saveImage)
+            .store(in: &cancellables)
+        
         // dismiss
         output.dismiss
             .receive(on: RunLoop.main)
@@ -182,7 +189,7 @@ extension DetailActivityPhotoListViewController {
         section.orthogonalScrollingBehavior = .groupPaging
         section.visibleItemsInvalidationHandler = { [weak self] (_, offset, env) in
             let currentPage = Int(max(0, round(offset.x / env.container.contentSize.width)))
-            self?.currentPageSubject.send(currentPage + 1)
+            self?.currentPageSubject.send(currentPage)
         }
         let layout = UICollectionViewCompositionalLayout(section: section)
     
@@ -222,7 +229,7 @@ extension DetailActivityPhotoListViewController {
 // MARK: - UIUpdate
 
 extension DetailActivityPhotoListViewController {
-    func updateTitleLabel(text: String) {
+    private func updateTitleLabel(text: String) {
         let attributeText = NSMutableAttributedString(string: text)
         
         let firstCharacterRange = NSRange(location: 0, length: 1)
@@ -232,5 +239,18 @@ extension DetailActivityPhotoListViewController {
         attributeText.addAttribute(.foregroundColor, value: UIColor.white, range: sixthCharacterRange)
         
         titleLabel.attributedText = attributeText
+    }
+}
+
+
+// MARK: - Function
+
+extension DetailActivityPhotoListViewController {
+    private func saveImage(page: Int) {
+        let indexPath = IndexPath(row: page, section: 0)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? DetailActivityPhotoCell,
+              let image = cell.imageView.image else { return }
+        
+        UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
     }
 }

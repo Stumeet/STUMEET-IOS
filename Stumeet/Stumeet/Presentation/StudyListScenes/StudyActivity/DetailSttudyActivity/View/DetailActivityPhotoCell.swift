@@ -22,7 +22,7 @@ final class DetailActivityPhotoCell: BaseCollectionViewCell {
         return scrollView
     }()
     
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(resource: .changeProfileCharacter)
         imageView.contentMode = .scaleAspectFit

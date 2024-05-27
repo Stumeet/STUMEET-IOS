@@ -17,11 +17,12 @@ protocol DetailActivityPhotoListUseCase {
 final class DefualtDetailActivityPhotoListUseCase: DetailActivityPhotoListUseCase {
     
     func setPhotoItems(items: [String]) -> AnyPublisher<[DetailActivityPhotoSectionItem], Never> {
-        return Just(items.map { .photoCell($0)} ).eraseToAnyPublisher()
+        return Just(items.map { .photoCell($0) } ).eraseToAnyPublisher()
     }
     
     func setTitle(items: [String], currentPage: Int?, selectedRow: Int) -> AnyPublisher<String, Never> {
-        return Just(String(items.count) + "장 중 \(currentPage ?? selectedRow)번").eraseToAnyPublisher()
+        let page = currentPage == nil ? selectedRow : currentPage! + 1
+        return Just(String(items.count) + "장 중 \(page)번").eraseToAnyPublisher()
     }
     
     func setFirstItemIndexPath(selectedRow: Int) -> AnyPublisher<IndexPath, Never> {
