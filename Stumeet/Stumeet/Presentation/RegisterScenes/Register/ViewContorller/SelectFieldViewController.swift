@@ -97,7 +97,7 @@ class SelectFieldViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureRegisterNavigationBarItems()
+        configureBackButtonTitleNavigationBarItems(title: "프로필 설정")
         configureDatasource()
     }
     
