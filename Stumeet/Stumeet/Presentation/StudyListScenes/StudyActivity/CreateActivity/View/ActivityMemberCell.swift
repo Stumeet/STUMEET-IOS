@@ -38,7 +38,19 @@ class ActivityMemberCell: UITableViewCell {
         return UILabel().setLabelProperty(text: nil, font: StumeetFont.bodyMedium15.font, color: .gray800)
     }()
     
+    private let stateLabel: UILabel = {
+        let label = PaddingLabel()
+        label.setPadding(top: 4, bottom: 4, left: 12, right: 12)
+        label.font = StumeetFont.bodyMedium14.font
+        label.layer.cornerRadius = 12
+        label.layer.masksToBounds = true
+        label.isHidden = true
+        
+        return label
+    }()
+    
     // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpStyle()
@@ -58,7 +70,8 @@ class ActivityMemberCell: UITableViewCell {
         [
             profileImageView,
             nameLabel,
-            checkMarkImageView
+            checkMarkImageView,
+            stateLabel
         ]   .forEach { addSubview($0) }
     }
     
@@ -79,6 +92,11 @@ class ActivityMemberCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(32)
         }
+        
+        stateLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(32)
+        }
     }
     
     // MARK: - Configure
@@ -94,6 +112,20 @@ class ActivityMemberCell: UITableViewCell {
             checkMarkImageView.isHidden = true
         }
         nameLabel.text = name
+    }
+    
+    func configureDetailMemeberCell(item: ActivityMember) {
+        nameLabel.text = item.name
+        stateLabel.isHidden = false
+        stateLabel.text = item.state
+        
+        if item.state == "수행" {
+            stateLabel.backgroundColor = StumeetColor.primary50.color
+            stateLabel.textColor = StumeetColor.primary700.color
+        } else {
+            stateLabel.backgroundColor = StumeetColor.danger50.color
+            stateLabel.textColor = StumeetColor.danger500.color
+        }
     }
     
 }

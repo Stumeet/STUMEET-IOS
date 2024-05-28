@@ -37,8 +37,7 @@ final class TabBarCoordinator: Coordinator {
         let dependencies = StudyListDIContainer.Dependencies(provider: nil)
         let studyListCoordinator = StudyListCoordinator(
             navigationController: studyListNavigationController,
-            dependencies: StudyListDIContainer(dependencies: dependencies),
-            diContainer: AppDIContainer()
+            dependencies: StudyListDIContainer(dependencies: dependencies)
         )
         studyListCoordinator.parentCoordinator = parentCoordinator
         

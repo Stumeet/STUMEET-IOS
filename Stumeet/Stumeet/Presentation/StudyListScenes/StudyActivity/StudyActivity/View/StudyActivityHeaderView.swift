@@ -16,18 +16,6 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
     
     // MARK: - UIComponents
     
-    let xButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "xMark"), for: .normal)
-        
-        return button
-    }()
-    
-    private let topLabel: UILabel = {
-        let label = UILabel().setLabelProperty(text: "활동", font: StumeetFont.titleMedium.font, color: .gray800)
-        return label
-    }()
-    
     let allButton: UIButton = {
         let button = makeHeaderButton(title: "전체")
         button.isSelected = true
@@ -58,23 +46,6 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
         return stackView
     }()
     
-    let sortButton: UIButton = {
-        let button = UIButton()
-        
-        var titleAttr = AttributedString.init("최신순")
-        titleAttr.font = StumeetFont.bodyMedium14.font
-        
-        var config = UIButton.Configuration.filled()
-        config.attributedTitle = titleAttr
-        config.imagePlacement = .trailing
-        config.image = UIImage(systemName: "chevron.down")
-        config.baseBackgroundColor = .white
-        config.baseForegroundColor = StumeetColor.gray300.color
-        button.configuration = config
-        
-        return button
-    }()
-    
     // MARK: - Property
     
     var cancellables = Set<AnyCancellable>()
@@ -99,34 +70,15 @@ class StudyActivityHeaderView: BaseCollectionReusableView {
         ]   .forEach { buttonStackView.addArrangedSubview($0) }
         
         [
-            xButton,
-            topLabel,
-            buttonStackView,
-            sortButton
+            buttonStackView
         ]   .forEach { addSubview($0) }
     }
     
     override func setupConstaints() {
         
-        xButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().inset(12)
-            make.width.height.equalTo(24)
-        }
-        
-        topLabel.snp.makeConstraints { make in
-            make.leading.equalTo(xButton.snp.trailing).offset(24)
-            make.centerY.equalTo(xButton)
-        }
-        
         buttonStackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.top.equalTo(xButton.snp.bottom).offset(28)
-        }
-        
-        sortButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
-            make.centerY.equalTo(buttonStackView)
+            make.top.equalToSuperview().inset(12)
         }
     }
 }

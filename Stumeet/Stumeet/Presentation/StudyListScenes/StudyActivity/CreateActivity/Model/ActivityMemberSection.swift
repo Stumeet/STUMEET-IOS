@@ -16,3 +16,7 @@ enum ActivityMemberSection {
 enum ActivityMemberSectionItem: Hashable {
     case memberCell(String, Bool)
 }
+
+enum DetailActivityMemberSectionItem: Hashable {
+    case memberCell(ActivityMember)
+}
