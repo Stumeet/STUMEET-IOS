@@ -48,8 +48,13 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
         return imageView
     }()
     
-    private let memberCountLabel: UILabel = {
-        return UILabel().setLabelProperty(text: "+2", font: StumeetFont.bodyMedium14.font, color: .gray500)
+    let memberCountButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("+2", for: .normal)
+        button.titleLabel?.font = StumeetFont.bodyMedium14.font
+        button.setTitleColor(StumeetColor.gray500.color, for: .normal)
+        
+        return button
     }()
     
     private var separationLine: UIView = {
@@ -93,7 +98,7 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
             thirdProfileImageView,
             secondProfileImageView,
             firstProfileImageView,
-            memberCountLabel,
+            memberCountButton,
             separationLine,
             startDateTextLabel,
             startDateLabel,
@@ -130,7 +135,7 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
             make.width.height.equalTo(24)
         }
         
-        memberCountLabel.snp.makeConstraints { make in
+        memberCountButton.snp.makeConstraints { make in
             make.leading.equalTo(fourthProfileImageView.snp.trailing).offset(4)
             make.centerY.equalTo(firstProfileImageView)
         }

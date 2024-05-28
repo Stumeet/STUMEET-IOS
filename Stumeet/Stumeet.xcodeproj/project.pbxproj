@@ -57,6 +57,21 @@
 		CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B26C2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift */; };
 		CA01B26F2BFF28BC00A01CEA /* DetailStudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B26E2BFF28BC00A01CEA /* DetailStudyActivitySection.swift */; };
 		CA01B2712BFF294500A01CEA /* DetailStudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */; };
+		CA01B2752C01B36D00A01CEA /* DetailStudyActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2742C01B36D00A01CEA /* DetailStudyActivityViewModel.swift */; };
+		CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */; };
+		CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */; };
+		CA01B27B2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */; };
+		CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */; };
+		CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */; };
+		CA01B2812C01D28D00A01CEA /* DetailActivityPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2802C01D28D00A01CEA /* DetailActivityPhotoCell.swift */; };
+		CA01B2832C01D63F00A01CEA /* DetailActivityPhotoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2822C01D63F00A01CEA /* DetailActivityPhotoSection.swift */; };
+		CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2842C043ED900A01CEA /* DetailActivityPhotoListUseCase.swift */; };
+		CA01B2872C0452DB00A01CEA /* DetailActivityMemberListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */; };
+		CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */; };
+		CA01B28B2C04614300A01CEA /* AcitivtyMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */; };
+		CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */; };
+		CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */; };
+		CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */; };
 		CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */; };
 		CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */; };
 		CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */; };
@@ -236,6 +251,21 @@
 		CA01B26C2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityBottomCell.swift; sourceTree = "<group>"; };
 		CA01B26E2BFF28BC00A01CEA /* DetailStudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivitySection.swift; sourceTree = "<group>"; };
 		CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivity.swift; sourceTree = "<group>"; };
+		CA01B2742C01B36D00A01CEA /* DetailStudyActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityViewModel.swift; sourceTree = "<group>"; };
+		CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityUseCase.swift; sourceTree = "<group>"; };
+		CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListViewController.swift; sourceTree = "<group>"; };
+		CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListViewModel.swift; sourceTree = "<group>"; };
+		CA01B2802C01D28D00A01CEA /* DetailActivityPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoCell.swift; sourceTree = "<group>"; };
+		CA01B2822C01D63F00A01CEA /* DetailActivityPhotoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoSection.swift; sourceTree = "<group>"; };
+		CA01B2842C043ED900A01CEA /* DetailActivityPhotoListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListUseCase.swift; sourceTree = "<group>"; };
+		CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListViewController.swift; sourceTree = "<group>"; };
+		CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListViewModel.swift; sourceTree = "<group>"; };
+		CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcitivtyMember.swift; sourceTree = "<group>"; };
+		CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListUseCase.swift; sourceTree = "<group>"; };
+		CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
+		CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
 		CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewModel.swift; sourceTree = "<group>"; };
 		CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingUseCase.swift; sourceTree = "<group>"; };
 		CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultActivityMemberSettingRepository.swift; sourceTree = "<group>"; };
@@ -693,6 +723,8 @@
 			isa = PBXGroup;
 			children = (
 				CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */,
+				CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */,
+				CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -700,6 +732,10 @@
 		CA01B2632BFF1F7200A01CEA /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CA01B2742C01B36D00A01CEA /* DetailStudyActivityViewModel.swift */,
+				CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */,
+				CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */,
+				CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -710,6 +746,7 @@
 				CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */,
 				CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */,
 				CA01B26C2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift */,
+				CA01B2802C01D28D00A01CEA /* DetailActivityPhotoCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -718,6 +755,7 @@
 			isa = PBXGroup;
 			children = (
 				CA01B26E2BFF28BC00A01CEA /* DetailStudyActivitySection.swift */,
+				CA01B2822C01D63F00A01CEA /* DetailActivityPhotoSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1265,6 +1303,7 @@
 				CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */,
 				CA9958542BB018CB00884615 /* ActivityCategory.swift */,
 				CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */,
+				CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1346,6 +1385,8 @@
 				CA9958562BB055BD00884615 /* ActivityCreateUseCase.swift */,
 				CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */,
 				CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */,
+				CA01B2842C043ED900A01CEA /* DetailActivityPhotoListUseCase.swift */,
+				CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1355,6 +1396,8 @@
 			children = (
 				CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */,
 				CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */,
+				CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */,
+				CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1364,6 +1407,8 @@
 			children = (
 				CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */,
 				CA023A592BF75B5500E98103 /* ActivityMemberSettingRepository.swift */,
+				CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */,
+				CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1714,6 +1759,7 @@
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
 				CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */,
+				CA01B2872C0452DB00A01CEA /* DetailActivityMemberListViewController.swift in Sources */,
 				357D1BAD2BB81B0F0079DCE6 /* LoginRepository.swift in Sources */,
 				357D1B972BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift in Sources */,
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
@@ -1731,7 +1777,9 @@
 				CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */,
 				CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */,
 				CA6448572B863BB90090DD84 /* BaseViewController.swift in Sources */,
+				CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */,
 				CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */,
+				CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */,
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
 				CAF5335C2B9EB7AC00A7B8B2 /* DefualtStartRepository.swift in Sources */,
@@ -1743,9 +1791,13 @@
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
 				CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */,
+				CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */,
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
+				CA01B2752C01B36D00A01CEA /* DetailStudyActivityViewModel.swift in Sources */,
 				CAE62E342BA80BF300AAD44A /* CreateActivityViewController.swift in Sources */,
 				CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */,
+				CA01B27B2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift in Sources */,
+				CA01B2832C01D63F00A01CEA /* DetailActivityPhotoSection.swift in Sources */,
 				CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */,
 				352885F22BB9C79600EFC0F6 /* UserTokenService.swift in Sources */,
 				CAFBF3712B9C319200507047 /* RegisterRequestDTO.swift in Sources */,
@@ -1768,6 +1820,7 @@
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
+				CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */,
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
 				CAF533542B9EAF7D00A7B8B2 /* StartViewModel.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
@@ -1793,6 +1846,7 @@
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
+				CA01B28B2C04614300A01CEA /* AcitivtyMember.swift in Sources */,
 				CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */,
 				CA64483D2B863BB90090DD84 /* SelectFieldViewController.swift in Sources */,
 				CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */,
@@ -1801,19 +1855,23 @@
 				35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */,
 				CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */,
 				CA6448582B863BB90090DD84 /* BaseCollectionViewCell.swift in Sources */,
+				CA01B2812C01D28D00A01CEA /* DetailActivityPhotoCell.swift in Sources */,
 				CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */,
+				CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */,
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
 				CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
+				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
 				CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */,
 				357D1B9A2BB2FDBF0079DCE6 /* BaseTargetType.swift in Sources */,
 				CA6448552B863BB90090DD84 /* StumeetColor.swift in Sources */,
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
+				CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */,
 				CA9AB2142B8C6A480027072E /* StudyActivityViewModel.swift in Sources */,
 				CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */,
 				35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */,
@@ -1824,6 +1882,7 @@
 				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
 				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
+				CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */,
 				353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */,
 				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				357D1BA92BB8119E0079DCE6 /* SessionTokens.swift in Sources */,
@@ -1837,6 +1896,7 @@
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
+				CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2016,6 +2076,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -2048,6 +2109,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

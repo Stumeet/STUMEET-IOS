@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 5/23/24.
 //
 
+import Combine
 import UIKit
 
 final class DetailStudyActivityViewController: BaseViewController {
@@ -27,11 +28,17 @@ final class DetailStudyActivityViewController: BaseViewController {
     
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     private let coordinator: StudyListNavigation
+    private let viewModel: DetailStudyActivityViewModel
+    
+    // MARK: - Subject
+    
+    private let memberButtonTapSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
     
-    init(coordinator: StudyListNavigation) {
+    init(coordinator: StudyListNavigation, viewModel: DetailStudyActivityViewModel) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -46,6 +53,7 @@ final class DetailStudyActivityViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureDatasource()
     }
     
     // MARK: - SetUp
@@ -71,36 +79,28 @@ final class DetailStudyActivityViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
-        configureDatasource()
-        let top = DetailStudyActivityTop(
-            dayLeft: "18일 남음",
-            status: "미제출",
-            profileImageURL: "",
-            name: "홍길동",
-            date: "2024.01.01 23:58",
-            title: "캠스터디 교재 1장 2번까지 풀이",
-            content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고, 풀이 정리 후 정답, 오답 공유 후 질의 응답합니다!")
         
-        let photo1 = DetailStudyActivityPhoto(imageURL: "1")
-        let photo2 = DetailStudyActivityPhoto(imageURL: "2")
-        let photo3 = DetailStudyActivityPhoto(imageURL: "3")
-        let photo4 = DetailStudyActivityPhoto(imageURL: "4")
+        let input = DetailStudyActivityViewModel.Input(
+            didSelectedCell: collectionView.didSelectItemPublisher.eraseToAnyPublisher(),
+            didTapMemeberButton: memberButtonTapSubject.eraseToAnyPublisher()
+        )
         
-        let bottom = DetailStudyActivityBottom(
-            memberImageURL: [""],
-            startDate: "2024. 1. 29(월) 오전 9:00",
-            endDate: "2024. 1. 29(월) 오전 9:00",
-            place: "서울여자대학교 학생누리관 7층")
+        let output = viewModel.transform(input: input)
         
-        let items: [SectionItem] = [
-            .topCell(top),
-            .photoCell(photo1),
-            .photoCell(photo2),
-            .photoCell(photo3),
-            .photoCell(photo4),
-            .bottomCell(bottom)
-        ]
-        updateSnapshot(items: items)
+        output.items
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.presentToPhotoListVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToDetailActivityPhotoListVC)
+            .store(in: &cancellables)
+        
+        output.presentToMemeberListVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToDetailActivityMemberListVC)
+            .store(in: &cancellables)
     }
 }
 
@@ -195,6 +195,8 @@ extension DetailStudyActivityViewController {
                     for: indexPath) as? DetailStudyActivityBottomCell
                 else { return UICollectionViewCell() }
                 
+                cell.memberCountButton.tapPublisher.subscribe(self.memberButtonTapSubject)
+                    .store(in: &self.cancellables)
                 cell.configureCell(item)
                 return cell
             }

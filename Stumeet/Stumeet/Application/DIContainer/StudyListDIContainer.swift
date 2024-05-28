@@ -22,13 +22,36 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     // MARK: - Repository
+    
     func makeStudyActivityRepository() -> StudyActivityRepository {
         DefaultStudyActivityRepository()
     }
     
+    func makeDetailsudyActivityRepository() -> DetailStudyActivityRepository {
+        // MARK: - TODO netwokring 후 Default로 교체
+        MockDetailStudyActivityRepository()
+    }
+    
+    func makeDetailActivityMemberRepository() -> DetailActivityMemberListRepository {
+        MockDetailActivityMemberListRepository()
+    }
+    
     // MARK: - UseCase
+    
     func makeStudyActivityUseCase() -> StudyActivityUseCase {
         DefaultStudyActivityUseCase(repository: makeStudyActivityRepository())
+    }
+    
+    func makeDetailStudyActivityUseCase() -> DetailStudyActivityUseCase {
+        DefaultDetailStudyActivityUseCase(repository: makeDetailsudyActivityRepository())
+    }
+    
+    func makeDetailActivityPhotoListUseCase() -> DetailActivityPhotoListUseCase {
+        DefualtDetailActivityPhotoListUseCase()
+    }
+    
+    func makeDetailActivityMemberListUseCase() -> DetailActivityMemberListUseCase {
+        DefualtDetailActivityMemberListUseCase(repository: makeDetailActivityMemberRepository())
     }
     
     // MARK: - StudyList
@@ -49,8 +72,46 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     // MARK: - DetailStudyActivity
-    func makeDetailStudyActivityListVC(coordinator: any StudyListNavigation) -> DetailStudyActivityViewController {
-        DetailStudyActivityViewController(coordinator: coordinator)
+    
+    func makeDetailStudyActivityViewModel() -> DetailStudyActivityViewModel {
+        DetailStudyActivityViewModel(useCase: makeDetailStudyActivityUseCase())
+    }
+    
+    func makeDetailStudyActivityListVC(coordinator: Navigation) -> DetailStudyActivityViewController {
+        DetailStudyActivityViewController(
+            coordinator: coordinator,
+            viewModel: makeDetailStudyActivityViewModel()
+        )
+    }
+    
+    // MARK: - DetailActivityPhotoList
+    
+    func makeDetailActivityPhotoListViewModel(with imageURLs: [String], selectedRow row: Int) -> DetailActivityPhotoListViewModel {
+        DetailActivityPhotoListViewModel(
+            useCase: makeDetailActivityPhotoListUseCase(),
+            imageURLs: imageURLs,
+            selectedRow: row
+        )
+    }
+    
+    func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: Navigation) -> DetailActivityPhotoListViewController {
+        DetailActivityPhotoListViewController(
+            coordinator: coordinator,
+            viewModel: makeDetailActivityPhotoListViewModel(with: imageURLs, selectedRow: row)
+        )
+    }
+    
+    // MARK: - DetailActivityMemberList
+    
+    func makeDetailActivityMemberListViewModel() -> DetailActivityMemberListViewModel {
+        DetailActivityMemberListViewModel(useCase: makeDetailActivityMemberListUseCase())
+    }
+    
+    func makeDetailActivityMemberListVC(coordinator: Navigation) -> DetailActivityMemberListViewController {
+        DetailActivityMemberListViewController(
+            coordinator: coordinator,
+            viewModel: makeDetailActivityMemberListViewModel()
+        )
     }
     
     // MARK: - DIContainer

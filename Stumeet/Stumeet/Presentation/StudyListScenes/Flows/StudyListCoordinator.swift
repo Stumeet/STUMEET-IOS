@@ -12,13 +12,18 @@ protocol StudyListCoordinatorDependencies {
     func makeStudyActivityListVC(coordinator: StudyListNavigation) -> StudyActivityListViewController
     func makeDetailStudyActivityListVC(coordinator: StudyListNavigation) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
+    func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: StudyListNavigation) -> DetailActivityPhotoListViewController
+    func makeDetailActivityMemberListVC(coordinator: StudyListNavigation) -> DetailActivityMemberListViewController
 }
 
 protocol StudyListNavigation: AnyObject {
     func goToStudyList()
     func goToStudyActivityList()
     func goToDetailStudyActivityVC()
+    func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
+    func presentToDetailActivityMemberListVC()
     func startCreateActivityCoordinator()
+    func dismiss()
 }
 
 final class StudyListCoordinator: Coordinator {
@@ -27,15 +32,12 @@ final class StudyListCoordinator: Coordinator {
     var navigationController: UINavigationController
     
     private let dependencies: StudyListCoordinatorDependencies
-    private let appDIConatiner: AppDIContainer
     
     init(navigationController: UINavigationController,
-         dependencies: StudyListCoordinatorDependencies,
-         diContainer: AppDIContainer
+         dependencies: StudyListCoordinatorDependencies
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
-        self.appDIConatiner = diContainer
     }
     
     func start() {
@@ -68,5 +70,26 @@ extension StudyListCoordinator: StudyListNavigation {
         flow.parentCoordinator = self
         children.append(flow)
         flow.start()
+    }
+    
+    func presentToDetailActivityMemberListVC() {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        
+        let memberListVC = dependencies.makeDetailActivityMemberListVC(coordinator: self)
+        memberListVC.modalPresentationStyle = .fullScreen
+        lastVC.present(memberListVC, animated: true)
+    }
+    
+    func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        
+        let detailActivityPhotoListVC = dependencies.makeDetailActivityPhotoListVC(with: imageURLs, selectedRow: row, coordinator: self)
+        detailActivityPhotoListVC.modalPresentationStyle = .overFullScreen
+        lastVC.present(detailActivityPhotoListVC, animated: true)
+    }
+    
+    func dismiss() {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        lastVC.dismiss(animated: true)
     }
 }
