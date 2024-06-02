@@ -35,7 +35,7 @@ class StudyMainActivityTableViewCell: BaseTableViewCell {
     
     private let registeredNoticeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .iconPinned)
+        imageView.image = UIImage(resource: .StudyGroupMain.iconPinned)
         return imageView
     }()
     

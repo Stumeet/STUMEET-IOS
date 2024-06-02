@@ -18,7 +18,10 @@ extension UINavigationController {
         appearance.configureWithTransparentBackground()
         appearance.backgroundColor = backgroundColor
         appearance.shadowColor = .clear
-        appearance.setBackIndicatorImage(UIImage(resource: .iconNaviBack), transitionMaskImage: UIImage(resource: .iconNaviBack))
+        appearance.setBackIndicatorImage(
+            UIImage(resource: .StudyGroupMain.iconNaviBack),
+            transitionMaskImage: UIImage(resource: .StudyGroupMain.iconNaviBack)
+        )
         
         let backButtonAppearance = UIBarButtonItemAppearance()
         backButtonAppearance.normal.titleTextAttributes = [

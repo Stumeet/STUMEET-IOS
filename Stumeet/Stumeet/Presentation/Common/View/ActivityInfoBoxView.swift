@@ -87,7 +87,7 @@ class ActivityInfoBoxView: UIView {
     
     private let dateImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .iconClock)
+        imageView.image = UIImage(resource: .StudyGroupMain.iconClock)
         return imageView
     }()
     
@@ -107,7 +107,7 @@ class ActivityInfoBoxView: UIView {
     
     private let locationImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .iconMapPin)
+        imageView.image = UIImage(resource: .StudyGroupMain.iconMapPin)
         return imageView
     }()
     
@@ -128,7 +128,7 @@ class ActivityInfoBoxView: UIView {
     
     private let profileInfoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .iconClock)
+        imageView.image = UIImage(resource: .StudyGroupMain.iconClock)
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -244,7 +244,7 @@ class ActivityInfoBoxView: UIView {
         mainSubtitleLabel.text = "이번주 캠 스터디 진행합니다. 참여하시는 분들은 디스코"
         dateLabel.text = "2024.02.00 00:00"
         locationLabel.text = "서울여자대학교"
-        profileInfoImageView.image = UIImage(resource: .testHeaderImg)
+        profileInfoImageView.image = UIImage(resource: .StudyGroupMain.testHeaderImg)
         profileInfoNameLabel.text = "김철수"
         profileInfoDateLabel.text = "2일 전"
     }

@@ -32,7 +32,7 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .iconClose), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.iconClose), for: .normal)
         button.addTarget(self, action: #selector(dismissPopupView), for: .touchUpInside)
         return button
     }()
@@ -97,7 +97,7 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     
     private let copyLinkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .iconLink), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.iconLink), for: .normal)
         button.backgroundColor = StumeetColor.primary50.color
         return button
     }()
@@ -121,7 +121,7 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     
     private let emailButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .iconMail), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.iconMail), for: .normal)
         button.backgroundColor = StumeetColor.primary50.color
         return button
     }()
@@ -144,7 +144,7 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     
     private let kakaoTalkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .iconKakaotalk), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.iconKakaotalk), for: .normal)
         button.backgroundColor = .clear
         return button
     }()

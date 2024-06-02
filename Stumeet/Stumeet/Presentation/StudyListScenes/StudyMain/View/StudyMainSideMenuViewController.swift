@@ -83,14 +83,14 @@ class StudyMainSideMenuViewController: BaseViewController {
     
     private lazy var addMemberButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .usersPlus), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.usersPlus), for: .normal)
         button.addTarget(self, action: #selector(invitationPopupButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var exitStudyGroupButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .doorEnter), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.doorEnter), for: .normal)
         button.addTarget(self, action: #selector(exitPopupButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -191,10 +191,10 @@ class StudyMainSideMenuViewController: BaseViewController {
         // TODO: API 연결 시 수정
         var snapshot = NSDiffableDataSourceSnapshot<StudyMainMenuSection, StudyMainMenu>()
         snapshot.appendSections([.main])
-        snapshot.appendItems([StudyMainMenu(id: 0, title: "공지", symbolImage: UIImage(resource: .pinned)),
-                              StudyMainMenu(id: 1, title: "일정", symbolImage: UIImage(resource: .calendarSmile)),
-                              StudyMainMenu(id: 2, title: "활동", symbolImage: UIImage(resource: .messageChatbot)),
-                              StudyMainMenu(id: 3, title: "멤버", symbolImage: UIImage(resource: .users))])
+        snapshot.appendItems([StudyMainMenu(id: 0, title: "공지", symbolImage: UIImage(resource: .StudyGroupMain.pinned)),
+                              StudyMainMenu(id: 1, title: "일정", symbolImage: UIImage(resource: .StudyGroupMain.calendarSmile)),
+                              StudyMainMenu(id: 2, title: "활동", symbolImage: UIImage(resource: .StudyGroupMain.messageChatbot)),
+                              StudyMainMenu(id: 3, title: "멤버", symbolImage: UIImage(resource: .StudyGroupMain.users))])
         
         guard let datasource = self.menuDataSource else { return }
         datasource.apply(snapshot, animatingDifferences: false)

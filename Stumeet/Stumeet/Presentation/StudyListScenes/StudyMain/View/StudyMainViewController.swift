@@ -19,25 +19,24 @@ class StudyMainViewController: BaseViewController {
     // MARK: - UIComponents
     private lazy var menuOpenButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .iconHamburgerMenu), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.iconHamburgerMenu), for: .normal)
         button.addTarget(self, action: #selector(menuOpenButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    private let floatingContainerVStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        return stackView
-    }()
-    
     private lazy var newActivityFloatingButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .floatingPlus), for: .normal)
-        button.setImage(UIImage(resource: .floatingPlus), for: .disabled)
+        button.setImage(UIImage(resource: .StudyGroupMain.floatingPlus), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.floatingPlus), for: .disabled)
         button.backgroundColor = StumeetColor.primary700.color
         button.setShadow()
         return button
+    }()
+    
+    private lazy var praiseReminderFloatingPopupView: StudyMainPraiseReminderPopupView = {
+        let popupView = StudyMainPraiseReminderPopupView()
+        popupView.delegate = self
+        return popupView
     }()
     
     private let headerView: UIView = {
@@ -48,7 +47,7 @@ class StudyMainViewController: BaseViewController {
     
     private let headerImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .testHeaderImg)
+        imageView.image = UIImage(resource: .StudyGroupMain.testHeaderImg)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -76,7 +75,7 @@ class StudyMainViewController: BaseViewController {
     
     private lazy var detailInfoOpenButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .iconArrowDown), for: .normal)
+        button.setImage(UIImage(resource: .StudyGroupMain.iconArrowDown), for: .normal)
         button.addTarget(self, action: #selector(detailInfoOpenButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -100,6 +99,7 @@ class StudyMainViewController: BaseViewController {
     private weak var coordinator: StudyListNavigation!
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var tableHeaderHeight: CGFloat = (screenWidth * 0.542).rounded() // 디바이스 넓이 * 크기 비율
+    private var constPopupBottom: Constraint!
     // TODO: API 연동 시 수정
     private var dataSource: [StudyMainViewCellStyle] = [.activity]
     private var activityList: [StudyMainViewCellStyle] = [.activity, .activity, .activity, .activity, .activity, .activity]
@@ -128,11 +128,8 @@ class StudyMainViewController: BaseViewController {
     
     override func setupAddView() {
         view.addSubview(tableView)
-        view.addSubview(floatingContainerVStackView)
-        
-        [
-            newActivityFloatingButton
-        ].forEach { floatingContainerVStackView.addArrangedSubview($0) }
+        view.addSubview(newActivityFloatingButton)
+        view.addSubview(praiseReminderFloatingPopupView)
         
         tableView.addSubview(headerView)
         headerView.addSubview(headerImageView)
@@ -143,8 +140,15 @@ class StudyMainViewController: BaseViewController {
     }
     
     override func setupConstaints() {
-        floatingContainerVStackView.snp.makeConstraints {
-            $0.trailing.bottom.equalToSuperview().inset(24)
+        praiseReminderFloatingPopupView.snp.makeConstraints {
+            constPopupBottom = $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10).constraint
+            $0.horizontalEdges.equalToSuperview().inset(24)
+        }
+        
+        newActivityFloatingButton.snp.makeConstraints {
+            $0.trailing.equalTo(praiseReminderFloatingPopupView)
+            $0.bottom.equalTo(praiseReminderFloatingPopupView.snp.top).offset(-16).priority(.high)
+            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(24)
         }
         
         newActivityFloatingButton.snp.makeConstraints {
@@ -161,13 +165,13 @@ class StudyMainViewController: BaseViewController {
         
         sectionHeaderTitleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(24)
-            $0.trailing.greaterThanOrEqualTo(detailInfoOpenButton)
+            $0.trailing.equalTo(detailInfoOpenButton.snp.leading)
             $0.centerY.equalToSuperview()
         }
         
         detailInfoOpenButton.snp.makeConstraints {
-            $0.size.equalTo(24)
-            $0.trailing.equalToSuperview().inset(24)
+            $0.size.equalTo(48)
+            $0.centerX.equalTo(sectionHeaderView.snp.right).inset(36)
             $0.centerY.equalToSuperview()
         }
         
@@ -217,23 +221,24 @@ class StudyMainViewController: BaseViewController {
         })
     }
     
-    private func animateButtonAlpha(for button: UIButton, isHidden: Bool) {
-        button.isEnabled = false
+    private func animateControlAlpha(for control: UIView, isHidden: Bool) {
+        control.isUserInteractionEnabled = false
         UIView.animate(
             withDuration: 0.3,
             animations: {
-                button.alpha = isHidden ? 0 : 1
+                control.alpha = isHidden ? 0 : 1
             },
             completion: { _ in
-                button.isEnabled = true
+                control.isUserInteractionEnabled = true
             })
     }
     
     // TODO: API 연동 시 수정
-    private func addNewItem() {
+    private func reloadTableView() {
         dataSource = isActivity ? activityList : detailInfoList
-        animateButtonImage(to: UIImage(resource: isActivity ? .iconArrowDown : .iconArrowUp), for: detailInfoOpenButton)
-        animateButtonAlpha(for: newActivityFloatingButton, isHidden: !isActivity)
+        animateButtonImage(to: UIImage(resource: isActivity ? .StudyGroupMain.iconArrowDown : .StudyGroupMain.iconArrowUp), for: detailInfoOpenButton)
+        animateControlAlpha(for: newActivityFloatingButton, isHidden: !isActivity)
+        animateControlAlpha(for: praiseReminderFloatingPopupView, isHidden: !isActivity)
         
         detailInfoOpenButton.isEnabled = false
 
@@ -243,7 +248,7 @@ class StudyMainViewController: BaseViewController {
             let indexPath = IndexPath(row: index, section: 0)
             indexPaths.append(indexPath)
         }
-                
+        
         tableView.performBatchUpdates({
             if isActivity {
                 tableView.insertRows(at: indexPaths, with: .bottom)
@@ -267,13 +272,15 @@ class StudyMainViewController: BaseViewController {
     
     // TODO: API 연동 시 수정
     @objc func detailInfoOpenButtonTapped(_ sender: UIButton) {
-        addNewItem()
+        reloadTableView()
     }
 }
 
 extension StudyMainViewController:
     UITableViewDataSource,
-    UITableViewDelegate {
+    UITableViewDelegate,
+    StudyMainPraiseReminderPopupViewDelegate {
+    
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
@@ -347,6 +354,27 @@ extension StudyMainViewController:
             delay: 0.05 * Double(indexPath.row),
             animations: {
                 cell.alpha = 1
+        })
+    }
+    
+    // MARK: - StudyMainPraiseReminderPopupViewDelegate
+    func closeButtonAction() {
+        constPopupBottom.update(inset: -praiseReminderFloatingPopupView.frame.height - view.safeAreaInsets.bottom)
+        
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let self = self else { return }
+            var initialTransform = CATransform3DIdentity
+            initialTransform = CATransform3DScale(initialTransform, 0.1, 0.1, 1)
+            initialTransform = CATransform3DTranslate(
+                initialTransform,
+                0,
+                praiseReminderFloatingPopupView.frame.height + view.safeAreaInsets.bottom,
+                0.3
+            )
+
+            praiseReminderFloatingPopupView.layer.transform = initialTransform
+            praiseReminderFloatingPopupView.alpha = 0
+            view.layoutIfNeeded()
         })
     }
 }
