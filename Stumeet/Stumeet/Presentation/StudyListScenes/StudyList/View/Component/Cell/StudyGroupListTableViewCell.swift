@@ -18,6 +18,12 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         return stackView
     }()
     
+    private let newBadgeView: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.primary700.color
+        return view
+    }()
+    
     private let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -66,10 +72,12 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
     override func setupStyles() {
         selectionStyle = .none
         backgroundColor = .white
+        newBadgeView.layer.cornerRadius = newBadgeView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height / 2
     }
 
     override func setupAddView() {
         contentView.addSubview(rootHStackView)
+        contentView.addSubview(newBadgeView)
         
         [
             thumbnailImageView,
@@ -103,7 +111,12 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         }
 
         thumbnailImageView.snp.makeConstraints {
-            $0.width.height.equalTo(64)
+            $0.size.equalTo(64)
+        }
+        
+        newBadgeView.snp.makeConstraints {
+            $0.size.equalTo(8)
+            $0.top.leading.equalTo(thumbnailImageView)
         }
     }
     
@@ -113,5 +126,6 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         mainDetailsInfoTitleLabel.text = "자바를 자바"
         mainDetailsInfoSubTitleLabel.text = "7"
         mainDetailsPeriodLabel.text = "2023.10.20 ~ 2024.01.10"
+        newBadgeView.isHidden = false
     }
 }

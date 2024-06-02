@@ -647,8 +647,7 @@
 				35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */,
 				35E4EA302BCA878A003A10D4 /* Config(debug).xcconfig */,
 			);
-			name = Configurations;
-			path = ../Configurations;
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 		35E4EA332BCA8D88003A10D4 /* StudyMain */ = {
@@ -665,13 +664,6 @@
 				35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		35E4EA382BCC0C55003A10D4 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		35E4EA3B2BCC2B07003A10D4 /* Component */ = {
@@ -879,7 +871,6 @@
 		CA6447E02B863BB90090DD84 /* StudyListScenes */ = {
 			isa = PBXGroup;
 			children = (
-				35E4EA382BCC0C55003A10D4 /* New Group */,
 				35E4EA332BCA8D88003A10D4 /* StudyMain */,
 				CA6FADDE2B8717A0008BCEF7 /* StudyActivity */,
 				CA6FADDD2B871787008BCEF7 /* StudyList */,

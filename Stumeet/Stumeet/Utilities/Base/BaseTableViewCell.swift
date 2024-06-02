@@ -11,9 +11,9 @@ class BaseTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupStyles()
         setupAddView()
         setupConstaints()
+        setupStyles()
     }
     
     required init?(coder: NSCoder) {
