@@ -17,6 +17,7 @@ final class StudyActivityViewModel: ViewModelType {
         let didTapAllButton: AnyPublisher<Void, Never>
         let didTapGroupButton: AnyPublisher<Void, Never>
         let didTapTaskButton: AnyPublisher<Void, Never>
+        let didTapXButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -70,7 +71,8 @@ final class StudyActivityViewModel: ViewModelType {
         return Output(
             items: items,
             isSelected: isSelected,
-            presentToCreateActivityVC: presentToCreateAcitivityVC)
+            presentToCreateActivityVC: presentToCreateAcitivityVC
+        )
     }
 
 }

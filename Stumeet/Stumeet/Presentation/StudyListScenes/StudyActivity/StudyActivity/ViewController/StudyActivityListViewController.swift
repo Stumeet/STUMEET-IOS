@@ -8,7 +8,7 @@
 import UIKit
 
 class StudyActivityListViewController: BaseViewController {
-
+    
     // MARK: - UIComponents
     
     private let allButton: UIButton = {
@@ -66,6 +66,16 @@ class StudyActivityListViewController: BaseViewController {
         return button
     }()
     
+    private lazy var xButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .xMark).withTintColor(StumeetColor.gray800.color), for: .normal)
+        return button
+    }()
+    
+    private lazy var xBarButton: UIBarButtonItem = {
+        return UIBarButtonItem(customView: xButton)
+    }()
+    
     // MARK: - Properties
     
     private let viewModel: StudyActivityViewModel
@@ -96,7 +106,7 @@ class StudyActivityListViewController: BaseViewController {
     
     override func setupStyles() {
         view.backgroundColor = .white
-        configureXButtonTitleNavigationBarItems(title: "활동")
+        configureXButtonTitleNavigationBarItems(button: xBarButton, title: "활동")
     }
     
     override func setupAddView() {
@@ -138,11 +148,14 @@ class StudyActivityListViewController: BaseViewController {
     
     override func bind() {
         
+        // TODO: - xButton 이벤트 처리
+        
         let input = StudyActivityViewModel.Input(
             didTapCreateButton: floatingButton.tapPublisher,
             didTapAllButton: allButton.tapPublisher,
             didTapGroupButton: groupButton.tapPublisher,
-            didTapTaskButton: taskButton.tapPublisher
+            didTapTaskButton: taskButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)

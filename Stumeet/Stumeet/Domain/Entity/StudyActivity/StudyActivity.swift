@@ -16,6 +16,7 @@ struct Activity: Hashable {
     let image: String?
     let name: String?
     let day: String?
+    let status: String?
 }
 
 extension Activity {
@@ -28,7 +29,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: "김철수",
-            day: "2일 전"),
+            day: "2일 전",
+            status: nil
+        ),
         Activity(
             tag: "과제",
             title: "캠스터디",
@@ -37,7 +40,9 @@ extension Activity {
             place: nil,
             image: nil,
             name: "김철수",
-            day: "2일 전"),
+            day: "2일 전",
+            status: nil
+        ),
         Activity(
             tag: "자유",
             title: "캠스터디",
@@ -46,7 +51,9 @@ extension Activity {
             place: nil,
             image: nil,
             name: "김철수",
-            day: "2일 전"),
+            day: "2일 전",
+            status: nil
+        ),
         Activity(
             tag: "과제",
             title: "캠스터디",
@@ -55,7 +62,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: "김철수",
-            day: "2일 전")
+            day: "2일 전",
+            status: nil
+        )
     ]
     
     static let groupData: [Activity] = [
@@ -67,7 +76,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "시작 전"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디2",
@@ -76,7 +87,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "미참여"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디3",
@@ -85,7 +98,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "인정결석"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디4",
@@ -94,7 +109,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "출석"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디5",
@@ -103,7 +120,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "결석"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디6",
@@ -112,7 +131,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "지각"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디7",
@@ -121,7 +142,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "출석"
+        ),
         Activity(
                 tag: nil,
                 title: "캠스터디8",
@@ -130,7 +153,9 @@ extension Activity {
                 place: "서울여자대학교",
                 image: nil,
                 name: nil,
-                day: nil),
+                day: nil,
+                status: "출석"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디9",
@@ -139,7 +164,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil)
+            day: nil,
+            status: "출석"
+        )
     ]
     
     static let taskData: [Activity] = [
@@ -151,7 +178,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "시작 전"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디2",
@@ -160,7 +189,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "미참여"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디3",
@@ -169,7 +200,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "미수행"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디4",
@@ -178,7 +211,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "수행"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디5",
@@ -187,7 +222,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "미수행"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디6",
@@ -196,7 +233,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "지각제출"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디7",
@@ -205,7 +244,9 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil),
+            day: nil,
+            status: "수행"
+        ),
         Activity(
                 tag: nil,
                 title: "캠스터디8",
@@ -214,7 +255,9 @@ extension Activity {
                 place: "서울여자대학교",
                 image: nil,
                 name: nil,
-                day: nil),
+                day: nil,
+                status: "수행"
+        ),
         Activity(
             tag: nil,
             title: "캠스터디9",
@@ -223,6 +266,8 @@ extension Activity {
             place: "서울여자대학교",
             image: nil,
             name: nil,
-            day: nil)
+            day: nil,
+            status: "수행"
+        )
     ]
 }

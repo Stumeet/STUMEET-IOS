@@ -92,12 +92,10 @@ class StudyActivityAllCell: BaseCollectionViewCell {
         return view
     }()
     
-    private let checkLabel: UILabel = {
+    private let statusLabel: UILabel = {
         let label = PaddingLabel()
         label.setPadding(top: 4, bottom: 4, left: 12, right: 12)
         label.font = StumeetFont.bodyMedium14.font
-        label.textColor = StumeetColor.primaryInfo.color
-        label.backgroundColor = StumeetColor.primary50.color
         label.layer.cornerRadius = 12
         label.layer.masksToBounds = true
         
@@ -236,7 +234,7 @@ extension StudyActivityAllCell {
             timeLabel,
             placeLabel,
             placeImageView,
-            checkLabel
+            statusLabel
         ]   .forEach { addSubview($0) }
     }
     
@@ -267,7 +265,7 @@ extension StudyActivityAllCell {
             make.centerY.equalTo(placeImageView)
         }
         
-        checkLabel.snp.makeConstraints { make in
+        statusLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(22)
             make.trailing.equalToSuperview().inset(24)
         }
@@ -277,10 +275,11 @@ extension StudyActivityAllCell {
         removeAddedViews()
         groupAddView()
         setUpGroupConstraints()
+        updateStatusLabel(status: item.status!)
         
         titleLabel.text = item.title
         timeLabel.text = item.time
-        checkLabel.text = "출석"
+        statusLabel.text = item.status
         placeLabel.text = item.place
         
         if timeImageView.isHidden { timeImageView.isHidden = false }
@@ -293,7 +292,7 @@ extension StudyActivityAllCell {
             titleLabel,
             timeImageView,
             timeLabel,
-            checkLabel
+            statusLabel
         ]   .forEach { addSubview($0) }
     }
     
@@ -313,7 +312,7 @@ extension StudyActivityAllCell {
             make.centerY.equalTo(timeImageView)
         }
         
-        checkLabel.snp.makeConstraints { make in
+        statusLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(22)
             make.trailing.equalToSuperview().inset(24)
         }
@@ -323,10 +322,10 @@ extension StudyActivityAllCell {
         removeAddedViews()
         taskAddView()
         setUpTaskConstraints()
+        updateStatusLabel(status: item.status!)
         
         titleLabel.text = item.title
         timeLabel.text = item.time
-        checkLabel.text = "미수행"
         
         if timeImageView.isHidden { timeImageView.isHidden = false }
     
@@ -341,5 +340,25 @@ extension StudyActivityAllCell {
         for subview in subviews {
             subview.removeFromSuperview()
         }
+    }
+    
+    func updateStatusLabel(status: String) {
+        switch status {
+        case "시작 전", "미참여":
+            statusLabel.textColor = StumeetColor.gray400.color
+            statusLabel.backgroundColor = StumeetColor.gray50.color
+        case "인정결석", "출석":
+            statusLabel.textColor = StumeetColor.primaryInfo.color
+            statusLabel.backgroundColor = StumeetColor.primary50.color
+        case "결석", "미수행":
+            statusLabel.textColor = StumeetColor.danger500.color
+            statusLabel.backgroundColor = StumeetColor.danger50.color
+        case "지각", "지각제출":
+            statusLabel.textColor = StumeetColor.warning500.color
+            statusLabel.backgroundColor = StumeetColor.warning50.color
+        default: break
+        }
+        
+        statusLabel.text = status
     }
 }
