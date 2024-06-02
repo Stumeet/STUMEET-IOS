@@ -14,6 +14,9 @@ final class StudyActivityViewModel: ViewModelType {
     
     struct Input {
         let didTapCreateButton: AnyPublisher<Void, Never>
+        let didTapAllButton: AnyPublisher<Void, Never>
+        let didTapGroupButton: AnyPublisher<Void, Never>
+        let didTapTaskButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -26,15 +29,7 @@ final class StudyActivityViewModel: ViewModelType {
     
     // MARK: - Properties
     
-    let useCase: StudyActivityUseCase
-    private var initialItems: AnyPublisher<[StudyActivityItem], Never> {
-        useCase.getActivityItems(type: .all(nil))
-            .eraseToAnyPublisher()
-    }
-    
-    let didTapAllButton = PassthroughSubject<Void, Never>()
-    let didTapGroupButton = PassthroughSubject<Void, Never>()
-    let didTapTaskButton = PassthroughSubject<Void, Never>()
+    private let useCase: StudyActivityUseCase
     
     // MARK: - Init
     
@@ -46,37 +41,28 @@ final class StudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        // 전체 활동 아이템
-        let allItems = didTapAllButton
-            .flatMap { [weak self] _ -> AnyPublisher<[StudyActivityItem], Never> in
-                guard let self = self else { return Just([]).eraseToAnyPublisher() }
-                return self.useCase.getActivityItems(type: .all(nil))
-            }
+        let initialItems = useCase.getActivityItems(type: .all(nil)).eraseToAnyPublisher()
         
-        // 그룹 활동 아이템
-        let groupItems = didTapGroupButton
-            .flatMap { [weak self] _ -> AnyPublisher<[StudyActivityItem], Never> in
-                guard let self = self else { return Just([]).eraseToAnyPublisher() }
-                return self.useCase.getActivityItems(type: .group(nil))
-            }
+        let allItems = input.didTapAllButton
+            .map { (.all(nil)) }
+            .flatMap(useCase.getActivityItems)
         
-        // 과제 활동 아이템
-        let taskItems = didTapTaskButton
-            .flatMap { [weak self] _ -> AnyPublisher<[StudyActivityItem], Never> in
-                guard let self = self else { return Just([]).eraseToAnyPublisher() }
-                return self.useCase.getActivityItems(type: .task(nil))
-            }
+        let groupItems = input.didTapGroupButton
+            .map { (.group(nil)) }
+            .flatMap(useCase.getActivityItems)
         
-        // 최종 아이템
+        let taskItems = input.didTapTaskButton
+            .map { (.task(nil)) }
+            .flatMap(useCase.getActivityItems)
+        
         let items = Publishers.Merge4(allItems, groupItems, taskItems, initialItems)
             .eraseToAnyPublisher()
         
-        // 버튼 선택 상태
         let isSelected = Publishers.Merge3(
-                didTapAllButton.map { _ in [true, false, false] },
-                didTapGroupButton.map { _ in [false, true, false] },
-                didTapTaskButton.map { _ in [false, false, true] }
-            )
+            input.didTapAllButton.map { _ in [true, false, false] },
+            input.didTapGroupButton.map { _ in [false, true, false] },
+            input.didTapTaskButton.map { _ in [false, false, true] }
+        )
             .eraseToAnyPublisher()
         
         let presentToCreateAcitivityVC = input.didTapCreateButton.eraseToAnyPublisher()

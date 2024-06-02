@@ -72,6 +72,8 @@
 		CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */; };
 		CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */; };
 		CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */; };
+		CA01B2952C05B06800A01CEA /* Config(debug).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CA01B2932C05B06800A01CEA /* Config(debug).xcconfig */; };
+		CA01B2962C05B06800A01CEA /* Config(release).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CA01B2942C05B06800A01CEA /* Config(release).xcconfig */; };
 		CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */; };
 		CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */; };
 		CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */; };
@@ -139,7 +141,6 @@
 		CA64486C2B863CE20090DD84 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA64486B2B863CE20090DD84 /* CombineCocoa */; };
 		CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */; };
 		CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */; };
-		CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */; };
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
@@ -266,6 +267,8 @@
 		CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListUseCase.swift; sourceTree = "<group>"; };
 		CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
 		CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
+		CA01B2932C05B06800A01CEA /* Config(debug).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
+		CA01B2942C05B06800A01CEA /* Config(release).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewModel.swift; sourceTree = "<group>"; };
 		CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingUseCase.swift; sourceTree = "<group>"; };
 		CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultActivityMemberSettingRepository.swift; sourceTree = "<group>"; };
@@ -338,7 +341,6 @@
 		CA64486E2B863DB60090DD84 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityListViewController.swift; sourceTree = "<group>"; };
 		CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityAllCell.swift; sourceTree = "<group>"; };
-		CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityHeaderView.swift; sourceTree = "<group>"; };
 		CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySection.swift; sourceTree = "<group>"; };
 		CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -758,6 +760,15 @@
 				CA01B2822C01D63F00A01CEA /* DetailActivityPhotoSection.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		CA01B2922C05B05100A01CEA /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				CA01B2932C05B06800A01CEA /* Config(debug).xcconfig */,
+				CA01B2942C05B06800A01CEA /* Config(release).xcconfig */,
+			);
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 		CA0A0AE92B918E0A009D4064 /* Register */ = {
@@ -1266,7 +1277,6 @@
 			isa = PBXGroup;
 			children = (
 				CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */,
-				CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1424,6 +1434,7 @@
 		CAD495B92B863B6500AB61D9 = {
 			isa = PBXGroup;
 			children = (
+				CA01B2922C05B05100A01CEA /* Configurations */,
 				CAD495C42B863B6500AB61D9 /* Stumeet */,
 				CAD495DB2B863B6800AB61D9 /* StumeetTests */,
 				CAD495E52B863B6800AB61D9 /* StumeetUITests */,
@@ -1628,8 +1639,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA01B2952C05B06800A01CEA /* Config(debug).xcconfig in Resources */,
 				CA194E902BCA60A50090E97C /* Assets.xcassets in Resources */,
 				CAD495D22B863B6800AB61D9 /* LaunchScreen.storyboard in Resources */,
+				CA01B2962C05B06800A01CEA /* Config(release).xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1861,7 +1874,6 @@
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
-				CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
 				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
@@ -2065,15 +2077,17 @@
 		};
 		CAD495ED2B863B6900AB61D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */;
+			baseConfigurationReference = CA01B2932C05B06800A01CEA /* Config(debug).xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
@@ -2090,6 +2104,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2098,15 +2113,17 @@
 		};
 		CAD495EE2B863B6900AB61D9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */;
+			baseConfigurationReference = CA01B2942C05B06800A01CEA /* Config(release).xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
@@ -2123,6 +2140,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

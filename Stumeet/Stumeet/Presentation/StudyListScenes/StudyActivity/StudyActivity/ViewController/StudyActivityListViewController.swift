@@ -11,13 +11,49 @@ class StudyActivityListViewController: BaseViewController {
 
     // MARK: - UIComponents
     
+    private let allButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("전체", for: .normal)
+        button.setTitleColor(StumeetColor.gray300.color, for: .normal)
+        button.setTitleColor(StumeetColor.primaryInfo.color, for: .selected)
+        button.isSelected = true
+        button.titleLabel?.font = StumeetFont.titleSemibold.font
+        
+        return button
+    }()
+    
+    private let groupButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("모임", for: .normal)
+        button.setTitleColor(StumeetColor.gray300.color, for: .normal)
+        button.setTitleColor(StumeetColor.primaryInfo.color, for: .selected)
+        button.titleLabel?.font = StumeetFont.titleMedium.font
+        button.sizeToFit()
+        return button
+    }()
+    
+    private let taskButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("과제", for: .normal)
+        button.setTitleColor(StumeetColor.gray300.color, for: .normal)
+        button.setTitleColor(StumeetColor.primaryInfo.color, for: .selected)
+        button.titleLabel?.font = StumeetFont.titleMedium.font
+        
+        return button
+    }()
+    
+    private let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        stackView.distribution = .fillProportionally
+        
+        return stackView
+    }()
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createAllLayout(type: .all(nil)))
         collectionView.register(StudyActivityAllCell.self, forCellWithReuseIdentifier: StudyActivityAllCell.identifier)
-        collectionView.register(
-            StudyActivityHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: StudyActivityHeaderView.identifier)
         collectionView.backgroundColor = StumeetColor.primary50.color
         
         return collectionView
@@ -35,10 +71,9 @@ class StudyActivityListViewController: BaseViewController {
     private let viewModel: StudyActivityViewModel
     private let coordinator: StudyListNavigation
     private var datasource: UICollectionViewDiffableDataSource<StudyActivitySection, StudyActivityItem>?
-    // TODO: - HeadrView 제거, subject로 연결
-    private var headerView: StudyActivityHeaderView?
     
     // MARK: - Init
+    
     init(viewModel: StudyActivityViewModel, coordinator: StudyListNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
@@ -66,15 +101,29 @@ class StudyActivityListViewController: BaseViewController {
     
     override func setupAddView() {
         [
+            allButton,
+            groupButton,
+            taskButton
+        ]   .forEach(buttonStackView.addArrangedSubview)
+        
+        [
+            buttonStackView,
             collectionView,
             floatingButton
-        ]   .forEach { view.addSubview($0) }
+        ]   .forEach(view.addSubview)
     }
     
     override func setupConstaints() {
         
-        collectionView.snp.makeConstraints { make in
+        buttonStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(24)
+            make.height.equalTo(56)
+            make.width.equalTo(137)
             make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(buttonStackView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
@@ -90,7 +139,10 @@ class StudyActivityListViewController: BaseViewController {
     override func bind() {
         
         let input = StudyActivityViewModel.Input(
-            didTapCreateButton: floatingButton.tapPublisher
+            didTapCreateButton: floatingButton.tapPublisher,
+            didTapAllButton: allButton.tapPublisher,
+            didTapGroupButton: groupButton.tapPublisher,
+            didTapTaskButton: taskButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -106,45 +158,16 @@ class StudyActivityListViewController: BaseViewController {
         output.items
             .removeDuplicates()
             .receive(on: RunLoop.main)
-            .sink { [weak self] items in
-                guard let self = self,
-                      let datasource = self.datasource else { return }
-                var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivityItem>()
-                snapshot.appendSections([.main])
-                
-                switch items.first {
-                case .all:
-                    self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .all(nil)), animated: false)
-                    self.collectionView.backgroundColor = StumeetColor.primary50.color
-                    
-                case .group:
-                    self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .group(nil)), animated: false)
-                    self.collectionView.backgroundColor = .white
-                    
-                case .task:
-                    self.collectionView.setCollectionViewLayout(self.createAllLayout(type: .task(nil)), animated: false)
-                    self.collectionView.backgroundColor = .white
-                    
-                case .none:
-                    break
-                }
-                self.collectionView.contentOffset = .zero
-                snapshot.appendItems(items, toSection: .main)
-                datasource.apply(snapshot, animatingDifferences: false)
-                
-            }
+            .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
         
         // 버튼 선택 상태 업데이트
         output.isSelected
             .receive(on: RunLoop.main)
-            .sink { [weak self] isSelecteds in
-                self?.headerView?.allButton.isSelected = isSelecteds[0]
-                self?.headerView?.groupButton.isSelected = isSelecteds[1]
-                self?.headerView?.taskButton.isSelected = isSelecteds[2]
-            }
+            .sink(receiveValue: updateSelectedButton)
             .store(in: &cancellables)
         
+        // 활동 생성VC로 present
         output.presentToCreateActivityVC
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.startCreateActivityCoordinator)
@@ -173,29 +196,6 @@ extension StudyActivityListViewController {
             
             return cell
         })
-        
-        datasource?.supplementaryViewProvider = { collectionview, _, indexPath in
-            guard let header = collectionview.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: StudyActivityHeaderView.identifier,
-                for: indexPath) as? StudyActivityHeaderView else { return UICollectionReusableView() }
-            
-            header.allButton.tapPublisher
-                .sink(receiveValue: { [weak self] _ in self?.viewModel.didTapAllButton.send()})
-                .store(in: &header.cancellables)
-            
-            header.taskButton.tapPublisher
-                .sink(receiveValue: { [weak self] _ in self?.viewModel.didTapTaskButton.send()})
-                .store(in: &header.cancellables)
-            
-            header.groupButton.tapPublisher
-                .sink(receiveValue: { [weak self] _ in self?.viewModel.didTapGroupButton.send()})
-                .store(in: &header.cancellables)
-            
-            self.headerView = header
-            
-            return header
-        }
     }
 }
 
@@ -214,15 +214,8 @@ extension StudyActivityListViewController {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(156))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize
-                , elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top)
-            
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0)
-            section.boundarySupplementaryItems = [sectionHeader]
+            section.contentInsets = .init(top: 16, leading: 0, bottom: 0, trailing: 0)
             section.interGroupSpacing = 24
             layout = UICollectionViewCompositionalLayout(section: section)
             
@@ -232,18 +225,54 @@ extension StudyActivityListViewController {
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(91))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-            
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize
-                , elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top)
+
             
             let section = NSCollectionLayoutSection(group: group)
-            section.boundarySupplementaryItems = [sectionHeader]
             
             layout = UICollectionViewCompositionalLayout(section: section)
         }
         return layout
+    }
+}
+
+// MARK: - UIUpdate
+
+extension StudyActivityListViewController {
+    private func updateSnapshot(items: [StudyActivityItem]) {
+        guard let datasource = self.datasource else { return }
+        
+        var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivityItem>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(items, toSection: .main)
+        
+        setCollectionvViewLayout(items: items)
+        datasource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func setCollectionvViewLayout(items: [StudyActivityItem]) {
+        switch items.first {
+        case .all:
+            collectionView.setCollectionViewLayout(createAllLayout(type: .all(nil)), animated: false)
+            collectionView.backgroundColor = StumeetColor.primary50.color
+            
+        case .group:
+            collectionView.setCollectionViewLayout(createAllLayout(type: .group(nil)), animated: false)
+            collectionView.backgroundColor = .white
+            
+        case .task:
+            collectionView.setCollectionViewLayout(createAllLayout(type: .task(nil)), animated: false)
+            collectionView.backgroundColor = .white
+            
+        case .none:
+            break
+        }
+        
+        collectionView.contentOffset = .zero
+    }
+    
+    private func updateSelectedButton(isSelecteds: [Bool]) {
+        allButton.isSelected = isSelecteds[0]
+        groupButton.isSelected = isSelecteds[1]
+        taskButton.isSelected = isSelecteds[2]
     }
 }

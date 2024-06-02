@@ -21,7 +21,7 @@ final class DefaultStudyActivityUseCase: StudyActivityUseCase {
     }
     
     func getActivityItems(type: StudyActivityItem) -> AnyPublisher<[StudyActivityItem], Never> {
-        repository.fetchActivityItems(type: type)
+        return repository.fetchActivityItems(type: type)
     }
     
     
