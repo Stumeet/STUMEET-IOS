@@ -27,11 +27,11 @@ final class CreateActivityViewModel: ViewModelType {
     struct Output {
         let isBeginEditing: AnyPublisher<Bool, Never>
         let isEnableNextButton: AnyPublisher<Bool, Never>
-        let showCategoryStackView: AnyPublisher<Void, Never>
         let selectedCategory: AnyPublisher<ActivityCategory, Never>
         let isShowMaxLengthContentAlert: AnyPublisher<Bool, Never>
         let dismiss: AnyPublisher<Void, Never>
         let navigateToActivitySettingVC: AnyPublisher<Void, Never>
+        let isHiddenCategoryItems: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -59,7 +59,7 @@ final class CreateActivityViewModel: ViewModelType {
         
         let title = input.didChangeTitle
             .compactMap { $0 }
-
+        
         let isEnableNextButton = Publishers.CombineLatest(content, title)
             .flatMap(useCase.setEnableNextButton)
             .eraseToAnyPublisher()
@@ -68,7 +68,12 @@ final class CreateActivityViewModel: ViewModelType {
             .map { _ in true }
             .eraseToAnyPublisher()
         
-        let showCategoryStackView = input.didTapCategoryButton
+        let isHiddenCategoryItems = Publishers.Merge(
+            input.didTapCategoryButton.map { false },
+            input.didTapCategoryItem.map { _ in true })
+            .scan(true) { isHidden, newValue in
+                newValue ? true : !isHidden
+            }
             .eraseToAnyPublisher()
 
         let selectedCategory = currentCategorySubject.eraseToAnyPublisher()
@@ -85,11 +90,11 @@ final class CreateActivityViewModel: ViewModelType {
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
-            showCategoryStackView: showCategoryStackView,
             selectedCategory: selectedCategory,
             isShowMaxLengthContentAlert: isShowAlert,
             dismiss: dismiss,
-            navigateToActivitySettingVC: navigateToActivitySettingVC
+            navigateToActivitySettingVC: navigateToActivitySettingVC,
+            isHiddenCategoryItems: isHiddenCategoryItems
         )
     }
 }

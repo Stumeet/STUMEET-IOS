@@ -22,5 +22,4 @@ final class DefaultCreateActivityUseCase: CreateActivityUseCase {
     func setIsShowMaxLengthAlert(content: String) -> AnyPublisher<Bool, Never> {
         return Just(content.count > 500).eraseToAnyPublisher()
     }
-    
 }

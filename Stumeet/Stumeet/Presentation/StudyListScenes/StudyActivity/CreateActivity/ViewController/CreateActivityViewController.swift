@@ -63,8 +63,11 @@ final class CreateActivityViewController: BaseViewController {
     private lazy var categoryStackViewContainer: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = .white
+        containerView.layer.borderWidth = 2
+        containerView.layer.borderColor = StumeetColor.gray75.color.cgColor
         containerView.layer.cornerRadius = 16
         containerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        containerView.layer.masksToBounds = true
         
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -144,15 +147,14 @@ final class CreateActivityViewController: BaseViewController {
         bottomView.layer.addBorder([.top, .bottom], color: StumeetColor.gray100.color, width: 1)
         
         contentTextView.layer.addBorder([.top], color: StumeetColor.gray100.color, width: 1)
-        
-        categoryButton.configuration?.imagePadding =  269 * categoryButton.frame.width / 380
-        
         categoryStackViewContainer.layer.addBorder([.left, .right, .bottom], color: StumeetColor.gray100.color, width: 1)
     }
     
     override func setupStyles() {
         view.backgroundColor = .white
         noticeSwitch.transform = CGAffineTransform(scaleX: 36 / 51, y: 20 / 31)
+        let buttonWidth = UIScreen.main.bounds.width - 32
+        categoryButton.configuration?.imagePadding =  269 * buttonWidth / 380
     }
     
     override func setupAddView() {
@@ -305,10 +307,10 @@ final class CreateActivityViewController: BaseViewController {
             .store(in: &cancellables)
         
         // 다음 버튼 enable 설정)
-        output.showCategoryStackView
+        output.isHiddenCategoryItems
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.categoryStackViewContainer.isHidden = false
+            .sink { [weak self] isHidden in
+                self?.categoryStackViewContainer.isHidden = isHidden
                 self?.updateCategoryItemTitleColor()
             }
             .store(in: &cancellables)
@@ -317,7 +319,6 @@ final class CreateActivityViewController: BaseViewController {
         output.selectedCategory
             .receive(on: RunLoop.main)
             .sink { [weak self] selectedCategory in
-                self?.categoryStackViewContainer.isHidden = true
                 self?.categoryButton.configuration?.attributedTitle = AttributedString(selectedCategory.title)
             }
             .store(in: &cancellables)
