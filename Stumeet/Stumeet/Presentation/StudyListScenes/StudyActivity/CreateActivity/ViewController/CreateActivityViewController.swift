@@ -36,8 +36,6 @@ final class CreateActivityViewController: BaseViewController {
     private let nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("다음", for: .normal)
-        button.isEnabled = false
-        button.setTitleColor(StumeetColor.gray400.color, for: .disabled)
         button.setTitleColor(StumeetColor.primary700.color, for: .normal)
         
         return button
@@ -293,65 +291,40 @@ final class CreateActivityViewController: BaseViewController {
         output.isBeginEditing
             .filter { $0 }
             .removeDuplicates()
+            .map { _ in }
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.contentTextView.text = ""
-                self?.contentTextView.textColor = .black
-            }
+            .sink(receiveValue: setBeginEditingText)
             .store(in: &cancellables)
         
         // 다음 버튼 enable 설정
         output.isEnableNextButton
             .receive(on: RunLoop.main)
-            .assign(to: \.isEnabled, on: nextButton)
+            .sink(receiveValue: checkNavigateToSettingVC)
             .store(in: &cancellables)
         
-        // 다음 버튼 enable 설정)
+        // 카테고리 스택뷰 업데이트
         output.isHiddenCategoryItems
             .receive(on: RunLoop.main)
-            .sink { [weak self] isHidden in
-                self?.categoryStackViewContainer.isHidden = isHidden
-                self?.updateCategoryItemTitleColor()
-            }
+            .sink(receiveValue: updateCategoryItem)
             .store(in: &cancellables)
         
         // 선택한 category UI binding
         output.selectedCategory
             .receive(on: RunLoop.main)
-            .sink { [weak self] selectedCategory in
-                self?.categoryButton.configuration?.attributedTitle = AttributedString(selectedCategory.title)
-            }
+            .assign(to: \.configuration!.attributedTitle, on: categoryButton)
             .store(in: &cancellables)
         
-        // 500자 이상일 경우 alert 표시
-        output.isShowMaxLengthContentAlert
-            .removeDuplicates()
-            .filter { $0 }
+        // 500자 이상일 경우 SnackBar 표시
+        output.maxLengthText
+            .filter { $0 != "" }
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.contentTextView.text = String(self?.contentTextView.text?.dropLast() ?? "")
-                self?.showAlert(
-                    title: "글자 수 제한",
-                    message: "500자 이하로 써주세요",
-                    buttonTitle1: "확인",
-                    buttonTitle2: nil,
-                    action1: nil,
-                    action2: nil
-                )
-            }
+            .sink(receiveValue: showMaxLengthContentSnackBar)
             .store(in: &cancellables)
         
         // dismiss
         output.dismiss
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] _ in
-                self?.dismiss(animated: true)
-            })
-            .store(in: &cancellables)
-        
-        output.navigateToActivitySettingVC
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.goToStudyActivitySettingVC)
+            .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
     }
 }
@@ -377,7 +350,7 @@ extension CreateActivityViewController {
         return button
     }
     
-    private func updateCategoryItemTitleColor() {
+    private func updateCategoryItem(isHidden: Bool) {
         
         let categoryButtons: [ActivityCategory: UIButton?] = [
             .freedom: freedomButton,
@@ -385,14 +358,59 @@ extension CreateActivityViewController {
             .homework: homeWorkButton
         ]
         
-        let selectedCategory = viewModel.currentCategorySubject.value
-                
-        categoryButtons.forEach { category, button in
-            if category == selectedCategory {
-                button?.configuration?.baseForegroundColor = StumeetColor.primary700.color
-            } else {
-                button?.configuration?.baseForegroundColor = .black
+        categoryStackViewContainer.isHidden = isHidden
+        if isHidden {
+            let selectedCategory = viewModel.currentCategorySubject.value
+            categoryButtons.forEach { category, button in
+                if category == selectedCategory {
+                    button?.configuration?.baseForegroundColor = StumeetColor.primary700.color
+                } else {
+                    button?.configuration?.baseForegroundColor = .black
+                }
             }
         }
+    }
+    
+    private func checkNavigateToSettingVC(isEnable: Bool) {
+        if isEnable { coordinator.goToStudyActivitySettingVC() }
+        else { showSnackBar(text: "! 활동 작성이 완료되지 않았어요.") }
+    }
+    
+    private func showSnackBar(text: String) {
+        let snackBar = SnackBar(frame: .zero, text: text)
+        
+        view.addSubview(snackBar)
+        
+        snackBar.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(self.bottomView.snp.top).offset(-24)
+            make.height.equalTo(74)
+        }
+        
+        snackBar.isHidden = false
+        snackBar.alpha = 0
+
+        UIView.animate(withDuration: 0.3) {
+            snackBar.alpha = 1
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIView.animate(withDuration: 0.3) {
+                    snackBar.alpha = 0
+                } completion: { _ in
+                    snackBar.isHidden = true
+                    snackBar.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    private func showMaxLengthContentSnackBar(text: String) {
+        contentTextView.text = String(contentTextView.text?.dropLast() ?? "")
+        showSnackBar(text: text)
+    }
+    
+    private func setBeginEditingText() {
+        contentTextView.text = ""
+        contentTextView.textColor = StumeetColor.gray800.color
     }
 }

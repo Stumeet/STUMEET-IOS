@@ -160,6 +160,7 @@
 		CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */; };
 		CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */; };
 		CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */; };
+		CAB8E6DC2C0D8B98001034DC /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */; };
 		CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */; };
 		CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */; };
 		CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */; };
@@ -360,6 +361,7 @@
 		CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityRepository.swift; sourceTree = "<group>"; };
 		CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStudyActivityRepository.swift; sourceTree = "<group>"; };
 		CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
+		CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySettingViewModel.swift; sourceTree = "<group>"; };
 		CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarViewController.swift; sourceTree = "<group>"; };
 		CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -1285,6 +1287,7 @@
 				CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */,
 				CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */,
 				CA1C92C72BC91AF700ECF835 /* CalendarView.swift */,
+				CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1823,6 +1826,7 @@
 				CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */,
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
 				CAF533542B9EAF7D00A7B8B2 /* StartViewModel.swift in Sources */,
+				CAB8E6DC2C0D8B98001034DC /* SnackBar.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
 				35C9929D2BA73D04003B0AE7 /* KeychainManager.swift in Sources */,
 				357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */,

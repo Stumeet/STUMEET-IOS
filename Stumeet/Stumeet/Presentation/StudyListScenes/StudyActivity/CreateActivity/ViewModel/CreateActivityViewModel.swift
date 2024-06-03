@@ -27,10 +27,9 @@ final class CreateActivityViewModel: ViewModelType {
     struct Output {
         let isBeginEditing: AnyPublisher<Bool, Never>
         let isEnableNextButton: AnyPublisher<Bool, Never>
-        let selectedCategory: AnyPublisher<ActivityCategory, Never>
-        let isShowMaxLengthContentAlert: AnyPublisher<Bool, Never>
+        let selectedCategory: AnyPublisher<AttributedString?, Never>
+        let maxLengthText: AnyPublisher<String, Never>
         let dismiss: AnyPublisher<Void, Never>
-        let navigateToActivitySettingVC: AnyPublisher<Void, Never>
         let isHiddenCategoryItems: AnyPublisher<Bool, Never>
     }
     
@@ -50,18 +49,29 @@ final class CreateActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let content = input.didChangeContent
-            .compactMap { $0 }
+        let contentSubject = CurrentValueSubject<String, Never>("")
+        let titleSubject = CurrentValueSubject<String, Never>("")
         
-        let isShowAlert = content
-            .flatMap(useCase.setIsShowMaxLengthAlert)
+        input.didChangeContent
+            .compactMap { $0 }
+            .sink(receiveValue: contentSubject.send)
+            .store(in: &cancellables)
+        
+        input.didChangeTitle
+            .compactMap { $0 }
+            .sink(receiveValue: titleSubject.send)
+            .store(in: &cancellables)
+        
+        let maxLengthText = contentSubject
+            .compactMap { $0 }
+            .flatMap(useCase.setMaxLengthText)
             .eraseToAnyPublisher()
         
-        let title = input.didChangeTitle
-            .compactMap { $0 }
+        let didTapNextButton = input.didTapNextButton
         
-        let isEnableNextButton = Publishers.CombineLatest(content, title)
-            .flatMap(useCase.setEnableNextButton)
+        let isEnableNextButton = input.didTapNextButton
+            .map { (contentSubject.value, titleSubject.value) }
+            .flatMap(useCase.setIsEnableNextButton)
             .eraseToAnyPublisher()
         
         let isBeginEditing = input.didBeginEditing
@@ -76,7 +86,11 @@ final class CreateActivityViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
 
-        let selectedCategory = currentCategorySubject.eraseToAnyPublisher()
+        let selectedCategory = currentCategorySubject
+            .map { category -> AttributedString? in
+                return AttributedString(category.title)
+            }
+            .eraseToAnyPublisher()
         
         input.didTapCategoryItem
             .sink(receiveValue: currentCategorySubject.send)
@@ -85,15 +99,12 @@ final class CreateActivityViewModel: ViewModelType {
         let dismiss = input.didTapXButton
             .eraseToAnyPublisher()
         
-        let navigateToActivitySettingVC = input.didTapNextButton.eraseToAnyPublisher()
-        
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
             selectedCategory: selectedCategory,
-            isShowMaxLengthContentAlert: isShowAlert,
+            maxLengthText: maxLengthText,
             dismiss: dismiss,
-            navigateToActivitySettingVC: navigateToActivitySettingVC,
             isHiddenCategoryItems: isHiddenCategoryItems
         )
     }
