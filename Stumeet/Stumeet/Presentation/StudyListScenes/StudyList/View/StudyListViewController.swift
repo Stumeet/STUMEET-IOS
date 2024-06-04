@@ -80,11 +80,16 @@ class StudyListViewController: BaseViewController {
     private func setupRegister() {
         studyGroupTableView.registerCell(StudyGroupListTableViewCell.self)
     }
+    
+    private func setupDelegate() {
+        studyGroupTableView.delegate = self
+    }
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRegister()
+        setupDelegate()
         configureDatasource()
     }
     
@@ -120,7 +125,13 @@ class StudyListViewController: BaseViewController {
     }
 }
 
-extension StudyListViewController {
+extension StudyListViewController:
+    UITableViewDelegate {
+    // MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        coordinator.goToStudyMain()
+    }
+    
     // MARK: - DataSource
     private func configureDatasource() {
         studyGroupDataSource = UITableViewDiffableDataSource(
