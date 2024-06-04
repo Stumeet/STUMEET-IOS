@@ -13,23 +13,22 @@ final class CalendarView: UIView {
 
     // MARK: UIComponent
     
-    private let yearMonthButton: UIButton = {
+    let yearMonthButton: UIButton = {
         let button = UIButton()
-        button.setTitle("2024년4월", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = StumeetFont.bodyMedium15.font
         
         return button
     }()
     
-    private let leftButton: UIButton = {
+    let backMonthButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "calendarLeft"), for: .normal)
         
         return button
     }()
     
-    private let rightButton: UIButton = {
+    let nextMonthButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "calendarRight"), for: .normal)
         
@@ -39,7 +38,7 @@ final class CalendarView: UIView {
     lazy var calendarCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.register(CalendarCell.self, forCellWithReuseIdentifier: CalendarCell.identifier)
-        collectionView.isScrollEnabled = false
+        collectionView.showsVerticalScrollIndicator = false
         
         return collectionView
     }()
@@ -62,8 +61,8 @@ final class CalendarView: UIView {
     func setupAddView() {
         [
             yearMonthButton,
-            leftButton,
-            rightButton,
+            backMonthButton,
+            nextMonthButton,
             calendarCollectionView
         ]   .forEach { addSubview($0) }
     }
@@ -76,14 +75,14 @@ final class CalendarView: UIView {
             make.height.equalTo(19)
         }
         
-        rightButton.snp.makeConstraints { make in
+        nextMonthButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.trailing.equalToSuperview().inset(16)
         }
         
-        leftButton.snp.makeConstraints { make in
+        backMonthButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.trailing.equalTo(rightButton.snp.leading).offset(-16)
+            make.trailing.equalTo(nextMonthButton.snp.leading).offset(-16)
         }
         
         calendarCollectionView.snp.makeConstraints { make in
@@ -126,5 +125,19 @@ extension CalendarView {
                 return nil
             }
         }
+    }
+}
+
+// MARK: - UIUpdate
+
+extension CalendarView {
+    
+    func setEnableBackMonthButton(isEnable: Bool) {
+        backMonthButton.tintColor = isEnable ? StumeetColor.gray300.color : StumeetColor.gray800.color
+        backMonthButton.isEnabled = isEnable
+    }
+    
+    func setYearMonthButtonTitle(title: String) {
+        yearMonthButton.setTitle(title, for: .normal)
     }
 }

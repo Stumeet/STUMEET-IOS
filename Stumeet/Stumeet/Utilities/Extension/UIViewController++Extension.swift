@@ -9,8 +9,8 @@ import UIKit
 
 extension UIViewController {
     
-    /// RegisterScene에 사용되는 navgationBar 생성
-    func configureRegisterNavigationBarItems() {
+    /// BackButton, Title navgationBar 생성
+    func configureBackButtonTitleNavigationBarItems(title: String) {
         let backButton = UIBarButtonItem(
             image: UIImage(named: "backButton"),
             style: .plain,
@@ -20,7 +20,7 @@ extension UIViewController {
         backButton.tintColor = .black
         
         let titleLabel = UILabel().setLabelProperty(
-            text: "프로필 설정",
+            text: title,
             font: StumeetFont.titleMedium.font,
             color: nil
         )
@@ -29,6 +29,27 @@ extension UIViewController {
         
         self.navigationItem.leftBarButtonItems = [backButton, navigationTitleItem]
     }
+    
+    func configureXButtonTitleNavigationBarItems(title: String) {
+        let xButton = UIBarButtonItem(
+            image: UIImage(named: "xMark"),
+            style: .plain,
+            target: self,
+            action: nil
+        )
+        xButton.tintColor = .black
+        
+        let titleLabel = UILabel().setLabelProperty(
+            text: title,
+            font: StumeetFont.titleMedium.font,
+            color: nil
+        )
+        
+        let navigationTitleItem = UIBarButtonItem(customView: titleLabel)
+        
+        self.navigationItem.leftBarButtonItems = [xButton, navigationTitleItem]
+    }
+    
     
     @objc func popViewController() {
         navigationController?.popViewController(animated: true)
