@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tabler_calendar-smile.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

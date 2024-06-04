@@ -6,8 +6,8 @@ target 'Stumeet' do
   use_frameworks!
 
   pod "SwiftLint"
-
-  # Pods for Stumeet
+  
+  pod 'LookinServer', :configurations => ['Debug']
 
   target 'StumeetTests' do
     inherit! :search_paths
