@@ -37,11 +37,11 @@ class StudyListViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private weak var coordinator: StudyListCoordinator!
+    private weak var coordinator: StudyListNavigation!
     private var studyGroupDataSource: UITableViewDiffableDataSource<StudyGroupSection, StudyGroup>?
     
     // MARK: - Init
-    init(coordinator: StudyListCoordinator) {
+    init(coordinator: StudyListNavigation) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
