@@ -71,6 +71,31 @@
 		35EF30092C03926F00F86052 /* StudyMainInvitationPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF30082C03926F00F86052 /* StudyMainInvitationPopupViewController.swift */; };
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
+		CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */; };
+		CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */; };
+		CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */; };
+		CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B26C2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift */; };
+		CA01B26F2BFF28BC00A01CEA /* DetailStudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B26E2BFF28BC00A01CEA /* DetailStudyActivitySection.swift */; };
+		CA01B2712BFF294500A01CEA /* DetailStudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */; };
+		CA01B2752C01B36D00A01CEA /* DetailStudyActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2742C01B36D00A01CEA /* DetailStudyActivityViewModel.swift */; };
+		CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */; };
+		CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */; };
+		CA01B27B2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */; };
+		CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */; };
+		CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */; };
+		CA01B2812C01D28D00A01CEA /* DetailActivityPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2802C01D28D00A01CEA /* DetailActivityPhotoCell.swift */; };
+		CA01B2832C01D63F00A01CEA /* DetailActivityPhotoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2822C01D63F00A01CEA /* DetailActivityPhotoSection.swift */; };
+		CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2842C043ED900A01CEA /* DetailActivityPhotoListUseCase.swift */; };
+		CA01B2872C0452DB00A01CEA /* DetailActivityMemberListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */; };
+		CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */; };
+		CA01B28B2C04614300A01CEA /* AcitivtyMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */; };
+		CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */; };
+		CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */; };
+		CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */; };
+		CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */; };
+		CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */; };
+		CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */; };
+		CA023A5A2BF75B5500E98103 /* ActivityMemberSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA023A592BF75B5500E98103 /* ActivityMemberSettingRepository.swift */; };
 		CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */; };
 		CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEC2B918F99009D4064 /* NicknameRepository.swift */; };
 		CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */; };
@@ -78,7 +103,7 @@
 		CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */; };
 		CA194E902BCA60A50090E97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA194E912BCA619C0090E97C /* RegionSection.swift */; };
-		CA1C92C62BC91A0200ECF835 /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */; };
+		CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */; };
 		CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C72BC91AF700ECF835 /* CalendarView.swift */; };
 		CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */; };
 		CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */; };
@@ -132,13 +157,19 @@
 		CA6448662B863CCB0090DD84 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448652B863CCB0090DD84 /* Moya */; };
 		CA6448692B863CD90090DD84 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448682B863CD90090DD84 /* SnapKit */; };
 		CA64486C2B863CE20090DD84 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA64486B2B863CE20090DD84 /* CombineCocoa */; };
-		CA6FADE22B8717C6008BCEF7 /* StudyActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */; };
+		CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */; };
 		CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */; };
 		CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */; };
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
+		CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */; };
+		CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */; };
+		CA8062F72BF20089009BE351 /* ActivityMemberSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */; };
 		CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */; };
+		CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */; };
+		CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */; };
+		CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */; };
 		CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */; };
 		CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958522BB010C000884615 /* UITextView++Extension.swift */; };
 		CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958542BB018CB00884615 /* ActivityCategory.swift */; };
@@ -148,6 +179,7 @@
 		CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */; };
 		CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */; };
 		CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */; };
+		CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */; };
 		CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */; };
 		CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */; };
 		CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */; };
@@ -253,13 +285,38 @@
 		7FCB7D7075B1E5E75906578A /* Pods-Stumeet-StumeetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet-StumeetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet-StumeetUITests/Pods-Stumeet-StumeetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
+		CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityViewController.swift; sourceTree = "<group>"; };
+		CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityTopCell.swift; sourceTree = "<group>"; };
+		CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityPhotoCell.swift; sourceTree = "<group>"; };
+		CA01B26C2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityBottomCell.swift; sourceTree = "<group>"; };
+		CA01B26E2BFF28BC00A01CEA /* DetailStudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivitySection.swift; sourceTree = "<group>"; };
+		CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivity.swift; sourceTree = "<group>"; };
+		CA01B2742C01B36D00A01CEA /* DetailStudyActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityViewModel.swift; sourceTree = "<group>"; };
+		CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityUseCase.swift; sourceTree = "<group>"; };
+		CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListViewController.swift; sourceTree = "<group>"; };
+		CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListViewModel.swift; sourceTree = "<group>"; };
+		CA01B2802C01D28D00A01CEA /* DetailActivityPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoCell.swift; sourceTree = "<group>"; };
+		CA01B2822C01D63F00A01CEA /* DetailActivityPhotoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoSection.swift; sourceTree = "<group>"; };
+		CA01B2842C043ED900A01CEA /* DetailActivityPhotoListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityPhotoListUseCase.swift; sourceTree = "<group>"; };
+		CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListViewController.swift; sourceTree = "<group>"; };
+		CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListViewModel.swift; sourceTree = "<group>"; };
+		CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcitivtyMember.swift; sourceTree = "<group>"; };
+		CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListUseCase.swift; sourceTree = "<group>"; };
+		CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
+		CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailActivityMemberListRepository.swift; sourceTree = "<group>"; };
+		CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewModel.swift; sourceTree = "<group>"; };
+		CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingUseCase.swift; sourceTree = "<group>"; };
+		CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultActivityMemberSettingRepository.swift; sourceTree = "<group>"; };
+		CA023A592BF75B5500E98103 /* ActivityMemberSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingRepository.swift; sourceTree = "<group>"; };
 		CA0A0AEA2B918E27009D4064 /* NicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameUseCase.swift; sourceTree = "<group>"; };
 		CA0A0AEC2B918F99009D4064 /* NicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRepository.swift; sourceTree = "<group>"; };
 		CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNicknameRepository.swift; sourceTree = "<group>"; };
 		CA0A0AF02B919341009D4064 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
 		CA194E912BCA619C0090E97C /* RegionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSection.swift; sourceTree = "<group>"; };
-		CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
+		CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
 		CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSection.swift; sourceTree = "<group>"; };
@@ -319,14 +376,20 @@
 		CA6448242B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA6448262B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA64486E2B863DB60090DD84 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityViewController.swift; sourceTree = "<group>"; };
+		CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityListViewController.swift; sourceTree = "<group>"; };
 		CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityAllCell.swift; sourceTree = "<group>"; };
 		CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityHeaderView.swift; sourceTree = "<group>"; };
 		CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySection.swift; sourceTree = "<group>"; };
 		CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewController.swift; sourceTree = "<group>"; };
+		CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberCell.swift; sourceTree = "<group>"; };
+		CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSection.swift; sourceTree = "<group>"; };
 		CA86DC462B8DCBF20044DB6C /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivity.swift; sourceTree = "<group>"; };
+		CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityDIContainer.swift; sourceTree = "<group>"; };
+		CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityCoordinator.swift; sourceTree = "<group>"; };
+		CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListDIContainer.swift; sourceTree = "<group>"; };
 		CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityViewModel.swift; sourceTree = "<group>"; };
 		CA9958522BB010C000884615 /* UITextView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView++Extension.swift"; sourceTree = "<group>"; };
 		CA9958542BB018CB00884615 /* ActivityCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCategory.swift; sourceTree = "<group>"; };
@@ -336,6 +399,7 @@
 		CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityUseCase.swift; sourceTree = "<group>"; };
 		CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityRepository.swift; sourceTree = "<group>"; };
 		CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySettingViewModel.swift; sourceTree = "<group>"; };
 		CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarViewController.swift; sourceTree = "<group>"; };
 		CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -449,6 +513,8 @@
 				353393162BC2947E0021FDF9 /* AppDIContainer.swift */,
 				353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */,
 				3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */,
+				CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */,
+				CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -745,6 +811,58 @@
 				2F6921DA1FDADA19D041AFA6 /* Pods-StumeetTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		CA01B2612BFF1F5200A01CEA /* DetailSttudyActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CA01B2652BFF1F7E00A01CEA /* Model */,
+				CA01B2642BFF1F7900A01CEA /* View */,
+				CA01B2632BFF1F7200A01CEA /* ViewModel */,
+				CA01B2622BFF1F6600A01CEA /* ViewController */,
+			);
+			path = DetailSttudyActivity;
+			sourceTree = "<group>";
+		};
+		CA01B2622BFF1F6600A01CEA /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */,
+				CA01B27C2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift */,
+				CA01B2862C0452DB00A01CEA /* DetailActivityMemberListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA01B2632BFF1F7200A01CEA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CA01B2742C01B36D00A01CEA /* DetailStudyActivityViewModel.swift */,
+				CA01B27E2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift */,
+				CA01B2882C04535200A01CEA /* DetailActivityMemberListViewModel.swift */,
+				CA01B2762C01B3B600A01CEA /* DetailStudyActivityUseCase.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CA01B2642BFF1F7900A01CEA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */,
+				CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */,
+				CA01B26C2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift */,
+				CA01B2802C01D28D00A01CEA /* DetailActivityPhotoCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CA01B2652BFF1F7E00A01CEA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA01B26E2BFF28BC00A01CEA /* DetailStudyActivitySection.swift */,
+				CA01B2822C01D63F00A01CEA /* DetailActivityPhotoSection.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		CA0A0AE92B918E0A009D4064 /* Register */ = {
@@ -1234,10 +1352,9 @@
 		CA6FADDE2B8717A0008BCEF7 /* StudyActivity */ = {
 			isa = PBXGroup;
 			children = (
-				CA6FADEA2B8723ED008BCEF7 /* Model */,
-				CA6FADE32B871AE2008BCEF7 /* View */,
-				CA6FADE02B8717B4008BCEF7 /* ViewModel */,
-				CA6FADDF2B8717AD008BCEF7 /* ViewController */,
+				CA01B2612BFF1F5200A01CEA /* DetailSttudyActivity */,
+				CA98F6B22BEE0BC900C36772 /* StudyActivity */,
+				CA98F6B12BEE0BB900C36772 /* CreateActivity */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1245,11 +1362,7 @@
 		CA6FADDF2B8717AD008BCEF7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CA6FADE12B8717C6008BCEF7 /* StudyActivityViewController.swift */,
-				CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */,
-				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
-				CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */,
-				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
+				CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1258,8 +1371,6 @@
 			isa = PBXGroup;
 			children = (
 				CA9AB2132B8C6A480027072E /* StudyActivityViewModel.swift */,
-				CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */,
-				CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1285,7 +1396,7 @@
 			isa = PBXGroup;
 			children = (
 				CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */,
-				CA1C92C52BC91A0200ECF835 /* CalendarViewCell.swift */,
+				CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */,
 				CA1C92C72BC91AF700ECF835 /* CalendarView.swift */,
 				3562163C2C0208B100CAB23F /* ActivityInfoBoxView.swift */,
 				35EF30022C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift */,
@@ -1293,13 +1404,93 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		CA8062F52BF2006E009BE351 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CA86DC442B8DCBC40044DB6C /* StudyActivity */ = {
 			isa = PBXGroup;
 			children = (
 				CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */,
 				CA9958542BB018CB00884615 /* ActivityCategory.swift */,
+				CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */,
+				CA01B28A2C04614300A01CEA /* AcitivtyMember.swift */,
 			);
 			path = StudyActivity;
+			sourceTree = "<group>";
+		};
+		CA98F6AE2BEE0ACF00C36772 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		CA98F6B12BEE0BB900C36772 /* CreateActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CA8062F52BF2006E009BE351 /* Model */,
+				CA98F6AE2BEE0ACF00C36772 /* Flow */,
+				CA98F6B82BEE0C0400C36772 /* View */,
+				CA98F6B72BEE0BFF00C36772 /* ViewModel */,
+				CA98F6B62BEE0BF700C36772 /* ViewController */,
+			);
+			path = CreateActivity;
+			sourceTree = "<group>";
+		};
+		CA98F6B22BEE0BC900C36772 /* StudyActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CA98F6B32BEE0BD700C36772 /* Flow */,
+				CA6FADEA2B8723ED008BCEF7 /* Model */,
+				CA6FADE32B871AE2008BCEF7 /* View */,
+				CA6FADE02B8717B4008BCEF7 /* ViewModel */,
+				CA6FADDF2B8717AD008BCEF7 /* ViewController */,
+			);
+			path = StudyActivity;
+			sourceTree = "<group>";
+		};
+		CA98F6B32BEE0BD700C36772 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		CA98F6B62BEE0BF700C36772 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CAE62E332BA80BF300AAD44A /* CreateActivityViewController.swift */,
+				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
+				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
+				CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		CA98F6B72BEE0BFF00C36772 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */,
+				CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */,
+				CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */,
+				CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CA98F6B82BEE0C0400C36772 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */,
+				CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		CA9AB2182B8C7B890027072E /* StudyActivity */ = {
@@ -1308,6 +1499,9 @@
 				CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */,
 				CA9958562BB055BD00884615 /* ActivityCreateUseCase.swift */,
 				CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */,
+				CA023A552BF75B1400E98103 /* ActivityMemberSettingUseCase.swift */,
+				CA01B2842C043ED900A01CEA /* DetailActivityPhotoListUseCase.swift */,
+				CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1316,6 +1510,9 @@
 			isa = PBXGroup;
 			children = (
 				CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */,
+				CA023A572BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift */,
+				CA01B2902C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift */,
+				CA01B27A2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1324,6 +1521,9 @@
 			isa = PBXGroup;
 			children = (
 				CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */,
+				CA023A592BF75B5500E98103 /* ActivityMemberSettingRepository.swift */,
+				CA01B2782C01B4D100A01CEA /* DetailStudyActivityRepository.swift */,
+				CA01B28E2C0465B500A01CEA /* DetailActivityMemberListRepository.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -1698,6 +1898,7 @@
 				35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */,
 				CA6448432B863BB90090DD84 /* Region.swift in Sources */,
 				355F51EB2BFE1C4600782D17 /* UINavigationController ++Extension.swift in Sources */,
+				CA01B26F2BFF28BC00A01CEA /* DetailStudyActivitySection.swift in Sources */,
 				CAF533512B9DA6EC00A7B8B2 /* FadeOutAnimator.swift in Sources */,
 				352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */,
 				CAF533582B9EB6D000A7B8B2 /* StartRepository.swift in Sources */,
@@ -1709,14 +1910,18 @@
 				CA6448332B863BB90090DD84 /* SelectFieldUseCase.swift in Sources */,
 				352885EF2BB9BA8300EFC0F6 /* AuthInterceptor.swift in Sources */,
 				CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */,
+				CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
 				CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */,
+				CA01B2872C0452DB00A01CEA /* DetailActivityMemberListViewController.swift in Sources */,
 				357D1BAD2BB81B0F0079DCE6 /* LoginRepository.swift in Sources */,
 				357D1B972BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift in Sources */,
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
+				CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
 				CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */,
+				CA01B2712BFF294500A01CEA /* DetailStudyActivity.swift in Sources */,
 				3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */,
 				357D1BA32BB7E68E0079DCE6 /* SessionTokensDTO.swift in Sources */,
 				355F51EF2BFE309B00782D17 /* UITabBarController++Extension.swift in Sources */,
@@ -1724,13 +1929,18 @@
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				356216452C02420100CAB23F /* UICollectionView++Extension.swift in Sources */,
+				CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
+				CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */,
 				CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */,
 				CA6448572B863BB90090DD84 /* BaseViewController.swift in Sources */,
+				CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */,
 				CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */,
+				CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */,
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
 				CAF5335C2B9EB7AC00A7B8B2 /* DefualtStartRepository.swift in Sources */,
+				CA8062F72BF20089009BE351 /* ActivityMemberSection.swift in Sources */,
 				CA64483B2B863BB90090DD84 /* SelecteFieldViewModel.swift in Sources */,
 				CA64484A2B863BB90090DD84 /* ViewModelType.swift in Sources */,
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
@@ -1738,33 +1948,41 @@
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
 				CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */,
+				CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */,
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
+				CA01B2752C01B36D00A01CEA /* DetailStudyActivityViewModel.swift in Sources */,
 				CAE62E342BA80BF300AAD44A /* CreateActivityViewController.swift in Sources */,
 				355F51ED2BFE25BD00782D17 /* UIColor++Extension.swift in Sources */,
 				CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */,
+				CA01B27B2C01B52300A01CEA /* DefaultDetailStudyActivityRepository.swift in Sources */,
+				CA01B2832C01D63F00A01CEA /* DetailActivityPhotoSection.swift in Sources */,
 				CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */,
 				352885F22BB9C79600EFC0F6 /* UserTokenService.swift in Sources */,
 				CAFBF3712B9C319200507047 /* RegisterRequestDTO.swift in Sources */,
 				CAF533562B9EB5EE00A7B8B2 /* StartUseCase.swift in Sources */,
+				CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
 				357D1B8A2BB07BA20079DCE6 /* StudyListCoordinator.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
 				3562163F2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift in Sources */,
+				CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */,
 				35C992972BA341FB003B0AE7 /* LoginService.swift in Sources */,
 				3587F02E2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift in Sources */,
 				CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */,
 				CA6448502B863BB90090DD84 /* UILabel++Extension.swift in Sources */,
-				CA1C92C62BC91A0200ECF835 /* CalendarViewCell.swift in Sources */,
+				CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */,
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
+				CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */,
 				352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
-				CA6FADE22B8717C6008BCEF7 /* StudyActivityViewController.swift in Sources */,
 				355F51DD2BF89F9800782D17 /* StudyMainSideMenuViewController.swift in Sources */,
+				CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */,
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
 				35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */,
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
+				CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */,
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
 				CAF533542B9EAF7D00A7B8B2 /* StartViewModel.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
@@ -1777,9 +1995,11 @@
 				35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
 				CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */,
+				CA023A5A2BF75B5500E98103 /* ActivityMemberSettingRepository.swift in Sources */,
 				CA6448352B863BB90090DD84 /* HomeViewController.swift in Sources */,
 				35EF30072C03841700F86052 /* StudyMainExitPopupViewController.swift in Sources */,
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
+				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
@@ -1791,6 +2011,7 @@
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
+				CA01B28B2C04614300A01CEA /* AcitivtyMember.swift in Sources */,
 				CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */,
 				CA64483D2B863BB90090DD84 /* SelectFieldViewController.swift in Sources */,
 				CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */,
@@ -1798,19 +2019,26 @@
 				352885FF2BB9CF3700EFC0F6 /* AccessToken.swift in Sources */,
 				35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */,
 				35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */,
+				CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */,
 				CA6448582B863BB90090DD84 /* BaseCollectionViewCell.swift in Sources */,
+				CA01B2812C01D28D00A01CEA /* DetailActivityPhotoCell.swift in Sources */,
 				CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */,
+				CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */,
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
+				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
 				CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
+				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
+				CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */,
 				357D1B9A2BB2FDBF0079DCE6 /* BaseTargetType.swift in Sources */,
 				35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */,
 				CA6448552B863BB90090DD84 /* StumeetColor.swift in Sources */,
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
+				CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */,
 				CA9AB2142B8C6A480027072E /* StudyActivityViewModel.swift in Sources */,
 				CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */,
 				35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */,
@@ -1819,12 +2047,15 @@
 				CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */,
 				35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */,
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
+				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
 				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
+				CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */,
 				353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */,
 				35EF30092C03926F00F86052 /* StudyMainInvitationPopupViewController.swift in Sources */,
 				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				357D1BA92BB8119E0079DCE6 /* SessionTokens.swift in Sources */,
+				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,
 				353EAEB52B8F6A79008F7E8C /* APIConst.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA9958572BB055BD00884615 /* ActivityCreateUseCase.swift in Sources */,
@@ -1837,6 +2068,7 @@
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
+				CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2016,6 +2248,7 @@
 				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -2048,6 +2281,7 @@
 				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

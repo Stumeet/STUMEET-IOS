@@ -75,7 +75,7 @@ class ChangeProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        configureRegisterNavigationBarItems()
+        configureBackButtonTitleNavigationBarItems(title: "프로필 설정")
     }
     
     // MARK: - SetUp
