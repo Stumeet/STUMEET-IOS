@@ -12,8 +12,8 @@ import SnapKit
 class ActivityMemberCell: UITableViewCell {
     
     // TODO: - Dev Merge후 BaseCell로 변경
-    
-    static let identifier = "ActivityMemberCell"
+    // TODO: - UITableView++Extension 으로 이전 주석 확인 후 삭제 필요
+    // static let identifier = "ActivityMemberCell"
     
     // MARK: - UIComponents
     
