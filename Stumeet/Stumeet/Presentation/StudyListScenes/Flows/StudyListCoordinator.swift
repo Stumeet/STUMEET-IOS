@@ -81,6 +81,7 @@ extension StudyListCoordinator: StudyListNavigation {
         invitationPopupVC.modalPresentationStyle = .overFullScreen
         invitationPopupVC.modalTransitionStyle = .crossDissolve
         viewController.present(invitationPopupVC, animated: false, completion: nil)
+    }
       
     func goToStudyActivityList() {
         let studyActivityListVC = dependencies.makeStudyActivityListVC(coordinator: self)
