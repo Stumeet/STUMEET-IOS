@@ -23,6 +23,7 @@ final class CreateActivityViewModel: ViewModelType {
         let didTapNextButton: AnyPublisher<Void, Never>
         let didTapImageButton: AnyPublisher<Void, Never>
         let didSelectedPhotos: AnyPublisher<[UIImage], Never>
+        let didTapCellXButton: AnyPublisher<UIImage, Never>
     }
     
     // MARK: - Output
@@ -56,6 +57,8 @@ final class CreateActivityViewModel: ViewModelType {
         
         let contentSubject = CurrentValueSubject<String, Never>("")
         let titleSubject = CurrentValueSubject<String, Never>("")
+        let photoSubject = CurrentValueSubject<[UIImage], Never>([])
+        
         
         input.didChangeContent
             .compactMap { $0 }
@@ -71,8 +74,6 @@ final class CreateActivityViewModel: ViewModelType {
             .compactMap { $0 }
             .flatMap(useCase.setMaxLengthText)
             .eraseToAnyPublisher()
-        
-        let didTapNextButton = input.didTapNextButton
         
         let isEnableNextButton = input.didTapNextButton
             .map { (contentSubject.value, titleSubject.value) }
@@ -103,7 +104,17 @@ final class CreateActivityViewModel: ViewModelType {
         
         let presentToPickerVC = input.didTapImageButton.eraseToAnyPublisher()
         
-        let photosItem = input.didSelectedPhotos.eraseToAnyPublisher()
+        let photosItem = photoSubject.eraseToAnyPublisher()
+        
+        input.didSelectedPhotos
+            .sink(receiveValue: photoSubject.send)
+            .store(in: &cancellables)
+        
+        input.didTapCellXButton
+            .map { ($0, photoSubject.value) }
+            .flatMap(useCase.deletePhoto)
+            .sink(receiveValue: photoSubject.send)
+            .store(in: &cancellables)
         
         let dismiss = input.didTapXButton
             .eraseToAnyPublisher()

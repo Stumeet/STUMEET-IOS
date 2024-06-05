@@ -130,7 +130,11 @@ final class CreateActivityViewController: BaseViewController {
     private let viewModel: CreateActivityViewModel
     private let coordinator: CreateActivityNavigation
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
+    
+    // MARK: - Subjects
+    
     private let selecetedPhotoSubject = PassthroughSubject<[UIImage], Never>()
+    private let cellXButtonTapSubject = PassthroughSubject<UIImage, Never>()
     
     // MARK: - Init
     
@@ -311,7 +315,8 @@ final class CreateActivityViewController: BaseViewController {
             didTapXButton: xButton.tapPublisher,
             didTapNextButton: nextButton.tapPublisher,
             didTapImageButton: imageButton.tapPublisher,
-            didSelectedPhotos: selecetedPhotoSubject.eraseToAnyPublisher()
+            didSelectedPhotos: selecetedPhotoSubject.eraseToAnyPublisher(),
+            didTapCellXButton: cellXButtonTapSubject.eraseToAnyPublisher()
         )
         
         
@@ -404,6 +409,11 @@ extension CreateActivityViewController {
                     withReuseIdentifier: DetailStudyActivityPhotoCell.identifer,
                     for: indexPath)
                         as? DetailStudyActivityPhotoCell else { return UICollectionViewCell() }
+                
+                cell.xButton.tapPublisher
+                    .map { image }
+                    .sink(receiveValue: self.cellXButtonTapSubject.send)
+                    .store(in: &self.cancellables)
                 
                 cell.configureCreateActivityPhotoCell(image: image)
                 
