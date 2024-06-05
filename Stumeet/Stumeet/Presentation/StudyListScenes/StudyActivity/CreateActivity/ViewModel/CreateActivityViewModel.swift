@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 3/24/24.
 //
 
+import UIKit
 import Combine
 import Foundation
 
@@ -20,6 +21,8 @@ final class CreateActivityViewModel: ViewModelType {
         let didTapCategoryItem: AnyPublisher<ActivityCategory, Never>
         let didTapXButton: AnyPublisher<Void, Never>
         let didTapNextButton: AnyPublisher<Void, Never>
+        let didTapImageButton: AnyPublisher<Void, Never>
+        let didSelectedPhotos: AnyPublisher<[UIImage], Never>
     }
     
     // MARK: - Output
@@ -31,6 +34,8 @@ final class CreateActivityViewModel: ViewModelType {
         let maxLengthText: AnyPublisher<String, Never>
         let dismiss: AnyPublisher<Void, Never>
         let isHiddenCategoryItems: AnyPublisher<Bool, Never>
+        let presentToPickerVC: AnyPublisher<Void, Never>
+        let photosItem: AnyPublisher<[UIImage], Never>
     }
     
     // MARK: - Properties
@@ -96,6 +101,10 @@ final class CreateActivityViewModel: ViewModelType {
             .sink(receiveValue: currentCategorySubject.send)
             .store(in: &cancellables)
         
+        let presentToPickerVC = input.didTapImageButton.eraseToAnyPublisher()
+        
+        let photosItem = input.didSelectedPhotos.eraseToAnyPublisher()
+        
         let dismiss = input.didTapXButton
             .eraseToAnyPublisher()
         
@@ -105,7 +114,9 @@ final class CreateActivityViewModel: ViewModelType {
             selectedCategory: selectedCategory,
             maxLengthText: maxLengthText,
             dismiss: dismiss,
-            isHiddenCategoryItems: isHiddenCategoryItems
+            isHiddenCategoryItems: isHiddenCategoryItems,
+            presentToPickerVC: presentToPickerVC,
+            photosItem: photosItem
         )
     }
 }

@@ -7,12 +7,14 @@
 
 import Foundation
 import UIKit
+import PhotosUI
 
 protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
     func makeStudyActivitySettingViewController(coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
     func makeActivityMemberSettingViewController(coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
+    func makePHPickerViewController() -> PHPickerViewController
 }
 
 protocol CreateActivityNavigation: AnyObject {
@@ -20,6 +22,7 @@ protocol CreateActivityNavigation: AnyObject {
     func goToStudyActivitySettingVC()
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
     func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
+    func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate)
     func dismiss()
 }
 
@@ -72,6 +75,13 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         activityMemberSettingVC.modalPresentationStyle = .fullScreen
         activityMemberSettingVC.delegate = delegate
         lastVC.present(activityMemberSettingVC, animated: true)
+    }
+    
+    func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let pickerVC = dependencies.makePHPickerViewController()
+        pickerVC.delegate = delegate
+        lastVC.present(pickerVC, animated: true)
     }
     
     func dismiss() {

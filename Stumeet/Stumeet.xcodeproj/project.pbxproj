@@ -159,6 +159,7 @@
 		CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */; };
 		CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */; };
 		CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */; };
+		CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */; };
 		CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */; };
 		CAB8E6DC2C0D8B98001034DC /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */; };
 		CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */; };
@@ -360,6 +361,7 @@
 		CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityUseCase.swift; sourceTree = "<group>"; };
 		CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityRepository.swift; sourceTree = "<group>"; };
 		CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivitySection.swift; sourceTree = "<group>"; };
 		CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySettingViewModel.swift; sourceTree = "<group>"; };
@@ -1296,6 +1298,7 @@
 			isa = PBXGroup;
 			children = (
 				CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */,
+				CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1900,6 +1903,7 @@
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
+				CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */,
 				CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
