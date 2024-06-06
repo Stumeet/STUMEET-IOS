@@ -27,7 +27,7 @@ class DefaultUserTokenRepository: UserTokenRepository {
             .compactMap { $0.data?.toDomain() }
             .map { [weak self] result in
                 guard let self = self else { return false}
-                return self.keychainManager.saveToken(result.accessToken, for: APIConst.accessToken)
+                return self.keychainManager.saveToken(result.accessToken, for: .accessToken)
             }
             .catch { error -> AnyPublisher<Bool, MoyaError> in
                 print("Error: \(error)")

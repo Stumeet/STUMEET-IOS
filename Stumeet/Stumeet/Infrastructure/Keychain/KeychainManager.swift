@@ -8,17 +8,35 @@
 import Foundation
 import Security
 
+enum TokenKey: CaseIterable {
+    case accessToken
+    case refreshToken
+    case loginSnsToken
+    
+    var key: String {
+        switch self {
+        case .accessToken:
+            return "ACCESS_TOKEN"
+        case .refreshToken:
+            return "REFRESH_TOKEN"
+        case .loginSnsToken:
+            return "LOGIN_SNS_TOKEN"
+        }
+    }
+}
+
 protocol KeychainManageable {
-    func saveToken(_ token: String, for key: String) -> Bool
-    func removeToken(for key: String) -> Bool
-    func getToken(for key: String) -> String?
+    func saveToken(_ token: String, for key: TokenKey) -> Bool
+    func removeToken(for key: TokenKey) -> Bool
+    func removeAllTokens() -> Bool
+    func getToken(for key: TokenKey) -> String?
 }
 
 final class KeychainManager: KeychainManageable {
-    func saveToken(_ token: String, for key: String) -> Bool {
+    func saveToken(_ token: String, for key: TokenKey) -> Bool {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
+            kSecAttrAccount as String: key.key,
             kSecValueData as String: token.data(using: .utf8)!
         ]
 
@@ -28,20 +46,36 @@ final class KeychainManager: KeychainManageable {
         return status == errSecSuccess
     }
 
-    func removeToken(for key: String) -> Bool {
+    func removeToken(for key: TokenKey) -> Bool {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key
+            kSecAttrAccount as String: key.key
         ]
 
         let status = SecItemDelete(query as CFDictionary)
         return status == errSecSuccess
     }
-
-    func getToken(for key: String) -> String? {
+    
+    func removeAllTokens() -> Bool {
+        var allRemoved = true
+        TokenKey.allCases.forEach { key in
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrAccount as String: key.key
+            ]
+            
+            let status = SecItemDelete(query as CFDictionary)
+            if status != errSecSuccess {
+                allRemoved = false
+            }
+        }
+        return allRemoved
+    }
+    
+    func getToken(for key: TokenKey) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
+            kSecAttrAccount as String: key.key,
             kSecReturnData as String: kCFBooleanTrue!,
             kSecMatchLimit as String: kSecMatchLimitOne
         ]

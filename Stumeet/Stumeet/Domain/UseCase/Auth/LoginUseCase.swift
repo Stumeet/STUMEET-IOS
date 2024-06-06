@@ -34,7 +34,7 @@ final class DefaultLoginUseCase: LoginUseCase {
                 }
                 
                 // SNS 토큰을 Keychain에 저장
-                let isTokenSaved = self.keychainManager.saveToken(snsToken, for: APIConst.loginSnsToken)
+                let isTokenSaved = self.keychainManager.saveToken(snsToken, for: .loginSnsToken)
                 guard isTokenSaved else {
                     return Empty().eraseToAnyPublisher()
                 }
@@ -43,8 +43,8 @@ final class DefaultLoginUseCase: LoginUseCase {
                 return self.repository.requestLogin(loginType: loginType)
                     .map { data in
                         // AccessToken을 Keychain에 저장
-                        return self.keychainManager.saveToken(data.accessToken, for: APIConst.accessToken) &&
-                        self.keychainManager.saveToken(data.refreshToken, for: APIConst.refreshToken)
+                        return self.keychainManager.saveToken(data.accessToken, for: .accessToken) &&
+                        self.keychainManager.saveToken(data.refreshToken, for: .refreshToken)
                     }
                     .catch { error in
                         Fail(error: error).eraseToAnyPublisher()

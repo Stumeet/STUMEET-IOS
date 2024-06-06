@@ -8,7 +8,7 @@
 import UIKit
 import Moya
 
-protocol BaseTargetType: 
+protocol BaseTargetType:
     TargetType,
     AccessTokenAuthorizable {
     var baseURL: URL {get}

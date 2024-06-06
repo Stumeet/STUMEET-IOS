@@ -28,8 +28,8 @@ final class AuthInterceptor: RequestInterceptor {
         // TODO: - 현재는 401코드의 경우 토큰 재발급 처리가 이루어 지고있지만, 토큰 만료 케이스의 특정 코드를 정할 필요가 있음, 현재 API는 토큰 만료 이외에도 401케이스가 있기에 무한 재발급될 우려가 있음
         guard let response = request.task?.response as? HTTPURLResponse,
               response.statusCode == 401,
-              let accessToken = keychainManager.getToken(for: APIConst.accessToken),
-              let refreshToken = keychainManager.getToken(for: APIConst.refreshToken)
+              let accessToken = keychainManager.getToken(for: .accessToken),
+              let refreshToken = keychainManager.getToken(for: .refreshToken)
         else {
             completion(.doNotRetryWithError(error))
             return
