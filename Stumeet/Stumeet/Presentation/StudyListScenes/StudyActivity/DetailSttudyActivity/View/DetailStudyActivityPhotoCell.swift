@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 5/23/24.
 //
 
+import Combine
 import UIKit
 
 class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
@@ -28,6 +29,8 @@ class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
         return button
     }()
     
+    var cancellables = Set<AnyCancellable>()
+    
     // MARK: - SetUp
     
     override func setupAddView() {
@@ -40,6 +43,10 @@ class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    override func prepareForReuse() {
+        cancellables = Set<AnyCancellable>()
     }
     
     func configureCreateActivityPhotoCell(image: UIImage) {

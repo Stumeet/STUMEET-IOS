@@ -415,7 +415,7 @@ extension CreateActivityViewController {
                 cell.xButton.tapPublisher
                     .map { image }
                     .sink(receiveValue: self.cellXButtonTapSubject.send)
-                    .store(in: &self.cancellables)
+                    .store(in: &cell.cancellables)
                 
                 cell.configureCreateActivityPhotoCell(image: image)
                 
@@ -450,7 +450,11 @@ extension CreateActivityViewController {
     }
     
     private func checkNavigateToSettingVC(isEnable: Bool) {
-        isEnable ? coordinator.goToStudyActivitySettingVC() : showSnackBar(text: "! 활동 작성이 완료되지 않았어요.")
+        if isEnable {
+            coordinator.goToStudyActivitySettingVC()
+        } else {
+            showSnackBar(text: "! 활동 작성이 완료되지 않았어요.")
+        }
     }
     
     private func showSnackBar(text: String) {
