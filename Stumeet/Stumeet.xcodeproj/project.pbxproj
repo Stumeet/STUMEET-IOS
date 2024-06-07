@@ -137,6 +137,8 @@
 		CA6448662B863CCB0090DD84 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448652B863CCB0090DD84 /* Moya */; };
 		CA6448692B863CD90090DD84 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448682B863CD90090DD84 /* SnapKit */; };
 		CA64486C2B863CE20090DD84 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA64486B2B863CE20090DD84 /* CombineCocoa */; };
+		CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */; };
+		CA6450802C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */; };
 		CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */; };
 		CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */; };
 		CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */; };
@@ -338,6 +340,8 @@
 		CA6448242B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA6448262B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA64486E2B863DB60090DD84 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityLinkPopUpViewController.swift; sourceTree = "<group>"; };
+		CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityLinkPopUpViewModel.swift; sourceTree = "<group>"; };
 		CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityListViewController.swift; sourceTree = "<group>"; };
 		CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityAllCell.swift; sourceTree = "<group>"; };
 		CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityHeaderView.swift; sourceTree = "<group>"; };
@@ -1360,6 +1364,7 @@
 				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
 				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
 				CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */,
+				CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1371,6 +1376,7 @@
 				CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */,
 				CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */,
 				CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */,
+				CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1795,6 +1801,7 @@
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
 				CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */,
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
+				CA6450802C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
 				CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */,
 				CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */,
@@ -1844,6 +1851,7 @@
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */,
+				CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */,

@@ -85,6 +85,13 @@ final class CreateActivityViewController: BaseViewController {
         return textField
     }()
     
+    private let seperationLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.gray100.color
+        
+        return view
+    }()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
@@ -115,6 +122,13 @@ final class CreateActivityViewController: BaseViewController {
     private let imageButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "addImageButton"), for: .normal)
+        
+        return button
+    }()
+    
+    private let linkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .createActivityLink), for: .normal)
         
         return button
     }()
@@ -162,9 +176,6 @@ final class CreateActivityViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         bottomView.layer.addBorder([.top, .bottom], color: StumeetColor.gray100.color, width: 1)
-        
-        contentTextView.layer.addBorder([.top], color: StumeetColor.gray100.color, width: 1)
-        
         categoryStackViewContainer.layer.addBorder([.left, .right, .bottom], color: StumeetColor.gray100.color, width: 1)
     }
     
@@ -188,6 +199,7 @@ final class CreateActivityViewController: BaseViewController {
         [
             imageButton,
             noticeLabel,
+            linkButton,
             noticeSwitch
         ]   .forEach { bottomView.addSubview($0) }
         
@@ -200,6 +212,7 @@ final class CreateActivityViewController: BaseViewController {
         [
             categoryButton,
             titleTextField,
+            seperationLine,
             contentTextView,
             photoCollectionView,
             categoryStackViewContainer
@@ -241,29 +254,34 @@ final class CreateActivityViewController: BaseViewController {
             make.height.equalTo(56)
         }
         
-        titleTextField.snp.makeConstraints { make in
-            make.top.equalTo(categoryButton.snp.bottom).offset(24)
-            make.horizontalEdges.equalTo(view).inset(24)
-            make.height.equalTo(22)
-        }
-        
         scrollView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalTo(xButton.snp.bottom)
             make.bottom.equalTo(bottomView.snp.top)
         }
         
-        contentTextView.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(16)
-            make.horizontalEdges.equalTo(view).inset(20)
+        titleTextField.snp.makeConstraints { make in
+            make.top.equalTo(categoryButton.snp.bottom).offset(24)
+            make.horizontalEdges.equalTo(view).inset(24)
+            make.height.equalTo(22)
+        }
+        
+        seperationLine.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(titleTextField)
+            make.top.equalTo(titleTextField.snp.bottom).offset(15)
+            make.height.equalTo(1)
         }
         
         photoCollectionView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalTo(view)
-            make.height.equalTo(160)
-            make.top.equalTo(contentTextView.snp.bottom).offset(14)
-            make.bottom.equalToSuperview()
+            make.top.equalTo(seperationLine.snp.bottom).offset(24)
+            make.height.equalTo(0)
+        }
+        
+        contentTextView.snp.makeConstraints { make in
+            make.top.equalTo(seperationLine.snp.bottom).offset(6)
+            make.horizontalEdges.equalTo(view).inset(20)
         }
         
         bottomView.snp.makeConstraints { make in
@@ -274,6 +292,11 @@ final class CreateActivityViewController: BaseViewController {
         
         imageButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
+            make.centerY.equalToSuperview()
+        }
+        
+        linkButton.snp.makeConstraints { make in
+            make.leading.equalTo(imageButton.snp.trailing).offset(16)
             make.centerY.equalToSuperview()
         }
         
@@ -318,7 +341,8 @@ final class CreateActivityViewController: BaseViewController {
             didTapNextButton: nextButton.tapPublisher,
             didTapImageButton: imageButton.tapPublisher,
             didSelectedPhotos: selecetedPhotoSubject.eraseToAnyPublisher(),
-            didTapCellXButton: cellXButtonTapSubject.eraseToAnyPublisher()
+            didTapCellXButton: cellXButtonTapSubject.eraseToAnyPublisher(),
+            didTapLinkButton: linkButton.tapPublisher
         )
         
         
@@ -360,15 +384,23 @@ final class CreateActivityViewController: BaseViewController {
             .sink(receiveValue: showMaxLengthContentSnackBar)
             .store(in: &cancellables)
         
+        // 앨범화면 전환
         output.presentToPickerVC
             .map { _ in self }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToPHPickerVC)
             .store(in: &cancellables)
         
+        // 선택한 사진 바인딩
         output.photosItem
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        // linkPopUpVC로 화면 전환
+        output.presentToLinkPopUpVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToLinkPopUpVC)
             .store(in: &cancellables)
         
         // dismiss
@@ -545,7 +577,23 @@ extension CreateActivityViewController: PHPickerViewControllerDelegate {
     
     private func updateSnapshot(items: [UIImage]) {
         guard let datasource = datasource else { return }
-        
+        if items.isEmpty {
+            photoCollectionView.snp.updateConstraints { make in
+                make.height.equalTo(0)
+            }
+            
+            contentTextView.snp.makeConstraints { make in
+                make.top.equalTo(seperationLine.snp.bottom).offset(6)
+            }
+        } else {
+            photoCollectionView.snp.updateConstraints { make in
+                make.height.equalTo(160)
+            }
+            
+            contentTextView.snp.updateConstraints { make in
+                make.top.equalTo(photoCollectionView.snp.bottom)
+            }
+        }
         var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
         snapshot.appendSections([.main])
         items.forEach { snapshot.appendItems([.photoCell($0)]) }

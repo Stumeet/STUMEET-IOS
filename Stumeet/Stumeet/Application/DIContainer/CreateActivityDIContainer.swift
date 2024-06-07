@@ -106,6 +106,19 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
         )
     }
     
+    // MARK: - LinkPopUp
+    
+    func makeCreateActivityLinkPopUpViewModel() -> CreateActivityLinkPopUpViewModel {
+        CreateActivityLinkPopUpViewModel()
+    }
+    
+    func makeCreateActivityLinkPopUpViewController(coordinator: Navigation) -> CreateActivityLinkPopUpViewController {
+        CreateActivityLinkPopUpViewController(
+            viewModel: makeCreateActivityLinkPopUpViewModel(),
+            coordinator: coordinator
+        )
+    }
+    
     // MARK: - PHPicker
     func makePHPickerViewController() -> PHPickerViewController {
         var config = PHPickerConfiguration()

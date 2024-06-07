@@ -14,6 +14,7 @@ protocol CreateActivityCoordinatorDependencies {
     func makeStudyActivitySettingViewController(coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
     func makeActivityMemberSettingViewController(coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
+    func makeCreateActivityLinkPopUpViewController(coordinator: CreateActivityNavigation) -> CreateActivityLinkPopUpViewController
     func makePHPickerViewController() -> PHPickerViewController
 }
 
@@ -23,6 +24,7 @@ protocol CreateActivityNavigation: AnyObject {
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
     func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
     func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate)
+    func presentToLinkPopUpVC()
     func dismiss()
 }
 
@@ -82,6 +84,15 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         let pickerVC = dependencies.makePHPickerViewController()
         pickerVC.delegate = delegate
         lastVC.present(pickerVC, animated: true)
+    }
+    
+    func presentToLinkPopUpVC() {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let linkPopUpVC = dependencies.makeCreateActivityLinkPopUpViewController(coordinator: self)
+        linkPopUpVC.modalPresentationStyle = .overFullScreen
+        linkPopUpVC.modalTransitionStyle = .crossDissolve
+        lastVC.present(linkPopUpVC, animated: true)
+        
     }
     
     func dismiss() {

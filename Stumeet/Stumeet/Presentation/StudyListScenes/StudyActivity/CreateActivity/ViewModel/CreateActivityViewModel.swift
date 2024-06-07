@@ -24,6 +24,7 @@ final class CreateActivityViewModel: ViewModelType {
         let didTapImageButton: AnyPublisher<Void, Never>
         let didSelectedPhotos: AnyPublisher<[UIImage], Never>
         let didTapCellXButton: AnyPublisher<UIImage, Never>
+        let didTapLinkButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -37,6 +38,7 @@ final class CreateActivityViewModel: ViewModelType {
         let isHiddenCategoryItems: AnyPublisher<Bool, Never>
         let presentToPickerVC: AnyPublisher<Void, Never>
         let photosItem: AnyPublisher<[UIImage], Never>
+        let presentToLinkPopUpVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -108,6 +110,8 @@ final class CreateActivityViewModel: ViewModelType {
             .sink(receiveValue: photoSubject.send)
             .store(in: &cancellables)
         
+        let presentToLinkPopUpVC = input.didTapLinkButton.eraseToAnyPublisher()
+        
         let dismiss = input.didTapXButton
             .eraseToAnyPublisher()
         
@@ -119,7 +123,8 @@ final class CreateActivityViewModel: ViewModelType {
             dismiss: dismiss,
             isHiddenCategoryItems: isHiddenCategoryItems,
             presentToPickerVC: presentToPickerVC,
-            photosItem: photosItem
+            photosItem: photosItem,
+            presentToLinkPopUpVC: presentToLinkPopUpVC
         )
     }
 }
