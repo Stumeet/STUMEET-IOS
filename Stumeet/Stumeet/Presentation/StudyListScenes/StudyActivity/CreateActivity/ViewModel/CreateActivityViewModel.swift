@@ -31,7 +31,7 @@ final class CreateActivityViewModel: ViewModelType {
     struct Output {
         let isBeginEditing: AnyPublisher<Bool, Never>
         let isEnableNextButton: AnyPublisher<Bool, Never>
-        let selectedCategory: AnyPublisher<AttributedString?, Never>
+        let selectedCategory: AnyPublisher<ActivityCategory, Never>
         let maxLengthText: AnyPublisher<String, Never>
         let dismiss: AnyPublisher<Void, Never>
         let isHiddenCategoryItems: AnyPublisher<Bool, Never>
@@ -42,7 +42,6 @@ final class CreateActivityViewModel: ViewModelType {
     // MARK: - Properties
     
     private let useCase: CreateActivityUseCase
-    let currentCategorySubject = CurrentValueSubject<ActivityCategory, Never>(.freedom)
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
@@ -92,15 +91,8 @@ final class CreateActivityViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
 
-        let selectedCategory = currentCategorySubject
-            .map { category -> AttributedString? in
-                return AttributedString(category.title)
-            }
+        let selectedCategory = input.didTapCategoryItem
             .eraseToAnyPublisher()
-        
-        input.didTapCategoryItem
-            .sink(receiveValue: currentCategorySubject.send)
-            .store(in: &cancellables)
         
         let presentToPickerVC = input.didTapImageButton.eraseToAnyPublisher()
         

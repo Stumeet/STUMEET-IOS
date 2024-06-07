@@ -86,6 +86,8 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
     
     func dismiss() {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        lastVC.dismiss(animated: true)
+        lastVC.dismiss(animated: true) {
+            self.parentCoordinator?.childDidFinish(self)
+        }
     }
 }

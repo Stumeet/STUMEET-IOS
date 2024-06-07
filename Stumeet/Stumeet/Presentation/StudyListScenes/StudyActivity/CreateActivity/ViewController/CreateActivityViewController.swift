@@ -199,10 +199,10 @@ final class CreateActivityViewController: BaseViewController {
 
         [
             categoryButton,
-            categoryStackViewContainer,
             titleTextField,
             contentTextView,
-            photoCollectionView
+            photoCollectionView,
+            categoryStackViewContainer
         ]   .forEach(scrollView.addSubview)
         
         [
@@ -216,12 +216,13 @@ final class CreateActivityViewController: BaseViewController {
         
         topView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().offset(71)
+            make.height.equalTo(48)
         }
         
         xButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().offset(71)
+            make.top.equalToSuperview()
         }
         
         topLabel.snp.makeConstraints { make in
@@ -261,7 +262,7 @@ final class CreateActivityViewController: BaseViewController {
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalTo(view)
             make.height.equalTo(160)
-            make.top.equalTo(contentTextView.snp.bottom)
+            make.top.equalTo(contentTextView.snp.bottom).offset(14)
             make.bottom.equalToSuperview()
         }
         
@@ -289,7 +290,8 @@ final class CreateActivityViewController: BaseViewController {
         categoryStackViewContainer.snp.makeConstraints { make in
             make.height.equalTo(168)
             make.top.equalTo(categoryButton.snp.bottom).offset(-8)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.equalTo(view).inset(16)
         }
         
         categoryStackViewContainer.subviews[0].snp.makeConstraints { make in
@@ -342,13 +344,13 @@ final class CreateActivityViewController: BaseViewController {
         // 카테고리 스택뷰 업데이트
         output.isHiddenCategoryItems
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateCategoryItem)
+            .assign(to: \.isHidden, on: categoryStackViewContainer)
             .store(in: &cancellables)
         
         // 선택한 category UI binding
         output.selectedCategory
             .receive(on: RunLoop.main)
-            .assign(to: \.configuration!.attributedTitle, on: categoryButton)
+            .sink(receiveValue: updateCategoryItem)
             .store(in: &cancellables)
         
         // 500자 이상일 경우 SnackBar 표시
@@ -443,25 +445,8 @@ extension CreateActivityViewController {
         return button
     }
     
-    private func updateCategoryItem(isHidden: Bool) {
-        
-        let categoryButtons: [ActivityCategory: UIButton?] = [
-            .freedom: freedomButton,
-            .meeting: meetingButton,
-            .homework: homeWorkButton
-        ]
-        
+    private func updateIsHiddenCategoryItem(isHidden: Bool) {
         categoryStackViewContainer.isHidden = isHidden
-        if isHidden {
-            let selectedCategory = viewModel.currentCategorySubject.value
-            categoryButtons.forEach { category, button in
-                if category == selectedCategory {
-                    button?.configuration?.baseForegroundColor = StumeetColor.primary700.color
-                } else {
-                    button?.configuration?.baseForegroundColor = .black
-                }
-            }
-        }
     }
     
     private func checkNavigateToSettingVC(isEnable: Bool) {
@@ -492,6 +477,25 @@ extension CreateActivityViewController {
                     snackBar.isHidden = true
                     snackBar.removeFromSuperview()
                 }
+            }
+        }
+    }
+    
+    private func updateCategoryItem(selectedCategory: ActivityCategory) {
+        
+        let categoryButtons: [ActivityCategory: UIButton?] = [
+            .freedom: freedomButton,
+            .meeting: meetingButton,
+            .homework: homeWorkButton
+        ]
+        
+        categoryButton.configuration?.attributedTitle = AttributedString(selectedCategory.title)
+        
+        categoryButtons.forEach { category, button in
+            if category == selectedCategory {
+                button?.configuration?.baseForegroundColor = StumeetColor.primary700.color
+            } else {
+                button?.configuration?.baseForegroundColor = .black
             }
         }
     }
@@ -530,7 +534,7 @@ extension CreateActivityViewController: PHPickerViewControllerDelegate {
 
         dispatchGroup.notify(queue: .main) {
             self.selecetedPhotoSubject.send(images)
-            self.dismiss(animated: true)
+            self.coordinator.dismiss()
         }
     }
 
