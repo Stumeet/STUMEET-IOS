@@ -26,6 +26,8 @@ final class CreateActivityViewModel: ViewModelType {
         let didTapCellXButton: AnyPublisher<UIImage, Never>
         let didTapLinkButton: AnyPublisher<Void, Never>
         let didChangedLink: AnyPublisher<String, Never>
+        let didTapPopUpStayButton: AnyPublisher<Void, Never>
+        let didTapPopUpExitButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -35,13 +37,14 @@ final class CreateActivityViewModel: ViewModelType {
         let isEnableNextButton: AnyPublisher<Bool, Never>
         let selectedCategory: AnyPublisher<ActivityCategory, Never>
         let maxLengthText: AnyPublisher<String, Never>
-        let showExitPopUpView: AnyPublisher<PopUp, Never>
+        let exitPopUp: AnyPublisher<PopUp?, Never>
         let isHiddenCategoryItems: AnyPublisher<Bool, Never>
         let presentToPickerVC: AnyPublisher<Void, Never>
         let photosItem: AnyPublisher<[UIImage], Never>
         let presentToLinkPopUpVC: AnyPublisher<Void, Never>
         let isEmptyPhotoItem: AnyPublisher<Bool, Never>
         let linkText: AnyPublisher<String, Never>
+        let dismiss: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -62,7 +65,7 @@ final class CreateActivityViewModel: ViewModelType {
         let contentSubject = CurrentValueSubject<String, Never>("")
         let titleSubject = CurrentValueSubject<String, Never>("")
         let photoSubject = CurrentValueSubject<[UIImage], Never>([])
-        
+        let exitPopUpSubject = PassthroughSubject<PopUp?, Never>()
         
         input.didChangeContent
             .compactMap { $0 }
@@ -119,7 +122,9 @@ final class CreateActivityViewModel: ViewModelType {
             .map { $0.isEmpty }
             .eraseToAnyPublisher()
         
-        let showExitPopUpView = input.didTapXButton
+        let exitPopUp = exitPopUpSubject.eraseToAnyPublisher()
+        
+        input.didTapXButton
             .map {
                 PopUp(
                     title: "작성중인 활동은 저장되지 않아요.",
@@ -127,20 +132,30 @@ final class CreateActivityViewModel: ViewModelType {
                     leftButtonTitle: "머무르기",
                     rightButtonTitle: "나가기")
             }
-            .eraseToAnyPublisher()
+            .sink(receiveValue: exitPopUpSubject.send)
+            .store(in: &cancellables)
+        
+        input.didTapPopUpStayButton
+            .map { nil }
+            .sink(receiveValue: exitPopUpSubject.send)
+            .store(in: &cancellables)
+        
+        
+        let dismiss = input.didTapPopUpExitButton
         
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
             selectedCategory: selectedCategory,
             maxLengthText: maxLengthText,
-            showExitPopUpView: showExitPopUpView,
+            exitPopUp: exitPopUp,
             isHiddenCategoryItems: isHiddenCategoryItems,
             presentToPickerVC: presentToPickerVC,
             photosItem: photosItem,
             presentToLinkPopUpVC: presentToLinkPopUpVC,
             isEmptyPhotoItem: isEmptyPhotoItem,
-            linkText: input.didChangedLink
+            linkText: input.didChangedLink,
+            dismiss: dismiss
         )
     }
 }

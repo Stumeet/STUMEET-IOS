@@ -5,8 +5,10 @@
 //  Created by 정지훈 on 6/8/24.
 //
 
+import Combine
 import UIKit
 
+import CombineCocoa
 import SnapKit
 
 /// Stumeet Custom 기본 PopUpView입니다.
@@ -48,6 +50,12 @@ final class StumeetPopUpView: UIView {
         return button
     }()
     
+    // MARK: - Subject
+    
+    let leftButtonTapSubject = PassthroughSubject<Void, Never>()
+    let rightButtonTapSubject = PassthroughSubject<Void, Never>()
+    private var cancellables = Set<AnyCancellable>()
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -55,6 +63,7 @@ final class StumeetPopUpView: UIView {
         setUpStyle()
         setUpAddView()
         setUpConstraints()
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -130,5 +139,15 @@ final class StumeetPopUpView: UIView {
         subTitleLabel.text = item.subTitle
         leftButton.setTitle(item.leftButtonTitle, for: .normal)
         rightButton.setTitle(item.rightButtonTitle, for: .normal)
+    }
+    
+    func bind() {
+        leftButton.tapPublisher
+            .sink(receiveValue:leftButtonTapSubject.send)
+            .store(in: &cancellables)
+        
+        rightButton.tapPublisher
+            .sink(receiveValue: rightButtonTapSubject.send)
+            .store(in: &cancellables)
     }
 }

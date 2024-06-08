@@ -378,7 +378,9 @@ final class CreateActivityViewController: BaseViewController {
             didSelectedPhotos: selecetedPhotoSubject.eraseToAnyPublisher(),
             didTapCellXButton: cellXButtonTapSubject.eraseToAnyPublisher(),
             didTapLinkButton: linkButton.tapPublisher,
-            didChangedLink: didChangedLinkSubject.eraseToAnyPublisher()
+            didChangedLink: didChangedLinkSubject.eraseToAnyPublisher(),
+            didTapPopUpStayButton: exitPopUpView.leftButtonTapSubject.eraseToAnyPublisher(),
+            didTapPopUpExitButton: exitPopUpView.rightButtonTapSubject.eraseToAnyPublisher()
         )
         
         
@@ -452,10 +454,14 @@ final class CreateActivityViewController: BaseViewController {
             .sink(receiveValue: updateConstraints)
             .store(in: &cancellables)
         
-        // dismiss
-        output.showExitPopUpView
+        output.exitPopUp
             .receive(on: RunLoop.main)
-            .sink(receiveValue: showExitPopUpView)
+            .sink(receiveValue: chekcShowExitPopUpView)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
     }
 }
@@ -646,12 +652,27 @@ extension CreateActivityViewController {
         }
     }
     
+    private func chekcShowExitPopUpView(item: PopUp?) {
+        if let item {
+            showExitPopUpView(item: item)
+        } else {
+            hideExitPopUpView()
+        }
+    }
+    
     private func showExitPopUpView(item: PopUp) {
         exitPopUpView.configurePopUpView(item: item)
         exitPopUpView.isHidden = false
         UIView.transition(with: exitPopUpView, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.exitPopUpView.alpha = 1
-        }, completion: nil)
+        })
+    }
+    
+    private func hideExitPopUpView() {
+        exitPopUpView.isHidden = true
+        UIView.transition(with: exitPopUpView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.exitPopUpView.alpha = 0
+        })
     }
 }
 
