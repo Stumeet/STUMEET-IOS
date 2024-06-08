@@ -85,7 +85,7 @@ final class CreateActivityViewController: BaseViewController {
         return textField
     }()
     
-    private let seperationLine: UIView = {
+    private let separationLine: UIView = {
         let view = UIView()
         view.backgroundColor = StumeetColor.gray100.color
         
@@ -162,6 +162,7 @@ final class CreateActivityViewController: BaseViewController {
     
     private let selecetedPhotoSubject = PassthroughSubject<[UIImage], Never>()
     private let cellXButtonTapSubject = PassthroughSubject<UIImage, Never>()
+    private let didChangedLinkSubject = CurrentValueSubject<String, Never>("")
     
     // MARK: - Init
     
@@ -225,7 +226,7 @@ final class CreateActivityViewController: BaseViewController {
         [
             categoryButton,
             titleTextField,
-            seperationLine,
+            separationLine,
             contentTextView,
             photoCollectionView,
             linkLabel,
@@ -280,7 +281,7 @@ final class CreateActivityViewController: BaseViewController {
             make.height.equalTo(22)
         }
         
-        seperationLine.snp.makeConstraints { make in
+        separationLine.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(titleTextField)
             make.top.equalTo(titleTextField.snp.bottom).offset(15)
             make.height.equalTo(1)
@@ -289,18 +290,19 @@ final class CreateActivityViewController: BaseViewController {
         photoCollectionView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalTo(view)
-            make.top.equalTo(seperationLine.snp.bottom).offset(24)
+            make.top.equalTo(separationLine.snp.bottom).offset(24)
             make.height.equalTo(0)
         }
         
         linkLabel.snp.makeConstraints { make in
-            make.top.equalTo(seperationLine.snp.bottom).offset(200)
+            make.top.equalTo(separationLine.snp.bottom).offset(200)
             make.horizontalEdges.equalTo(view).inset(24)
             make.height.equalTo(0)
         }
         
         contentTextView.snp.makeConstraints { make in
-            make.top.equalTo(seperationLine.snp.bottom).offset(6)
+            make.top.equalTo(separationLine.snp.bottom).offset(6)
+            make.bottom.equalToSuperview()
             make.horizontalEdges.equalTo(view).inset(20)
         }
         
@@ -362,7 +364,8 @@ final class CreateActivityViewController: BaseViewController {
             didTapImageButton: imageButton.tapPublisher,
             didSelectedPhotos: selecetedPhotoSubject.eraseToAnyPublisher(),
             didTapCellXButton: cellXButtonTapSubject.eraseToAnyPublisher(),
-            didTapLinkButton: linkButton.tapPublisher
+            didTapLinkButton: linkButton.tapPublisher,
+            didChangedLink: didChangedLinkSubject.eraseToAnyPublisher()
         )
         
         
@@ -424,6 +427,18 @@ final class CreateActivityViewController: BaseViewController {
             .sink(receiveValue: coordinator.presentToLinkPopUpVC)
             .store(in: &cancellables)
         
+        output.linkText
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: setLinkLabelText)
+            .store(in: &cancellables)
+        
+        output.isEmptyPhotoItem
+            .removeDuplicates()
+            .combineLatest(output.linkText)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateConstraints)
+            .store(in: &cancellables)
+        
         // dismiss
         output.dismiss
             .receive(on: RunLoop.main)
@@ -476,6 +491,14 @@ extension CreateActivityViewController {
             }
         })
     }
+
+    private func updateSnapshot(items: [UIImage]) {
+        guard let datasource = datasource else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
+        snapshot.appendSections([.main])
+        items.forEach { snapshot.appendItems([.photoCell($0)]) }
+        datasource.apply(snapshot)
+    }
 }
 
 // MARK: UpdateUI
@@ -491,7 +514,7 @@ extension CreateActivityViewController {
         if case .freedom = category {
             config.baseForegroundColor = StumeetColor.primary700.color
         } else { config.baseForegroundColor = StumeetColor.gray400.color}
-
+        
         let button = UIButton()
         button.configuration = config
         button.contentHorizontalAlignment = .leading
@@ -523,7 +546,7 @@ extension CreateActivityViewController {
         
         snackBar.isHidden = false
         snackBar.alpha = 0
-
+        
         UIView.animate(withDuration: 0.3) {
             snackBar.alpha = 1
         } completion: { _ in
@@ -566,6 +589,49 @@ extension CreateActivityViewController {
         contentTextView.text = ""
         contentTextView.textColor = StumeetColor.gray800.color
     }
+    
+    private func setLinkLabelText(link: String) {
+        let imageAttachment = NSTextAttachment()
+        let image = UIImage(resource: .createActivityLink).withTintColor(StumeetColor.primary700.color)
+        imageAttachment.image = image
+        let imageOffsetY: CGFloat = -(image.size.height - linkLabel.font.capHeight) / 2
+        imageAttachment.bounds = CGRect(x: 0, y: imageOffsetY, width: 24, height: 24)
+        
+        let text = NSMutableAttributedString()
+        text.append(NSAttributedString(attachment: imageAttachment))
+        text.append(NSAttributedString(string: "  "))
+        text.append(NSAttributedString(string: link))
+        linkLabel.attributedText = text
+    }
+    
+    private func updateConstraints(isEmpty: Bool, link: String) {
+        updatePhotoCollectionViewConstraints(isEmpty: isEmpty)
+        updateLinkLabelAndContentTextViewConstraints(isEmpty: isEmpty, link: link)
+    }
+    
+    private func updatePhotoCollectionViewConstraints(isEmpty: Bool) {
+        photoCollectionView.snp.updateConstraints { make in
+            make.height.equalTo(isEmpty ? 0 : 160)
+        }
+    }
+    
+    private func updateLinkLabelAndContentTextViewConstraints(isEmpty: Bool, link: String) {
+        if link.isEmpty {
+            let topOffset = isEmpty ? 6 : 200
+            contentTextView.snp.updateConstraints { make in
+                make.top.equalTo(separationLine.snp.bottom).offset(topOffset)
+            }
+        } else {
+            linkLabel.snp.updateConstraints { make in
+                make.height.equalTo(56)
+                make.top.equalTo(separationLine.snp.bottom).offset(isEmpty ? 24 : 200)
+            }
+            
+            contentTextView.snp.updateConstraints { make in
+                make.top.equalTo(separationLine.snp.bottom).offset(isEmpty ? 102 : 278)
+            }
+        }
+    }
 }
 
 // MARK: - PHPickerViewDelegate
@@ -594,49 +660,10 @@ extension CreateActivityViewController: PHPickerViewControllerDelegate {
             self.coordinator.dismiss()
         }
     }
-
-    
-    private func updateSnapshot(items: [UIImage]) {
-        guard let datasource = datasource else { return }
-        if items.isEmpty {
-            photoCollectionView.snp.updateConstraints { make in
-                make.height.equalTo(0)
-            }
-            
-            contentTextView.snp.makeConstraints { make in
-                make.top.equalTo(seperationLine.snp.bottom).offset(6)
-            }
-        } else {
-            photoCollectionView.snp.updateConstraints { make in
-                make.height.equalTo(160)
-            }
-            
-            contentTextView.snp.updateConstraints { make in
-                make.top.equalTo(photoCollectionView.snp.bottom)
-            }
-        }
-        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
-        snapshot.appendSections([.main])
-        items.forEach { snapshot.appendItems([.photoCell($0)]) }
-        datasource.apply(snapshot)
-    }
 }
 
 extension CreateActivityViewController: CreateActivityLinkDelegate {
     func didTapRegisterButton(link: String) {
-        let imageAttachment = NSTextAttachment()
-        let image = UIImage(resource: .createActivityLink).withTintColor(StumeetColor.primary700.color)
-        imageAttachment.image = image
-        let imageOffsetY: CGFloat = -(image.size.height - linkLabel.font.capHeight) / 2
-        imageAttachment.bounds = CGRect(x: 0, y: imageOffsetY, width: 24, height: 24)
-        let text = NSMutableAttributedString()
-        text.append(NSAttributedString(attachment: imageAttachment))
-        text.append(NSAttributedString(string: "  "))
-        text.append(NSAttributedString(string: link))
-        linkLabel.attributedText = text
-        
-        linkLabel.snp.updateConstraints { make in
-            make.height.equalTo(56)
-        }
+        didChangedLinkSubject.send(link)
     }
 }

@@ -25,6 +25,7 @@ final class CreateActivityViewModel: ViewModelType {
         let didSelectedPhotos: AnyPublisher<[UIImage], Never>
         let didTapCellXButton: AnyPublisher<UIImage, Never>
         let didTapLinkButton: AnyPublisher<Void, Never>
+        let didChangedLink: AnyPublisher<String, Never>
     }
     
     // MARK: - Output
@@ -39,6 +40,8 @@ final class CreateActivityViewModel: ViewModelType {
         let presentToPickerVC: AnyPublisher<Void, Never>
         let photosItem: AnyPublisher<[UIImage], Never>
         let presentToLinkPopUpVC: AnyPublisher<Void, Never>
+        let isEmptyPhotoItem: AnyPublisher<Bool, Never>
+        let linkText: AnyPublisher<String, Never>
     }
     
     // MARK: - Properties
@@ -112,8 +115,11 @@ final class CreateActivityViewModel: ViewModelType {
         
         let presentToLinkPopUpVC = input.didTapLinkButton.eraseToAnyPublisher()
         
-        let dismiss = input.didTapXButton
+        let isEmptyPhotoItem = photoSubject
+            .map { $0.isEmpty }
             .eraseToAnyPublisher()
+        
+        let dismiss = input.didTapXButton
         
         return Output(
             isBeginEditing: isBeginEditing,
@@ -124,7 +130,9 @@ final class CreateActivityViewModel: ViewModelType {
             isHiddenCategoryItems: isHiddenCategoryItems,
             presentToPickerVC: presentToPickerVC,
             photosItem: photosItem,
-            presentToLinkPopUpVC: presentToLinkPopUpVC
+            presentToLinkPopUpVC: presentToLinkPopUpVC,
+            isEmptyPhotoItem: isEmptyPhotoItem,
+            linkText: input.didChangedLink
         )
     }
 }
