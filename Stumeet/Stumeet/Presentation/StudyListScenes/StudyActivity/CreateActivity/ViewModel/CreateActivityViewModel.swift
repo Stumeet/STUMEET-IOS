@@ -35,7 +35,7 @@ final class CreateActivityViewModel: ViewModelType {
         let isEnableNextButton: AnyPublisher<Bool, Never>
         let selectedCategory: AnyPublisher<ActivityCategory, Never>
         let maxLengthText: AnyPublisher<String, Never>
-        let dismiss: AnyPublisher<Void, Never>
+        let showExitPopUpView: AnyPublisher<PopUp, Never>
         let isHiddenCategoryItems: AnyPublisher<Bool, Never>
         let presentToPickerVC: AnyPublisher<Void, Never>
         let photosItem: AnyPublisher<[UIImage], Never>
@@ -119,14 +119,22 @@ final class CreateActivityViewModel: ViewModelType {
             .map { $0.isEmpty }
             .eraseToAnyPublisher()
         
-        let dismiss = input.didTapXButton
+        let showExitPopUpView = input.didTapXButton
+            .map {
+                PopUp(
+                    title: "작성중인 활동은 저장되지 않아요.",
+                    subTitle: "활동 생성을 그만두시겠어요?",
+                    leftButtonTitle: "머무르기",
+                    rightButtonTitle: "나가기")
+            }
+            .eraseToAnyPublisher()
         
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
             selectedCategory: selectedCategory,
             maxLengthText: maxLengthText,
-            dismiss: dismiss,
+            showExitPopUpView: showExitPopUpView,
             isHiddenCategoryItems: isHiddenCategoryItems,
             presentToPickerVC: presentToPickerVC,
             photosItem: photosItem,

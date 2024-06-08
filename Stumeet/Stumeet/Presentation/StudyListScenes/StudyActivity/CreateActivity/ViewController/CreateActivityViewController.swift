@@ -152,6 +152,14 @@ final class CreateActivityViewController: BaseViewController {
     
     private let noticeSwitch = UISwitch()
     
+    private let exitPopUpView: StumeetPopUpView = {
+        let view = StumeetPopUpView()
+        view.isHidden = true
+        view.alpha = 0
+        
+        return view
+    }()
+    
     // MARK: - Properties
     
     private let viewModel: CreateActivityViewModel
@@ -236,7 +244,8 @@ final class CreateActivityViewController: BaseViewController {
         [
             topView,
             scrollView,
-            bottomView
+            bottomView,
+            exitPopUpView
         ]   .forEach(view.addSubview)
     }
     
@@ -342,6 +351,10 @@ final class CreateActivityViewController: BaseViewController {
         categoryStackViewContainer.subviews[0].snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        exitPopUpView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     override func bind() {
@@ -440,9 +453,9 @@ final class CreateActivityViewController: BaseViewController {
             .store(in: &cancellables)
         
         // dismiss
-        output.dismiss
+        output.showExitPopUpView
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.dismiss)
+            .sink(receiveValue: showExitPopUpView)
             .store(in: &cancellables)
     }
 }
@@ -631,6 +644,14 @@ extension CreateActivityViewController {
                 make.top.equalTo(separationLine.snp.bottom).offset(isEmpty ? 102 : 278)
             }
         }
+    }
+    
+    private func showExitPopUpView(item: PopUp) {
+        exitPopUpView.configurePopUpView(item: item)
+        exitPopUpView.isHidden = false
+        UIView.transition(with: exitPopUpView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.exitPopUpView.alpha = 1
+        }, completion: nil)
     }
 }
 

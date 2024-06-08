@@ -139,6 +139,8 @@
 		CA64486C2B863CE20090DD84 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA64486B2B863CE20090DD84 /* CombineCocoa */; };
 		CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */; };
 		CA6450802C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */; };
+		CA6450862C141E0B00E00665 /* StumeetPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6450852C141E0B00E00665 /* StumeetPopUpView.swift */; };
+		CA6450882C14220200E00665 /* PopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6450872C14220200E00665 /* PopUp.swift */; };
 		CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */; };
 		CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */; };
 		CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */; };
@@ -342,6 +344,8 @@
 		CA64486E2B863DB60090DD84 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityLinkPopUpViewController.swift; sourceTree = "<group>"; };
 		CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityLinkPopUpViewModel.swift; sourceTree = "<group>"; };
+		CA6450852C141E0B00E00665 /* StumeetPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetPopUpView.swift; sourceTree = "<group>"; };
+		CA6450872C14220200E00665 /* PopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUp.swift; sourceTree = "<group>"; };
 		CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityListViewController.swift; sourceTree = "<group>"; };
 		CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityAllCell.swift; sourceTree = "<group>"; };
 		CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityHeaderView.swift; sourceTree = "<group>"; };
@@ -792,6 +796,7 @@
 			isa = PBXGroup;
 			children = (
 				CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */,
+				CA6450872C14220200E00665 /* PopUp.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1294,6 +1299,7 @@
 				CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */,
 				CA1C92C72BC91AF700ECF835 /* CalendarView.swift */,
 				CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */,
+				CA6450852C141E0B00E00665 /* StumeetPopUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1908,10 +1914,12 @@
 				CA9958592BB3EBF000884615 /* StudyActivitySettingViewController.swift in Sources */,
 				357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */,
 				353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */,
+				CA6450862C141E0B00E00665 /* StumeetPopUpView.swift in Sources */,
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
 				CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */,
+				CA6450882C14220200E00665 /* PopUp.swift in Sources */,
 				CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
