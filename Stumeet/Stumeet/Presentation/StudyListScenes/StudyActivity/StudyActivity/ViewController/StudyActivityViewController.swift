@@ -153,20 +153,30 @@ class StudyActivityViewController: BaseViewController {
             didTapGroupButton: groupButton.tapPublisher,
             didTapTaskButton: taskButton.tapPublisher,
             didChangedIndex: previousIndexSubject.eraseToAnyPublisher(),
-            didSlideIndex: slidedIndexSubject.eraseToAnyPublisher()
+            didSlideIndex: slidedIndexSubject.eraseToAnyPublisher(),
+            didTapFloatingButton: floatingButton.tapPublisher
         )
+        
+        // TODO: - ViewModel Biniding
         
         let output = viewModel.transform(input: input)
         
         output.selectedButtonIndex
-            .combineLatest(output.previousIndex)
             .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: setBackgroundColor)
+            .combineLatest(output.previousIndex)
             .sink(receiveValue: setSelectedViewController)
             .store(in: &cancellables)
         
         output.slideIndex
             .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: setBackgroundColor)
             .sink(receiveValue: updateButtonSelection)
+            .store(in: &cancellables)
+        
+        output.presentToCreateActivityVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.startCreateActivityCoordinator)
             .store(in: &cancellables)
     }
 }
@@ -209,5 +219,13 @@ extension StudyActivityViewController {
         allButton.isSelected = index == 0
         groupButton.isSelected = index == 1
         taskButton.isSelected = index == 2
+    }
+    
+    private func setBackgroundColor(index: Int) {
+        if index == 0 {
+            pageViewController.view.backgroundColor = StumeetColor.primary50.color
+        } else {
+            pageViewController.view.backgroundColor = .white
+        }
     }
 }
