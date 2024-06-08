@@ -117,6 +117,19 @@ final class CreateActivityViewController: BaseViewController {
         return collectionView
     }()
     
+    private let linkLabel: PaddingLabel = {
+        let label = PaddingLabel()
+        label.font = StumeetFont.bodyMedium14.font
+        label.textColor = StumeetColor.primary700.color
+        label.setPadding(top: 20, bottom: 19, left: 16, right: 16)
+        label.backgroundColor = StumeetColor.primary50.color
+        label.layer.cornerRadius = 16
+        label.layer.masksToBounds = true
+        
+        
+        return label
+    }()
+    
     private let bottomView = UIView()
     
     private let imageButton: UIButton = {
@@ -215,6 +228,7 @@ final class CreateActivityViewController: BaseViewController {
             seperationLine,
             contentTextView,
             photoCollectionView,
+            linkLabel,
             categoryStackViewContainer
         ]   .forEach(scrollView.addSubview)
         
@@ -276,6 +290,12 @@ final class CreateActivityViewController: BaseViewController {
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalTo(view)
             make.top.equalTo(seperationLine.snp.bottom).offset(24)
+            make.height.equalTo(0)
+        }
+        
+        linkLabel.snp.makeConstraints { make in
+            make.top.equalTo(seperationLine.snp.bottom).offset(200)
+            make.horizontalEdges.equalTo(view).inset(24)
             make.height.equalTo(0)
         }
         
@@ -399,6 +419,7 @@ final class CreateActivityViewController: BaseViewController {
         
         // linkPopUpVC로 화면 전환
         output.presentToLinkPopUpVC
+            .map { self }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToLinkPopUpVC)
             .store(in: &cancellables)
@@ -598,5 +619,24 @@ extension CreateActivityViewController: PHPickerViewControllerDelegate {
         snapshot.appendSections([.main])
         items.forEach { snapshot.appendItems([.photoCell($0)]) }
         datasource.apply(snapshot)
+    }
+}
+
+extension CreateActivityViewController: CreateActivityLinkDelegate {
+    func didTapRegisterButton(link: String) {
+        let imageAttachment = NSTextAttachment()
+        let image = UIImage(resource: .createActivityLink).withTintColor(StumeetColor.primary700.color)
+        imageAttachment.image = image
+        let imageOffsetY: CGFloat = -(image.size.height - linkLabel.font.capHeight) / 2
+        imageAttachment.bounds = CGRect(x: 0, y: imageOffsetY, width: 24, height: 24)
+        let text = NSMutableAttributedString()
+        text.append(NSAttributedString(attachment: imageAttachment))
+        text.append(NSAttributedString(string: "  "))
+        text.append(NSAttributedString(string: link))
+        linkLabel.attributedText = text
+        
+        linkLabel.snp.updateConstraints { make in
+            make.height.equalTo(56)
+        }
     }
 }

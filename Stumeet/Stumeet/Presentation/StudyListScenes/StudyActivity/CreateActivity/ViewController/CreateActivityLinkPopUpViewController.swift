@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CreateActivityLinkDelegate: AnyObject {
+    func didTapRegisterButton(link: String)
+}
+
 final class CreateActivityLinkPopUpViewController: BaseViewController {
 
     // MARK: - UIComponents
@@ -48,6 +52,7 @@ final class CreateActivityLinkPopUpViewController: BaseViewController {
         button.backgroundColor = StumeetColor.gray200.color
         button.layer.cornerRadius = 24
         button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        button.isEnabled = false
         
         return button
     }()
@@ -56,6 +61,7 @@ final class CreateActivityLinkPopUpViewController: BaseViewController {
     
     private let viewModel: CreateActivityLinkPopUpViewModel
     private let coordinator: CreateActivityNavigation
+    weak var delegate: CreateActivityLinkDelegate?
     
     // MARK: - Init
     
@@ -126,6 +132,53 @@ final class CreateActivityLinkPopUpViewController: BaseViewController {
     
     override func bind() {
         
+        let input = CreateActivityLinkPopUpViewModel.Input(
+            didBegienEditing: linkTextField.didBeginEditingPublisher,
+            didChangedText: linkTextField.textPublisher,
+            didTapXButton: xButton.tapPublisher,
+            didTapRegisterButton: registerButton.tapPublisher
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isEnableRegisterButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateRegisterButton)
+            .store(in: &cancellables)
+        
+        output.registerLink
+            .receive(on: RunLoop.main)
+            .sink { [weak self] link in
+                self?.delegate?.didTapRegisterButton(link: link)
+                self?.coordinator.dismiss()
+            }
+            .store(in: &cancellables)
+        
+        output.updateConstraintContainerView
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateConstraintContainerView)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - UpdateUI
+
+extension CreateActivityLinkPopUpViewController {
+    private func updateRegisterButton(isEnable: Bool) {
+        registerButton.isEnabled = isEnable
+        registerButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
     }
     
+    private func updateConstraintContainerView() {
+        containerView.snp.remakeConstraints { make in
+            make.height.equalTo(225)
+            make.horizontalEdges.equalToSuperview().inset(24)
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-32)
+        }
+    }
 }

@@ -24,7 +24,7 @@ protocol CreateActivityNavigation: AnyObject {
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
     func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
     func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate)
-    func presentToLinkPopUpVC()
+    func presentToLinkPopUpVC(delegate: CreateActivityLinkDelegate)
     func dismiss()
 }
 
@@ -86,11 +86,12 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         lastVC.present(pickerVC, animated: true)
     }
     
-    func presentToLinkPopUpVC() {
+    func presentToLinkPopUpVC(delegate: CreateActivityLinkDelegate) {
         guard let lastVC = navigationController.viewControllers.last else { return }
         let linkPopUpVC = dependencies.makeCreateActivityLinkPopUpViewController(coordinator: self)
         linkPopUpVC.modalPresentationStyle = .overFullScreen
         linkPopUpVC.modalTransitionStyle = .crossDissolve
+        linkPopUpVC.delegate = delegate
         lastVC.present(linkPopUpVC, animated: true)
         
     }
