@@ -1,5 +1,5 @@
 //
-//  StudyActivityAllCell.swift
+//  StudyActivityCell.swift
 //  Stumeet
 //
 //  Created by 정지훈 on 2/22/24.
@@ -8,11 +8,11 @@
 import Combine
 import UIKit
 
-class StudyActivityAllCell: BaseCollectionViewCell {
+class StudyActivityCell: BaseCollectionViewCell {
     
     // MARK: - Identifier
     
-    static let identifier = "StudyActivityAllCell"
+    static let identifier = "StudyActivityCell"
     
     // MARK: - UIComponents
     
@@ -105,7 +105,7 @@ class StudyActivityAllCell: BaseCollectionViewCell {
 
 // MARK: ConfigureUI
 
-extension StudyActivityAllCell {
+extension StudyActivityCell {
     
     
     func allAddView() {

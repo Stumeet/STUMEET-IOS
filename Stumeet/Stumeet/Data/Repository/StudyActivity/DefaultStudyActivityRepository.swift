@@ -10,25 +10,25 @@ import Foundation
 
 final class DefaultStudyActivityRepository: StudyActivityRepository {
     
-    private var items: [StudyActivityItem] = []
-    private var activityItemsSubject = CurrentValueSubject<[StudyActivityItem], Never>([])
+    private var items: [StudyActivitySectionItem] = []
+    private var activityItemsSubject = CurrentValueSubject<[StudyActivitySectionItem], Never>([])
     
-    func fetchActivityItems(type: StudyActivityItem) -> AnyPublisher<[StudyActivityItem], Never> {
+    func fetchActivityItems(type: StudyActivitySectionItem) -> AnyPublisher<[StudyActivitySectionItem], Never> {
         
         switch type {
             
         case .all:
-            items = Activity.allData.map { StudyActivityItem.all($0) }
+            items = Activity.allData.map { StudyActivitySectionItem.all($0) }
             activityItemsSubject.send(items)
             return activityItemsSubject.eraseToAnyPublisher()
             
         case .group:
-            items = Activity.groupData.map { StudyActivityItem.group($0) }
+            items = Activity.groupData.map { StudyActivitySectionItem.group($0) }
             activityItemsSubject.send(items)
             return activityItemsSubject.eraseToAnyPublisher()
             
         case .task:
-            items = Activity.taskData.map { StudyActivityItem.task($0) }
+            items = Activity.taskData.map { StudyActivitySectionItem.task($0) }
             activityItemsSubject.send(items)
             return activityItemsSubject.eraseToAnyPublisher()
         }

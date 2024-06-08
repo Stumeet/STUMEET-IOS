@@ -53,7 +53,7 @@ class StudyActivityListViewController: BaseViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createAllLayout(type: .all(nil)))
-        collectionView.register(StudyActivityAllCell.self, forCellWithReuseIdentifier: StudyActivityAllCell.identifier)
+        collectionView.register(StudyActivityCell.self, forCellWithReuseIdentifier: StudyActivityCell.identifier)
         collectionView.backgroundColor = StumeetColor.primary50.color
         
         return collectionView
@@ -78,13 +78,13 @@ class StudyActivityListViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel: StudyActivityViewModel
+    private let viewModel: AllStudyActivityViewModel
     private let coordinator: StudyListNavigation
-    private var datasource: UICollectionViewDiffableDataSource<StudyActivitySection, StudyActivityItem>?
+    private var datasource: UICollectionViewDiffableDataSource<StudyActivitySection, StudyActivitySectionItem>?
     
     // MARK: - Init
     
-    init(viewModel: StudyActivityViewModel, coordinator: StudyListNavigation) {
+    init(viewModel: AllStudyActivityViewModel, coordinator: StudyListNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         
@@ -149,54 +149,55 @@ class StudyActivityListViewController: BaseViewController {
     override func bind() {
         
         // TODO: - xButton 이벤트 처리
-        
-        let input = StudyActivityViewModel.Input(
-            didTapCreateButton: floatingButton.tapPublisher,
-            didTapAllButton: allButton.tapPublisher,
-            didTapGroupButton: groupButton.tapPublisher,
-            didTapTaskButton: taskButton.tapPublisher,
-            didTapXButton: xButton.tapPublisher
-        )
-        
-        let output = viewModel.transform(input: input)
-        
-        // TODO: - ViewModel Biniding
-        collectionView.didSelectItemPublisher
-            .map { _ in }
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
-            .store(in: &cancellables)
-        
-        // collectionview 아이템 바인딩
-        output.items
-            .removeDuplicates()
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateSnapshot)
-            .store(in: &cancellables)
-        
-        // 버튼 선택 상태 업데이트
-        output.isSelected
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateSelectedButton)
-            .store(in: &cancellables)
-        
-        // 활동 생성VC로 present
-        output.presentToCreateActivityVC
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.startCreateActivityCoordinator)
-            .store(in: &cancellables)
+        //
+        //        let input = AllStudyActivityViewModel.Input(
+        //            didTapCreateButton: floatingButton.tapPublisher,
+        //            didTapAllButton: allButton.tapPublisher,
+        //            didTapGroupButton: groupButton.tapPublisher,
+        //            didTapTaskButton: taskButton.tapPublisher,
+        //            didTapXButton: xButton.tapPublisher
+        //        )
+        //
+        //        let output = viewModel.transform(input: input)
+        //
+        //        // TODO: - ViewModel Biniding
+        //        collectionView.didSelectItemPublisher
+        //            .map { _ in }
+        //            .receive(on: RunLoop.main)
+        //            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
+        //            .store(in: &cancellables)
+        //
+        //        // collectionview 아이템 바인딩
+        //        output.items
+        //            .removeDuplicates()
+        //            .receive(on: RunLoop.main)
+        //            .sink(receiveValue: updateSnapshot)
+        //            .store(in: &cancellables)
+        //
+        //        // 버튼 선택 상태 업데이트
+        //        output.isSelected
+        //            .receive(on: RunLoop.main)
+        //            .sink(receiveValue: updateSelectedButton)
+        //            .store(in: &cancellables)
+        //
+        //        // 활동 생성VC로 present
+        //        output.presentToCreateActivityVC
+        //            .receive(on: RunLoop.main)
+        //            .sink(receiveValue: coordinator.startCreateActivityCoordinator)
+        //            .store(in: &cancellables)
+        //    }
     }
 }
-
-// MARK: - DataSource
-
+    
+    // MARK: - DataSource
+    
 extension StudyActivityListViewController {
     func configureDatasource() {
         datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
             
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: StudyActivityAllCell.identifier,
-                for: indexPath) as? StudyActivityAllCell else { return UICollectionViewCell() }
+                withReuseIdentifier: StudyActivityCell.identifier,
+                for: indexPath) as? StudyActivityCell else { return UICollectionViewCell() }
             
             switch item {
             case .all(let item):
@@ -211,12 +212,12 @@ extension StudyActivityListViewController {
         })
     }
 }
-
-// MARK: ConfigureLayout
-
+    
+    // MARK: ConfigureLayout
+    
 extension StudyActivityListViewController {
     
-    private func createAllLayout(type: StudyActivityItem) -> UICollectionViewCompositionalLayout {
+    private func createAllLayout(type: StudyActivitySectionItem) -> UICollectionViewCompositionalLayout {
         var layout: UICollectionViewCompositionalLayout
         
         switch type {
@@ -238,7 +239,7 @@ extension StudyActivityListViewController {
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(91))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
+            
             
             let section = NSCollectionLayoutSection(group: group)
             
@@ -251,36 +252,13 @@ extension StudyActivityListViewController {
 // MARK: - UIUpdate
 
 extension StudyActivityListViewController {
-    private func updateSnapshot(items: [StudyActivityItem]) {
+    private func updateSnapshot(items: [StudyActivitySectionItem]) {
         guard let datasource = self.datasource else { return }
         
-        var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivityItem>()
+        var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivitySectionItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
-        
-        setCollectionvViewLayout(items: items)
         datasource.apply(snapshot, animatingDifferences: false)
-    }
-    
-    private func setCollectionvViewLayout(items: [StudyActivityItem]) {
-        switch items.first {
-        case .all:
-            collectionView.setCollectionViewLayout(createAllLayout(type: .all(nil)), animated: false)
-            collectionView.backgroundColor = StumeetColor.primary50.color
-            
-        case .group:
-            collectionView.setCollectionViewLayout(createAllLayout(type: .group(nil)), animated: false)
-            collectionView.backgroundColor = .white
-            
-        case .task:
-            collectionView.setCollectionViewLayout(createAllLayout(type: .task(nil)), animated: false)
-            collectionView.backgroundColor = .white
-            
-        case .none:
-            break
-        }
-        
-        collectionView.contentOffset = .zero
     }
     
     private func updateSelectedButton(isSelecteds: [Bool]) {
