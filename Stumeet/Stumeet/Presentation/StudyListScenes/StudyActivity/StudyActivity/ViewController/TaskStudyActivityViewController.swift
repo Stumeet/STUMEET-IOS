@@ -81,6 +81,8 @@ final class TaskStudyActivityViewController: BaseViewController {
     }
 }
 
+// MARK: - Datasource
+
 extension TaskStudyActivityViewController {
     private func configureDatasource() {
         datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
@@ -109,6 +111,8 @@ extension TaskStudyActivityViewController {
         datasource.apply(snapshot, animatingDifferences: false)
     }
 }
+
+// MARK: - Layout
 
 extension TaskStudyActivityViewController {
     

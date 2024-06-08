@@ -81,6 +81,8 @@ final class GroupStudyActivityViewController: BaseViewController {
     }
 }
 
+// MARK: - Datasource
+
 extension GroupStudyActivityViewController {
     private func configureDatasource() {
         datasource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
@@ -109,6 +111,9 @@ extension GroupStudyActivityViewController {
         datasource.apply(snapshot, animatingDifferences: false)
     }
 }
+
+// MARK: - Layout
+
 extension GroupStudyActivityViewController {
     
     private func createLayout() -> UICollectionViewCompositionalLayout {

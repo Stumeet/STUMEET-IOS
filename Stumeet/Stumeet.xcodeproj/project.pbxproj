@@ -146,7 +146,6 @@
 		CA6450942C1465AF00E00665 /* GroupStudyActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6450932C1465AF00E00665 /* GroupStudyActivityViewController.swift */; };
 		CA6450962C1480A900E00665 /* GroupStudyActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6450952C1480A900E00665 /* GroupStudyActivityViewModel.swift */; };
 		CA6450982C1481FF00E00665 /* TaskStudyActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6450972C1481FF00E00665 /* TaskStudyActivityViewModel.swift */; };
-		CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */; };
 		CA6FADE52B871AF4008BCEF7 /* StudyActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE42B871AF4008BCEF7 /* StudyActivityCell.swift */; };
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
@@ -353,7 +352,6 @@
 		CA6450932C1465AF00E00665 /* GroupStudyActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStudyActivityViewController.swift; sourceTree = "<group>"; };
 		CA6450952C1480A900E00665 /* GroupStudyActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStudyActivityViewModel.swift; sourceTree = "<group>"; };
 		CA6450972C1481FF00E00665 /* TaskStudyActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStudyActivityViewModel.swift; sourceTree = "<group>"; };
-		CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityListViewController.swift; sourceTree = "<group>"; };
 		CA6FADE42B871AF4008BCEF7 /* StudyActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityCell.swift; sourceTree = "<group>"; };
 		CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySection.swift; sourceTree = "<group>"; };
@@ -1274,7 +1272,6 @@
 		CA6FADDF2B8717AD008BCEF7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */,
 				CA64508B2C14596100E00665 /* StudyActivityViewController.swift */,
 				CA6450932C1465AF00E00665 /* GroupStudyActivityViewController.swift */,
 				CA6450912C14659100E00665 /* TaskStudyActivityViewController.swift */,
@@ -1851,7 +1848,6 @@
 				CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */,
 				352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
-				CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */,
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,

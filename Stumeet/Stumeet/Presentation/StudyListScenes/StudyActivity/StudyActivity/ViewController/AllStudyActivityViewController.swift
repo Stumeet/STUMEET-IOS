@@ -73,6 +73,12 @@ final class AllStudyActivityViewController: BaseViewController {
         
         let output = viewModel.transform(input: input)
         
+        collectionView.didSelectItemPublisher
+            .map { _ in }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
+            .store(in: &cancellables)
+        
         output.items
             .removeDuplicates()
             .receive(on: RunLoop.main)
@@ -80,6 +86,8 @@ final class AllStudyActivityViewController: BaseViewController {
             .store(in: &cancellables)
     }
 }
+
+// MARK: - Datasource
 
 extension AllStudyActivityViewController {
     private func configureDatasource() {
@@ -109,6 +117,9 @@ extension AllStudyActivityViewController {
         datasource.apply(snapshot, animatingDifferences: false)
     }
 }
+
+// MARK: - Layout
+
 extension AllStudyActivityViewController {
     
     private func createLayout() -> UICollectionViewCompositionalLayout {
