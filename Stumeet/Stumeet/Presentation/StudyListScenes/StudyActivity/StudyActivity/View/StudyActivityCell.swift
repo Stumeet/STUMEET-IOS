@@ -89,6 +89,14 @@ class StudyActivityCell: BaseCollectionViewCell {
         view.backgroundColor = .white
         view.layer.cornerRadius = 16
         
+        view.layer.masksToBounds = false
+        view.layer.borderColor = StumeetColor.primary50.color.cgColor
+        view.layer.borderWidth = 1
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowRadius = 13
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        
         return view
     }()
     
@@ -188,7 +196,7 @@ extension StudyActivityCell {
     }
     
     func configureAllUI(item: Activity) {
-        removeAddedViews()
+        
         allAddView()
         setUpAllConstaints()
         
@@ -224,7 +232,6 @@ extension StudyActivityCell {
                 make.bottom.equalToSuperview().inset(16)
             }
         }
-    
     }
     
     func groupAddView() {
@@ -272,7 +279,6 @@ extension StudyActivityCell {
     }
     
     func configureGroupUI(item: Activity) {
-        removeAddedViews()
         groupAddView()
         setUpGroupConstraints()
         updateStatusLabel(status: item.status!)
@@ -319,7 +325,6 @@ extension StudyActivityCell {
     }
     func configureTaskUI(item: Activity) {
 
-        removeAddedViews()
         taskAddView()
         setUpTaskConstraints()
         updateStatusLabel(status: item.status!)
@@ -329,17 +334,6 @@ extension StudyActivityCell {
         
         if timeImageView.isHidden { timeImageView.isHidden = false }
     
-    }
-    
-    func removeAddedViews() {
-        
-        for subview in containerView.subviews {
-            subview.removeFromSuperview()
-        }
-        
-        for subview in subviews {
-            subview.removeFromSuperview()
-        }
     }
     
     func updateStatusLabel(status: String) {
