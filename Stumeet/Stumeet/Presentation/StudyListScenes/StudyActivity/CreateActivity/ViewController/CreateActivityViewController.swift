@@ -232,13 +232,13 @@ final class CreateActivityViewController: BaseViewController {
         ]   .forEach { topView.addSubview($0) }
 
         [
-            categoryButton,
             titleTextField,
             separationLine,
             contentTextView,
             photoCollectionView,
             linkLabel,
-            categoryStackViewContainer
+            categoryStackViewContainer,
+            categoryButton
         ]   .forEach(scrollView.addSubview)
         
         [
@@ -594,7 +594,7 @@ extension CreateActivityViewController {
             if category == selectedCategory {
                 button?.configuration?.baseForegroundColor = StumeetColor.primary700.color
             } else {
-                button?.configuration?.baseForegroundColor = .black
+                button?.configuration?.baseForegroundColor = StumeetColor.gray400.color
             }
         }
     }
