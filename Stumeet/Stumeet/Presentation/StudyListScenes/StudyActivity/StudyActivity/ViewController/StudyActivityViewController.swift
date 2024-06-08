@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 6/8/24.
 //
 
+import Combine
 import UIKit
 
 class StudyActivityViewController: BaseViewController {
@@ -76,6 +77,11 @@ class StudyActivityViewController: BaseViewController {
     private let viewModel: StudyActivityViewModel
     private let coordinator: StudyListNavigation
     
+    // MARK: - Subject
+    
+    private let previousIndexSubject = CurrentValueSubject<Int, Never>(0)
+    private let slidedIndexSubject = CurrentValueSubject<Int, Never>(0)
+    
     // MARK: - Init
     
     init(viewControllers: [UIViewController], viewModel: StudyActivityViewModel, coordinator: StudyListNavigation) {
@@ -140,33 +146,68 @@ class StudyActivityViewController: BaseViewController {
             make.width.height.equalTo(72)
         }
     }
+    
+    override func bind() {
+        let input = StudyActivityViewModel.Input(
+            didTapAllButton: allButton.tapPublisher,
+            didTapGroupButton: groupButton.tapPublisher,
+            didTapTaskButton: taskButton.tapPublisher,
+            didChangedIndex: previousIndexSubject.eraseToAnyPublisher(),
+            didSlideIndex: slidedIndexSubject.eraseToAnyPublisher()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.selectedButtonIndex
+            .combineLatest(output.previousIndex)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: setSelectedViewController)
+            .store(in: &cancellables)
+        
+        output.slideIndex
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateButtonSelection)
+            .store(in: &cancellables)
+    }
 }
+
+// MARK: - PageViewControllerDatsource, Delegate
 
 extension StudyActivityViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
-        let previousIndex = index - 1
-        if previousIndex < 0 {
-            return nil
-        }
-        return viewControllers[previousIndex]
+        guard let index = viewControllers.firstIndex(of: viewController), index > 0 else { return nil }
+        return viewControllers[index - 1]
     }
-
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.firstIndex(of: viewController) else { return nil }
-        let nextIndex = index + 1
-        if nextIndex == viewControllers.count {
-            return nil
-        }
-        return viewControllers[nextIndex]
+        guard let index = viewControllers.firstIndex(of: viewController), index < viewControllers.count - 1 else { return nil }
+        return viewControllers[index + 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let targetVC = pendingViewControllers.first,
+              let targetIndex = viewControllers.firstIndex(of: targetVC)
+        else { return }
+        slidedIndexSubject.send(targetIndex)
     }
 }
 
+// MARK: - UpdateUI
 
-//let isSelected = Publishers.Merge3(
-//    input.didTapAllButton.map { _ in [true, false, false] },
-//    input.didTapGroupButton.map { _ in [false, true, false] },
-//    input.didTapTaskButton.map { _ in [false, false, true] }
-//)
-//    .eraseToAnyPublisher()
+extension StudyActivityViewController {
+    private func setSelectedViewController(index: Int, previousIndex: Int) {
+        let selectedVC = viewControllers[index]
+        let direction: UIPageViewController.NavigationDirection = index > previousIndex ? .forward : .reverse
+        
+        updateButtonSelection(index: index)
+        pageViewController.setViewControllers([selectedVC], direction: direction, animated: true)
+        previousIndexSubject.send(index)
+    }
+    
+    private func updateButtonSelection(index: Int) {
+        allButton.isSelected = index == 0
+        groupButton.isSelected = index == 1
+        taskButton.isSelected = index == 2
+    }
+}
