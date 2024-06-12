@@ -156,9 +156,14 @@ class SnsLoginViewController: BaseViewController {
         
         output.navigateToChangeProfileVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                // TODO: 프로필 변경 화면으로 변경
-                self?.coordinator.goToRegisterVC()
+            .sink { [weak self] isLoggedIn in
+                guard let self = self else { return }
+
+                if isLoggedIn {
+                    coordinator.goToHomeVC()                    
+                } else {
+                    coordinator.goToRegisterVC()
+                }
             }
             .store(in: &cancellables)
         
