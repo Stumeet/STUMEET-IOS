@@ -14,7 +14,13 @@ final class AppCoordinator: Coordinator {
     private let appDIContainer: AppDIContainer
     
     func start() {
-        startTabbarCoordinator() // !IMP: 임시 코드
+        let isLoggedIn = appDIContainer.keychainManager.getToken(for: .accessToken) != nil
+        
+        if isLoggedIn {
+            startTabbarCoordinator()
+        } else {
+            startAuthCoordinator()
+        }
     }
     
     init(navigationController: UINavigationController,
