@@ -50,11 +50,6 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
         DefaultActivityMemberSettingRepository()
     }
     
-    // MARK: - StudyActivityList
-    func makeStudyActivityListViewModel() -> StudyActivityViewModel {
-        StudyActivityViewModel(useCase: makeStudyActivityUseCase())
-    }
-    
     // MARK: - CreateActivity
     func makeCreateActivityViewModel() -> CreateActivityViewModel {
         CreateActivityViewModel(useCase: makeCreateActivityUseCase())
