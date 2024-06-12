@@ -137,6 +137,10 @@
 		CA6448662B863CCB0090DD84 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448652B863CCB0090DD84 /* Moya */; };
 		CA6448692B863CD90090DD84 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CA6448682B863CD90090DD84 /* SnapKit */; };
 		CA64486C2B863CE20090DD84 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CA64486B2B863CE20090DD84 /* CombineCocoa */; };
+		CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */; };
+		CA6450802C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */; };
+		CA6450862C141E0B00E00665 /* StumeetPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6450852C141E0B00E00665 /* StumeetPopUpView.swift */; };
+		CA6450882C14220200E00665 /* PopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6450872C14220200E00665 /* PopUp.swift */; };
 		CA6FADE22B8717C6008BCEF7 /* StudyActivityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */; };
 		CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */; };
 		CA6FADE72B871BC9008BCEF7 /* StudyActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */; };
@@ -159,7 +163,9 @@
 		CA9AB21A2B8C7BA00027072E /* StudyActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */; };
 		CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */; };
 		CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */; };
+		CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */; };
 		CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */; };
+		CAB8E6DC2C0D8B98001034DC /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */; };
 		CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */; };
 		CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */; };
 		CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */; };
@@ -336,6 +342,10 @@
 		CA6448242B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA6448262B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA64486E2B863DB60090DD84 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityLinkPopUpViewController.swift; sourceTree = "<group>"; };
+		CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityLinkPopUpViewModel.swift; sourceTree = "<group>"; };
+		CA6450852C141E0B00E00665 /* StumeetPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetPopUpView.swift; sourceTree = "<group>"; };
+		CA6450872C14220200E00665 /* PopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUp.swift; sourceTree = "<group>"; };
 		CA6FADE12B8717C6008BCEF7 /* StudyActivityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityListViewController.swift; sourceTree = "<group>"; };
 		CA6FADE42B871AF4008BCEF7 /* StudyActivityAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityAllCell.swift; sourceTree = "<group>"; };
 		CA6FADE62B871BC9008BCEF7 /* StudyActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityHeaderView.swift; sourceTree = "<group>"; };
@@ -359,7 +369,9 @@
 		CA9AB2192B8C7BA00027072E /* StudyActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityUseCase.swift; sourceTree = "<group>"; };
 		CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityRepository.swift; sourceTree = "<group>"; };
 		CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStudyActivityRepository.swift; sourceTree = "<group>"; };
+		CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivitySection.swift; sourceTree = "<group>"; };
 		CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
+		CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		CAD45A082BB40674006BCB4A /* StudyActivitySettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySettingViewModel.swift; sourceTree = "<group>"; };
 		CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarViewController.swift; sourceTree = "<group>"; };
 		CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -784,6 +796,7 @@
 			isa = PBXGroup;
 			children = (
 				CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */,
+				CA6450872C14220200E00665 /* PopUp.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1285,6 +1298,8 @@
 				CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */,
 				CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */,
 				CA1C92C72BC91AF700ECF835 /* CalendarView.swift */,
+				CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */,
+				CA6450852C141E0B00E00665 /* StumeetPopUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1293,6 +1308,7 @@
 			isa = PBXGroup;
 			children = (
 				CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */,
+				CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1354,6 +1370,7 @@
 				CA9958582BB3EBF000884615 /* StudyActivitySettingViewController.swift */,
 				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
 				CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */,
+				CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1365,6 +1382,7 @@
 				CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */,
 				CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */,
 				CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */,
+				CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1789,6 +1807,7 @@
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
 				CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */,
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
+				CA6450802C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
 				CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */,
 				CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */,
@@ -1823,6 +1842,7 @@
 				CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */,
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
 				CAF533542B9EAF7D00A7B8B2 /* StartViewModel.swift in Sources */,
+				CAB8E6DC2C0D8B98001034DC /* SnackBar.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
 				35C9929D2BA73D04003B0AE7 /* KeychainManager.swift in Sources */,
 				357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */,
@@ -1837,6 +1857,7 @@
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */,
+				CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */,
@@ -1893,9 +1914,12 @@
 				CA9958592BB3EBF000884615 /* StudyActivitySettingViewController.swift in Sources */,
 				357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */,
 				353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */,
+				CA6450862C141E0B00E00665 /* StumeetPopUpView.swift in Sources */,
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
+				CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */,
+				CA6450882C14220200E00665 /* PopUp.swift in Sources */,
 				CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2071,9 +2095,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
@@ -2090,6 +2116,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2104,9 +2131,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stumeet/Stumeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
@@ -2123,6 +2152,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

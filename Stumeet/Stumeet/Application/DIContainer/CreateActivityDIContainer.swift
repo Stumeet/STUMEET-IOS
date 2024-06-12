@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     
@@ -105,4 +106,26 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
         )
     }
     
+    // MARK: - LinkPopUp
+    
+    func makeCreateActivityLinkPopUpViewModel() -> CreateActivityLinkPopUpViewModel {
+        CreateActivityLinkPopUpViewModel()
+    }
+    
+    func makeCreateActivityLinkPopUpViewController(coordinator: Navigation) -> CreateActivityLinkPopUpViewController {
+        CreateActivityLinkPopUpViewController(
+            viewModel: makeCreateActivityLinkPopUpViewModel(),
+            coordinator: coordinator
+        )
+    }
+    
+    // MARK: - PHPicker
+    func makePHPickerViewController() -> PHPickerViewController {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 5
+        let pickerVC = PHPickerViewController(configuration: config)
+        
+        return pickerVC
+    }
 }
