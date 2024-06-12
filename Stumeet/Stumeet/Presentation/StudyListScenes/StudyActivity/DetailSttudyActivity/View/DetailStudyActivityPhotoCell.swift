@@ -50,9 +50,11 @@ class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
     }
     
     func configureCreateActivityPhotoCell(image: UIImage) {
-        addSubview(xButton)
-        xButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(12)
+        if xButton.superview == nil {
+            addSubview(xButton)
+            xButton.snp.makeConstraints { make in
+                make.top.trailing.equalToSuperview().inset(12)
+            }
         }
         imageView.image = image
     }

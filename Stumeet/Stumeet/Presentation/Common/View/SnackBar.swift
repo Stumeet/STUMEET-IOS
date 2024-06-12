@@ -21,7 +21,7 @@ final class SnackBar: UIView {
         
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(24)
+            make.horizontalEdges.equalToSuperview().inset(24)
         }
     }
 
