@@ -9,5 +9,5 @@ import Combine
 import Foundation
 
 protocol StudyActivityRepository {
-    func fetchActivityItems(type: StudyActivityItem) -> AnyPublisher<[StudyActivityItem], Never>
+    func fetchActivityItems(type: StudyActivitySectionItem) -> AnyPublisher<[StudyActivitySectionItem], Never>
 }

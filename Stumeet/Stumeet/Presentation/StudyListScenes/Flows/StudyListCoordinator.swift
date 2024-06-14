@@ -9,7 +9,7 @@ import UIKit
 
 protocol StudyListCoordinatorDependencies {
     func makeStudyListVC(coordinator: StudyListNavigation) -> StudyListViewController
-    func makeStudyActivityListVC(coordinator: StudyListNavigation) -> StudyActivityListViewController
+    func makeStudyActivityVC(coordinator: StudyListNavigation) -> StudyActivityViewController
     func makeDetailStudyActivityListVC(coordinator: StudyListNavigation) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: StudyListNavigation) -> DetailActivityPhotoListViewController
@@ -84,7 +84,7 @@ extension StudyListCoordinator: StudyListNavigation {
     }
       
     func goToStudyActivityList() {
-        let studyActivityListVC = dependencies.makeStudyActivityListVC(coordinator: self)
+        let studyActivityListVC = dependencies.makeStudyActivityVC(coordinator: self)
         studyActivityListVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(studyActivityListVC, animated: true)
     }

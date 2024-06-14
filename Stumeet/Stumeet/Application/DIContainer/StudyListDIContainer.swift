@@ -16,7 +16,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     let dependencies: Dependencies
-
+    
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
@@ -60,14 +60,40 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         StudyListViewController(coordinator: coordinator)
     }
     
-    // MARK: - StudyActivityList
-    func makeStudyActivityListVM() -> StudyActivityViewModel {
-        StudyActivityViewModel(useCase: makeStudyActivityUseCase())
+    // MARK: - StudyActivity
+    
+    func makeAllStudyActivityViewModel() -> AllStudyActivityViewModel {
+        AllStudyActivityViewModel(useCase: makeStudyActivityUseCase())
     }
     
-    func makeStudyActivityListVC(coordinator: Navigation) -> StudyActivityListViewController {
-        StudyActivityListViewController(
-            viewModel: makeStudyActivityListVM(),
+    func makeGroupStudyActivityViewModel() -> GroupStudyActivityViewModel {
+        GroupStudyActivityViewModel(useCase: makeStudyActivityUseCase())
+    }
+    
+    func makeTaskStudyActivityViewModel() -> TaskStudyActivityViewModel {
+        TaskStudyActivityViewModel(useCase: makeStudyActivityUseCase())
+    }
+    
+    func makePageViewControllers(coordinator: Navigation) -> [UIViewController] {
+        return [
+            AllStudyActivityViewController(
+                viewModel: makeAllStudyActivityViewModel(),
+                coordinator: coordinator),
+            GroupStudyActivityViewController(
+                viewModel: makeGroupStudyActivityViewModel(),
+                coordinator: coordinator
+            ),
+            TaskStudyActivityViewController(
+                viewModel: makeTaskStudyActivityViewModel(),
+                coordinator: coordinator
+            )
+        ]
+    }
+    
+    func makeStudyActivityVC(coordinator: StudyListNavigation) -> StudyActivityViewController {
+        StudyActivityViewController(
+            viewControllers: makePageViewControllers(coordinator: coordinator),
+            viewModel: StudyActivityViewModel(),
             coordinator: coordinator)
     }
     

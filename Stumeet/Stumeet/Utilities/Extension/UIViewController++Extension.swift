@@ -30,14 +30,7 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItems = [backButton, navigationTitleItem]
     }
     
-    func configureXButtonTitleNavigationBarItems(title: String) {
-        let xButton = UIBarButtonItem(
-            image: UIImage(named: "xMark"),
-            style: .plain,
-            target: self,
-            action: nil
-        )
-        xButton.tintColor = .black
+    func configureXButtonTitleNavigationBarItems(button: UIBarButtonItem, title: String) {
         
         let titleLabel = UILabel().setLabelProperty(
             text: title,
@@ -46,8 +39,9 @@ extension UIViewController {
         )
         
         let navigationTitleItem = UIBarButtonItem(customView: titleLabel)
-        
-        self.navigationItem.leftBarButtonItems = [xButton, navigationTitleItem]
+        let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer.width = 24
+        self.navigationItem.leftBarButtonItems = [button, spacer, navigationTitleItem]
     }
     
     

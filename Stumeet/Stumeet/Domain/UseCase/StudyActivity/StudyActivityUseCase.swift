@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol StudyActivityUseCase {
-    func getActivityItems(type: StudyActivityItem) -> AnyPublisher<[StudyActivityItem], Never>
+    func getActivityItems(type: StudyActivitySectionItem) -> AnyPublisher<[StudyActivitySectionItem], Never>
 }
 
 final class DefaultStudyActivityUseCase: StudyActivityUseCase {
@@ -20,8 +20,8 @@ final class DefaultStudyActivityUseCase: StudyActivityUseCase {
         self.repository = repository
     }
     
-    func getActivityItems(type: StudyActivityItem) -> AnyPublisher<[StudyActivityItem], Never> {
-        repository.fetchActivityItems(type: type)
+    func getActivityItems(type: StudyActivitySectionItem) -> AnyPublisher<[StudyActivitySectionItem], Never> {
+        return repository.fetchActivityItems(type: type)
     }
     
     
