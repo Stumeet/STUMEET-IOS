@@ -28,7 +28,7 @@ enum TokenKey: CaseIterable {
 protocol KeychainManageable {
     func saveToken(_ token: String, for key: TokenKey) -> Bool
     func removeToken(for key: TokenKey) -> Bool
-    func removeAllTokens() -> Bool
+    @discardableResult func removeAllTokens() -> Bool
     func getToken(for key: TokenKey) -> String?
 }
 
@@ -56,7 +56,7 @@ final class KeychainManager: KeychainManageable {
         return status == errSecSuccess
     }
     
-    func removeAllTokens() -> Bool {
+    @discardableResult func removeAllTokens() -> Bool {
         var allRemoved = true
         TokenKey.allCases.forEach { key in
             let query: [String: Any] = [

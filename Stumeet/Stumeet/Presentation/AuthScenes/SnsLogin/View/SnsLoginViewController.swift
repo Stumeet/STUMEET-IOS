@@ -154,7 +154,7 @@ class SnsLoginViewController: BaseViewController {
         // MARK: - Output
         let output = viewModel.transform(input: input)
         
-        output.navigateToChangeProfileVC
+        output.authStateNavigation
             .receive(on: RunLoop.main)
             .sink { [weak self] isLoggedIn in
                 guard let self = self else { return }

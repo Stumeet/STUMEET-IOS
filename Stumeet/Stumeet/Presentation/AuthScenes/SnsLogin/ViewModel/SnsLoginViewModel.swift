@@ -19,7 +19,7 @@ final class SnsLoginViewModel: ViewModelType {
     
     // MARK: - Output
     struct Output {
-        let navigateToChangeProfileVC: AnyPublisher<Bool, Never>
+        let authStateNavigation: AnyPublisher<Bool, Never>
         let showError: AnyPublisher<String, Never>
     }
     
@@ -52,7 +52,7 @@ final class SnsLoginViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         return Output(
-            navigateToChangeProfileVC: navigateToChangeProfileVC,
+            authStateNavigation: navigateToChangeProfileVC,
             showError: showErrorSubject.eraseToAnyPublisher()
         )
     }
