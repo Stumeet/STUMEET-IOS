@@ -201,7 +201,10 @@ extension StudyActivitySettingViewController: CreateActivityMemberDelegate {
 }
 
 extension StudyActivitySettingViewController: CreateActivityPlaceDelegate {
-    
+    func didTapCompleteButton(place: String) {
+        placeLabel.text = place
+        placeLabel.textColor = StumeetColor.primary700.color
+    }
 }
 
 // MARK: - UpdateUI

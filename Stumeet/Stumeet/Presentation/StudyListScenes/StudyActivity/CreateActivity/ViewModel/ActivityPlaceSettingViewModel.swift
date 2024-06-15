@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 6/15/24.
 //
 
+import Combine
 import Foundation
 
 final class ActivityPlaceSettingViewModel: ViewModelType {
@@ -12,16 +13,19 @@ final class ActivityPlaceSettingViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
-        
+        let didchangeText: AnyPublisher<String?, Never>
+        let didTapCompleteButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
     
     struct Output {
+        let isEnableCompleteButton: AnyPublisher<Bool, Never>
+        let dismiss: AnyPublisher<String, Never>
     }
     
     // MARK: - Properties
-    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -32,6 +36,26 @@ final class ActivityPlaceSettingViewModel: ViewModelType {
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
-        return Output()
+        
+        let placeTextSubject = CurrentValueSubject<String?, Never>(nil)
+        
+        input.didchangeText
+            .sink(receiveValue: placeTextSubject.send)
+            .store(in: &cancellables)
+        
+        let isEnableCompleteButton = placeTextSubject
+            .compactMap { $0 }
+            .map { !$0.isEmpty }
+            .eraseToAnyPublisher()
+        
+        let text = input.didTapCompleteButton
+            .map { placeTextSubject.value }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+        
+        return Output(
+            isEnableCompleteButton: isEnableCompleteButton,
+            dismiss: text
+        )
     }
 }

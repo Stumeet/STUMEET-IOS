@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CreateActivityPlaceDelegate: AnyObject {
-    
+    func didTapCompleteButton(place: String)
 }
 
 class ActivityPlaceSettingViewController: BaseViewController {
@@ -111,6 +111,33 @@ class ActivityPlaceSettingViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
+        let input = ActivityPlaceSettingViewModel.Input(
+            didchangeText: placeTextfield.textPublisher,
+            didTapCompleteButton: completeButton.tapPublisher
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateEnableCompleteButton)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: delegate?.didTapCompleteButton)
+            .map { _ in }
+            .sink(receiveValue: coordinator.dismiss)
+            .store(in: &cancellables)
     }
 
+}
+
+// MARK: - UIUpdate
+
+extension ActivityPlaceSettingViewController {
+    func updateEnableCompleteButton(isEnable: Bool) {
+        completeButton.isEnabled = isEnable
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
+    }
 }
