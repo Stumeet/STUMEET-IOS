@@ -166,6 +166,12 @@ final class StudyActivitySettingViewController: BaseViewController {
             .sink(receiveValue: setCurrentDate)
             .store(in: &cancellables)
         
+        output.presentToPlaceVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToActivityPlaceSettingVC)
+            .store(in: &cancellables)
+        
         // 멤버설정 VC present
         output.presentToParticipatingMemberVC
             .map { self }
@@ -192,6 +198,10 @@ extension StudyActivitySettingViewController: CreateActivityMemberDelegate {
     func didTapCompleteButton(name: [String]) {
         print(name)
     }
+}
+
+extension StudyActivitySettingViewController: CreateActivityPlaceDelegate {
+    
 }
 
 // MARK: - UpdateUI
