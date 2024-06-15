@@ -15,16 +15,19 @@ final class ActivityPlaceSettingViewModel: ViewModelType {
     struct Input {
         let didchangeText: AnyPublisher<String?, Never>
         let didTapCompleteButton: AnyPublisher<Void, Never>
+        let didTapXButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
     
     struct Output {
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
-        let dismiss: AnyPublisher<String, Never>
+        let completedText: AnyPublisher<String, Never>
+        let dismiss: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
+    
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
@@ -55,7 +58,8 @@ final class ActivityPlaceSettingViewModel: ViewModelType {
         
         return Output(
             isEnableCompleteButton: isEnableCompleteButton,
-            dismiss: text
+            completedText: text,
+            dismiss: input.didTapXButton
         )
     }
 }

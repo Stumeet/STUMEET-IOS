@@ -214,6 +214,7 @@ extension StudyActivitySettingViewController {
         let button = UIButton()
         
         let titleLabel = UILabel().setLabelProperty(text: title, font: StumeetFont.bodyMedium16.font, color: nil)
+        subTitleLabel.textAlignment = .right
         
         button.addSubview(titleLabel)
         button.addSubview(subTitleLabel)
@@ -225,6 +226,7 @@ extension StudyActivitySettingViewController {
         
         subTitleLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(24)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(24)
             make.centerY.equalToSuperview()
         }
         

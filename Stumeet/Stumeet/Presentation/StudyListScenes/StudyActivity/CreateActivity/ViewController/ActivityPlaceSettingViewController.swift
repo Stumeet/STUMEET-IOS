@@ -113,7 +113,8 @@ class ActivityPlaceSettingViewController: BaseViewController {
     override func bind() {
         let input = ActivityPlaceSettingViewModel.Input(
             didchangeText: placeTextfield.textPublisher,
-            didTapCompleteButton: completeButton.tapPublisher
+            didTapCompleteButton: completeButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -123,10 +124,15 @@ class ActivityPlaceSettingViewController: BaseViewController {
             .sink(receiveValue: updateEnableCompleteButton)
             .store(in: &cancellables)
         
-        output.dismiss
+        output.completedText
             .receive(on: RunLoop.main)
             .handleEvents(receiveOutput: delegate?.didTapCompleteButton)
             .map { _ in }
+            .sink(receiveValue: coordinator.dismiss)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
     }
