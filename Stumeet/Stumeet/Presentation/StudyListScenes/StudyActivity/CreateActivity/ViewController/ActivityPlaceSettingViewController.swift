@@ -16,14 +16,44 @@ class ActivityPlaceSettingViewController: BaseViewController {
     
     // MARK: - UIComponents
     
+    private let xButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "xMark"), for: .normal)
+        
+        return button
+    }()
+    
+    private let titleLabel: UILabel = {
+        return UILabel().setLabelProperty(text: "장소", font: StumeetFont.titleMedium.font, color: .gray800)
+    }()
+    
+    private let placeTextfield: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "장소명, 링크, 장소 별칭 등을 입력하세요"
+        textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
+        textField.addLeftPadding(24)
+        textField.layer.cornerRadius = 16
+        textField.backgroundColor = StumeetColor.primary50.color
+        
+        return textField
+    }()
+    
+    private let completeButton: UIButton = {
+        let button = UIButton().makeRegisterBottomButton(text: "완료", color: StumeetColor.gray200.color)
+        button.isEnabled = false
+        return button
+    }()
+    
     // MARK: - Properties
     
+    private let viewModel: ActivityPlaceSettingViewModel
     private let coordinator: CreateActivityNavigation
     weak var delegate: CreateActivityPlaceDelegate?
     
     // MARK: - Init
     
-    init(coordinator: CreateActivityNavigation) {
+    init(viewModel: ActivityPlaceSettingViewModel, coordinator: CreateActivityNavigation) {
+        self.viewModel = viewModel
         self.coordinator = coordinator
         
         super.init(nibName: nil, bundle: nil)
@@ -42,21 +72,45 @@ class ActivityPlaceSettingViewController: BaseViewController {
     // MARK: - SetUp
     
     override func setupStyles() {
-        
+        view.backgroundColor = .white
     }
     
     override func setupAddView() {
-        
+        [
+            xButton,
+            titleLabel,
+            placeTextfield,
+            completeButton
+        ]   .forEach { view.addSubview($0) }
     }
     
     override func setupConstaints() {
+        xButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+        }
         
+        titleLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.centerY.equalTo(xButton)
+        }
+        
+        placeTextfield.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.height.equalTo(48)
+            make.top.equalTo(titleLabel.snp.bottom).offset(28)
+        }
+        
+        completeButton.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(34)
+            make.height.equalTo(72)
+        }
     }
     
     // MARK: - Bind
     
     override func bind() {
-        
     }
 
 }
