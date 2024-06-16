@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: HomeNavigation!
@@ -22,10 +22,25 @@ class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func setupStyles() {
         view.backgroundColor = .white
     }
-
+    
+    // MARK: - LifeCycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLogoutNotification()
+    }
+    
+    // MARK: - Function
+    // TODO: - 토큰 만료 플로우 및 로그아웃 처리 기획이 나오는대로 수정
+    private func setupLogoutNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleLogout), name: .userDidLogout, object: nil)
+    }
+    
+    @objc func handleLogout() {
+        DispatchQueue.main.async {
+            self.coordinator.presentLogoutAlert()
+        }
+    }
 }

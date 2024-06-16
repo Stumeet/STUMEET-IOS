@@ -25,7 +25,6 @@ final class AuthInterceptor: RequestInterceptor {
                for session: Session,
                dueTo error: Error,
                completion: @escaping (RetryResult) -> Void) {
-        // TODO: - 현재는 401코드의 경우 토큰 재발급 처리가 이루어 지고있지만, 토큰 만료 케이스의 특정 코드를 정할 필요가 있음, 현재 API는 토큰 만료 이외에도 401케이스가 있기에 무한 재발급될 우려가 있음
         guard let response = request.task?.response as? HTTPURLResponse,
               response.statusCode == 401,
               let accessToken = keychainManager.getToken(for: .accessToken),
@@ -37,13 +36,20 @@ final class AuthInterceptor: RequestInterceptor {
         
         useCase
             .refreshToken(accessToken: accessToken, refreshToken: refreshToken)
-            .sink { success in
+            .sink { [weak self] success in
                 if success {
                     completion(.retry)
                 } else {
+                    self?.logout()
                     completion(.doNotRetryWithError(error))
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    // TODO: - 토큰 만료 플로우 및 로그아웃 처리 기획이 나오는대로 수정
+    private func logout() {
+        keychainManager.removeAllTokens()
+        NotificationCenter.default.post(name: .userDidLogout, object: nil)
     }
 }
