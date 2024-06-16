@@ -9,5 +9,5 @@ import Combine
 import Moya
 
 protocol UserTokenRepository {
-    func updateAccessToken(accessToken: String, refreshToken: String) -> AnyPublisher<Bool, MoyaError>
+    func updateAuthToken(accessToken: String, refreshToken: String) -> AnyPublisher<Bool, MoyaError>
 }

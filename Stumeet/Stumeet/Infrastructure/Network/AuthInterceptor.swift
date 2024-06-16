@@ -35,7 +35,7 @@ final class AuthInterceptor: RequestInterceptor {
         }
         
         useCase
-            .refreshToken(accessToken: accessToken, refreshToken: refreshToken)
+            .refreshAuthToken(accessToken: accessToken, refreshToken: refreshToken)
             .sink { [weak self] success in
                 if success {
                     completion(.retry)

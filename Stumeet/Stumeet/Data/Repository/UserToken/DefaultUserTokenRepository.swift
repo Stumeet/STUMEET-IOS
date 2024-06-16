@@ -20,14 +20,15 @@ class DefaultUserTokenRepository: UserTokenRepository {
         self.keychainManager = keychainManager
     }
     
-    func updateAccessToken(accessToken: String, refreshToken: String) -> AnyPublisher<Bool, MoyaError> {
+    func updateAuthToken(accessToken: String, refreshToken: String) -> AnyPublisher<Bool, MoyaError> {
         let requestDTO = TokensRequestDTO(accessToken: accessToken, refreshToken: refreshToken)
         return provider.requestPublisher(.tokens(requestDTO))
-            .map(ResponseWithDataDTO<AccessTokenDTO>.self)
+            .map(ResponseWithDataDTO<AuthTokenDTO>.self)
             .compactMap { $0.data?.toDomain() }
             .map { [weak self] result in
                 guard let self = self else { return false}
-                return self.keychainManager.saveToken(result.accessToken, for: .accessToken)
+                return self.keychainManager.saveToken(result.accessToken, for: .accessToken) &&
+                self.keychainManager.saveToken(result.refreshToken, for: .refreshToken)
             }
             .catch { error -> AnyPublisher<Bool, MoyaError> in
                 print("Error: \(error)")
@@ -37,4 +38,3 @@ class DefaultUserTokenRepository: UserTokenRepository {
         
     }
 }
-

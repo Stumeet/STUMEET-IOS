@@ -13,8 +13,8 @@
 		352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885F42BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift */; };
 		352885F82BB9C9E800EFC0F6 /* UserTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885F72BB9C9E800EFC0F6 /* UserTokenRepository.swift */; };
 		352885FB2BB9CB5600EFC0F6 /* TokensRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */; };
-		352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FC2BB9CEF600EFC0F6 /* AccessTokenDTO.swift */; };
-		352885FF2BB9CF3700EFC0F6 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FE2BB9CF3700EFC0F6 /* AccessToken.swift */; };
+		352885FD2BB9CEF600EFC0F6 /* AuthTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */; };
+		352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */; };
 		352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352886052BB9D30700EFC0F6 /* TokenUseCase.swift */; };
 		352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DBE512C1DF001008859D2 /* Notification++Extension.swift */; };
 		352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */; };
@@ -225,8 +225,8 @@
 		352885F42BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserTokenRepository.swift; sourceTree = "<group>"; };
 		352885F72BB9C9E800EFC0F6 /* UserTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTokenRepository.swift; sourceTree = "<group>"; };
 		352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensRequestDTO.swift; sourceTree = "<group>"; };
-		352885FC2BB9CEF600EFC0F6 /* AccessTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenDTO.swift; sourceTree = "<group>"; };
-		352885FE2BB9CF3700EFC0F6 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenDTO.swift; sourceTree = "<group>"; };
+		352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		352886052BB9D30700EFC0F6 /* TokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUseCase.swift; sourceTree = "<group>"; };
 		352DBE512C1DF001008859D2 /* Notification++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification++Extension.swift"; sourceTree = "<group>"; };
 		352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++Extension.swift"; sourceTree = "<group>"; };
@@ -488,7 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */,
-				352885FC2BB9CEF600EFC0F6 /* AccessTokenDTO.swift */,
+				352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */,
 			);
 			path = UserToken;
 			sourceTree = "<group>";
@@ -496,7 +496,7 @@
 		352886002BB9CF3D00EFC0F6 /* UserToken */ = {
 			isa = PBXGroup;
 			children = (
-				352885FE2BB9CF3700EFC0F6 /* AccessToken.swift */,
+				352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */,
 			);
 			path = UserToken;
 			sourceTree = "<group>";
@@ -2004,7 +2004,7 @@
 				35EF30072C03841700F86052 /* StudyMainExitPopupViewController.swift in Sources */,
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
-				352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */,
+				352885FD2BB9CEF600EFC0F6 /* AuthTokenDTO.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityAllCell.swift in Sources */,
@@ -2020,7 +2020,7 @@
 				CA64483D2B863BB90090DD84 /* SelectFieldViewController.swift in Sources */,
 				CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */,
 				3562163D2C0208B100CAB23F /* ActivityInfoBoxView.swift in Sources */,
-				352885FF2BB9CF3700EFC0F6 /* AccessToken.swift in Sources */,
+				352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */,
 				35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */,
 				35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */,
 				CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */,
