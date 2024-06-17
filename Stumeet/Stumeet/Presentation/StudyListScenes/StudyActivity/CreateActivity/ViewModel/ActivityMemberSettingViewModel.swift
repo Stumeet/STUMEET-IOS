@@ -12,6 +12,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         let didTapAllSelectButton: AnyPublisher<Bool, Never>
         let searchTextPublisher: AnyPublisher<String?, Never>
         let didTapCompleteButton: AnyPublisher<Void, Never>
+        let didTapXButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -21,6 +22,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         let isSelectedAllButton: AnyPublisher<Bool, Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
         let completeMember: AnyPublisher<[ActivityMember], Never>
+        let dismiss: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -93,7 +95,8 @@ final class ActivityMemberSettingViewModel: ViewModelType {
             members: members,
             isSelectedAllButton: isSelectedAllButton,
             isEnableCompleteButton: isEnableCompleteButton,
-            completeMember: completeMember
+            completeMember: completeMember,
+            dismiss: input.didTapXButton
         )
     }
 }

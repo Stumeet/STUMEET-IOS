@@ -166,8 +166,9 @@ final class ActivityMemberSettingViewController: BaseViewController {
         let input = ActivityMemberSettingViewModel.Input(
             didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher(),
             didTapAllSelectButton: allSelectButton.tapPublisher.map {self.allSelectButton.isSelected}.eraseToAnyPublisher(),
-            searchTextPublisher: searchTextField.textPublisher.eraseToAnyPublisher(),
-            didTapCompleteButton: completeButton.tapPublisher.eraseToAnyPublisher()
+            searchTextPublisher: searchTextField.textPublisher,
+            didTapCompleteButton: completeButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -178,9 +179,6 @@ final class ActivityMemberSettingViewController: BaseViewController {
             .store(in: &cancellables)
         
         output.isSelectedAllButton
-            .map { print($0)
-                    return $0
-            }
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .assign(to: \.isSelected, on: allSelectButton)
@@ -197,6 +195,11 @@ final class ActivityMemberSettingViewController: BaseViewController {
                 self?.delegate?.didTapCompleteButton(members: names)
                 self?.coordinator.dismiss()
             })
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
         
     }
