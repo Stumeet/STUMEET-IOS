@@ -7,12 +7,15 @@
 
 import Foundation
 import UIKit
+import PhotosUI
 
 protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
     func makeStudyActivitySettingViewController(coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
     func makeActivityMemberSettingViewController(coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
+    func makeCreateActivityLinkPopUpViewController(coordinator: CreateActivityNavigation) -> CreateActivityLinkPopUpViewController
+    func makePHPickerViewController() -> PHPickerViewController
 }
 
 protocol CreateActivityNavigation: AnyObject {
@@ -20,6 +23,8 @@ protocol CreateActivityNavigation: AnyObject {
     func goToStudyActivitySettingVC()
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
     func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
+    func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate)
+    func presentToLinkPopUpVC(delegate: CreateActivityLinkDelegate)
     func dismiss()
 }
 
@@ -74,8 +79,27 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         lastVC.present(activityMemberSettingVC, animated: true)
     }
     
+    func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let pickerVC = dependencies.makePHPickerViewController()
+        pickerVC.delegate = delegate
+        lastVC.present(pickerVC, animated: true)
+    }
+    
+    func presentToLinkPopUpVC(delegate: CreateActivityLinkDelegate) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let linkPopUpVC = dependencies.makeCreateActivityLinkPopUpViewController(coordinator: self)
+        linkPopUpVC.modalPresentationStyle = .overFullScreen
+        linkPopUpVC.modalTransitionStyle = .crossDissolve
+        linkPopUpVC.delegate = delegate
+        lastVC.present(linkPopUpVC, animated: true)
+        
+    }
+    
     func dismiss() {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        lastVC.dismiss(animated: true)
+        lastVC.dismiss(animated: true) {
+            self.parentCoordinator?.childDidFinish(self)
+        }
     }
 }

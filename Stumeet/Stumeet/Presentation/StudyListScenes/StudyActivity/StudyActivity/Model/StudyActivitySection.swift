@@ -13,7 +13,7 @@ enum StudyActivitySection {
     case main
 }
 
-enum StudyActivityItem: Hashable {
+enum StudyActivitySectionItem: Hashable {
     case all(Activity?)
     case group(Activity?)
     case task(Activity?)

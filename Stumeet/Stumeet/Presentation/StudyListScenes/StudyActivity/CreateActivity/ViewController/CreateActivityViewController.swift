@@ -7,20 +7,16 @@
 
 import Combine
 import UIKit
+import PhotosUI
 
 final class CreateActivityViewController: BaseViewController {
     
+    typealias Section = CreateActivitySection
+    typealias SectionItem = CreateActivitySectionItem
+    
     // MARK: - UIComponents
     
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        
-        return scrollView
-    }()
-    
-    private let contentView = UIView()
+    private let topView = UIView()
     
     private let xButton: UIButton = {
         let button = UIButton()
@@ -36,8 +32,6 @@ final class CreateActivityViewController: BaseViewController {
     private let nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("다음", for: .normal)
-        button.isEnabled = false
-        button.setTitleColor(StumeetColor.gray400.color, for: .disabled)
         button.setTitleColor(StumeetColor.primary700.color, for: .normal)
         
         return button
@@ -63,8 +57,11 @@ final class CreateActivityViewController: BaseViewController {
     private lazy var categoryStackViewContainer: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = .white
+        containerView.layer.borderWidth = 2
+        containerView.layer.borderColor = StumeetColor.gray75.color.cgColor
         containerView.layer.cornerRadius = 16
         containerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        containerView.layer.masksToBounds = true
         
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -88,14 +85,49 @@ final class CreateActivityViewController: BaseViewController {
         return textField
     }()
     
+    private let separationLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.gray100.color
+        
+        return view
+    }()
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.alwaysBounceVertical = true
+    
+        return scrollView
+    }()
+    
     private let contentTextView: UITextView = {
         let textView = UITextView()
         textView.text = "내용을 입력하세요"
         textView.textColor = StumeetColor.gray300.color
         textView.font = StumeetFont.bodyMedium15.font
+        textView.isScrollEnabled = false
         
         return textView
         
+    }()
+    
+    private lazy var photoCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
+        collectionView.register(DetailStudyActivityPhotoCell.self, forCellWithReuseIdentifier: DetailStudyActivityPhotoCell.identifer)
+        
+        return collectionView
+    }()
+    
+    private let linkLabel: PaddingLabel = {
+        let label = PaddingLabel()
+        label.font = StumeetFont.bodyMedium14.font
+        label.textColor = StumeetColor.primary700.color
+        label.setPadding(top: 20, bottom: 19, left: 16, right: 16)
+        label.backgroundColor = StumeetColor.primary50.color
+        label.layer.cornerRadius = 16
+        label.layer.masksToBounds = true
+        
+        
+        return label
     }()
     
     private let bottomView = UIView()
@@ -107,16 +139,38 @@ final class CreateActivityViewController: BaseViewController {
         return button
     }()
     
+    private let linkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .createActivityLink), for: .normal)
+        
+        return button
+    }()
+    
     private let noticeLabel: UILabel = {
         return UILabel().setLabelProperty(text: "공지 등록", font: StumeetFont.bodyMedium14.font, color: .gray500)
     }()
     
     private let noticeSwitch = UISwitch()
     
+    private let exitPopUpView: StumeetPopUpView = {
+        let view = StumeetPopUpView()
+        view.isHidden = true
+        view.alpha = 0
+        
+        return view
+    }()
+    
     // MARK: - Properties
     
     private let viewModel: CreateActivityViewModel
     private let coordinator: CreateActivityNavigation
+    private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
+    
+    // MARK: - Subjects
+    
+    private let selecetedPhotoSubject = PassthroughSubject<[UIImage], Never>()
+    private let cellXButtonTapSubject = PassthroughSubject<UIImage, Never>()
+    private let didChangedLinkSubject = CurrentValueSubject<String, Never>("")
     
     // MARK: - Init
     
@@ -135,6 +189,8 @@ final class CreateActivityViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureDatasource()
         navigationController?.isNavigationBarHidden = true
     }
     
@@ -142,17 +198,14 @@ final class CreateActivityViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         bottomView.layer.addBorder([.top, .bottom], color: StumeetColor.gray100.color, width: 1)
-        
-        contentTextView.layer.addBorder([.top], color: StumeetColor.gray100.color, width: 1)
-        
-        categoryButton.configuration?.imagePadding =  269 * categoryButton.frame.width / 380
-        
         categoryStackViewContainer.layer.addBorder([.left, .right, .bottom], color: StumeetColor.gray100.color, width: 1)
     }
     
     override func setupStyles() {
         view.backgroundColor = .white
         noticeSwitch.transform = CGAffineTransform(scaleX: 36 / 51, y: 20 / 31)
+        let buttonWidth = UIScreen.main.bounds.width - 32
+        categoryButton.configuration?.imagePadding =  269 * buttonWidth / 380
     }
     
     override func setupAddView() {
@@ -168,39 +221,45 @@ final class CreateActivityViewController: BaseViewController {
         [
             imageButton,
             noticeLabel,
+            linkButton,
             noticeSwitch
         ]   .forEach { bottomView.addSubview($0) }
         
         [
             xButton,
             topLabel,
-            nextButton,
+            nextButton
+        ]   .forEach { topView.addSubview($0) }
+
+        [
             titleTextField,
+            separationLine,
             contentTextView,
+            photoCollectionView,
+            linkLabel,
             categoryStackViewContainer,
-            categoryButton,
-            bottomView
-        ]   .forEach { contentView.addSubview($0) }
+            categoryButton
+        ]   .forEach(scrollView.addSubview)
         
-        scrollView.addSubview(contentView)
-        
-        view.addSubview(scrollView)
+        [
+            topView,
+            scrollView,
+            bottomView,
+            exitPopUpView
+        ]   .forEach(view.addSubview)
     }
     
     override func setupConstaints() {
         
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        contentView.snp.makeConstraints { make in
-            make.width.equalTo(scrollView.snp.width)
-            make.edges.equalTo(scrollView.contentLayoutGuide)
+        topView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalToSuperview().offset(71)
+            make.height.equalTo(48)
         }
         
         xButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
+            make.top.equalToSuperview()
         }
         
         topLabel.snp.makeConstraints { make in
@@ -214,22 +273,46 @@ final class CreateActivityViewController: BaseViewController {
         }
         
         categoryButton.snp.makeConstraints { make in
-            make.top.equalTo(xButton.snp.bottom).offset(21)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(21)
+            make.horizontalEdges.equalTo(view).inset(16)
             make.height.equalTo(56)
+        }
+        
+        scrollView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalTo(xButton.snp.bottom)
+            make.bottom.equalTo(bottomView.snp.top)
         }
         
         titleTextField.snp.makeConstraints { make in
             make.top.equalTo(categoryButton.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.horizontalEdges.equalTo(view).inset(24)
             make.height.equalTo(22)
         }
         
+        separationLine.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(titleTextField)
+            make.top.equalTo(titleTextField.snp.bottom).offset(15)
+            make.height.equalTo(1)
+        }
+        
+        photoCollectionView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.equalTo(view)
+            make.top.equalTo(separationLine.snp.bottom).offset(24)
+            make.height.equalTo(0)
+        }
+        
+        linkLabel.snp.makeConstraints { make in
+            make.top.equalTo(separationLine.snp.bottom).offset(200)
+            make.horizontalEdges.equalTo(view).inset(24)
+            make.height.equalTo(0)
+        }
+        
         contentTextView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(titleTextField.snp.bottom).offset(16)
+            make.top.equalTo(separationLine.snp.bottom).offset(6)
             make.bottom.equalToSuperview()
-            make.height.equalTo(520)
+            make.horizontalEdges.equalTo(view).inset(20)
         }
         
         bottomView.snp.makeConstraints { make in
@@ -240,6 +323,11 @@ final class CreateActivityViewController: BaseViewController {
         
         imageButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
+            make.centerY.equalToSuperview()
+        }
+        
+        linkButton.snp.makeConstraints { make in
+            make.leading.equalTo(imageButton.snp.trailing).offset(16)
             make.centerY.equalToSuperview()
         }
         
@@ -256,10 +344,15 @@ final class CreateActivityViewController: BaseViewController {
         categoryStackViewContainer.snp.makeConstraints { make in
             make.height.equalTo(168)
             make.top.equalTo(categoryButton.snp.bottom).offset(-8)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.equalTo(view).inset(16)
         }
         
         categoryStackViewContainer.subviews[0].snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        exitPopUpView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -280,8 +373,16 @@ final class CreateActivityViewController: BaseViewController {
             didTapCategoryButton: categoryButton.tapPublisher,
             didTapCategoryItem: categoryButtonTaps.eraseToAnyPublisher(),
             didTapXButton: xButton.tapPublisher,
-            didTapNextButton: nextButton.tapPublisher
+            didTapNextButton: nextButton.tapPublisher,
+            didTapImageButton: imageButton.tapPublisher,
+            didSelectedPhotos: selecetedPhotoSubject.eraseToAnyPublisher(),
+            didTapCellXButton: cellXButtonTapSubject.eraseToAnyPublisher(),
+            didTapLinkButton: linkButton.tapPublisher,
+            didChangedLink: didChangedLinkSubject.eraseToAnyPublisher(),
+            didTapPopUpStayButton: exitPopUpView.leftButtonTapSubject.eraseToAnyPublisher(),
+            didTapPopUpExitButton: exitPopUpView.rightButtonTapSubject.eraseToAnyPublisher()
         )
+        
         
         // MARK: - Output
         
@@ -291,70 +392,133 @@ final class CreateActivityViewController: BaseViewController {
         output.isBeginEditing
             .filter { $0 }
             .removeDuplicates()
+            .map { _ in }
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.contentTextView.text = ""
-                self?.contentTextView.textColor = .black
-            }
+            .sink(receiveValue: setBeginEditingText)
             .store(in: &cancellables)
         
         // 다음 버튼 enable 설정
         output.isEnableNextButton
             .receive(on: RunLoop.main)
-            .assign(to: \.isEnabled, on: nextButton)
+            .sink(receiveValue: checkNavigateToSettingVC)
             .store(in: &cancellables)
         
-        // 다음 버튼 enable 설정)
-        output.showCategoryStackView
+        // 카테고리 스택뷰 업데이트
+        output.isHiddenCategoryItems
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.categoryStackViewContainer.isHidden = false
-                self?.updateCategoryItemTitleColor()
-            }
+            .assign(to: \.isHidden, on: categoryStackViewContainer)
             .store(in: &cancellables)
         
         // 선택한 category UI binding
         output.selectedCategory
             .receive(on: RunLoop.main)
-            .sink { [weak self] selectedCategory in
-                self?.categoryStackViewContainer.isHidden = true
-                self?.categoryButton.configuration?.attributedTitle = AttributedString(selectedCategory.title)
-            }
+            .sink(receiveValue: updateCategoryItem)
             .store(in: &cancellables)
         
-        // 500자 이상일 경우 alert 표시
-        output.isShowMaxLengthContentAlert
-            .removeDuplicates()
-            .filter { $0 }
+        // 500자 이상일 경우 SnackBar 표시
+        output.maxLengthText
+            .filter { $0 != "" }
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.contentTextView.text = String(self?.contentTextView.text?.dropLast() ?? "")
-                self?.showAlert(
-                    title: "글자 수 제한",
-                    message: "500자 이하로 써주세요",
-                    buttonTitle1: "확인",
-                    buttonTitle2: nil,
-                    action1: nil,
-                    action2: nil
-                )
-            }
+            .sink(receiveValue: showMaxLengthContentSnackBar)
             .store(in: &cancellables)
         
-        // dismiss
+        // 앨범화면 전환
+        output.presentToPickerVC
+            .map { _ in self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToPHPickerVC)
+            .store(in: &cancellables)
+        
+        // 선택한 사진 바인딩
+        output.photosItem
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        // linkPopUpVC로 화면 전환
+        output.presentToLinkPopUpVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToLinkPopUpVC)
+            .store(in: &cancellables)
+        
+        output.linkText
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: setLinkLabelText)
+            .store(in: &cancellables)
+        
+        output.isEmptyPhotoItem
+            .removeDuplicates()
+            .combineLatest(output.linkText)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateConstraints)
+            .store(in: &cancellables)
+        
+        output.exitPopUp
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: chekcShowExitPopUpView)
+            .store(in: &cancellables)
+        
         output.dismiss
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] _ in
-                self?.dismiss(animated: true)
-            })
-            .store(in: &cancellables)
-        
-        output.navigateToActivitySettingVC
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.goToStudyActivitySettingVC)
+            .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
     }
 }
 
+// MARK: - CollectionViewLayout
+
+extension CreateActivityViewController {
+    private func configureLayout() -> UICollectionViewCompositionalLayout {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(160))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(160))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 16
+        section.orthogonalScrollingBehavior = .continuous
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        
+        return layout
+    }
+}
+
+// MARK: - Datasource
+
+extension CreateActivityViewController {
+    private func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource(collectionView: photoCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .photoCell(let image):
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: DetailStudyActivityPhotoCell.identifer,
+                    for: indexPath)
+                        as? DetailStudyActivityPhotoCell else { return UICollectionViewCell() }
+                
+                cell.xButton.tapPublisher
+                    .map { image }
+                    .sink(receiveValue: self.cellXButtonTapSubject.send)
+                    .store(in: &cell.cancellables)
+                
+                cell.configureCreateActivityPhotoCell(image: image)
+                
+                return cell
+            }
+        })
+    }
+
+    private func updateSnapshot(items: [UIImage]) {
+        guard let datasource = datasource else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
+        snapshot.appendSections([.main])
+        items.forEach { snapshot.appendItems([.photoCell($0)]) }
+        datasource.apply(snapshot)
+    }
+}
 
 // MARK: UpdateUI
 
@@ -369,14 +533,54 @@ extension CreateActivityViewController {
         if case .freedom = category {
             config.baseForegroundColor = StumeetColor.primary700.color
         } else { config.baseForegroundColor = StumeetColor.gray400.color}
-
+        
         let button = UIButton()
         button.configuration = config
         button.contentHorizontalAlignment = .leading
         return button
     }
     
-    private func updateCategoryItemTitleColor() {
+    private func updateIsHiddenCategoryItem(isHidden: Bool) {
+        categoryStackViewContainer.isHidden = isHidden
+    }
+    
+    private func checkNavigateToSettingVC(isEnable: Bool) {
+        if isEnable {
+            coordinator.goToStudyActivitySettingVC()
+        } else {
+            showSnackBar(text: "! 활동 작성이 완료되지 않았어요.")
+        }
+    }
+    
+    private func showSnackBar(text: String) {
+        let snackBar = SnackBar(frame: .zero, text: text)
+        
+        view.addSubview(snackBar)
+        
+        snackBar.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(self.bottomView.snp.top).offset(-24)
+            make.height.equalTo(74)
+        }
+        
+        snackBar.isHidden = false
+        snackBar.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            snackBar.alpha = 1
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIView.animate(withDuration: 0.3) {
+                    snackBar.alpha = 0
+                } completion: { _ in
+                    snackBar.isHidden = true
+                    snackBar.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    private func updateCategoryItem(selectedCategory: ActivityCategory) {
         
         let categoryButtons: [ActivityCategory: UIButton?] = [
             .freedom: freedomButton,
@@ -384,14 +588,124 @@ extension CreateActivityViewController {
             .homework: homeWorkButton
         ]
         
-        let selectedCategory = viewModel.currentCategorySubject.value
-                
+        categoryButton.configuration?.attributedTitle = AttributedString(selectedCategory.title)
+        
         categoryButtons.forEach { category, button in
             if category == selectedCategory {
                 button?.configuration?.baseForegroundColor = StumeetColor.primary700.color
             } else {
-                button?.configuration?.baseForegroundColor = .black
+                button?.configuration?.baseForegroundColor = StumeetColor.gray400.color
             }
         }
+    }
+    
+    private func showMaxLengthContentSnackBar(text: String) {
+        contentTextView.text = String(contentTextView.text?.dropLast() ?? "")
+        showSnackBar(text: text)
+    }
+    
+    private func setBeginEditingText() {
+        contentTextView.text = ""
+        contentTextView.textColor = StumeetColor.gray800.color
+    }
+    
+    private func setLinkLabelText(link: String) {
+        let imageAttachment = NSTextAttachment()
+        let image = UIImage(resource: .createActivityLink).withTintColor(StumeetColor.primary700.color)
+        imageAttachment.image = image
+        let imageOffsetY: CGFloat = -(image.size.height - linkLabel.font.capHeight) / 2
+        imageAttachment.bounds = CGRect(x: 0, y: imageOffsetY, width: 24, height: 24)
+        
+        let text = NSMutableAttributedString()
+        text.append(NSAttributedString(attachment: imageAttachment))
+        text.append(NSAttributedString(string: "  "))
+        text.append(NSAttributedString(string: link))
+        linkLabel.attributedText = text
+    }
+    
+    private func updateConstraints(isEmpty: Bool, link: String) {
+        updatePhotoCollectionViewConstraints(isEmpty: isEmpty)
+        updateLinkLabelAndContentTextViewConstraints(isEmpty: isEmpty, link: link)
+    }
+    
+    private func updatePhotoCollectionViewConstraints(isEmpty: Bool) {
+        photoCollectionView.snp.updateConstraints { make in
+            make.height.equalTo(isEmpty ? 0 : 160)
+        }
+    }
+    
+    private func updateLinkLabelAndContentTextViewConstraints(isEmpty: Bool, link: String) {
+        if link.isEmpty {
+            let topOffset = isEmpty ? 6 : 200
+            contentTextView.snp.updateConstraints { make in
+                make.top.equalTo(separationLine.snp.bottom).offset(topOffset)
+            }
+        } else {
+            linkLabel.snp.updateConstraints { make in
+                make.height.equalTo(56)
+                make.top.equalTo(separationLine.snp.bottom).offset(isEmpty ? 24 : 200)
+            }
+            
+            contentTextView.snp.updateConstraints { make in
+                make.top.equalTo(separationLine.snp.bottom).offset(isEmpty ? 102 : 278)
+            }
+        }
+    }
+    
+    private func chekcShowExitPopUpView(item: PopUp?) {
+        if let item {
+            showExitPopUpView(item: item)
+        } else {
+            hideExitPopUpView()
+        }
+    }
+    
+    private func showExitPopUpView(item: PopUp) {
+        exitPopUpView.configurePopUpView(item: item)
+        exitPopUpView.isHidden = false
+        UIView.transition(with: exitPopUpView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.exitPopUpView.alpha = 1
+        })
+    }
+    
+    private func hideExitPopUpView() {
+        exitPopUpView.isHidden = true
+        UIView.transition(with: exitPopUpView, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.exitPopUpView.alpha = 0
+        })
+    }
+}
+
+// MARK: - PHPickerViewDelegate
+
+extension CreateActivityViewController: PHPickerViewControllerDelegate {
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        var images: [UIImage] = []
+        let dispatchGroup = DispatchGroup()
+
+        for result in results {
+            let itemProvider = result.itemProvider
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                dispatchGroup.enter()
+                itemProvider.loadObject(ofClass: UIImage.self) { object, _ in
+                    if let image = object as? UIImage {
+                        images.append(image)
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            self.selecetedPhotoSubject.send(images)
+            self.coordinator.dismiss()
+        }
+    }
+}
+
+extension CreateActivityViewController: CreateActivityLinkDelegate {
+    func didTapRegisterButton(link: String) {
+        didChangedLinkSubject.send(link)
     }
 }
