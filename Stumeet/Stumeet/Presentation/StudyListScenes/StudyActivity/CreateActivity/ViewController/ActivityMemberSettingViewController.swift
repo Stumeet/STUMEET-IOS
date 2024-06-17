@@ -204,14 +204,14 @@ extension ActivityMemberSettingViewController {
     private func configureDatasource() {
         datasource = UITableViewDiffableDataSource(tableView: memberTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .memberCell(let name, let isSelected):
+            case .memberCell(let item):
                 guard let cell =
                         tableView.dequeueReusableCell(
                             withIdentifier: ActivityMemberCell.identifier,
                             for: indexPath
                         ) as? ActivityMemberCell
                 else { return UITableViewCell() }
-                cell.configureCell(name, isSelected)
+                cell.configureCell(item)
                 
                 return cell
             }

@@ -25,7 +25,7 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
     
     func getMembers() -> AnyPublisher<[ActivityMemberSectionItem], Never> {
         return repository.fetchMembers()
-            .map { $0.map { ActivityMemberSectionItem.memberCell($0, false)} }
+            .map { $0.map { ActivityMemberSectionItem.memberCell($0) } }
             .eraseToAnyPublisher()
     }
     
@@ -35,21 +35,24 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
         filterMembers: [ActivityMemberSectionItem]
     ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem]), Never> {
         
-        guard case .memberCell(let name, let isSelected) = filterMembers[indexPath.row] else {
+        guard case .memberCell(let item) = filterMembers[indexPath.row] else {
             return Empty().eraseToAnyPublisher()
         }
         
-        let toggledMember = ActivityMemberSectionItem.memberCell(name, !isSelected)
+        var toggledMember = item
+        toggledMember.isSelected.toggle()
+        
+        let toggledItem = ActivityMemberSectionItem.memberCell(toggledMember)
         
         let allMembers = members.map { member -> ActivityMemberSectionItem in
-            if case .memberCell(let memberName, _) = member, memberName == name {
-                return toggledMember
+            if case .memberCell(let item) = member, item.id == member.id {
+                return toggledItem
             }
             return member
         }
         
         var filteredMembers = filterMembers
-        filteredMembers[indexPath.row] = toggledMember
+        filteredMembers[indexPath.row] = toggledItem
         
         return Just((allMembers, filteredMembers)).eraseToAnyPublisher()
     }
@@ -58,17 +61,19 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
     func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never> {
         let updatedMembers = members.map { member -> ActivityMemberSectionItem in
             switch member {
-            case .memberCell(let name, _):
-                return .memberCell(name, isSelected)
+            case .memberCell(let item):
+                var updatedItem = item
+                updatedItem.isSelected = isSelected
+                return .memberCell(updatedItem)
             }
         }
         return Just((updatedMembers, isSelected)).eraseToAnyPublisher()
     }
     
     func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never> {
-        let filteredMembers = text.isEmpty ? members : members.filter {
-            if case .memberCell(let name, _) = $0 {
-                return name.contains(text)
+        let filteredMembers = text.isEmpty ? members : members.filter { member in
+            if case .memberCell(let item) = member {
+                return item.name.contains(text)
             }
             return false
         }
@@ -77,8 +82,8 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
     
     func setIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never> {
         let hasSelected = members.contains { member in
-            if case .memberCell(_, let isSelected) = member {
-                return isSelected
+            if case .memberCell(let item) = member {
+                return item.isSelected
             }
             return false
         }
@@ -87,14 +92,14 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
     
     func completeMembers(members: [ActivityMemberSectionItem]) -> AnyPublisher<[String], Never> {
         let selectedMembers = members.filter { member in
-            if case .memberCell(_, let isSelected) = member {
-                return isSelected
+            if case .memberCell(let item) = member {
+                return item.isSelected
             }
             return false
         }
             .map { member in
-                if case .memberCell(let name, _) = member {
-                    return name
+                if case .memberCell(let item) = member {
+                    return item.name
                 }
                 return ""
             }

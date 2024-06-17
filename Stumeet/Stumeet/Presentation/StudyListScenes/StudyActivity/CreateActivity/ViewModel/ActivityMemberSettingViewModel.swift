@@ -65,10 +65,10 @@ final class ActivityMemberSettingViewModel: ViewModelType {
             .store(in: &cancellables)
         
         let isSelectedAll = input.didTapAllSelectButton
-            .map { (!$0, self.memberSubject.value) }
+            .map { (!$0, self.filteredMemberSubject.value) }
             .flatMap(useCase.setIsSelectedAll)
             .map { [weak self] members, isSelected in
-                self?.memberSubject.send(members)
+                self?.filteredMemberSubject.send(members)
                 return isSelected
             }
             .eraseToAnyPublisher()

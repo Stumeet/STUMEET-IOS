@@ -9,5 +9,5 @@ import Combine
 import Foundation
 
 protocol ActivityMemberSettingRepository {
-    func fetchMembers() -> AnyPublisher<[String], Never> 
+    func fetchMembers() -> AnyPublisher<[ActivityMember], Never> 
 }
