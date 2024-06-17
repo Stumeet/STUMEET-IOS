@@ -13,7 +13,7 @@ protocol ActivityMemberSettingUseCase {
     func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never>
     func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never>
     func setIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never>
-    func completeMembers(members: [ActivityMemberSectionItem]) -> AnyPublisher<[String], Never>
+    func completeMembers(members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMember], Never>
 }
 
 final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
@@ -35,24 +35,26 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
         filterMembers: [ActivityMemberSectionItem]
     ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem]), Never> {
         
-        guard case .memberCell(let item) = filterMembers[indexPath.row] else {
+        guard case .memberCell(let toggledItem) = filterMembers[indexPath.row] else {
             return Empty().eraseToAnyPublisher()
         }
         
-        var toggledMember = item
+        var toggledMember = toggledItem
         toggledMember.isSelected.toggle()
         
-        let toggledItem = ActivityMemberSectionItem.memberCell(toggledMember)
+        let toggledSectionItem = ActivityMemberSectionItem.memberCell(toggledMember)
         
         let allMembers = members.map { member -> ActivityMemberSectionItem in
-            if case .memberCell(let item) = member, item.id == member.id {
-                return toggledItem
+            if member.item.id == toggledItem.id {
+                return toggledSectionItem
             }
-            return member
+            else {
+                return member
+            }
         }
         
         var filteredMembers = filterMembers
-        filteredMembers[indexPath.row] = toggledItem
+        filteredMembers[indexPath.row] = toggledSectionItem
         
         return Just((allMembers, filteredMembers)).eraseToAnyPublisher()
     }
@@ -60,49 +62,27 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
 
     func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never> {
         let updatedMembers = members.map { member -> ActivityMemberSectionItem in
-            switch member {
-            case .memberCell(let item):
-                var updatedItem = item
-                updatedItem.isSelected = isSelected
-                return .memberCell(updatedItem)
-            }
+            var updatedItem = member.item
+            updatedItem.isSelected = isSelected
+            return .memberCell(updatedItem)
         }
         return Just((updatedMembers, isSelected)).eraseToAnyPublisher()
     }
     
     func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never> {
-        let filteredMembers = text.isEmpty ? members : members.filter { member in
-            if case .memberCell(let item) = member {
-                return item.name.contains(text)
-            }
-            return false
-        }
+        let filteredMembers = text.isEmpty ? members : members.filter { $0.item.name.contains(text) }
         return Just(filteredMembers).eraseToAnyPublisher()
     }
     
     func setIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never> {
-        let hasSelected = members.contains { member in
-            if case .memberCell(let item) = member {
-                return item.isSelected
-            }
-            return false
-        }
+        let hasSelected = members.contains { $0.item.isSelected }
         return Just(hasSelected).eraseToAnyPublisher()
     }
     
-    func completeMembers(members: [ActivityMemberSectionItem]) -> AnyPublisher<[String], Never> {
-        let selectedMembers = members.filter { member in
-            if case .memberCell(let item) = member {
-                return item.isSelected
-            }
-            return false
-        }
-            .map { member in
-                if case .memberCell(let item) = member {
-                    return item.name
-                }
-                return ""
-            }
+    func completeMembers(members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMember], Never> {
+        let selectedMembers = members
+            .filter { $0.item.isSelected }
+            .map { $0.item }
         
         return Just(selectedMembers).eraseToAnyPublisher()
     }

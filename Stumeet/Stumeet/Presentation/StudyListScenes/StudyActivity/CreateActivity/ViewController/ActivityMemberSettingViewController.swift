@@ -10,7 +10,7 @@ import UIKit
 // TODO: - Netwokring 후 이미지로 변경
 
 protocol CreateActivityMemberDelegate: AnyObject {
-    func didTapCompleteButton(name: [String])
+    func didTapCompleteButton(members: [ActivityMember])
 }
 
 final class ActivityMemberSettingViewController: BaseViewController {
@@ -190,7 +190,7 @@ final class ActivityMemberSettingViewController: BaseViewController {
         output.completeMember
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] names in
-                self?.delegate?.didTapCompleteButton(name: names)
+                self?.delegate?.didTapCompleteButton(members: names)
                 self?.coordinator.dismiss()
             })
             .store(in: &cancellables)

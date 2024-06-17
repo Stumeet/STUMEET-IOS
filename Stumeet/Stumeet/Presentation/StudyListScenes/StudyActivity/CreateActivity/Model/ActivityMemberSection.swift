@@ -22,10 +22,10 @@ enum DetailActivityMemberSectionItem: Hashable {
 }
 
 extension ActivityMemberSectionItem {
-    var id: Int {
+    var item: ActivityMember {
         switch self {
-        case.memberCell(let item):
-            return item.id
+        case .memberCell(let item):
+            return item
         }
     }
 }

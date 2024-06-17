@@ -195,8 +195,8 @@ extension StudyActivitySettingViewController: CreateActivityDelegate {
 }
 
 extension StudyActivitySettingViewController: CreateActivityMemberDelegate {
-    func didTapCompleteButton(name: [String]) {
-        print(name)
+    func didTapCompleteButton(members: [ActivityMember]) {
+        print(members)
     }
 }
 
