@@ -10,9 +10,14 @@ protocol ActivityMemberSettingUseCase {
         members: [ActivityMemberSectionItem],
         filterMembers: [ActivityMemberSectionItem]
     ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem]), Never>
-    func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never>
-    func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never>
-    func setIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never>
+    func getIsSelectedEntireMember(
+        isSelected: Bool,
+        members: [ActivityMemberSectionItem],
+        filteredMembers: [ActivityMemberSectionItem]
+    ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem], Bool), Never>
+    func getIsSelectedAllButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never>
+    func getFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never>
+    func getIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never>
     func completeMembers(members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMember], Never>
 }
 
@@ -47,8 +52,7 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
         let allMembers = members.map { member -> ActivityMemberSectionItem in
             if member.item.id == toggledItem.id {
                 return toggledSectionItem
-            }
-            else {
+            } else {
                 return member
             }
         }
@@ -60,21 +64,41 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
     }
     
 
-    func setIsSelectedAll(isSelected: Bool, members: [ActivityMemberSectionItem]) -> AnyPublisher<([ActivityMemberSectionItem], Bool), Never> {
-        let updatedMembers = members.map { member -> ActivityMemberSectionItem in
+    func getIsSelectedEntireMember(
+        isSelected: Bool,
+        members: [ActivityMemberSectionItem],
+        filteredMembers: [ActivityMemberSectionItem]
+    ) -> AnyPublisher<([ActivityMemberSectionItem], [ActivityMemberSectionItem], Bool), Never> {
+        let selectedFilteredMembers = filteredMembers.map { member -> ActivityMemberSectionItem in
             var updatedItem = member.item
             updatedItem.isSelected = isSelected
             return .memberCell(updatedItem)
         }
-        return Just((updatedMembers, isSelected)).eraseToAnyPublisher()
+        
+        let updatedMembers = members.map { member -> ActivityMemberSectionItem in
+            if filteredMembers.contains(where: { filteredMember in
+                return filteredMember.item.id == member.item.id
+            }) {
+                var updatedItem = member.item
+                updatedItem.isSelected = isSelected
+                return .memberCell(updatedItem)
+            }
+            return member
+        }
+        return Just((updatedMembers, selectedFilteredMembers, isSelected)).eraseToAnyPublisher()
     }
     
-    func setFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never> {
+    func getIsSelectedAllButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never> {
+        let isSelected =  members.allSatisfy { $0.item.isSelected == true } && !members.isEmpty
+        return Just(isSelected).eraseToAnyPublisher()
+    }
+    
+    func getFilterMembers(text: String, members: [ActivityMemberSectionItem]) -> AnyPublisher<[ActivityMemberSectionItem], Never> {
         let filteredMembers = text.isEmpty ? members : members.filter { $0.item.name.contains(text) }
         return Just(filteredMembers).eraseToAnyPublisher()
     }
     
-    func setIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never> {
+    func getIsEnableCompleteButton(members: [ActivityMemberSectionItem]) -> AnyPublisher<Bool, Never> {
         let hasSelected = members.contains { $0.item.isSelected }
         return Just(hasSelected).eraseToAnyPublisher()
     }

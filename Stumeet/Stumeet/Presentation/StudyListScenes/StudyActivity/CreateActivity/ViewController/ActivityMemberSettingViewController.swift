@@ -177,7 +177,11 @@ final class ActivityMemberSettingViewController: BaseViewController {
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
         
-        output.isSelectedAll
+        output.isSelectedAllButton
+            .map { print($0)
+                    return $0
+            }
+            .removeDuplicates()
             .receive(on: RunLoop.main)
             .assign(to: \.isSelected, on: allSelectButton)
             .store(in: &cancellables)

@@ -18,7 +18,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
     
     struct Output {
         let members: AnyPublisher<[ActivityMemberSectionItem], Never>
-        let isSelectedAll: AnyPublisher<Bool, Never>
+        let isSelectedAllButton: AnyPublisher<Bool, Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
         let completeMember: AnyPublisher<[ActivityMember], Never>
     }
@@ -38,7 +38,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         
         let memberSubject = CurrentValueSubject<[ActivityMemberSectionItem], Never>([])
         let filteredMemberSubject = CurrentValueSubject<[ActivityMemberSectionItem], Never>([])
-        
+        let isSelectedAllButtonSubject = CurrentValueSubject<Bool, Never>(false)
         let members = filteredMemberSubject.eraseToAnyPublisher()
         
         useCase.getMembers()
@@ -59,21 +59,29 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         input.searchTextPublisher
             .compactMap { $0 }
             .combineLatest(memberSubject)
-            .flatMap(useCase.setFilterMembers)
+            .flatMap(useCase.getFilterMembers)
             .sink(receiveValue: filteredMemberSubject.send)
             .store(in: &cancellables)
         
-        let isSelectedAll = input.didTapAllSelectButton
-            .map { (!$0, filteredMemberSubject.value) }
-            .flatMap(useCase.setIsSelectedAll)
-            .map { members, isSelected in
-                filteredMemberSubject.send(members)
-                return isSelected
+        input.didTapAllSelectButton
+            .map { (!$0, memberSubject.value, filteredMemberSubject.value) }
+            .flatMap(useCase.getIsSelectedEntireMember)
+            .sink { members, filteredMembers, isSelected in
+                memberSubject.send(members)
+                filteredMemberSubject.send(filteredMembers)
+                isSelectedAllButtonSubject.send(isSelected)
             }
-            .eraseToAnyPublisher()
+            .store(in: &cancellables)
+        
+        filteredMemberSubject
+            .flatMap(useCase.getIsSelectedAllButton)
+            .sink(receiveValue: isSelectedAllButtonSubject.send)
+            .store(in: &cancellables)
+        
+        let isSelectedAllButton = isSelectedAllButtonSubject.eraseToAnyPublisher()
         
         let isEnableCompleteButton = filteredMemberSubject
-            .flatMap(useCase.setIsEnableCompleteButton)
+            .flatMap(useCase.getIsEnableCompleteButton)
             .eraseToAnyPublisher()
         
         let completeMember = input.didTapCompleteButton
@@ -83,7 +91,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
 
         return Output(
             members: members,
-            isSelectedAll: isSelectedAll,
+            isSelectedAllButton: isSelectedAllButton,
             isEnableCompleteButton: isEnableCompleteButton,
             completeMember: completeMember
         )
