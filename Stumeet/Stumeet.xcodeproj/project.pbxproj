@@ -170,6 +170,8 @@
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
+		CA7D18DB2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18DA2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift */; };
+		CA7D18DF2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18DE2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift */; };
 		CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18D82C1D302B00710C0D /* UICollectionViewExtension.swift */; };
 		CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */; };
 		CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */; };
@@ -400,6 +402,8 @@
 		CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySection.swift; sourceTree = "<group>"; };
 		CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		CA7D18DA2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPlaceSettingViewController.swift; sourceTree = "<group>"; };
+		CA7D18DE2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPlaceSettingViewModel.swift; sourceTree = "<group>"; };
 		CA7D18D82C1D302B00710C0D /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewController.swift; sourceTree = "<group>"; };
 		CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberCell.swift; sourceTree = "<group>"; };
@@ -1239,6 +1243,7 @@
 				CA6448122B863BB90090DD84 /* UIButton++Extension.swift */,
 				CA6448132B863BB90090DD84 /* UIVIew++Extension.swift */,
 				CA6448142B863BB90090DD84 /* UIViewController++Extension.swift */,
+				CA7D18DC2C1DB0C800710C0D /* UICollectionViewExtension.swift */,
 				CA9958522BB010C000884615 /* UITextView++Extension.swift */,
 				CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */,
 				35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */,
@@ -1491,6 +1496,7 @@
 				CAD45A0A2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift */,
 				CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */,
 				CA64507D2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift */,
+				CA7D18DA2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1503,6 +1509,7 @@
 				CAD45A0C2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift */,
 				CA023A532BF75A0B00E98103 /* ActivityMemberSettingViewModel.swift */,
 				CA64507F2C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift */,
+				CA7D18DE2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2004,6 +2011,7 @@
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
+				CA7D18DF2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift in Sources */,
 				CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */,
 				CA6450902C14657500E00665 /* AllStudyActivityViewController.swift in Sources */,
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
@@ -2025,6 +2033,7 @@
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */,
+				CA7D18DB2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift in Sources */,
 				CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
@@ -2033,6 +2042,7 @@
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,
 				CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */,
 				CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */,
+				CA7D18DD2C1DB0C800710C0D /* UICollectionViewExtension.swift in Sources */,
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
