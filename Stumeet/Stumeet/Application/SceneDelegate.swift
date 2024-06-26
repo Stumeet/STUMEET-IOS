@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             navigationController: navigationController,
             appDIContainer: appDIContainer
         )
-        appCoordinator?.startTabbarCoordinator()
+        appCoordinator?.start()
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()

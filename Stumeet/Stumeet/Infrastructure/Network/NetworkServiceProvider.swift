@@ -24,7 +24,7 @@ final class NetworkServiceProvider {
         guard isAccessTokenPlugin else { return }
         // TODO: - 키체인 에러 케이스 로직 필요
         self.pluginTypes.append(AccessTokenPlugin { targetType in
-            keychainManager.getToken(for: targetType.self is AuthService ? APIConst.loginSnsToken : APIConst.accessToken) ?? ""
+            keychainManager.getToken(for: targetType.self is AuthService ? .loginSnsToken : .accessToken) ?? ""
         })
     }
 
