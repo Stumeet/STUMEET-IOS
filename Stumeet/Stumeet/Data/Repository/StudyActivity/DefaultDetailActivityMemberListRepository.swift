@@ -11,14 +11,14 @@ import Foundation
 final class MockDetailActivityMemberListRepository: DetailActivityMemberListRepository {
     
     let members = [
-        ActivityMember(name: "홍길동1", state: "미수행"),
-        ActivityMember(name: "홍길동2", state: "수행"),
-        ActivityMember(name: "홍길동3", state: "수행"),
-        ActivityMember(name: "홍길동4", state: "수행"),
-        ActivityMember(name: "홍길동5", state: "미수행")
+        DetailActivityMember(name: "홍길동1", state: "미수행"),
+        DetailActivityMember(name: "홍길동2", state: "수행"),
+        DetailActivityMember(name: "홍길동3", state: "수행"),
+        DetailActivityMember(name: "홍길동4", state: "수행"),
+        DetailActivityMember(name: "홍길동5", state: "미수행")
     ]
     
-    func fetchMembers() -> AnyPublisher<[ActivityMember], Never> {
+    func fetchMembers() -> AnyPublisher<[DetailActivityMember], Never> {
         return Just(members).eraseToAnyPublisher()
     }
 }

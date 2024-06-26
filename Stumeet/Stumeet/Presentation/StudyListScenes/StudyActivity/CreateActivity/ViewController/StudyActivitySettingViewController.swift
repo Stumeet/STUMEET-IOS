@@ -166,6 +166,12 @@ final class StudyActivitySettingViewController: BaseViewController {
             .sink(receiveValue: setCurrentDate)
             .store(in: &cancellables)
         
+        output.presentToPlaceVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToActivityPlaceSettingVC)
+            .store(in: &cancellables)
+        
         // 멤버설정 VC present
         output.presentToParticipatingMemberVC
             .map { self }
@@ -189,8 +195,15 @@ extension StudyActivitySettingViewController: CreateActivityDelegate {
 }
 
 extension StudyActivitySettingViewController: CreateActivityMemberDelegate {
-    func didTapCompleteButton(name: [String]) {
-        print(name)
+    func didTapCompleteButton(members: [ActivityMember]) {
+        print(members)
+    }
+}
+
+extension StudyActivitySettingViewController: CreateActivityPlaceDelegate {
+    func didTapCompleteButton(place: String) {
+        placeLabel.text = place
+        placeLabel.textColor = StumeetColor.primary700.color
     }
 }
 
@@ -201,6 +214,7 @@ extension StudyActivitySettingViewController {
         let button = UIButton()
         
         let titleLabel = UILabel().setLabelProperty(text: title, font: StumeetFont.bodyMedium16.font, color: nil)
+        subTitleLabel.textAlignment = .right
         
         button.addSubview(titleLabel)
         button.addSubview(subTitleLabel)
@@ -212,6 +226,7 @@ extension StudyActivitySettingViewController {
         
         subTitleLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(24)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(24)
             make.centerY.equalToSuperview()
         }
         

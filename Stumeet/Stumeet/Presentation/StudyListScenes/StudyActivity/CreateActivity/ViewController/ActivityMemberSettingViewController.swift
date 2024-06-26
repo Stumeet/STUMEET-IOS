@@ -10,7 +10,7 @@ import UIKit
 // TODO: - Netwokring 후 이미지로 변경
 
 protocol CreateActivityMemberDelegate: AnyObject {
-    func didTapCompleteButton(name: [String])
+    func didTapCompleteButton(members: [ActivityMember])
 }
 
 final class ActivityMemberSettingViewController: BaseViewController {
@@ -166,8 +166,9 @@ final class ActivityMemberSettingViewController: BaseViewController {
         let input = ActivityMemberSettingViewModel.Input(
             didSelectIndexPathPublisher: memberTableView.didSelectRowPublisher.eraseToAnyPublisher(),
             didTapAllSelectButton: allSelectButton.tapPublisher.map {self.allSelectButton.isSelected}.eraseToAnyPublisher(),
-            searchTextPublisher: searchTextField.textPublisher.eraseToAnyPublisher(),
-            didTapCompleteButton: completeButton.tapPublisher.eraseToAnyPublisher()
+            searchTextPublisher: searchTextField.textPublisher,
+            didTapCompleteButton: completeButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -177,7 +178,8 @@ final class ActivityMemberSettingViewController: BaseViewController {
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
         
-        output.isSelectedAll
+        output.isSelectedAllButton
+            .removeDuplicates()
             .receive(on: RunLoop.main)
             .assign(to: \.isSelected, on: allSelectButton)
             .store(in: &cancellables)
@@ -190,9 +192,14 @@ final class ActivityMemberSettingViewController: BaseViewController {
         output.completeMember
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] names in
-                self?.delegate?.didTapCompleteButton(name: names)
+                self?.delegate?.didTapCompleteButton(members: names)
                 self?.coordinator.dismiss()
             })
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
         
     }
@@ -204,14 +211,14 @@ extension ActivityMemberSettingViewController {
     private func configureDatasource() {
         datasource = UITableViewDiffableDataSource(tableView: memberTableView, cellProvider: { tableView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .memberCell(let name, let isSelected):
+            case .memberCell(let item):
                 guard let cell =
                         tableView.dequeueReusableCell(
                             withIdentifier: ActivityMemberCell.identifier,
                             for: indexPath
                         ) as? ActivityMemberCell
                 else { return UITableViewCell() }
-                cell.configureCell(name, isSelected)
+                cell.configureCell(item)
                 
                 return cell
             }

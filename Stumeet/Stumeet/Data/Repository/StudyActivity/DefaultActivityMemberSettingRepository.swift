@@ -12,9 +12,18 @@ final class DefaultActivityMemberSettingRepository: ActivityMemberSettingReposit
     
     // TODO: - Networking
     
-    private let members: [String] = ["홍길동1", "홍길동2", "홍길동3", "홍길동4","홍길동5","홍길동6", "홍길동7", "홍길동8", "홍길동9"]
+    private let members: [ActivityMember] = [
+        ActivityMember(id: 1, imageURL: nil, name: "홍길1", isSelected: false),
+        ActivityMember(id: 2, imageURL: nil, name: "홍길2", isSelected: false),
+        ActivityMember(id: 3, imageURL: nil, name: "홍길3", isSelected: false),
+        ActivityMember(id: 4, imageURL: nil, name: "홍길4", isSelected: false),
+        ActivityMember(id: 5, imageURL: nil, name: "김개1", isSelected: false),
+        ActivityMember(id: 6, imageURL: nil, name: "김개2", isSelected: false),
+        ActivityMember(id: 7, imageURL: nil, name: "김개3", isSelected: false),
+        ActivityMember(id: 8, imageURL: nil, name: "김개4", isSelected: false),
+    ]
     
-    func fetchMembers() -> AnyPublisher<[String], Never> {
+    func fetchMembers() -> AnyPublisher<[ActivityMember], Never> {
         return Just(members).eraseToAnyPublisher()
     }
     

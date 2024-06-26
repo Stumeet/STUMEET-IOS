@@ -23,6 +23,9 @@ protocol BottomSheetCalendarUseCase {
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never>
     func setIsEnableCompleteButton(date: Date?, hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
     func setCompletedDateText(date: Date, isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never>
+    func initHourSelecteds(isStart: Bool) -> AnyPublisher<[Bool], Never>
+    func initMinuteSelecteds() -> AnyPublisher<[Bool], Never>
+    func initIsAm() -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
@@ -56,22 +59,26 @@ final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
             let date = String(idx * -1)
             calendarDates.append(CalendarDate(date: date))
         }
-
+        
         let now = Date()
         var components = components
+        let actualSelectedDate = selectedDate ?? now // selectedDate가 nil이면 현재 날짜를 사용
+        
         for date in 1...daysCountInMonth {
             components.day = date
             let compareDate = cal.date(from: components)!
-            if cal.isDate(compareDate, inSameDayAs: now) {
+            
+            if cal.isDate(actualSelectedDate, inSameDayAs: compareDate) {
+                calendarDates.append(CalendarDate(date: String(date), isSelected: true))
+            } else if cal.isDate(compareDate, inSameDayAs: now) {
                 calendarDates.append(CalendarDate(date: String(date)))
             } else if compareDate < now {
                 calendarDates.append(CalendarDate(date: String(date), isPast: true))
-            } else if let selectedDate = selectedDate, cal.isDate(selectedDate, inSameDayAs: compareDate) {
-                calendarDates.append(CalendarDate(date: String(date), isSelected: true))
             } else {
                 calendarDates.append(CalendarDate(date: String(date)))
             }
         }
+        
         let calendarData = CalendarData(selectedDate: selectedDate, data: calendarDates)
         return Just(calendarData).eraseToAnyPublisher()
     }
@@ -123,6 +130,27 @@ final class DefaultBottomSheetCalendarUseCase: BottomSheetCalendarUseCase {
         }
         
         return Just(updatedTimeSelecteds).eraseToAnyPublisher()
+    }
+    
+    func initHourSelecteds(isStart: Bool) -> AnyPublisher<[Bool], Never> {
+        if isStart {
+            return initSelectedsTime(unit: .hour, count: 12, adjust: -1)
+        } else {
+            return initSelectedsTime(unit: .hour, count: 12, adjust: 0)
+        }
+    }
+
+    func initMinuteSelecteds() -> AnyPublisher<[Bool], Never> {
+        return initSelectedsTime(unit: .minute, count: 12, adjust: 4)
+    }
+    
+    func initIsAm() -> AnyPublisher<Bool, Never> {
+        let now = Date()
+        let calendar = Calendar.current
+        
+        let isAm = calendar.component(.hour, from: now) < 12
+        
+        return Just(isAm).eraseToAnyPublisher()
     }
     
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never> {
@@ -184,5 +212,17 @@ extension DefaultBottomSheetCalendarUseCase {
         component.day = 1
         
         return component
+    }
+    
+    func initSelectedsTime(unit: Calendar.Component, count: Int, adjust: Int) -> AnyPublisher<[Bool], Never> {
+        var timeSelecteds = Array(repeating: false, count: count)
+        let now = Date()
+        let calendar = Calendar.current
+        
+        let value = calendar.component(unit, from: now)
+        let index = (value + adjust) / (unit == .minute ? 5 : 1) % count
+        timeSelecteds[index] = true
+        
+        return Just(timeSelecteds).eraseToAnyPublisher()
     }
 }

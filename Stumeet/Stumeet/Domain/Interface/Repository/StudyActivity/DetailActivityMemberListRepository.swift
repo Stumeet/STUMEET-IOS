@@ -9,5 +9,5 @@ import Combine
 import Foundation
 
 protocol DetailActivityMemberListRepository {
-    func fetchMembers() -> AnyPublisher<[ActivityMember], Never>
+    func fetchMembers() -> AnyPublisher<[DetailActivityMember], Never>
 }

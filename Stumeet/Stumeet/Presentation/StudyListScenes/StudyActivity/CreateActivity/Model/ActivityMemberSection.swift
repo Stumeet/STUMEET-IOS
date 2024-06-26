@@ -14,9 +14,18 @@ enum ActivityMemberSection {
 }
 
 enum ActivityMemberSectionItem: Hashable {
-    case memberCell(String, Bool)
+    case memberCell(ActivityMember)
 }
 
 enum DetailActivityMemberSectionItem: Hashable {
-    case memberCell(ActivityMember)
+    case memberCell(DetailActivityMember)
+}
+
+extension ActivityMemberSectionItem {
+    var item: ActivityMember {
+        switch self {
+        case .memberCell(let item):
+            return item
+        }
+    }
 }

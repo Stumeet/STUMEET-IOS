@@ -114,6 +114,19 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
         )
     }
     
+    // MARK: - Place
+    
+    func makeActivitPlaceSettingViewModel() -> ActivityPlaceSettingViewModel {
+        ActivityPlaceSettingViewModel()
+    }
+    
+    func makeActivityPlaceSettingViewController(coordinator: Navigation) -> ActivityPlaceSettingViewController {
+        ActivityPlaceSettingViewController(
+            viewModel: makeActivitPlaceSettingViewModel(),
+            coordinator: coordinator
+        )
+    }
+    
     // MARK: - PHPicker
     func makePHPickerViewController() -> PHPickerViewController {
         var config = PHPickerConfiguration()

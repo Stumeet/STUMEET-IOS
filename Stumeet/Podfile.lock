@@ -1,8 +1,8 @@
 PODS:
-  - LookinServer (1.2.6):
-    - LookinServer/Core (= 1.2.6)
-  - LookinServer/Core (1.2.6)
-  - SwiftLint (0.54.0)
+  - LookinServer (1.2.8):
+    - LookinServer/Core (= 1.2.8)
+  - LookinServer/Core (1.2.8)
+  - SwiftLint (0.55.1)
 
 DEPENDENCIES:
   - LookinServer
@@ -14,9 +14,9 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
-  LookinServer: de929b55f8fa2e241c18c39af3f900eaa9166389
-  SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
+  LookinServer: 1b2b61c6402ae29fa22182d48f5cd067b4e99e80
+  SwiftLint: 3fe909719babe5537c552ee8181c0031392be933
 
 PODFILE CHECKSUM: 8746f552c48a210026364ac0245b5cdf8e68f553
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.0
