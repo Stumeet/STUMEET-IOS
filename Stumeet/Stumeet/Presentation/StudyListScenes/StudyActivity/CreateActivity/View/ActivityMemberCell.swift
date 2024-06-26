@@ -101,8 +101,8 @@ class ActivityMemberCell: UITableViewCell {
     
     // MARK: - Configure
     
-    func configureCell(_ name: String, _ isSelected: Bool) {
-        if isSelected {
+    func configureCell(_ item: ActivityMember) {
+        if item.isSelected {
             nameLabel.textColor = StumeetColor.primary700.color
             backgroundColor = StumeetColor.primary50.color
             checkMarkImageView.isHidden = false
@@ -111,10 +111,10 @@ class ActivityMemberCell: UITableViewCell {
             backgroundColor = .white
             checkMarkImageView.isHidden = true
         }
-        nameLabel.text = name
+        nameLabel.text = item.name
     }
     
-    func configureDetailMemeberCell(item: ActivityMember) {
+    func configureDetailMemeberCell(item: DetailActivityMember) {
         nameLabel.text = item.name
         stateLabel.isHidden = false
         stateLabel.text = item.state
