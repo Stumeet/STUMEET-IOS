@@ -205,6 +205,16 @@ class StudyMainSideMenuViewController: BaseViewController {
         animateToExpandedState()
     }
     
+    // FIXME: - 활동으로 화면 전환을 위해 임시로 작성합니다.
+    
+    override func bind() {
+        menuTableView.didSelectRowPublisher
+            .filter { $0.item == 2 }
+            .map { _ in }
+            .sink(receiveValue: coordinator.goToStudyActivityList)
+            .store(in: &cancellables)
+    }
+    
     // MARK: - Function
     private func animateToExpandedState() {
         UIView.animate(withDuration: 0.2, animations: {
