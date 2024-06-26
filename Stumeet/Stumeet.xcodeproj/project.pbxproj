@@ -13,15 +13,16 @@
 		352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885F42BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift */; };
 		352885F82BB9C9E800EFC0F6 /* UserTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885F72BB9C9E800EFC0F6 /* UserTokenRepository.swift */; };
 		352885FB2BB9CB5600EFC0F6 /* TokensRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */; };
-		352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FC2BB9CEF600EFC0F6 /* AccessTokenDTO.swift */; };
-		352885FF2BB9CF3700EFC0F6 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FE2BB9CF3700EFC0F6 /* AccessToken.swift */; };
+		352885FD2BB9CEF600EFC0F6 /* AuthTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */; };
+		352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */; };
 		352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352886052BB9D30700EFC0F6 /* TokenUseCase.swift */; };
+		352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DBE512C1DF001008859D2 /* Notification++Extension.swift */; };
+		352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */; };
 		353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353393162BC2947E0021FDF9 /* AppDIContainer.swift */; };
 		353393192BC2975E0021FDF9 /* AuthSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */; };
 		3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */; };
 		353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */; };
 		353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */; };
-		353EAEB52B8F6A79008F7E8C /* APIConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEB42B8F6A79008F7E8C /* APIConst.swift */; };
 		35446B0E2B9DB20B00252283 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 35446B0D2B9DB20B00252283 /* KakaoSDK */; };
 		35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B122B9F4B2000252283 /* LoginUseCase.swift */; };
 		35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B152B9F4BDA00252283 /* AppleLoginService.swift */; };
@@ -237,15 +238,16 @@
 		352885F42BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserTokenRepository.swift; sourceTree = "<group>"; };
 		352885F72BB9C9E800EFC0F6 /* UserTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTokenRepository.swift; sourceTree = "<group>"; };
 		352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensRequestDTO.swift; sourceTree = "<group>"; };
-		352885FC2BB9CEF600EFC0F6 /* AccessTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenDTO.swift; sourceTree = "<group>"; };
-		352885FE2BB9CF3700EFC0F6 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenDTO.swift; sourceTree = "<group>"; };
+		352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		352886052BB9D30700EFC0F6 /* TokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUseCase.swift; sourceTree = "<group>"; };
+		352DBE512C1DF001008859D2 /* Notification++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification++Extension.swift"; sourceTree = "<group>"; };
+		352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++Extension.swift"; sourceTree = "<group>"; };
 		353393162BC2947E0021FDF9 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSceneDIContainer.swift; sourceTree = "<group>"; };
 		3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSceneDIContainer.swift; sourceTree = "<group>"; };
 		353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
-		353EAEB42B8F6A79008F7E8C /* APIConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConst.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
 		35446B122B9F4B2000252283 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		35446B152B9F4BDA00252283 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
@@ -512,7 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */,
-				352885FC2BB9CEF600EFC0F6 /* AccessTokenDTO.swift */,
+				352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */,
 			);
 			path = UserToken;
 			sourceTree = "<group>";
@@ -520,7 +522,7 @@
 		352886002BB9CF3D00EFC0F6 /* UserToken */ = {
 			isa = PBXGroup;
 			children = (
-				352885FE2BB9CF3700EFC0F6 /* AccessToken.swift */,
+				352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */,
 			);
 			path = UserToken;
 			sourceTree = "<group>";
@@ -1253,6 +1255,9 @@
 				355F51EA2BFE1C4600782D17 /* UINavigationController ++Extension.swift */,
 				355F51EC2BFE25BD00782D17 /* UIColor++Extension.swift */,
 				355F51EE2BFE309B00782D17 /* UITabBarController++Extension.swift */,
+				356216442C02420100CAB23F /* UICollectionView++Extension.swift */,
+				352DBE512C1DF001008859D2 /* Notification++Extension.swift */,
+				352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1352,7 +1357,6 @@
 		CA6448272B863BB90090DD84 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				353EAEB42B8F6A79008F7E8C /* APIConst.swift */,
 				357D1B952BB2FDBF0079DCE6 /* BaseTargetType.swift */,
 				357D1B922BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift */,
 				357D1B9F2BB30CA30079DCE6 /* NetworkServiceProvider.swift */,
@@ -1953,6 +1957,7 @@
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
 				CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
+				352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */,
 				CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */,
 				CA01B2712BFF294500A01CEA /* DetailStudyActivity.swift in Sources */,
 				3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */,
@@ -2038,6 +2043,7 @@
 				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */,
 				CA7D18DB2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift in Sources */,
+				352885FD2BB9CEF600EFC0F6 /* AuthTokenDTO.swift in Sources */,
 				CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
@@ -2055,7 +2061,7 @@
 				CA64483D2B863BB90090DD84 /* SelectFieldViewController.swift in Sources */,
 				CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */,
 				3562163D2C0208B100CAB23F /* ActivityInfoBoxView.swift in Sources */,
-				352885FF2BB9CF3700EFC0F6 /* AccessToken.swift in Sources */,
+				352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */,
 				35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */,
 				35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */,
 				CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */,
@@ -2087,6 +2093,7 @@
 				CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */,
 				35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */,
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
+				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,
 				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
 				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
@@ -2097,7 +2104,6 @@
 				CA6450942C1465AF00E00665 /* GroupStudyActivityViewController.swift in Sources */,
 				357D1BA92BB8119E0079DCE6 /* SessionTokens.swift in Sources */,
 				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,
-				353EAEB52B8F6A79008F7E8C /* APIConst.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */,
 				CA9958572BB055BD00884615 /* ActivityCreateUseCase.swift in Sources */,

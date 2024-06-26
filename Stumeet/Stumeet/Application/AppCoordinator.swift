@@ -14,7 +14,15 @@ final class AppCoordinator: Coordinator {
     private let appDIContainer: AppDIContainer
     
     func start() {
-        startTabbarCoordinator() // !IMP: 임시 코드
+        // !IMP: - 로그아웃 구현 시 삭제 (임시 로그아웃 처리 필요에 따라 주석 해제 후 사용)
+        // appDIContainer.keychainManager.removeAllTokens()
+        let isLoggedIn = appDIContainer.keychainManager.getToken(for: .accessToken) != nil
+        
+        if isLoggedIn {
+            startTabbarCoordinator()
+        } else {
+            startAuthCoordinator()
+        }
     }
     
     init(navigationController: UINavigationController,

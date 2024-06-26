@@ -33,7 +33,11 @@ final class AuthCoordinator: Coordinator {
     }
     
     func start() {
-        goToOnboardingVC()
+        if UserDefaults.standard.bool(forKey: "SHOW_ONBOARDING_VC") {
+            goToSnsLoginVC()
+        } else {
+            goToOnboardingVC()
+        }
     }
     
     deinit {
@@ -45,6 +49,7 @@ extension AuthCoordinator: AuthNavigation {
     func goToSnsLoginVC() {
         let snsLoginVC = dependencies.makeSnsLoginViewController(coordinator: self)
         navigationController.pushViewController(snsLoginVC, animated: true)
+        UserDefaults.standard.set(true, forKey: "SHOW_ONBOARDING_VC")
     }
     
     func goToOnboardingVC() {

@@ -14,12 +14,24 @@ final class AuthSceneDIContainer: AuthCoordinatorDependencies {
     struct Dependencies {
         let provider: NetworkServiceProvider
         let keychainManager: KeychainManageable
+        let kakaoLoginService: LoginService
+        let appleLoginService: LoginService
     }
     
     let dependencies: Dependencies
 
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
+    }
+    
+    // MARK: - Use Cases    
+    func makeLoginUseCase() -> LoginUseCase {
+        DefaultLoginUseCase.init(
+            kakaoLoginService: dependencies.kakaoLoginService,
+            appleLoginService: dependencies.appleLoginService,
+            repository: makeSnsLoginRepository(),
+            keychainManager: dependencies.keychainManager
+        )
     }
     
     // MARK: - Repositories
@@ -51,8 +63,7 @@ final class AuthSceneDIContainer: AuthCoordinatorDependencies {
     
     func makeSnsLoginViewModel() -> SnsLoginViewModel {
         SnsLoginViewModel.init(
-            repository: makeSnsLoginRepository(),
-            keychainManager: dependencies.keychainManager
+            useCase: makeLoginUseCase()
         )
     }
     

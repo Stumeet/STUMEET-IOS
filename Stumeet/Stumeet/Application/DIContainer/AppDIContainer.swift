@@ -10,7 +10,11 @@ import Moya
 
 
 final class AppDIContainer {
-    lazy var keychainManager: KeychainManageable = KeychainManager()
+    let keychainManager: KeychainManageable = KeychainManager()
+    
+    // MARK: - Sns Login
+    let kakaoLoginService: LoginService = KakaoLoginService()
+    let appleLoginService: LoginService = AppleLoginService()
     
     // MARK: - Network
     lazy var authInterceptor: RequestInterceptor = {
@@ -34,12 +38,14 @@ final class AppDIContainer {
                                pluginTypes: [NetworkLoggerPlugin()]
         )
     }()
-    
+
     // MARK: - DIContainers of scenes
     func makeAuthSceneDIContainer() -> AuthSceneDIContainer {
         let dependencies = AuthSceneDIContainer.Dependencies(
             provider: networkServiceProvider,
-            keychainManager: keychainManager
+            keychainManager: keychainManager,
+            kakaoLoginService: kakaoLoginService,
+            appleLoginService: appleLoginService
         )
         return AuthSceneDIContainer(dependencies: dependencies)
     }
