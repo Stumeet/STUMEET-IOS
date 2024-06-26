@@ -73,8 +73,8 @@ final class BottomSheetCalendarViewModel: ViewModelType {
     private let selectedDateSubject = CurrentValueSubject<Date?, Never>(Date())
     private lazy var componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
     private let isAmSubject = CurrentValueSubject<Bool, Never>(true)
-    private let isSelectedHoursSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
-    private let isSelectedMinuteSubject = CurrentValueSubject<[Bool], Never>(Array(repeating: false, count: 12))
+    private let isSelectedHoursSubject = CurrentValueSubject<[Bool], Never>([])
+    private let isSelectedMinuteSubject = CurrentValueSubject<[Bool], Never>([])
     
     // MARK: - Init
     
@@ -87,6 +87,17 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .sink(receiveValue: calendarDateItemSubject.send)
             .store(in: &cancellable)
         
+        useCase.initHourSelecteds(isStart: isStart)
+            .sink(receiveValue: isSelectedHoursSubject.send)
+            .store(in: &cancellable)
+        
+        useCase.initMinuteSelecteds()
+            .sink(receiveValue: isSelectedMinuteSubject.send)
+            .store(in: &cancellable)
+        
+        useCase.initIsAm()
+            .sink(receiveValue: isAmSubject.send)
+            .store(in: &cancellable)
     }
     
     // MARK: - Transform
@@ -178,12 +189,13 @@ final class BottomSheetCalendarViewModel: ViewModelType {
             .flatMap(useCase.setIsEnableBackMonthButton)
             .eraseToAnyPublisher()
         
-        let isSelectedAmButton = Publishers.Merge(
+        Publishers.Merge(
             input.didTapAmButtonTapPublisher.map { _ in true },
-            input.didTapPmButtonTapPublisher.map { _ in false }
-        )
-            .handleEvents(receiveOutput: isAmSubject.send)
-        .eraseToAnyPublisher()
+            input.didTapPmButtonTapPublisher.map { _ in false })
+        .sink(receiveValue: isAmSubject.send)
+        .store(in: &cancellable)
+        
+        let isSelectedAmButton = isAmSubject.eraseToAnyPublisher()
 
         
         let isEnableCompleteButton = Publishers.CombineLatest3(selectedDateSubject, isSelectedHoursSubject, isSelectedMinuteSubject)
