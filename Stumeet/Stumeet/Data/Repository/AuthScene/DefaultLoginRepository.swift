@@ -11,16 +11,27 @@ import Combine
 
 class DefaultLoginRepository: LoginRepository {
     private let provider: MoyaProvider<AuthService>
-        
-    init(provider: MoyaProvider<AuthService>) {
+    private let keychainManager: KeychainManageable
+    
+    init(provider: MoyaProvider<AuthService>,
+         keychainManager: KeychainManageable
+    ) {
         self.provider = provider
+        self.keychainManager = keychainManager
     }
     
-    func requestLogin(loginType: LoginType, snsToken: String) -> AnyPublisher<UserAuthInfo, MoyaError> {
+    func requestLogin(loginType: LoginType, snsToken: String) -> AnyPublisher<Bool, MoyaError> {
         return provider.requestPublisher(.login(loginType, snsToken))
             .map(ResponseWithDataDTO<OauthResponseDTO>.self)
             .compactMap { $0.data?.toDomain()}
-            .catch { error -> AnyPublisher<UserAuthInfo, MoyaError> in
+            .map { [weak self] result in
+                guard let self = self else { return false }
+                let isTokenSaved = keychainManager.saveToken(result.authTokens)
+                let isNewUser = result.isFirstLogin
+                
+                return isTokenSaved && !isNewUser
+            }
+            .catch { error -> AnyPublisher<Bool, MoyaError> in
                 print("Error: \(error)")
                 return Fail(error: error).eraseToAnyPublisher()
             }

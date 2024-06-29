@@ -39,17 +39,14 @@ final class DefaultLoginUseCase: LoginUseCase {
     private var kakaoLoginService: LoginService
     private var appleLoginService: LoginService
     private let repository: LoginRepository
-    private var keychainManager: KeychainManageable
 
     init(kakaoLoginService: LoginService,
          appleLoginService: LoginService,
-         repository: LoginRepository,
-         keychainManager: KeychainManageable
+         repository: LoginRepository
     ) {
         self.kakaoLoginService = kakaoLoginService
         self.appleLoginService = appleLoginService
         self.repository = repository
-        self.keychainManager = keychainManager
     }
     
     func signIn(loginType: LoginType) -> AnyPublisher<Bool, Error> {
@@ -73,12 +70,7 @@ final class DefaultLoginUseCase: LoginUseCase {
                 }
 
                 return repository.requestLogin(loginType: loginType, snsToken: snsToken)
-                    .map { data in
-                        let isTokenSaved = self.keychainManager.saveToken(data.authTokens)
-                        let isNewUser = data.isFirstLogin
-                        
-                        return isTokenSaved && !isNewUser
-                    }
+                    .map { $0 }
                     .catch { error in
                         Fail(error: error).eraseToAnyPublisher()
                     }

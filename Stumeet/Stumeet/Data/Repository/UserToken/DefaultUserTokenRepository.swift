@@ -26,7 +26,7 @@ class DefaultUserTokenRepository: UserTokenRepository {
             .map(ResponseWithDataDTO<TokensResponseDTO>.self)
             .compactMap { $0.data?.toDomain() }
             .map { [weak self] result in
-                guard let self = self else { return false}                
+                guard let self = self else { return false }
                 return keychainManager.saveToken(result)
             }
             .catch { error -> AnyPublisher<Bool, MoyaError> in

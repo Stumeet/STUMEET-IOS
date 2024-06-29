@@ -547,6 +547,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		35435BB82C305BF200BED2A9 /* Persistants */ = {
+			isa = PBXGroup;
+			children = (
+				35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */,
+			);
+			path = Persistants;
+			sourceTree = "<group>";
+		};
 		35446B112B9F4AFB00252283 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,7 +659,6 @@
 		357D1BAA2BB81A7C0079DCE6 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				357D1BAE2BB973530079DCE6 /* Keychain */,
 				CA6448272B863BB90090DD84 /* Network */,
 			);
 			path = Infrastructure;
@@ -663,14 +670,6 @@
 				357D1BAC2BB81B0F0079DCE6 /* LoginRepository.swift */,
 			);
 			path = AuthScene;
-			sourceTree = "<group>";
-		};
-		357D1BAE2BB973530079DCE6 /* Keychain */ = {
-			isa = PBXGroup;
-			children = (
-				35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */,
-			);
-			path = Keychain;
 			sourceTree = "<group>";
 		};
 		35BDF6F02B88CEFA000B6DCB /* AuthScenes */ = {
@@ -1285,6 +1284,7 @@
 				CA64481D2B863BB90090DD84 /* Repository */,
 				35446B142B9F4BC900252283 /* Service */,
 				CA6448222B863BB90090DD84 /* Network */,
+				35435BB82C305BF200BED2A9 /* Persistants */,
 			);
 			path = Data;
 			sourceTree = "<group>";
