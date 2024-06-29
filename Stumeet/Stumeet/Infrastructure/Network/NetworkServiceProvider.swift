@@ -21,7 +21,7 @@ final class NetworkServiceProvider {
         self.interceptor = interceptor
         self.networkLoggerPlugin = networkLoggerPlugin
         self.accessTokenPlugin = AccessTokenPlugin { _ in
-            guard let token = keychainManager.getToken(for: .accessToken) else {
+            guard let token = keychainManager.getToken()?.accessToken else {
                 // TODO: 적절한 에러 처리 필요함
                 fatalError("AccessToken is missing")
             }

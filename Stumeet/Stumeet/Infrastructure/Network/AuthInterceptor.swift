@@ -27,15 +27,14 @@ final class AuthInterceptor: RequestInterceptor {
                completion: @escaping (RetryResult) -> Void) {
         guard let response = request.task?.response as? HTTPURLResponse,
               response.statusCode == 401,
-              let accessToken = keychainManager.getToken(for: .accessToken),
-              let refreshToken = keychainManager.getToken(for: .refreshToken)
+              let authTokens = keychainManager.getToken()
         else {
             completion(.doNotRetryWithError(error))
             return
         }
         
         useCase
-            .refreshAuthToken(accessToken: accessToken, refreshToken: refreshToken)
+            .refreshAuthToken(accessToken: authTokens.accessToken, refreshToken: authTokens.refreshToken)
             .sink { [weak self] success in
                 if success {
                     completion(.retry)

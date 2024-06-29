@@ -13,7 +13,7 @@
 		352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885F42BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift */; };
 		352885F82BB9C9E800EFC0F6 /* UserTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885F72BB9C9E800EFC0F6 /* UserTokenRepository.swift */; };
 		352885FB2BB9CB5600EFC0F6 /* TokensRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */; };
-		352885FD2BB9CEF600EFC0F6 /* AuthTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */; };
+		352885FD2BB9CEF600EFC0F6 /* TokensResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FC2BB9CEF600EFC0F6 /* TokensResponseDTO.swift */; };
 		352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */; };
 		352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352886052BB9D30700EFC0F6 /* TokenUseCase.swift */; };
 		352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DBE512C1DF001008859D2 /* Notification++Extension.swift */; };
@@ -46,9 +46,9 @@
 		357D1B9A2BB2FDBF0079DCE6 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B952BB2FDBF0079DCE6 /* BaseTargetType.swift */; };
 		357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B9D2BB2FF280079DCE6 /* AuthService.swift */; };
 		357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B9F2BB30CA30079DCE6 /* NetworkServiceProvider.swift */; };
-		357D1BA32BB7E68E0079DCE6 /* SessionTokensDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BA22BB7E68E0079DCE6 /* SessionTokensDTO.swift */; };
+		357D1BA32BB7E68E0079DCE6 /* OauthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BA22BB7E68E0079DCE6 /* OauthResponseDTO.swift */; };
 		357D1BA62BB809B40079DCE6 /* ResponseWithDataDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BA52BB809B40079DCE6 /* ResponseWithDataDTO.swift */; };
-		357D1BA92BB8119E0079DCE6 /* SessionTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BA82BB8119E0079DCE6 /* SessionTokens.swift */; };
+		357D1BA92BB8119E0079DCE6 /* UserAuthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BA82BB8119E0079DCE6 /* UserAuthInfo.swift */; };
 		357D1BAD2BB81B0F0079DCE6 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BAC2BB81B0F0079DCE6 /* LoginRepository.swift */; };
 		3587F02E2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F02D2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift */; };
 		35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */; };
@@ -171,10 +171,10 @@
 		CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */; };
 		CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */; };
 		CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */; };
+		CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18D82C1D302B00710C0D /* UICollectionViewExtension.swift */; };
 		CA7D18DB2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18DA2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift */; };
 		CA7D18DF2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18DE2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift */; };
 		CA7D18E12C1FE33800710C0D /* ActivityMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18E02C1FE33800710C0D /* ActivityMember.swift */; };
-		CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D18D82C1D302B00710C0D /* UICollectionViewExtension.swift */; };
 		CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */; };
 		CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */; };
 		CA8062F72BF20089009BE351 /* ActivityMemberSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */; };
@@ -238,7 +238,7 @@
 		352885F42BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserTokenRepository.swift; sourceTree = "<group>"; };
 		352885F72BB9C9E800EFC0F6 /* UserTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTokenRepository.swift; sourceTree = "<group>"; };
 		352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensRequestDTO.swift; sourceTree = "<group>"; };
-		352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenDTO.swift; sourceTree = "<group>"; };
+		352885FC2BB9CEF600EFC0F6 /* TokensResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensResponseDTO.swift; sourceTree = "<group>"; };
 		352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		352886052BB9D30700EFC0F6 /* TokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUseCase.swift; sourceTree = "<group>"; };
 		352DBE512C1DF001008859D2 /* Notification++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification++Extension.swift"; sourceTree = "<group>"; };
@@ -271,9 +271,9 @@
 		357D1B952BB2FDBF0079DCE6 /* BaseTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
 		357D1B9D2BB2FF280079DCE6 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		357D1B9F2BB30CA30079DCE6 /* NetworkServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProvider.swift; sourceTree = "<group>"; };
-		357D1BA22BB7E68E0079DCE6 /* SessionTokensDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTokensDTO.swift; sourceTree = "<group>"; };
+		357D1BA22BB7E68E0079DCE6 /* OauthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OauthResponseDTO.swift; sourceTree = "<group>"; };
 		357D1BA52BB809B40079DCE6 /* ResponseWithDataDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseWithDataDTO.swift; sourceTree = "<group>"; };
-		357D1BA82BB8119E0079DCE6 /* SessionTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTokens.swift; sourceTree = "<group>"; };
+		357D1BA82BB8119E0079DCE6 /* UserAuthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthInfo.swift; sourceTree = "<group>"; };
 		357D1BAC2BB81B0F0079DCE6 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		3587F02D2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainPraiseReminderPopupView.swift; sourceTree = "<group>"; };
 		35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -405,10 +405,10 @@
 		CA6FADE82B8720CA008BCEF7 /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		CA6FADEB2B8723FB008BCEF7 /* StudyActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivitySection.swift; sourceTree = "<group>"; };
 		CA6FADEE2B87327B008BCEF7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		CA7D18D82C1D302B00710C0D /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		CA7D18DA2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPlaceSettingViewController.swift; sourceTree = "<group>"; };
 		CA7D18DE2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPlaceSettingViewModel.swift; sourceTree = "<group>"; };
 		CA7D18E02C1FE33800710C0D /* ActivityMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMember.swift; sourceTree = "<group>"; };
-		CA7D18D82C1D302B00710C0D /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewController.swift; sourceTree = "<group>"; };
 		CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberCell.swift; sourceTree = "<group>"; };
 		CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSection.swift; sourceTree = "<group>"; };
@@ -514,15 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				352885FA2BB9CB5600EFC0F6 /* TokensRequestDTO.swift */,
-				352885FC2BB9CEF600EFC0F6 /* AuthTokenDTO.swift */,
-			);
-			path = UserToken;
-			sourceTree = "<group>";
-		};
-		352886002BB9CF3D00EFC0F6 /* UserToken */ = {
-			isa = PBXGroup;
-			children = (
-				352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */,
+				352885FC2BB9CEF600EFC0F6 /* TokensResponseDTO.swift */,
 			);
 			path = UserToken;
 			sourceTree = "<group>";
@@ -642,7 +634,7 @@
 		357D1BA12BB7DFA10079DCE6 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				357D1BA22BB7E68E0079DCE6 /* SessionTokensDTO.swift */,
+				357D1BA22BB7E68E0079DCE6 /* OauthResponseDTO.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -650,7 +642,8 @@
 		357D1BA72BB811180079DCE6 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				357D1BA82BB8119E0079DCE6 /* SessionTokens.swift */,
+				352885FE2BB9CF3700EFC0F6 /* AuthToken.swift */,
+				357D1BA82BB8119E0079DCE6 /* UserAuthInfo.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1000,7 +993,6 @@
 			children = (
 				CA1C92C92BC92E2D00ECF835 /* Calendar */,
 				CA86DC442B8DCBC40044DB6C /* StudyActivity */,
-				352886002BB9CF3D00EFC0F6 /* UserToken */,
 				357D1BA72BB811180079DCE6 /* Auth */,
 				CAFBF3742B9C409A00507047 /* Register */,
 				CA6447D52B863BB90090DD84 /* .gitkeep */,
@@ -1247,7 +1239,6 @@
 				CA6448122B863BB90090DD84 /* UIButton++Extension.swift */,
 				CA6448132B863BB90090DD84 /* UIVIew++Extension.swift */,
 				CA6448142B863BB90090DD84 /* UIViewController++Extension.swift */,
-				CA7D18DC2C1DB0C800710C0D /* UICollectionViewExtension.swift */,
 				CA9958522BB010C000884615 /* UITextView++Extension.swift */,
 				CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */,
 				35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */,
@@ -1255,7 +1246,6 @@
 				355F51EA2BFE1C4600782D17 /* UINavigationController ++Extension.swift */,
 				355F51EC2BFE25BD00782D17 /* UIColor++Extension.swift */,
 				355F51EE2BFE309B00782D17 /* UITabBarController++Extension.swift */,
-				356216442C02420100CAB23F /* UICollectionView++Extension.swift */,
 				352DBE512C1DF001008859D2 /* Notification++Extension.swift */,
 				352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */,
 			);
@@ -1961,7 +1951,7 @@
 				CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */,
 				CA01B2712BFF294500A01CEA /* DetailStudyActivity.swift in Sources */,
 				3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */,
-				357D1BA32BB7E68E0079DCE6 /* SessionTokensDTO.swift in Sources */,
+				357D1BA32BB7E68E0079DCE6 /* OauthResponseDTO.swift in Sources */,
 				355F51EF2BFE309B00782D17 /* UITabBarController++Extension.swift in Sources */,
 				352885F82BB9C9E800EFC0F6 /* UserTokenRepository.swift in Sources */,
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
@@ -2041,9 +2031,9 @@
 				35EF30072C03841700F86052 /* StudyMainExitPopupViewController.swift in Sources */,
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
-				352885FD2BB9CEF600EFC0F6 /* AccessTokenDTO.swift in Sources */,
+				352885FD2BB9CEF600EFC0F6 /* TokensResponseDTO.swift in Sources */,
 				CA7D18DB2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift in Sources */,
-				352885FD2BB9CEF600EFC0F6 /* AuthTokenDTO.swift in Sources */,
+				352885FD2BB9CEF600EFC0F6 /* TokensResponseDTO.swift in Sources */,
 				CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
@@ -2052,7 +2042,6 @@
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,
 				CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */,
 				CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */,
-				CA7D18DD2C1DB0C800710C0D /* UICollectionViewExtension.swift in Sources */,
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
@@ -2102,7 +2091,7 @@
 				35EF30092C03926F00F86052 /* StudyMainInvitationPopupViewController.swift in Sources */,
 				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				CA6450942C1465AF00E00665 /* GroupStudyActivityViewController.swift in Sources */,
-				357D1BA92BB8119E0079DCE6 /* SessionTokens.swift in Sources */,
+				357D1BA92BB8119E0079DCE6 /* UserAuthInfo.swift in Sources */,
 				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */,

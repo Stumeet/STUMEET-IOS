@@ -74,9 +74,7 @@ final class DefaultLoginUseCase: LoginUseCase {
 
                 return repository.requestLogin(loginType: loginType, snsToken: snsToken)
                     .map { data in
-                        
-                        let isTokenSaved = self.keychainManager.saveToken(data.accessToken, for: .accessToken) &&
-                        self.keychainManager.saveToken(data.refreshToken, for: .refreshToken)
+                        let isTokenSaved = self.keychainManager.saveToken(data.authTokens)
                         let isNewUser = data.isFirstLogin
                         
                         return isTokenSaved && !isNewUser

@@ -16,11 +16,11 @@ class DefaultLoginRepository: LoginRepository {
         self.provider = provider
     }
     
-    func requestLogin(loginType: LoginType, snsToken: String) -> AnyPublisher<SessionTokens, MoyaError> {
+    func requestLogin(loginType: LoginType, snsToken: String) -> AnyPublisher<UserAuthInfo, MoyaError> {
         return provider.requestPublisher(.login(loginType, snsToken))
-            .map(ResponseWithDataDTO<SessionTokensDTO>.self)
+            .map(ResponseWithDataDTO<OauthResponseDTO>.self)
             .compactMap { $0.data?.toDomain()}
-            .catch { error -> AnyPublisher<SessionTokens, MoyaError> in
+            .catch { error -> AnyPublisher<UserAuthInfo, MoyaError> in
                 print("Error: \(error)")
                 return Fail(error: error).eraseToAnyPublisher()
             }
