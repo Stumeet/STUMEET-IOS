@@ -71,15 +71,8 @@ final class DefaultLoginUseCase: LoginUseCase {
                 guard let self = self else {
                     return Empty().eraseToAnyPublisher()
                 }
-                
-                // SNS 토큰을 Keychain에 저장
-                let isTokenSaved = keychainManager.saveToken(snsToken, for: .loginSnsToken)
-                guard isTokenSaved else {
-                    return Empty().eraseToAnyPublisher()
-                }
-                
-                // SNS 토큰 저장 성공 후 로그인 요청
-                return repository.requestLogin(loginType: loginType)
+
+                return repository.requestLogin(loginType: loginType, snsToken: snsToken)
                     .map { data in
                         
                         let isTokenSaved = self.keychainManager.saveToken(data.accessToken, for: .accessToken) &&

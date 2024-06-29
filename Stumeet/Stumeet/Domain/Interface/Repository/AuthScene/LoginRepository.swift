@@ -10,5 +10,5 @@ import Combine
 import Moya
 
 protocol LoginRepository {
-    func requestLogin(loginType: LoginType) -> AnyPublisher<SessionTokens, MoyaError>
+    func requestLogin(loginType: LoginType, snsToken: String) -> AnyPublisher<SessionTokens, MoyaError>
 }

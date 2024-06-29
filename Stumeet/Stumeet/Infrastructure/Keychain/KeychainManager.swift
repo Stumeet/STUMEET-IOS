@@ -11,7 +11,6 @@ import Security
 enum TokenKey: CaseIterable {
     case accessToken
     case refreshToken
-    case loginSnsToken
     
     var key: String {
         switch self {
@@ -19,8 +18,6 @@ enum TokenKey: CaseIterable {
             return "ACCESS_TOKEN"
         case .refreshToken:
             return "REFRESH_TOKEN"
-        case .loginSnsToken:
-            return "LOGIN_SNS_TOKEN"
         }
     }
 }
