@@ -13,9 +13,19 @@ final class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
     private let appDIContainer: AppDIContainer
     
+    private func removeKeychainAtFirstLaunch() {
+        guard UserDefaults.isFirstLaunch() else {
+            return
+        }
+        appDIContainer.keychainManager.removeAllTokens()
+    }
+    
     func start() {
         // !IMP: - 로그아웃 구현 시 삭제 (임시 로그아웃 처리 필요에 따라 주석 해제 후 사용)
         // appDIContainer.keychainManager.removeAllTokens()
+        
+        removeKeychainAtFirstLaunch()
+        
         let isLoggedIn = appDIContainer.keychainManager.getToken() != nil
         
         if isLoggedIn {

@@ -23,6 +23,7 @@
 		3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */; };
 		353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */; };
 		353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */; };
+		35435BBA2C310FED00BED2A9 /* UserDefaults++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */; };
 		35446B0E2B9DB20B00252283 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 35446B0D2B9DB20B00252283 /* KakaoSDK */; };
 		35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B122B9F4B2000252283 /* LoginUseCase.swift */; };
 		35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B152B9F4BDA00252283 /* AppleLoginService.swift */; };
@@ -249,6 +250,7 @@
 		353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
+		35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults++Extension.swift"; sourceTree = "<group>"; };
 		35446B122B9F4B2000252283 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		35446B152B9F4BDA00252283 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewModel.swift; sourceTree = "<group>"; };
@@ -1247,6 +1249,7 @@
 				355F51EE2BFE309B00782D17 /* UITabBarController++Extension.swift */,
 				352DBE512C1DF001008859D2 /* Notification++Extension.swift */,
 				352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */,
+				35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1986,6 +1989,7 @@
 				CA6450962C1480A900E00665 /* GroupStudyActivityViewModel.swift in Sources */,
 				CA01B2832C01D63F00A01CEA /* DetailActivityPhotoSection.swift in Sources */,
 				CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */,
+				35435BBA2C310FED00BED2A9 /* UserDefaults++Extension.swift in Sources */,
 				352885F22BB9C79600EFC0F6 /* UserTokenService.swift in Sources */,
 				CAFBF3712B9C319200507047 /* RegisterRequestDTO.swift in Sources */,
 				CAF533562B9EB5EE00A7B8B2 /* StartUseCase.swift in Sources */,
