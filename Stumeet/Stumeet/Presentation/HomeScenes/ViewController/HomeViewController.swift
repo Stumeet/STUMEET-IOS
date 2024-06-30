@@ -29,18 +29,5 @@ class HomeViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLogoutNotification()
-    }
-    
-    // MARK: - Function
-    // TODO: - 토큰 만료 플로우 및 로그아웃 처리 기획이 나오는대로 수정
-    private func setupLogoutNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleLogout), name: .userDidLogout, object: nil)
-    }
-    
-    @objc func handleLogout() {
-        DispatchQueue.main.async {
-            self.coordinator.presentLogoutAlert()
-        }
     }
 }
