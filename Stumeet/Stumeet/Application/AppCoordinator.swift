@@ -17,7 +17,13 @@ final class AppCoordinator: Coordinator {
         guard UserDefaults.isFirstLaunch() else {
             return
         }
-        appDIContainer.keychainManager.removeAllTokens()
+        
+        // TODO: 오류 케이스 로직 추가 필요
+        if appDIContainer.keychainManager.removeAllTokens() {
+            print("토큰 삭제 성공")
+        } else {
+            print("토큰 삭제 실패")
+        }
     }
     
     func start() {

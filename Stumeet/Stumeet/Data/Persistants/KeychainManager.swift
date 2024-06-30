@@ -10,7 +10,7 @@ import Security
 
 protocol KeychainManageable {
     func saveToken(_ token: AuthToken) -> Bool
-    @discardableResult func removeAllTokens() -> Bool
+    func removeAllTokens() -> Bool
     func getToken() -> AuthToken?
 }
 
@@ -50,7 +50,7 @@ final class KeychainManager: KeychainManageable {
         return token
     }
     
-    @discardableResult func removeAllTokens() -> Bool {
+    func removeAllTokens() -> Bool {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: authTokenKey
