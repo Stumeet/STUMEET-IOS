@@ -48,7 +48,6 @@ final class TaskStudyActivityViewController: BaseViewController {
         super.viewDidLoad()
 
         configureDatasource()
-        view.backgroundColor = .red
     }
     
     override func setupStyles() {
@@ -93,7 +92,7 @@ extension TaskStudyActivityViewController {
             
             switch item {
             case .task(let item):
-                cell.configureGroupUI(item: item!)
+                cell.configureTaskUI(item: item!)
                 
             default: break
             }
@@ -104,7 +103,6 @@ extension TaskStudyActivityViewController {
     
     private func updateSnapshot(items: [StudyActivitySectionItem]) {
         guard let datasource = self.datasource else { return }
-        
         var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivitySectionItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)

@@ -35,7 +35,9 @@ final class GroupStudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.getActivityItems(type: .group(nil)).eraseToAnyPublisher()
+        let items = useCase.getActivityItems(type: .group(nil))
+            .map { $0.map { StudyActivitySectionItem.group($0) } }
+            .eraseToAnyPublisher()
         
         
         return Output(

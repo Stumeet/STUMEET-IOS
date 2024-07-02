@@ -323,8 +323,8 @@ extension StudyActivityCell {
             make.trailing.equalToSuperview().inset(24)
         }
     }
+    
     func configureTaskUI(item: Activity) {
-
         taskAddView()
         setUpTaskConstraints()
         updateStatusLabel(status: item.status!)

@@ -12,7 +12,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     typealias Navigation = StudyListNavigation
     
     struct Dependencies {
-        let provider: NetworkServiceProvider?
+        let provider: NetworkServiceProvider
     }
     
     let dependencies: Dependencies
@@ -24,7 +24,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     // MARK: - Repository
     
     func makeStudyActivityRepository() -> StudyActivityRepository {
-        DefaultStudyActivityRepository()
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
     }
     
     func makeDetailsudyActivityRepository() -> DetailStudyActivityRepository {
@@ -142,7 +142,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     
     // MARK: - DIContainer
     func makeCreateActivityDIContainer() -> CreateActivityDIContainer {
-        let dependencies = CreateActivityDIContainer.Dependencies(provider: nil)
+        let dependencies = CreateActivityDIContainer.Dependencies(provider: dependencies.provider)
         return CreateActivityDIContainer(dependencies: dependencies)
     }
     

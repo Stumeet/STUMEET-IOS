@@ -32,9 +32,10 @@ final class TabBarCoordinator: Coordinator {
         homeItem.image = UIImage(systemName: "house")
         homeNavigationController.tabBarItem = homeItem
         
-        // TODO: TabBar DI Container?
         let studyListNavigationController = UINavigationController()
-        let dependencies = StudyListDIContainer.Dependencies(provider: nil)
+        
+        // TODO: TabBar DI Container 만들기
+        let dependencies = StudyListDIContainer.Dependencies(provider: AppDIContainer().networkServiceProvider)
         let studyListCoordinator = StudyListCoordinator(
             navigationController: studyListNavigationController,
             dependencies: StudyListDIContainer(dependencies: dependencies)

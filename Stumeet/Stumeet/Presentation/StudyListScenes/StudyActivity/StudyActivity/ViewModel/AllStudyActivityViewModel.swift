@@ -35,7 +35,9 @@ final class AllStudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.getActivityItems(type: .all(nil)).eraseToAnyPublisher()
+        let items = useCase.getActivityItems(type: .all(nil))
+            .map { $0.map { StudyActivitySectionItem.all($0) } }
+            .eraseToAnyPublisher()
         
         
         return Output(

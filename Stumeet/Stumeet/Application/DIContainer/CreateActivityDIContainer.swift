@@ -13,7 +13,7 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     typealias Navigation = CreateActivityNavigation
     
     struct Dependencies {
-        let provider: NetworkServiceProvider?
+        let provider: NetworkServiceProvider
     }
     
     let dependencies: Dependencies
@@ -43,7 +43,7 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     
     // MARK: - Repositories
     func makeStudyActivityRepository() -> StudyActivityRepository {
-        DefaultStudyActivityRepository()
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
     }
     
     func makeActivityMemeberSettingRepository() -> ActivityMemberSettingRepository {
