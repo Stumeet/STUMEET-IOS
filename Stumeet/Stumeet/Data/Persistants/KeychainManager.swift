@@ -16,6 +16,7 @@ protocol KeychainManageable {
 
 final class KeychainManager: KeychainManageable {
     private let authTokenKey = "authToken"
+    private var cachedToken: AuthToken?
     
     func saveToken(_ token: AuthToken) -> Bool {
         guard let tokenData = try? JSONEncoder().encode(token) else { return false }
@@ -28,10 +29,19 @@ final class KeychainManager: KeychainManageable {
         
         SecItemDelete(query as CFDictionary)
         let status = SecItemAdd(query as CFDictionary, nil)
-        return status == errSecSuccess
+        
+        let isSuccess = status == errSecSuccess
+        
+        if isSuccess {
+            cachedToken = token
+        }
+        
+        return isSuccess
     }
     
     func getToken() -> AuthToken? {
+        if let token = cachedToken { return token }
+
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: authTokenKey,
@@ -47,6 +57,7 @@ final class KeychainManager: KeychainManageable {
               let token = try? JSONDecoder().decode(AuthToken.self, from: data)
         else { return nil }
         
+        cachedToken = token
         return token
     }
     
@@ -57,6 +68,12 @@ final class KeychainManager: KeychainManageable {
         ]
         
         let status = SecItemDelete(query as CFDictionary)
-        return status == errSecSuccess
+        let isSuccess = status == errSecSuccess
+        
+        if isSuccess {
+            cachedToken = nil
+        }
+        
+        return isSuccess
     }
 }
