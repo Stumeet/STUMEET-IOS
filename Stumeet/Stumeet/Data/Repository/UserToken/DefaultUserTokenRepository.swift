@@ -23,12 +23,11 @@ class DefaultUserTokenRepository: UserTokenRepository {
     func updateAuthToken(accessToken: String, refreshToken: String) -> AnyPublisher<Bool, MoyaError> {
         let requestDTO = TokensRequestDTO(accessToken: accessToken, refreshToken: refreshToken)
         return provider.requestPublisher(.tokens(requestDTO))
-            .map(ResponseWithDataDTO<AuthTokenDTO>.self)
+            .map(ResponseWithDataDTO<TokensResponseDTO>.self)
             .compactMap { $0.data?.toDomain() }
             .map { [weak self] result in
-                guard let self = self else { return false}
-                return self.keychainManager.saveToken(result.accessToken, for: .accessToken) &&
-                self.keychainManager.saveToken(result.refreshToken, for: .refreshToken)
+                guard let self = self else { return false }
+                return keychainManager.saveToken(result)
             }
             .catch { error -> AnyPublisher<Bool, MoyaError> in
                 print("Error: \(error)")
