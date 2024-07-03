@@ -68,7 +68,9 @@ final class TaskStudyActivityViewController: BaseViewController {
     
     
     override func bind() {
-        let input = TaskStudyActivityViewModel.Input()
+        let input = TaskStudyActivityViewModel.Input(
+            reachedCollectionViewBottom: collectionView.reachedBottomPublisher()
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -92,7 +94,7 @@ extension TaskStudyActivityViewController {
             
             switch item {
             case .task(let item):
-                cell.configureTaskUI(item: item!)
+                cell.configureTaskUI(item: item)
                 
             default: break
             }

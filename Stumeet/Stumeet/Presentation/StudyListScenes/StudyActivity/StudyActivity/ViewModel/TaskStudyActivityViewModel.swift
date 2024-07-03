@@ -13,6 +13,7 @@ final class TaskStudyActivityViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
+        let reachedCollectionViewBottom: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -23,7 +24,8 @@ final class TaskStudyActivityViewModel: ViewModelType {
     
     // MARK: - Properties
     
-     private let useCase: StudyActivityUseCase
+    private let useCase: StudyActivityUseCase
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -35,9 +37,23 @@ final class TaskStudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.getActivityItems(type: .task(nil))
+        let itemSubject = CurrentValueSubject<[StudyActivitySectionItem], Never>([])
+        
+        let items = itemSubject.eraseToAnyPublisher()
+        
+        // 페이지 0번 데이터 받아오기
+        useCase.getTaskActivityItems(items: [])
             .map { $0.map { StudyActivitySectionItem.task($0) } }
-            .eraseToAnyPublisher()
+            .sink(receiveValue: itemSubject.send)
+            .store(in: &cancellables)
+        
+        // 다음 페이지 받아오기
+        input.reachedCollectionViewBottom
+            .map { (itemSubject.value) }
+            .flatMap(useCase.getTaskActivityItems)
+            .map { $0.map { StudyActivitySectionItem.task($0) } }
+            .sink(receiveValue: itemSubject.send)
+            .store(in: &cancellables)
         
         return Output(
             items: items

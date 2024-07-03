@@ -14,7 +14,16 @@ enum StudyActivitySection {
 }
 
 enum StudyActivitySectionItem: Hashable {
-    case all(Activity?)
-    case group(Activity?)
-    case task(Activity?)
+    case all(Activity)
+    case group(Activity)
+    case task(Activity)
+}
+
+extension StudyActivitySectionItem {
+    var item: Activity {
+        switch self {
+        case .all(let item), .group(let item), .task(let item):
+            return item
+        }
+    }
 }

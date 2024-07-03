@@ -13,6 +13,7 @@ final class GroupStudyActivityViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
+        let reachedCollectionViewBottom: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -23,7 +24,8 @@ final class GroupStudyActivityViewModel: ViewModelType {
     
     // MARK: - Properties
     
-     private let useCase: StudyActivityUseCase
+    private let useCase: StudyActivityUseCase
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -35,10 +37,23 @@ final class GroupStudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.getActivityItems(type: .group(nil))
-            .map { $0.map { StudyActivitySectionItem.group($0) } }
-            .eraseToAnyPublisher()
+        let itemSubject = CurrentValueSubject<[StudyActivitySectionItem], Never>([])
         
+        let items = itemSubject.eraseToAnyPublisher()
+        
+        // 페이지 0번 데이터 받아오기
+        useCase.getGroupActivityItems(items: [])
+            .map { $0.map { StudyActivitySectionItem.group($0) } }
+            .sink(receiveValue: itemSubject.send)
+            .store(in: &cancellables)
+        
+        // 다음 페이지 받아오기
+        input.reachedCollectionViewBottom
+            .map { (itemSubject.value) }
+            .flatMap(useCase.getGroupActivityItems)
+            .map { $0.map { StudyActivitySectionItem.group($0) } }
+            .sink(receiveValue: itemSubject.send)
+            .store(in: &cancellables)
         
         return Output(
             items: items

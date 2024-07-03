@@ -14,8 +14,9 @@ struct AllStudyActivityResponseDTO: Decodable {
 extension AllStudyActivityResponseDTO {
     struct ActivityItemResponseDTO: Decodable {
         let id: Int
-        let category, title, content, startDate: String
-        let endDate, location: String
+        let category, title, content: String
+        let startDate, endDate: String
+        let location: String?
         let author: AuthorResponseDTO
         let createdAt: String
     }

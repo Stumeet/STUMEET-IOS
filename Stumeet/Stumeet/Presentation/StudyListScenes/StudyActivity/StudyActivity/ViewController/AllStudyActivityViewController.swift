@@ -5,9 +5,11 @@
 //  Created by 정지훈 on 6/8/24.
 //
 
+import Combine
 import UIKit
 
 final class AllStudyActivityViewController: BaseViewController {
+    
     
     typealias Section = StudyActivitySection
     typealias SectionItem = StudyActivitySectionItem
@@ -28,6 +30,7 @@ final class AllStudyActivityViewController: BaseViewController {
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     private let viewModel: AllStudyActivityViewModel
     private let coordinator: StudyListNavigation
+    private let preFetchIndexPathSubject = PassthroughSubject<[IndexPath], Never>()
     
     // MARK: - Init
     
@@ -69,7 +72,10 @@ final class AllStudyActivityViewController: BaseViewController {
     
     
     override func bind() {
-        let input = AllStudyActivityViewModel.Input()
+        
+        let input = AllStudyActivityViewModel.Input(
+            reachedCollectionViewBottom: collectionView.reachedBottomPublisher()
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -96,21 +102,20 @@ extension AllStudyActivityViewController {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: StudyActivityCell.identifier,
                 for: indexPath) as? StudyActivityCell else { return UICollectionViewCell() }
-            
             switch item {
             case .all(let item):
-                cell.configureAllUI(item: item!)
+                cell.configureAllUI(item: item)
                 
             default: break
             }
             
             return cell
         })
+        
     }
     
     private func updateSnapshot(items: [StudyActivitySectionItem]) {
         guard let datasource = self.datasource else { return }
-        
         var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivitySectionItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)

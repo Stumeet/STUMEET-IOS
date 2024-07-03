@@ -69,7 +69,9 @@ final class GroupStudyActivityViewController: BaseViewController {
     
     
     override func bind() {
-        let input = GroupStudyActivityViewModel.Input()
+        let input = GroupStudyActivityViewModel.Input(
+            reachedCollectionViewBottom: collectionView.reachedBottomPublisher()
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -93,7 +95,7 @@ extension GroupStudyActivityViewController {
             
             switch item {
             case .group(let item):
-                cell.configureGroupUI(item: item!)
+                cell.configureGroupUI(item: item)
                 
             default: break
             }
