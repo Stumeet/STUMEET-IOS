@@ -19,6 +19,7 @@ final class StudyActivityViewModel: ViewModelType {
         let didChangedIndex: AnyPublisher<Int, Never>
         let didSlideIndex: AnyPublisher<Int, Never>
         let didTapFloatingButton: AnyPublisher<Void, Never>
+        let didTapXButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -28,6 +29,7 @@ final class StudyActivityViewModel: ViewModelType {
         let previousIndex: AnyPublisher<Int, Never>
         let slideIndex: AnyPublisher<Int, Never>
         let presentToCreateActivityVC: AnyPublisher<Void, Never>
+        let popViewController: AnyPublisher<Void, Never>
     }
     
     // MARK: - Transform
@@ -50,7 +52,8 @@ final class StudyActivityViewModel: ViewModelType {
             selectedButtonIndex: selectedButtonIndex,
             previousIndex: previousIndex,
             slideIndex: input.didSlideIndex.eraseToAnyPublisher(),
-            presentToCreateActivityVC: input.didTapFloatingButton
+            presentToCreateActivityVC: input.didTapFloatingButton,
+            popViewController: input.didTapXButton
         )
     }
     
