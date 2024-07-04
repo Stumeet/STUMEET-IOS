@@ -19,9 +19,12 @@ final class GroupStudyActivityViewController: BaseViewController {
         collectionView.register(StudyActivityCell.self, forCellWithReuseIdentifier: StudyActivityCell.identifier)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isHidden = true
         
         return collectionView
     }()
+    
+    private let emptyView = StudyActivityEmptyView()
     
     // MARK: - Properties
     
@@ -48,7 +51,6 @@ final class GroupStudyActivityViewController: BaseViewController {
         super.viewDidLoad()
 
         configureDatasource()
-        view.backgroundColor = .red
     }
     
     override func setupStyles() {
@@ -57,12 +59,17 @@ final class GroupStudyActivityViewController: BaseViewController {
     
     override func setupAddView() {
         [
-            collectionView
+            collectionView,
+            emptyView
         ]   .forEach(view.addSubview)
     }
     
     override func setupConstaints() {
         collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        emptyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -79,6 +86,12 @@ final class GroupStudyActivityViewController: BaseViewController {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.isEmptyItems
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: switchHiddenEmptyView)
             .store(in: &cancellables)
     }
 }
@@ -131,5 +144,14 @@ extension GroupStudyActivityViewController {
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
+    }
+}
+
+// MARK: - UIUpdate
+
+extension GroupStudyActivityViewController {
+    private func switchHiddenEmptyView(isEmpty: Bool) {
+        collectionView.isHidden = isEmpty
+        emptyView.isHidden = !isEmpty
     }
 }

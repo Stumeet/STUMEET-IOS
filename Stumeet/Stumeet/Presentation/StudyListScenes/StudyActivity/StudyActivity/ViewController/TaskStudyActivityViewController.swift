@@ -19,9 +19,12 @@ final class TaskStudyActivityViewController: BaseViewController {
         collectionView.register(StudyActivityCell.self, forCellWithReuseIdentifier: StudyActivityCell.identifier)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isHidden = true
         
         return collectionView
     }()
+    
+    private let emptyView = StudyActivityEmptyView()
     
     // MARK: - Properties
     
@@ -56,12 +59,17 @@ final class TaskStudyActivityViewController: BaseViewController {
     
     override func setupAddView() {
         [
-            collectionView
+            collectionView,
+            emptyView
         ]   .forEach(view.addSubview)
     }
     
     override func setupConstaints() {
         collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        emptyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -78,6 +86,12 @@ final class TaskStudyActivityViewController: BaseViewController {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.isEmptyItems
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: switchHiddenEmptyView)
             .store(in: &cancellables)
     }
 }
@@ -129,5 +143,13 @@ extension TaskStudyActivityViewController {
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
+    }
+}
+
+
+extension TaskStudyActivityViewController {
+    private func switchHiddenEmptyView(isEmpty: Bool) {
+        collectionView.isHidden = isEmpty
+        emptyView.isHidden = !isEmpty
     }
 }

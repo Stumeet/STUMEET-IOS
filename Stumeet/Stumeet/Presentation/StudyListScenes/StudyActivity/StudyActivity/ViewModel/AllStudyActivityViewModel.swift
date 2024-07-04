@@ -20,6 +20,7 @@ final class AllStudyActivityViewModel: ViewModelType {
     
     struct Output {
         let items: AnyPublisher<[StudyActivitySectionItem], Never>
+        let isEmptyItems: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -54,9 +55,14 @@ final class AllStudyActivityViewModel: ViewModelType {
             .map { $0.map { StudyActivitySectionItem.all($0) } }
             .sink(receiveValue: itemSubject.send)
             .store(in: &cancellables)
+        
+        let isEmptyItems = itemSubject
+            .map { $0.isEmpty }
+            .eraseToAnyPublisher()
 
         return Output(
-            items: items
+            items: items,
+            isEmptyItems: isEmptyItems
         )
     }
 
