@@ -23,16 +23,18 @@ final class StudyActivitySettingViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
-        let currentDate: AnyPublisher<String, Never>
+        let currentDates: AnyPublisher<(String, String), Never>
         let showCalendarIsStart: AnyPublisher<Bool, Never>
         let presentToPlaceVC: AnyPublisher<Void, Never>
         let presentToParticipatingMemberVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
+    
     private let activity: CreateActivity
     
     // MARK: - Init
+    
     init(activity: CreateActivity) {
         self.activity = activity
     }
@@ -41,7 +43,8 @@ final class StudyActivitySettingViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let currentDate = getCurrentFormattedDate()
+        let currentDates = Just(getCurrentFormattedDates())
+            .eraseToAnyPublisher()
         let showCalendarIsStart = Publishers.Merge(
             input.didTapStartDateButton.map { true },
             input.didTapEndDateButton.map { false }
@@ -51,7 +54,7 @@ final class StudyActivitySettingViewModel: ViewModelType {
         let presentToMemberVC = input.didTapMemeberButton
         
         return Output(
-            currentDate: currentDate,
+            currentDates: currentDates,
             showCalendarIsStart: showCalendarIsStart,
             presentToPlaceVC: presentToPlaceVC,
             presentToParticipatingMemberVC: presentToMemberVC)
@@ -59,21 +62,30 @@ final class StudyActivitySettingViewModel: ViewModelType {
 }
 
 extension StudyActivitySettingViewModel {
-    func getCurrentFormattedDate() -> AnyPublisher<String, Never> {
+    func getCurrentFormattedDates() -> (String, String) {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy. M. d(EEE) a h:mm"
+        
         let now = Date()
         let calendar = Calendar.current
         let roundedMinutes = (calendar.component(.minute, from: now) + 4) / 5 * 5
-        let components = DateComponents(
+        var components = DateComponents(
             year: calendar.component(.year, from: now),
             month: calendar.component(.month, from: now),
             day: calendar.component(.day, from: now),
             hour: calendar.component(.hour, from: now),
             minute: roundedMinutes
         )
-        let roundedDate = calendar.date(from: components)!
-        return Just(dateFormatter.string(from: roundedDate)).eraseToAnyPublisher()
+        let roundedStartDate = calendar.date(from: components)!
+        
+        
+        components.hour = calendar.component(.hour, from: now) + 1
+        let roundedEndDate = calendar.date(from: components)!
+        
+        let currentStartDate = dateFormatter.string(from: roundedStartDate)
+        let currentEndDate = dateFormatter.string(from: roundedEndDate)
+        
+        return (currentStartDate, currentEndDate)
     }
 }

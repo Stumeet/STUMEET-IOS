@@ -161,7 +161,7 @@ final class StudyActivitySettingViewController: BaseViewController {
             .store(in: &cancellables)
         
         // 현재 시간 update
-        output.currentDate
+        output.currentDates
             .receive(on: RunLoop.main)
             .sink(receiveValue: setCurrentDate)
             .store(in: &cancellables)
@@ -233,8 +233,8 @@ extension StudyActivitySettingViewController {
         return button
     }
     
-    func setCurrentDate(date: String) {
-        startDateLabel.text = date
-        endDateLabel.text = date
+    func setCurrentDate(startDate: String, endDate: String) {
+        startDateLabel.text = startDate
+        endDateLabel.text = endDate
     }
 }
