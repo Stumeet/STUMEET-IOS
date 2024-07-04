@@ -146,7 +146,7 @@ extension StudyActivityCell {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(tagLabel.snp.bottom).offset(14)
-            make.leading.equalToSuperview().inset(24)
+            make.horizontalEdges.equalToSuperview().inset(24)
         }
         
         contentLabel.snp.makeConstraints { make in
@@ -199,24 +199,17 @@ extension StudyActivityCell {
         
         allAddView()
         setUpAllConstaints()
+        configureTagText(item: item)
         
-        tagLabel.text = item.tag
         titleLabel.text = item.title
         contentLabel.text = item.content
-        timeLabel.text = item.time
         nameLabel.text = item.name
-        dayLabel.text = item.day
+        dayLabel.text = item.day?.timeAgoSince()
         
         if let place = item.place {
             placeLabel.text = place
         } else {
             placeImageView.isHidden = true
-        }
-        
-        if let time = item.time {
-            timeLabel.text = time
-        } else {
-            timeImageView.isHidden = true
         }
         
         if placeLabel.isHidden && timeLabel.isHidden {
@@ -248,6 +241,7 @@ extension StudyActivityCell {
     func setUpGroupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(24)
+            make.trailing.equalTo(statusLabel.snp.leading).offset(-17)
         }
         
         timeImageView.snp.makeConstraints { make in
@@ -282,9 +276,9 @@ extension StudyActivityCell {
         groupAddView()
         setUpGroupConstraints()
         updateStatusLabel(status: item.status!)
+        configureTimeLabel(text: item.startTiem)
         
         titleLabel.text = item.title
-        timeLabel.text = item.time
         statusLabel.text = item.status
         placeLabel.text = item.place
         
@@ -305,6 +299,7 @@ extension StudyActivityCell {
     func setUpTaskConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(24)
+            make.trailing.equalTo(statusLabel.snp.leading).offset(-17)
         }
         
         timeImageView.snp.makeConstraints { make in
@@ -328,9 +323,9 @@ extension StudyActivityCell {
         taskAddView()
         setUpTaskConstraints()
         updateStatusLabel(status: item.status!)
+        configureTimeLabel(text: item.endTime)
         
         titleLabel.text = item.title
-        timeLabel.text = item.time
         
         if timeImageView.isHidden { timeImageView.isHidden = false }
     
@@ -340,7 +335,7 @@ extension StudyActivityCell {
         switch status {
         case "시작 전", "미참여":
             statusLabel.textColor = StumeetColor.gray400.color
-            statusLabel.backgroundColor = StumeetColor.gray50.color
+            statusLabel.backgroundColor = StumeetColor.gray75.color
         case "인정결석", "출석":
             statusLabel.textColor = StumeetColor.primaryInfo.color
             statusLabel.backgroundColor = StumeetColor.primary50.color
@@ -354,5 +349,37 @@ extension StudyActivityCell {
         }
         
         statusLabel.text = status
+    }
+    
+    func configureTagText(item: Activity) {
+        var tag: String?
+        var time: String?
+        switch item.tag {
+        case "DEFAULT":
+            tag = "자유"
+        case "MEET":
+            tag = "모임"
+            time = item.startTiem
+        case "ASSIGNMENT":
+            tag = "과제"
+            time = item.endTime?.appending(" 까지")
+        default: break
+        }
+        tagLabel.text = tag
+        configureTimeLabel(text: time)
+    }
+    
+    func configureTimeLabel(text: String?) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        guard let timeText = text
+        else {
+            timeImageView.isHidden = true
+            return
+        }
+        
+        guard let date = dateFormatter.date(from: timeText) else { return }
+        dateFormatter.dateFormat = "yyyy.MM.dd HH:mm"
+        timeLabel.text = dateFormatter.string(from: date)
     }
 }
