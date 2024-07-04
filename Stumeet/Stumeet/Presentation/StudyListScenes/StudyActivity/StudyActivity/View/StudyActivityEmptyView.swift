@@ -58,7 +58,8 @@ final class StudyActivityEmptyView: UIView {
     
     private func setupConstraints() {
         contentLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-43)
         }
         
         bookImageView.snp.makeConstraints { make in

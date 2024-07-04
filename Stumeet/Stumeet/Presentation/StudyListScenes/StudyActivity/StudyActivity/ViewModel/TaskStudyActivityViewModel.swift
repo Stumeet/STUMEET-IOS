@@ -38,9 +38,11 @@ final class TaskStudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let itemSubject = CurrentValueSubject<[StudyActivitySectionItem], Never>([])
+        let itemSubject = CurrentValueSubject<[StudyActivitySectionItem]?, Never>(nil)
         
-        let items = itemSubject.eraseToAnyPublisher()
+        let items = itemSubject
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
         
         // 페이지 0번 데이터 받아오기
         useCase.getTaskActivityItems(items: [])
@@ -50,14 +52,14 @@ final class TaskStudyActivityViewModel: ViewModelType {
         
         // 다음 페이지 받아오기
         input.reachedCollectionViewBottom
-            .map { (itemSubject.value) }
+            .compactMap { (itemSubject.value) }
             .flatMap(useCase.getTaskActivityItems)
             .map { $0.map { StudyActivitySectionItem.task($0) } }
             .sink(receiveValue: itemSubject.send)
             .store(in: &cancellables)
         
         let isEmptyItems = itemSubject
-            .map { $0.isEmpty }
+            .compactMap { $0?.isEmpty }
             .eraseToAnyPublisher()
         
         return Output(
