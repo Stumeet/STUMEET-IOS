@@ -11,7 +11,7 @@ import PhotosUI
 
 protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
-    func makeStudyActivitySettingViewController(coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
+    func makeStudyActivitySettingViewController(activity:CreateActivity, coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
     func makeActivityMemberSettingViewController(coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
     func makeCreateActivityLinkPopUpViewController(coordinator: CreateActivityNavigation) -> CreateActivityLinkPopUpViewController
@@ -21,7 +21,7 @@ protocol CreateActivityCoordinatorDependencies {
 
 protocol CreateActivityNavigation: AnyObject {
     func presentToCreateActivityVC()
-    func goToStudyActivitySettingVC()
+    func goToStudyActivitySettingVC(activity: CreateActivity)
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
     func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
     func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate)
@@ -59,8 +59,8 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         parentCoordinator?.navigationController.present(navigationController, animated: true)
     }
     
-    func goToStudyActivitySettingVC() {
-        let studyActivitySettingVC = dependencies.makeStudyActivitySettingViewController(coordinator: self)
+    func goToStudyActivitySettingVC(activity: CreateActivity) {
+        let studyActivitySettingVC = dependencies.makeStudyActivitySettingViewController(activity: activity, coordinator: self)
         navigationController.pushViewController(studyActivitySettingVC, animated: true)
     }
 

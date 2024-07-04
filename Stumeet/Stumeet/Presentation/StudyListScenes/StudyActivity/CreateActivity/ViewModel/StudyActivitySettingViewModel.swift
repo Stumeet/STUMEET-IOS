@@ -30,11 +30,11 @@ final class StudyActivitySettingViewModel: ViewModelType {
     }
     
     // MARK: - Properties
-    
+    private let activity: CreateActivity
     
     // MARK: - Init
-    init() {
-        
+    init(activity: CreateActivity) {
+        self.activity = activity
     }
     
     // MARK: - Transform

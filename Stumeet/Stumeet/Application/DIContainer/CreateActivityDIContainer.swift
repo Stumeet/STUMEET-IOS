@@ -64,13 +64,13 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     
     // MARK: - StudyActivitySetting
     
-    func makeStudyActivitySettingViewModel() -> StudyActivitySettingViewModel {
-        StudyActivitySettingViewModel()
+    func makeStudyActivitySettingViewModel(activity: CreateActivity) -> StudyActivitySettingViewModel {
+        StudyActivitySettingViewModel(activity: activity)
     }
     
-    func makeStudyActivitySettingViewController(coordinator: Navigation) -> StudyActivitySettingViewController {
+    func makeStudyActivitySettingViewController(activity:CreateActivity, coordinator: Navigation) -> StudyActivitySettingViewController {
         StudyActivitySettingViewController(
-            viewModel: makeStudyActivitySettingViewModel(),
+            viewModel: makeStudyActivitySettingViewModel(activity: activity),
             coordinator: coordinator
         )
     }

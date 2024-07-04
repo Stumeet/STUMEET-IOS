@@ -109,6 +109,7 @@
 		CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */; };
 		CA342DAB2C3552990055A9A4 /* String++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAA2C3552990055A9A4 /* String++Extension.swift */; };
 		CA342DAD2C365E980055A9A4 /* StudyActivityEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */; };
+		CA342DAF2C36842B0055A9A4 /* CreateActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAE2C36842A0055A9A4 /* CreateActivity.swift */; };
 		CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */; };
 		CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */; };
 		CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */; };
@@ -344,6 +345,7 @@
 		CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage++Extension.swift"; sourceTree = "<group>"; };
 		CA342DAA2C3552990055A9A4 /* String++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String++Extension.swift"; sourceTree = "<group>"; };
 		CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityEmptyView.swift; sourceTree = "<group>"; };
+		CA342DAE2C36842A0055A9A4 /* CreateActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivity.swift; sourceTree = "<group>"; };
 		CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestDTO.swift; sourceTree = "<group>"; };
 		CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable++Extension.swift"; sourceTree = "<group>"; };
 		CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldResponseDTO.swift; sourceTree = "<group>"; };
@@ -1468,6 +1470,7 @@
 				CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */,
 				CA01B28A2C04614300A01CEA /* DetailAcitivtyMember.swift */,
 				CA7D18E02C1FE33800710C0D /* ActivityMember.swift */,
+				CA342DAE2C36842A0055A9A4 /* CreateActivity.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -2105,6 +2108,7 @@
 				CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */,
 				CA6448582B863BB90090DD84 /* BaseCollectionViewCell.swift in Sources */,
 				CA01B2812C01D28D00A01CEA /* DetailActivityPhotoCell.swift in Sources */,
+				CA342DAF2C36842B0055A9A4 /* CreateActivity.swift in Sources */,
 				CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */,
 				CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */,
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
