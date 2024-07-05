@@ -547,7 +547,12 @@ extension CreateActivityViewController {
     
     private func checkNavigateToSettingVC(isEnable: Bool, activity: CreateActivity) {
         if isEnable {
-            coordinator.goToStudyActivitySettingVC(activity: activity)
+            switch activity.category {
+            case .freedom:
+                coordinator.dismiss()
+            case .homework, .meeting:
+                coordinator.goToStudyActivitySettingVC(activity: activity)
+            }
         } else {
             showSnackBar(text: "! 활동 작성이 완료되지 않았어요.")
         }

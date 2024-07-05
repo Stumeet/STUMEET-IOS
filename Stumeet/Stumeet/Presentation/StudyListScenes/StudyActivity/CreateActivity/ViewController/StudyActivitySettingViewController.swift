@@ -155,6 +155,13 @@ final class StudyActivitySettingViewController: BaseViewController {
         
         // Output
         
+        output.currentCategory
+            .filter { $0 == .homework }
+            .map { _ in }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: reConfigureConstraints)
+            .store(in: &cancellables)
+        
         // CalendarBottomSheet으로 present
         output.showCalendarIsStart
             .map { (self, $0)}
@@ -243,5 +250,13 @@ extension StudyActivitySettingViewController {
     func setCurrentDate(startDate: String, endDate: String) {
         startDateLabel.text = startDate
         endDateLabel.text = endDate
+    }
+    
+    func reConfigureConstraints() {
+        placeButton.removeFromSuperview()
+        stackView.removeArrangedSubview(placeButton)
+        stackView.snp.updateConstraints { make in
+            make.height.equalTo(201)
+        }
     }
 }

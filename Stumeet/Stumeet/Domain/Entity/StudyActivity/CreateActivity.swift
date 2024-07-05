@@ -8,7 +8,7 @@
 import Foundation
 
 struct CreateActivity: Equatable {
-    let category: String
+    let category: ActivityCategory
     let title: String
     let content: String
     let images: [Data]?

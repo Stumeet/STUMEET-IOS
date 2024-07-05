@@ -131,7 +131,7 @@ final class CreateActivityViewModel: ViewModelType {
         let createActivityData = input.didTapNextButton
             .map {
                 CreateActivity(
-                    category: selectedCategorySubject.value.title,
+                    category: selectedCategorySubject.value,
                     title: titleSubject.value,
                     content: contentSubject.value,
                     images: photoSubject.value.map { $0.jpegData(compressionQuality: 1.0)! },

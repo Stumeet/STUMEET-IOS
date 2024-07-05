@@ -24,6 +24,7 @@ final class StudyActivitySettingViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
+        let currentCategory: AnyPublisher<ActivityCategory, Never>
         let currentDates: AnyPublisher<(String, String), Never>
         let showCalendarIsStart: AnyPublisher<Bool, Never>
         let presentToPlaceVC: AnyPublisher<Void, Never>
@@ -56,6 +57,7 @@ final class StudyActivitySettingViewModel: ViewModelType {
         let presentToMemberVC = input.didTapMemeberButton
         
         return Output(
+            currentCategory: Just(activity.category).eraseToAnyPublisher(),
             currentDates: currentDates,
             showCalendarIsStart: showCalendarIsStart,
             presentToPlaceVC: presentToPlaceVC,
