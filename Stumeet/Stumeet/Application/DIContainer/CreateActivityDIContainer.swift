@@ -47,7 +47,7 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     }
     
     func makeActivityMemeberSettingRepository() -> ActivityMemberSettingRepository {
-        DefaultActivityMemberSettingRepository()
+        DefaultActivityMemberSettingRepository(provider: dependencies.provider.makeProvider())
     }
     
     // MARK: - CreateActivity

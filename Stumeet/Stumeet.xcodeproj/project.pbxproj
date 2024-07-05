@@ -110,6 +110,9 @@
 		CA342DAB2C3552990055A9A4 /* String++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAA2C3552990055A9A4 /* String++Extension.swift */; };
 		CA342DAD2C365E980055A9A4 /* StudyActivityEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */; };
 		CA342DAF2C36842B0055A9A4 /* CreateActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAE2C36842A0055A9A4 /* CreateActivity.swift */; };
+		CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DB12C37AE890055A9A4 /* StudyMemberRequestDTO.swift */; };
+		CA342DB42C37AEF10055A9A4 /* StudyMemberResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DB32C37AEF10055A9A4 /* StudyMemberResponseDTO.swift */; };
+		CA342DB92C37B0940055A9A4 /* StudyMemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DB82C37B0940055A9A4 /* StudyMemberService.swift */; };
 		CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */; };
 		CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */; };
 		CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */; };
@@ -346,6 +349,9 @@
 		CA342DAA2C3552990055A9A4 /* String++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String++Extension.swift"; sourceTree = "<group>"; };
 		CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityEmptyView.swift; sourceTree = "<group>"; };
 		CA342DAE2C36842A0055A9A4 /* CreateActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivity.swift; sourceTree = "<group>"; };
+		CA342DB12C37AE890055A9A4 /* StudyMemberRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberRequestDTO.swift; sourceTree = "<group>"; };
+		CA342DB32C37AEF10055A9A4 /* StudyMemberResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberResponseDTO.swift; sourceTree = "<group>"; };
+		CA342DB82C37B0940055A9A4 /* StudyMemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberService.swift; sourceTree = "<group>"; };
 		CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestDTO.swift; sourceTree = "<group>"; };
 		CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable++Extension.swift"; sourceTree = "<group>"; };
 		CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldResponseDTO.swift; sourceTree = "<group>"; };
@@ -931,6 +937,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		CA342DB62C37B0330055A9A4 /* StudyMember */ = {
+			isa = PBXGroup;
+			children = (
+				CA342DB12C37AE890055A9A4 /* StudyMemberRequestDTO.swift */,
+				CA342DB32C37AEF10055A9A4 /* StudyMemberResponseDTO.swift */,
+			);
+			path = StudyMember;
+			sourceTree = "<group>";
+		};
+		CA342DB72C37B04A0055A9A4 /* StudyMember */ = {
+			isa = PBXGroup;
+			children = (
+				CA342DB82C37B0940055A9A4 /* StudyMemberService.swift */,
+			);
+			path = StudyMember;
+			sourceTree = "<group>";
+		};
 		CA4E7EDA2B9307C4009C07FD /* Register */ = {
 			isa = PBXGroup;
 			children = (
@@ -1348,6 +1371,7 @@
 		CA6448232B863BB90090DD84 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				CA342DB62C37B0330055A9A4 /* StudyMember */,
 				CA8C0DE02C33C974005ECA55 /* StudyActivity */,
 				352885F92BB9CB3500EFC0F6 /* UserToken */,
 				357D1BA12BB7DFA10079DCE6 /* Auth */,
@@ -1362,6 +1386,7 @@
 		CA6448252B863BB90090DD84 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CA342DB72C37B04A0055A9A4 /* StudyMember */,
 				CA8C0DDD2C33C7E3005ECA55 /* StudyActivity */,
 				352885F02BB9C75600EFC0F6 /* UserToken */,
 				357D1B9C2BB2FF140079DCE6 /* Auth */,
@@ -2062,6 +2087,7 @@
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
 				CA7D18DF2C1DB50C00710C0D /* ActivityPlaceSettingViewModel.swift in Sources */,
+				CA342DB42C37AEF10055A9A4 /* StudyMemberResponseDTO.swift in Sources */,
 				CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */,
 				CA6450902C14657500E00665 /* AllStudyActivityViewController.swift in Sources */,
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
@@ -2103,6 +2129,7 @@
 				CA1C92C82BC91AF700ECF835 /* CalendarView.swift in Sources */,
 				3562163D2C0208B100CAB23F /* ActivityInfoBoxView.swift in Sources */,
 				352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */,
+				CA342DB92C37B0940055A9A4 /* StudyMemberService.swift in Sources */,
 				35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */,
 				35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */,
 				CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */,
@@ -2114,6 +2141,7 @@
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
+				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
 				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
