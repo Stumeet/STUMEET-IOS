@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CreateActivity {
+struct CreateActivity: Equatable {
     let category: String
     let title: String
     let content: String

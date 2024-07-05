@@ -150,9 +150,6 @@ final class CreateActivityViewModel: ViewModelType {
             .map { $0.isEmpty }
             .eraseToAnyPublisher()
         
-       
-        
-        
         let exitPopUp = exitPopUpSubject.eraseToAnyPublisher()
         
         input.didTapXButton

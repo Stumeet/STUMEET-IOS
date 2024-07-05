@@ -18,6 +18,7 @@ final class StudyActivitySettingViewModel: ViewModelType {
         let didTapPlaceButton: AnyPublisher<Void, Never>
         let didTapMemeberButton: AnyPublisher<Void, Never>
         let didTapPostButton: AnyPublisher<Void, Never>
+        let didTapBackButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -27,6 +28,7 @@ final class StudyActivitySettingViewModel: ViewModelType {
         let showCalendarIsStart: AnyPublisher<Bool, Never>
         let presentToPlaceVC: AnyPublisher<Void, Never>
         let presentToParticipatingMemberVC: AnyPublisher<Void, Never>
+        let popViewController: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -57,7 +59,9 @@ final class StudyActivitySettingViewModel: ViewModelType {
             currentDates: currentDates,
             showCalendarIsStart: showCalendarIsStart,
             presentToPlaceVC: presentToPlaceVC,
-            presentToParticipatingMemberVC: presentToMemberVC)
+            presentToParticipatingMemberVC: presentToMemberVC,
+            popViewController: input.didTapBackButton
+        )
     }
 }
 

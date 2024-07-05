@@ -28,6 +28,7 @@ protocol CreateActivityNavigation: AnyObject {
     func presentToLinkPopUpVC(delegate: CreateActivityLinkDelegate)
     func presentToActivityPlaceSettingVC(delegate: CreateActivityPlaceDelegate)
     func dismiss()
+    func popViewController()
 }
 
 
@@ -111,5 +112,9 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         lastVC.dismiss(animated: true) {
             self.parentCoordinator?.childDidFinish(self)
         }
+    }
+    
+    func popViewController() {
+        navigationController.popViewController(animated: true)
     }
 }

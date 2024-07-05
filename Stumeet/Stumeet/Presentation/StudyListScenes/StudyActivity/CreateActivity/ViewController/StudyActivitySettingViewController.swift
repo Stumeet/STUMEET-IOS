@@ -147,7 +147,9 @@ final class StudyActivitySettingViewController: BaseViewController {
             didTapEndDateButton: endDateButton.tapPublisher,
             didTapPlaceButton: placeButton.tapPublisher,
             didTapMemeberButton: memberButton.tapPublisher,
-            didTapPostButton: postButton.tapPublisher)
+            didTapPostButton: postButton.tapPublisher,
+            didTapBackButton: backButton.tapPublisher
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -177,6 +179,11 @@ final class StudyActivitySettingViewController: BaseViewController {
             .map { self }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToActivityMemberSettingViewController)
+            .store(in: &cancellables)
+        
+        output.popViewController
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.popViewController)
             .store(in: &cancellables)
     }
 }

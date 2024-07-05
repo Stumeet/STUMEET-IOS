@@ -399,7 +399,7 @@ final class CreateActivityViewController: BaseViewController {
         
         // 다음 버튼 enable 설정
         output.isEnableNextButton
-            .combineLatest(output.createActivityData)
+            .zip(output.createActivityData)
             .receive(on: RunLoop.main)
             .sink(receiveValue: checkNavigateToSettingVC)
             .store(in: &cancellables)
