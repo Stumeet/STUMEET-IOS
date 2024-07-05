@@ -68,7 +68,7 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
         StudyActivitySettingViewModel(activity: activity)
     }
     
-    func makeStudyActivitySettingViewController(activity:CreateActivity, coordinator: Navigation) -> StudyActivitySettingViewController {
+    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: Navigation) -> StudyActivitySettingViewController {
         StudyActivitySettingViewController(
             viewModel: makeStudyActivitySettingViewModel(activity: activity),
             coordinator: coordinator
@@ -90,14 +90,14 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     
     // MARK: - Member
     
-    func makeActivityMemberSettingViewModel() -> ActivityMemberSettingViewModel {
-        ActivityMemberSettingViewModel(useCase: makeActivityMemeberSettingUseCase())
+    func makeActivityMemberSettingViewModel(member: [ActivityMember]) -> ActivityMemberSettingViewModel {
+        ActivityMemberSettingViewModel(members: member, useCase: makeActivityMemeberSettingUseCase())
     }
     
-    func makeActivityMemberSettingViewController(coordinator: Navigation) -> ActivityMemberSettingViewController {
+    func makeActivityMemberSettingViewController(member: [ActivityMember], coordinator: Navigation) -> ActivityMemberSettingViewController {
         ActivityMemberSettingViewController(
             coordinator: coordinator,
-            viewModel: makeActivityMemberSettingViewModel()
+            viewModel: makeActivityMemberSettingViewModel(member: member)
         )
     }
     

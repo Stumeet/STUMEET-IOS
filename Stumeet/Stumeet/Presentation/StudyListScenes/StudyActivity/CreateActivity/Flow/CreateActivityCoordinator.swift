@@ -11,9 +11,9 @@ import PhotosUI
 
 protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
-    func makeStudyActivitySettingViewController(activity:CreateActivity, coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
+    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
-    func makeActivityMemberSettingViewController(coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
+    func makeActivityMemberSettingViewController(member: [ActivityMember], coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
     func makeCreateActivityLinkPopUpViewController(coordinator: CreateActivityNavigation) -> CreateActivityLinkPopUpViewController
     func makeActivityPlaceSettingViewController(coordinator: CreateActivityNavigation) -> ActivityPlaceSettingViewController
     func makePHPickerViewController() -> PHPickerViewController
@@ -23,7 +23,7 @@ protocol CreateActivityNavigation: AnyObject {
     func presentToCreateActivityVC()
     func goToStudyActivitySettingVC(activity: CreateActivity)
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
-    func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
+    func presentToActivityMemberSettingViewController(member: [ActivityMember], delegate: CreateActivityMemberDelegate)
     func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate)
     func presentToLinkPopUpVC(delegate: CreateActivityLinkDelegate)
     func presentToActivityPlaceSettingVC(delegate: CreateActivityPlaceDelegate)
@@ -74,9 +74,9 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         lastVC.present(bottomSheetCalendarVC, animated: false)
     }
     
-    func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate) {
+    func presentToActivityMemberSettingViewController(member: [ActivityMember], delegate: CreateActivityMemberDelegate) {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        let activityMemberSettingVC = dependencies.makeActivityMemberSettingViewController(coordinator: self)
+        let activityMemberSettingVC = dependencies.makeActivityMemberSettingViewController(member: member, coordinator: self)
         activityMemberSettingVC.modalPresentationStyle = .fullScreen
         activityMemberSettingVC.delegate = delegate
         lastVC.present(activityMemberSettingVC, animated: true)

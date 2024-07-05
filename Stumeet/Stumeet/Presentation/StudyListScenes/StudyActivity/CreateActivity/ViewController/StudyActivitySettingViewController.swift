@@ -74,7 +74,7 @@ final class StudyActivitySettingViewController: BaseViewController {
     
     // MARK: - Subject
     
-    private let memberSubject = PassthroughSubject<[ActivityMember], Never>()
+    private let memberSubject = CurrentValueSubject<[ActivityMember]?, Never>(nil)
     
     
     // MARK: - Init
@@ -190,15 +190,17 @@ final class StudyActivitySettingViewController: BaseViewController {
         
         // 멤버설정 VC present
         output.presentToParticipatingMemberVC
-            .map { self }
+            .map { self.memberSubject.value ?? [] }
+            .map { ($0, self) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToActivityMemberSettingViewController)
             .store(in: &cancellables)
         
         output.selectedMembers
-                .receive(on: RunLoop.main)
-                .sink(receiveValue: updateMemberButton)
-                .store(in: &cancellables)
+            .compactMap { $0 }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateMemberButton)
+            .store(in: &cancellables)
         
         output.popViewController
             .receive(on: RunLoop.main)
