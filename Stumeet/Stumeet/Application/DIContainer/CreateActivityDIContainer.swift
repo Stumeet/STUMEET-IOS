@@ -41,6 +41,10 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
         DefaultActivityMemberSettingUseCase(repository: makeActivityMemeberSettingRepository())
     }
     
+    func makeStudyActivitySettingUseCase() -> StudyActivitySettingUseCase {
+        DefaultStudyActivitySettingUseCase(repository: makeStudyActivitySettingRepository())
+    }
+    
     // MARK: - Repositories
     func makeStudyActivityRepository() -> StudyActivityRepository {
         DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
@@ -48,6 +52,10 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     
     func makeActivityMemeberSettingRepository() -> ActivityMemberSettingRepository {
         DefaultActivityMemberSettingRepository(provider: dependencies.provider.makeProvider())
+    }
+    
+    func makeStudyActivitySettingRepository() -> StudyActivitySettingRepository {
+        DefaultStudyActivitySettingRepository(provider: dependencies.provider.makeProvider())
     }
     
     // MARK: - CreateActivity
@@ -65,7 +73,10 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     // MARK: - StudyActivitySetting
     
     func makeStudyActivitySettingViewModel(activity: CreateActivity) -> StudyActivitySettingViewModel {
-        StudyActivitySettingViewModel(activity: activity)
+        StudyActivitySettingViewModel(
+            activity: activity,
+            useCase: makeStudyActivitySettingUseCase()
+        )
     }
     
     func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: Navigation) -> StudyActivitySettingViewController {

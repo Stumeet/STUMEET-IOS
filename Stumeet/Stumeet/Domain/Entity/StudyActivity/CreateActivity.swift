@@ -13,8 +13,8 @@ struct CreateActivity: Equatable {
     let content: String
     let images: [Data]?
     let isNotice: Bool
-    let startDate: String?
-    let endDate: String?
-    let location: String?
-    let participants: [Int]?
+    var startDate: String?
+    var endDate: String?
+    var location: String?
+    var participants: [Int]?
 }

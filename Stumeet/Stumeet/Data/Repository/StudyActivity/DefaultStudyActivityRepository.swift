@@ -11,9 +11,9 @@ import Moya
 
 final class DefaultStudyActivityRepository: StudyActivityRepository {
     
-    private let provider: MoyaProvider<ActivityListService>
+    private let provider: MoyaProvider<ActivityService>
     
-    init(provider: MoyaProvider<ActivityListService>) {
+    init(provider: MoyaProvider<ActivityService>) {
         self.provider = provider
     }
     
