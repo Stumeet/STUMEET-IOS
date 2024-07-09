@@ -75,7 +75,7 @@ class StudyActivityViewController: BaseViewController {
     
     private let viewControllers: [UIViewController]
     private let viewModel: StudyActivityViewModel
-    private let coordinator: StudyListNavigation
+    private let coordinator: MyStudyGroupListNavigation
     
     // MARK: - Subject
     
@@ -84,7 +84,7 @@ class StudyActivityViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(viewControllers: [UIViewController], viewModel: StudyActivityViewModel, coordinator: StudyListNavigation) {
+    init(viewControllers: [UIViewController], viewModel: StudyActivityViewModel, coordinator: MyStudyGroupListNavigation) {
         self.viewControllers = viewControllers
         self.viewModel = viewModel
         self.coordinator = coordinator

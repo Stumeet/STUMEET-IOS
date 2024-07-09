@@ -51,7 +51,7 @@ final class DetailActivityPhotoListViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let coordinator: StudyListNavigation
+    private let coordinator: MyStudyGroupListNavigation
     private let viewModel: DetailActivityPhotoListViewModel
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     
@@ -62,7 +62,7 @@ final class DetailActivityPhotoListViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(coordinator: StudyListNavigation, viewModel: DetailActivityPhotoListViewModel) {
+    init(coordinator: MyStudyGroupListNavigation, viewModel: DetailActivityPhotoListViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         

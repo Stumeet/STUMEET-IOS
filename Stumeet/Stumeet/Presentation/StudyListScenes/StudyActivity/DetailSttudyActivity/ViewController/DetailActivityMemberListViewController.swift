@@ -40,13 +40,13 @@ class DetailActivityMemberListViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let coordinator: StudyListNavigation
+    private let coordinator: MyStudyGroupListNavigation
     private let viewModel: DetailActivityMemberListViewModel
     private var datasource: UITableViewDiffableDataSource<Section, SectionItem>?
     
     // MARK: - Init
     
-    init(coordinator: StudyListNavigation, viewModel: DetailActivityMemberListViewModel) {
+    init(coordinator: MyStudyGroupListNavigation, viewModel: DetailActivityMemberListViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         

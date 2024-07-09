@@ -53,7 +53,10 @@ final class AppCoordinator: Coordinator {
     }
     
     func startTabbarCoordinator() {
-        let tabbarCoordinator = TabBarCoordinator(navigationController: navigationController)
+        let tabbarCoordinator = TabBarCoordinator(
+            navigationController: navigationController,
+            appDIContainer: appDIContainer
+        )
         children.removeAll()
         tabbarCoordinator.parentCoordinator = self
         tabbarCoordinator.start()

@@ -1,5 +1,5 @@
 //
-//  StudyListViewController.swift
+//  MyStudyGroupListViewController.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/04/15.
@@ -7,17 +7,9 @@
 
 import UIKit
 import SnapKit
+import Combine
 
-// TODO: API 연동 시 수정
-enum StudyGroupSection: Hashable {
-    case main
-}
-
-struct StudyGroup: Hashable {
-    let id: Int
-}
-
-class StudyListViewController: BaseViewController {
+class MyStudyGroupListViewController: BaseViewController {
     
     // MARK: - UIComponents
     private let navigationTitleLabel: UILabel = {
@@ -37,12 +29,17 @@ class StudyListViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private weak var coordinator: StudyListNavigation!
-    private var studyGroupDataSource: UITableViewDiffableDataSource<StudyGroupSection, StudyGroup>?
+    private weak var coordinator: MyStudyGroupListNavigation!
+    private let viewModel: MyStudyGroupListViewModel
+    private var studyGroupDataSource: UITableViewDiffableDataSource<MyStudyGroupListSection, StudyGroup>?
+    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
-    init(coordinator: StudyListNavigation) {
+    init(coordinator: MyStudyGroupListNavigation,
+         viewModel: MyStudyGroupListViewModel
+    ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -78,7 +75,7 @@ class StudyListViewController: BaseViewController {
     }
     
     private func setupRegister() {
-        studyGroupTableView.registerCell(StudyGroupListTableViewCell.self)
+        studyGroupTableView.registerCell(MyStudyGroupListTableViewCell.self)
     }
     
     private func setupDelegate() {
@@ -95,25 +92,22 @@ class StudyListViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // TODO: API 연결 시 수정
-        var snapshot = NSDiffableDataSourceSnapshot<StudyGroupSection, StudyGroup>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems([StudyGroup(id: 0),
-                              StudyGroup(id: 1),
-                              StudyGroup(id: 2),
-                              StudyGroup(id: 3),
-                              StudyGroup(id: 4),
-                              StudyGroup(id: 5),
-                              StudyGroup(id: 6),
-                              StudyGroup(id: 7),
-                              StudyGroup(id: 8)])
-        
-        guard let datasource = self.studyGroupDataSource else { return }
-        datasource.apply(snapshot, animatingDifferences: false)
+        viewWillAppearSubject.send()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func bind() {
+        // MARK: - Input
+        let input = MyStudyGroupListViewModel.Input(
+            viewWillAppear: viewWillAppearSubject.eraseToAnyPublisher()
+        )
+        
+        // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.studyGroupDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
     }
     
     // MARK: - Function
@@ -125,7 +119,7 @@ class StudyListViewController: BaseViewController {
     }
 }
 
-extension StudyListViewController:
+extension MyStudyGroupListViewController:
     UITableViewDelegate {
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -137,11 +131,20 @@ extension StudyListViewController:
         studyGroupDataSource = UITableViewDiffableDataSource(
             tableView: studyGroupTableView,
             cellProvider: { tableView, indexPath, item in
-                guard let cell = tableView.dequeue(StudyGroupListTableViewCell.self, for: indexPath)
+                guard let cell = tableView.dequeue(MyStudyGroupListTableViewCell.self, for: indexPath)
                 else { return UITableViewCell() }
                 cell.configureCell(item)
                 return cell
             }
         )
+    }
+    
+    private func updateSnapshot(items: [StudyGroup]) {
+        var snapshot = NSDiffableDataSourceSnapshot<MyStudyGroupListSection, StudyGroup>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(items)
+        
+        guard let datasource = self.studyGroupDataSource else { return }
+        datasource.apply(snapshot, animatingDifferences: false)
     }
 }
