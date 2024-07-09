@@ -77,6 +77,7 @@
 		35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */; };
 		35E4EA3E2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA3D2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift */; };
 		35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA3F2BCC2BF2003A10D4 /* BaseTableViewCell.swift */; };
+		35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35ED53D42C3D9BF3006DDBA7 /* Collection++Extension.swift */; };
 		35EF30032C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF30022C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		35EF30072C03841700F86052 /* StudyMainExitPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF30062C03841700F86052 /* StudyMainExitPopupViewController.swift */; };
 		35EF30092C03926F00F86052 /* StudyMainInvitationPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF30082C03926F00F86052 /* StudyMainInvitationPopupViewController.swift */; };
@@ -314,6 +315,7 @@
 		35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView++Extension.swift"; sourceTree = "<group>"; };
 		35E4EA3D2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListTableViewCell.swift; sourceTree = "<group>"; };
 		35E4EA3F2BCC2BF2003A10D4 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		35ED53D42C3D9BF3006DDBA7 /* Collection++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection++Extension.swift"; sourceTree = "<group>"; };
 		35EF30022C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		35EF30062C03841700F86052 /* StudyMainExitPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainExitPopupViewController.swift; sourceTree = "<group>"; };
 		35EF30082C03926F00F86052 /* StudyMainInvitationPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainInvitationPopupViewController.swift; sourceTree = "<group>"; };
@@ -1341,6 +1343,7 @@
 				352DBE512C1DF001008859D2 /* Notification++Extension.swift */,
 				352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */,
 				35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */,
+				35ED53D42C3D9BF3006DDBA7 /* Collection++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2170,6 +2173,7 @@
 				CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */,
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
+				35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,

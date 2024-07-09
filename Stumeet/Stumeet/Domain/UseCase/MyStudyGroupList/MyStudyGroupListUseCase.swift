@@ -13,9 +13,9 @@ protocol MyStudyGroupListUseCase {
 
 final class DefaultMyStudyGroupListUseCase: MyStudyGroupListUseCase {
     
-    private let repository: StudyGroupRepository
+    private let repository: MyStudyGroupListRepository
     
-    init(repository: StudyGroupRepository) {
+    init(repository: MyStudyGroupListRepository) {
         self.repository = repository
     }
     

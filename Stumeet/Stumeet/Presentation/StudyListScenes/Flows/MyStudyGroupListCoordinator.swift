@@ -18,7 +18,7 @@ protocol MyStudyGroupListCoordinatorDependencies {
 
 protocol MyStudyGroupListNavigation: AnyObject {
     func goToMyStudyGroupList()
-    func goToStudyMain()
+    func goToStudyMain(with id: Int)
     func presentToSideMenu(from viewController: UIViewController)
     func presentToExitPopup(from viewController: UIViewController)
     func presentToInvitationPopup(from viewController: UIViewController)
@@ -56,7 +56,8 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         navigationController.pushViewController(studyListVC, animated: true)
     }
     
-    func goToStudyMain() {
+    // TODO: 메인 화면 API 연결 시 수정
+    func goToStudyMain(with id: Int) {
         let studyMainVC = StudyMainViewController(coordinator: self)
         studyMainVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(studyMainVC, animated: true)

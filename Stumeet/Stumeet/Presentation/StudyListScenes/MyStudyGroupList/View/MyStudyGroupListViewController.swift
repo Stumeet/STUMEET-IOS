@@ -77,16 +77,11 @@ class MyStudyGroupListViewController: BaseViewController {
     private func setupRegister() {
         studyGroupTableView.registerCell(MyStudyGroupListTableViewCell.self)
     }
-    
-    private func setupDelegate() {
-        studyGroupTableView.delegate = self
-    }
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRegister()
-        setupDelegate()
         configureDatasource()
     }
     
@@ -98,7 +93,8 @@ class MyStudyGroupListViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = MyStudyGroupListViewModel.Input(
-            viewWillAppear: viewWillAppearSubject.eraseToAnyPublisher()
+            viewWillAppear: viewWillAppearSubject.eraseToAnyPublisher(),
+            didSelectedCell: studyGroupTableView.didSelectRowPublisher.eraseToAnyPublisher()
         )
         
         // MARK: - Output
@@ -107,6 +103,16 @@ class MyStudyGroupListViewController: BaseViewController {
         output.studyGroupDataSource
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.navigateToStudyMainVC
+            .receive(on: RunLoop.main)
+            .sink { [weak self] id in
+                guard let self = self,
+                      let id = id
+                else { return }
+                coordinator.goToStudyMain(with: id)
+            }
             .store(in: &cancellables)
     }
     
@@ -119,13 +125,7 @@ class MyStudyGroupListViewController: BaseViewController {
     }
 }
 
-extension MyStudyGroupListViewController:
-    UITableViewDelegate {
-    // MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator.goToStudyMain()
-    }
-    
+extension MyStudyGroupListViewController {
     // MARK: - DataSource
     private func configureDatasource() {
         studyGroupDataSource = UITableViewDiffableDataSource(
