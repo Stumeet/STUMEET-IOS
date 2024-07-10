@@ -13,17 +13,20 @@ final class AllStudyActivityViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
+        let reachedCollectionViewBottom: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
     
     struct Output {
         let items: AnyPublisher<[StudyActivitySectionItem], Never>
+        let isEmptyItems: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
     
-     private let useCase: StudyActivityUseCase
+    private let useCase: StudyActivityUseCase
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -35,13 +38,33 @@ final class AllStudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.getActivityItems(type: .all(nil))
-            .map { $0.map { StudyActivitySectionItem.all($0) } }
+        let itemSubject = CurrentValueSubject<[StudyActivitySectionItem]?, Never>(nil)
+        
+        let items = itemSubject
+            .compactMap { $0 }
             .eraseToAnyPublisher()
         
+        // 페이지 0번 데이터 받아오기
+        useCase.getAllActivityItems(items: [])
+            .map { $0.map { StudyActivitySectionItem.all($0) } }
+            .sink(receiveValue: itemSubject.send)
+            .store(in: &cancellables)
         
+        // 다음 페이지 받아오기
+        input.reachedCollectionViewBottom
+            .compactMap { itemSubject.value }
+            .flatMap(useCase.getAllActivityItems)
+            .map { $0.map { StudyActivitySectionItem.all($0) } }
+            .sink(receiveValue: itemSubject.send)
+            .store(in: &cancellables)
+        
+        let isEmptyItems = itemSubject
+            .compactMap { $0?.isEmpty }
+            .eraseToAnyPublisher()
+
         return Output(
-            items: items
+            items: items,
+            isEmptyItems: isEmptyItems
         )
     }
 

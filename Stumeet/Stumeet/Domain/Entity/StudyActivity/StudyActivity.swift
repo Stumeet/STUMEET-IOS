@@ -12,7 +12,8 @@ struct Activity: Hashable {
     let tag: String?
     let title: String
     let content: String?
-    let time: String?
+    let startTiem: String?
+    let endTime: String?
     let place: String?
     let image: String?
     let name: String?

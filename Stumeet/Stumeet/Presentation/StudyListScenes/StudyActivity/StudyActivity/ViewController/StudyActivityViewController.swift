@@ -154,7 +154,8 @@ class StudyActivityViewController: BaseViewController {
             didTapTaskButton: taskButton.tapPublisher,
             didChangedIndex: previousIndexSubject.eraseToAnyPublisher(),
             didSlideIndex: slidedIndexSubject.eraseToAnyPublisher(),
-            didTapFloatingButton: floatingButton.tapPublisher
+            didTapFloatingButton: floatingButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         // TODO: - ViewModel Biniding
@@ -177,6 +178,11 @@ class StudyActivityViewController: BaseViewController {
         output.presentToCreateActivityVC
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.startCreateActivityCoordinator)
+            .store(in: &cancellables)
+        
+        output.popViewController
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.popViewController)
             .store(in: &cancellables)
     }
 }

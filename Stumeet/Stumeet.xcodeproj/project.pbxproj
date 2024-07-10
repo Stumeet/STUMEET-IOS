@@ -107,6 +107,8 @@
 		CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */; };
 		CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */; };
 		CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */; };
+		CA342DAB2C3552990055A9A4 /* String++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAA2C3552990055A9A4 /* String++Extension.swift */; };
+		CA342DAD2C365E980055A9A4 /* StudyActivityEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */; };
 		CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */; };
 		CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */; };
 		CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */; };
@@ -340,6 +342,8 @@
 		CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
 		CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSection.swift; sourceTree = "<group>"; };
 		CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage++Extension.swift"; sourceTree = "<group>"; };
+		CA342DAA2C3552990055A9A4 /* String++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String++Extension.swift"; sourceTree = "<group>"; };
+		CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityEmptyView.swift; sourceTree = "<group>"; };
 		CA4E7EDC2B930829009C07FD /* NicknameRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestDTO.swift; sourceTree = "<group>"; };
 		CA4E7EE02B930898009C07FD /* Encodable++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable++Extension.swift"; sourceTree = "<group>"; };
 		CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldResponseDTO.swift; sourceTree = "<group>"; };
@@ -1261,6 +1265,7 @@
 				CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */,
 				35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */,
 				CA7D18D82C1D302B00710C0D /* UICollectionViewExtension.swift */,
+				CA342DAA2C3552990055A9A4 /* String++Extension.swift */,
 				355F51EA2BFE1C4600782D17 /* UINavigationController ++Extension.swift */,
 				355F51EC2BFE25BD00782D17 /* UIColor++Extension.swift */,
 				355F51EE2BFE309B00782D17 /* UITabBarController++Extension.swift */,
@@ -1419,6 +1424,7 @@
 			isa = PBXGroup;
 			children = (
 				CA6FADE42B871AF4008BCEF7 /* StudyActivityCell.swift */,
+				CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1959,6 +1965,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA342DAB2C3552990055A9A4 /* String++Extension.swift in Sources */,
 				35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */,
 				CA6448432B863BB90090DD84 /* Region.swift in Sources */,
 				355F51EB2BFE1C4600782D17 /* UINavigationController ++Extension.swift in Sources */,
@@ -2018,6 +2025,7 @@
 				CAD45A092BB40674006BCB4A /* StudyActivitySettingViewModel.swift in Sources */,
 				CA01B2792C01B4D100A01CEA /* DetailStudyActivityRepository.swift in Sources */,
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
+				CA342DAD2C365E980055A9A4 /* StudyActivityEmptyView.swift in Sources */,
 				CA01B2752C01B36D00A01CEA /* DetailStudyActivityViewModel.swift in Sources */,
 				CAE62E342BA80BF300AAD44A /* CreateActivityViewController.swift in Sources */,
 				355F51ED2BFE25BD00782D17 /* UIColor++Extension.swift in Sources */,
@@ -2332,6 +2340,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YNN2UAMM79;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";
@@ -2367,6 +2376,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YNN2UAMM79;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 앨범에 저장하려면  접근 권한이 필요합니다.";

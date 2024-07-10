@@ -5,9 +5,11 @@
 //  Created by 정지훈 on 6/8/24.
 //
 
+import Combine
 import UIKit
 
 final class AllStudyActivityViewController: BaseViewController {
+    
     
     typealias Section = StudyActivitySection
     typealias SectionItem = StudyActivitySectionItem
@@ -19,15 +21,19 @@ final class AllStudyActivityViewController: BaseViewController {
         collectionView.register(StudyActivityCell.self, forCellWithReuseIdentifier: StudyActivityCell.identifier)
         collectionView.backgroundColor = StumeetColor.primary50.color
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isHidden = true
         
         return collectionView
     }()
+    
+    private let emptyView = StudyActivityEmptyView()
     
     // MARK: - Properties
     
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     private let viewModel: AllStudyActivityViewModel
     private let coordinator: StudyListNavigation
+    private let preFetchIndexPathSubject = PassthroughSubject<[IndexPath], Never>()
     
     // MARK: - Init
     
@@ -48,16 +54,16 @@ final class AllStudyActivityViewController: BaseViewController {
         super.viewDidLoad()
 
         configureDatasource()
-        view.backgroundColor = .red
     }
     
     override func setupStyles() {
-        
+        view.backgroundColor = .white
     }
     
     override func setupAddView() {
         [
-            collectionView
+            collectionView,
+            emptyView
         ]   .forEach(view.addSubview)
     }
     
@@ -65,11 +71,18 @@ final class AllStudyActivityViewController: BaseViewController {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     
     override func bind() {
-        let input = AllStudyActivityViewModel.Input()
+        
+        let input = AllStudyActivityViewModel.Input(
+            reachedCollectionViewBottom: collectionView.reachedBottomPublisher()
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -84,6 +97,12 @@ final class AllStudyActivityViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
+        
+        output.isEmptyItems
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: switchHiddenEmptyView)
+            .store(in: &cancellables)
     }
 }
 
@@ -96,21 +115,20 @@ extension AllStudyActivityViewController {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: StudyActivityCell.identifier,
                 for: indexPath) as? StudyActivityCell else { return UICollectionViewCell() }
-            
             switch item {
             case .all(let item):
-                cell.configureAllUI(item: item!)
+                cell.configureAllUI(item: item)
                 
             default: break
             }
             
             return cell
         })
+        
     }
     
     private func updateSnapshot(items: [StudyActivitySectionItem]) {
         guard let datasource = self.datasource else { return }
-        
         var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivitySectionItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
@@ -137,5 +155,14 @@ extension AllStudyActivityViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         
         return layout
+    }
+}
+
+// MARK: - UIUpdate
+
+extension AllStudyActivityViewController {
+    private func switchHiddenEmptyView(isEmpty: Bool) {
+        collectionView.isHidden = isEmpty
+        emptyView.isHidden = !isEmpty
     }
 }
