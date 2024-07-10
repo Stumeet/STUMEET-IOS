@@ -32,7 +32,7 @@ final class MyStudyGroupListViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         let studyGroupDataSource = input.viewWillAppear
-            .flatMap { [weak self] type -> AnyPublisher<[StudyGroup], Never> in
+            .flatMap { [weak self] _ -> AnyPublisher<[StudyGroup], Never> in
                 guard let self = self
                 else { return Empty().eraseToAnyPublisher() }
                 return useCase.getStudyGroupItems(type: MyStudyGroupListType.active.description)
