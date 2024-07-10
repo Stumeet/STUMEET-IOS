@@ -42,7 +42,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             page: page,
             isNotice: false,
             studyId: 1,
-            category: "MEET",
+            category: ActivityCategory.meeting.rawValue,
             fromDate: nil,
             toDate: nil
         )
@@ -59,7 +59,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             page: page,
             isNotice: false,
             studyId: 1,
-            category: "ASSIGNMENT",
+            category: ActivityCategory.homework.rawValue,
             fromDate: nil,
             toDate: nil
         )

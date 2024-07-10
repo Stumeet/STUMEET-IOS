@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum ActivityCategory {
-    case freedom
-    case meeting
-    case homework
+enum ActivityCategory: String {
+    case freedom = "DEFAULT"
+    case meeting = "MEET"
+    case homework = "ASSIGNMENT"
 }
 
 extension ActivityCategory {

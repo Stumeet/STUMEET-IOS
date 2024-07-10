@@ -352,20 +352,15 @@ extension StudyActivityCell {
     }
     
     func configureTagText(item: Activity) {
-        var tag: String?
         var time: String?
         switch item.tag {
-        case "DEFAULT":
-            tag = "자유"
-        case "MEET":
-            tag = "모임"
+        case .meeting:
             time = item.startTiem
-        case "ASSIGNMENT":
-            tag = "과제"
+        case .homework:
             time = item.endTime?.appending(" 까지")
         default: break
         }
-        tagLabel.text = tag
+        tagLabel.text = item.tag?.title
         configureTimeLabel(text: time)
     }
     

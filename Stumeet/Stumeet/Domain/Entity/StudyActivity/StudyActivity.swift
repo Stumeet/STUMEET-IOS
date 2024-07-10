@@ -9,7 +9,7 @@ import Foundation
 
 struct Activity: Hashable {
     let id: Int
-    let tag: String?
+    let tag: ActivityCategory?
     let title: String
     let content: String?
     let startTiem: String?
