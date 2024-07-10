@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 3/27/24.
 //
 
+import Combine
 import UIKit
 
 final class StudyActivitySettingViewController: BaseViewController {
@@ -63,13 +64,18 @@ final class StudyActivitySettingViewController: BaseViewController {
     }()
     
     private lazy var postButton: UIButton = {
-        return UIButton().makeRegisterBottomButton(text: "게시", color: StumeetColor.gray200.color)
+        return UIButton().makeRegisterBottomButton(text: "게시", color: StumeetColor.primary700.color)
     }()
     
     // MARK: - Properties
     
     private let viewModel: StudyActivitySettingViewModel
     private let coordinator: CreateActivityNavigation
+    
+    // MARK: - Subject
+    
+    private let memberSubject = CurrentValueSubject<[ActivityMember], Never>([])
+    private let placeSubject = CurrentValueSubject<String, Never>("")
     
     // MARK: - Init
     
@@ -146,12 +152,23 @@ final class StudyActivitySettingViewController: BaseViewController {
             didTapStartDateButton: startDateButton.tapPublisher,
             didTapEndDateButton: endDateButton.tapPublisher,
             didTapPlaceButton: placeButton.tapPublisher,
+            didEnterPlace: placeSubject.eraseToAnyPublisher(),
             didTapMemeberButton: memberButton.tapPublisher,
-            didTapPostButton: postButton.tapPublisher)
+            didSelectMembers: memberSubject.eraseToAnyPublisher(),
+            didTapPostButton: postButton.tapPublisher,
+            didTapBackButton: backButton.tapPublisher
+        )
         
         let output = viewModel.transform(input: input)
         
         // Output
+        
+        output.currentCategory
+            .filter { $0 == .homework }
+            .map { _ in }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: reConfigureConstraints)
+            .store(in: &cancellables)
         
         // CalendarBottomSheet으로 present
         output.showCalendarIsStart
@@ -160,10 +177,14 @@ final class StudyActivitySettingViewController: BaseViewController {
             .sink(receiveValue: coordinator.presentToBottomSheetCalendarVC)
             .store(in: &cancellables)
         
-        // 현재 시간 update
-        output.currentDate
+        output.currentStartDate
             .receive(on: RunLoop.main)
-            .sink(receiveValue: setCurrentDate)
+            .assign(to: \.text, on: startDateLabel)
+            .store(in: &cancellables)
+        
+        output.currentEndDate
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: endDateLabel)
             .store(in: &cancellables)
         
         output.presentToPlaceVC
@@ -172,11 +193,32 @@ final class StudyActivitySettingViewController: BaseViewController {
             .sink(receiveValue: coordinator.presentToActivityPlaceSettingVC)
             .store(in: &cancellables)
         
+        output.enteredPlace
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updatePlaceLabel)
+            .store(in: &cancellables)
+        
         // 멤버설정 VC present
         output.presentToParticipatingMemberVC
-            .map { self }
+            .map { self.memberSubject.value }
+            .map { ($0, self) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToActivityMemberSettingViewController)
+            .store(in: &cancellables)
+        
+        output.selectedMembers
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateMemberButton)
+            .store(in: &cancellables)
+        
+        output.popViewController
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.popViewController)
+            .store(in: &cancellables)
+        
+        output.snackBarText
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: showSnackBar)
             .store(in: &cancellables)
     }
 }
@@ -184,7 +226,6 @@ final class StudyActivitySettingViewController: BaseViewController {
 // MARK: - CalendarDelegate
 
 extension StudyActivitySettingViewController: CreateActivityDelegate {
-    
     func didTapStartDateCompleteButton(date: String) {
         startDateLabel.text = date
     }
@@ -196,21 +237,20 @@ extension StudyActivitySettingViewController: CreateActivityDelegate {
 
 extension StudyActivitySettingViewController: CreateActivityMemberDelegate {
     func didTapCompleteButton(members: [ActivityMember]) {
-        print(members)
+        memberSubject.send(members)
     }
 }
 
 extension StudyActivitySettingViewController: CreateActivityPlaceDelegate {
     func didTapCompleteButton(place: String) {
-        placeLabel.text = place
-        placeLabel.textColor = StumeetColor.primary700.color
+        placeSubject.send(place)
     }
 }
 
 // MARK: - UpdateUI
 
 extension StudyActivitySettingViewController {
-    func createActivitySettingButton(title: String, subTitleLabel: UILabel) -> UIButton {
+    private func createActivitySettingButton(title: String, subTitleLabel: UILabel) -> UIButton {
         let button = UIButton()
         
         let titleLabel = UILabel().setLabelProperty(text: title, font: StumeetFont.bodyMedium16.font, color: nil)
@@ -232,9 +272,105 @@ extension StudyActivitySettingViewController {
         
         return button
     }
+
+    private func reConfigureConstraints() {
+        placeButton.removeFromSuperview()
+        stackView.removeArrangedSubview(placeButton)
+        stackView.snp.updateConstraints { make in
+            make.height.equalTo(201)
+        }
+    }
     
-    func setCurrentDate(date: String) {
-        startDateLabel.text = date
-        endDateLabel.text = date
+    private func updateMemberButton(with members: [ActivityMember]) {
+
+        memberButton.subviews.dropFirst().forEach { $0.removeFromSuperview() }
+        
+        let memberStackView = createMemberImageView(members: members)
+        memberButton.addSubview(memberStackView)
+        
+        if members.count > 4 {
+            let count = members.count - 4
+            let othersMemberCountLabel = UILabel().setLabelProperty(text: "+\(count)", font: StumeetFont.bodyMedium14.font, color: .gray500)
+            
+            memberButton.addSubview(othersMemberCountLabel)
+            
+            othersMemberCountLabel.snp.makeConstraints { make in
+                make.trailing.equalToSuperview().inset(24)
+                make.centerY.equalToSuperview()
+            }
+            
+            
+            memberStackView.snp.makeConstraints { make in
+                make.trailing.equalTo(othersMemberCountLabel.snp.leading).offset(-4)
+                make.centerY.equalToSuperview()
+            }
+        } else {
+            memberStackView.snp.makeConstraints { make in
+                make.trailing.equalToSuperview().inset(24)
+                make.centerY.equalToSuperview()
+            }
+        }
+    }
+    
+    // TODO: - image 변경
+    
+    private func createMemberImageView(members: [ActivityMember]) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = -8
+        stackView.alignment = .trailing
+        stackView.isUserInteractionEnabled = false
+        
+        let colors = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green]
+        
+        for (index, member) in members.enumerated() {
+            if index >= 4 { break }
+            let imageView = UIImageView()
+            imageView.layer.cornerRadius = 12
+            imageView.clipsToBounds = true
+            imageView.contentMode = .scaleAspectFill
+            imageView.backgroundColor = colors[index]
+            stackView.addArrangedSubview(imageView)
+            imageView.layer.zPosition = CGFloat(-index)
+            
+            imageView.snp.makeConstraints { make in
+                make.width.height.equalTo(24)
+            }
+        }
+        
+        return stackView
+    }
+    
+    private func updatePlaceLabel(place: String) {
+        placeLabel.text = place
+        placeLabel.textColor = StumeetColor.primary700.color
+    }
+    
+    private func showSnackBar(text: String) {
+        let snackBar = SnackBar(frame: .zero, text: text)
+        
+        view.addSubview(snackBar)
+        
+        snackBar.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(self.postButton.snp.top).offset(-24)
+            make.height.equalTo(74)
+        }
+        
+        snackBar.isHidden = false
+        snackBar.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            snackBar.alpha = 1
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIView.animate(withDuration: 0.3) {
+                    snackBar.alpha = 0
+                } completion: { _ in
+                    snackBar.isHidden = true
+                    snackBar.removeFromSuperview()
+                }
+            }
+        }
     }
 }

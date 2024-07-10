@@ -11,9 +11,9 @@ import PhotosUI
 
 protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
-    func makeStudyActivitySettingViewController(coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
+    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
-    func makeActivityMemberSettingViewController(coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
+    func makeActivityMemberSettingViewController(member: [ActivityMember], coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
     func makeCreateActivityLinkPopUpViewController(coordinator: CreateActivityNavigation) -> CreateActivityLinkPopUpViewController
     func makeActivityPlaceSettingViewController(coordinator: CreateActivityNavigation) -> ActivityPlaceSettingViewController
     func makePHPickerViewController() -> PHPickerViewController
@@ -21,13 +21,14 @@ protocol CreateActivityCoordinatorDependencies {
 
 protocol CreateActivityNavigation: AnyObject {
     func presentToCreateActivityVC()
-    func goToStudyActivitySettingVC()
+    func goToStudyActivitySettingVC(activity: CreateActivity)
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
-    func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate)
+    func presentToActivityMemberSettingViewController(member: [ActivityMember], delegate: CreateActivityMemberDelegate)
     func presentToPHPickerVC(delegate: PHPickerViewControllerDelegate)
     func presentToLinkPopUpVC(delegate: CreateActivityLinkDelegate)
     func presentToActivityPlaceSettingVC(delegate: CreateActivityPlaceDelegate)
     func dismiss()
+    func popViewController()
 }
 
 
@@ -59,8 +60,8 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         parentCoordinator?.navigationController.present(navigationController, animated: true)
     }
     
-    func goToStudyActivitySettingVC() {
-        let studyActivitySettingVC = dependencies.makeStudyActivitySettingViewController(coordinator: self)
+    func goToStudyActivitySettingVC(activity: CreateActivity) {
+        let studyActivitySettingVC = dependencies.makeStudyActivitySettingViewController(activity: activity, coordinator: self)
         navigationController.pushViewController(studyActivitySettingVC, animated: true)
     }
 
@@ -73,9 +74,9 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         lastVC.present(bottomSheetCalendarVC, animated: false)
     }
     
-    func presentToActivityMemberSettingViewController(delegate: CreateActivityMemberDelegate) {
+    func presentToActivityMemberSettingViewController(member: [ActivityMember], delegate: CreateActivityMemberDelegate) {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        let activityMemberSettingVC = dependencies.makeActivityMemberSettingViewController(coordinator: self)
+        let activityMemberSettingVC = dependencies.makeActivityMemberSettingViewController(member: member, coordinator: self)
         activityMemberSettingVC.modalPresentationStyle = .fullScreen
         activityMemberSettingVC.delegate = delegate
         lastVC.present(activityMemberSettingVC, animated: true)
@@ -111,5 +112,9 @@ extension CreateActivityCoordinator: CreateActivityNavigation {
         lastVC.dismiss(animated: true) {
             self.parentCoordinator?.childDidFinish(self)
         }
+    }
+    
+    func popViewController() {
+        navigationController.popViewController(animated: true)
     }
 }
