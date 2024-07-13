@@ -20,11 +20,12 @@ class MyStudyGroupListViewController: BaseViewController {
         label.numberOfLines = 0
         return label
     }()
-    private let studyGroupTableView: UITableView = {
+    private lazy var studyGroupTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         tableView.scrollsToTop = false
+        tableView.registerCell(MyStudyGroupListTableViewCell.self)
         return tableView
     }()
     
@@ -73,15 +74,10 @@ class MyStudyGroupListViewController: BaseViewController {
             $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    private func setupRegister() {
-        studyGroupTableView.registerCell(MyStudyGroupListTableViewCell.self)
-    }
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupRegister()
         configureDatasource()
     }
     
