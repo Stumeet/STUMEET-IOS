@@ -177,10 +177,10 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
         }
     }
     
-    func configureCell(_ item: DetailStudyActivityBottom) {
-        startDateLabel.text = item.startDate
-        endDateLabel.text = item.endDate
-        placeLabel.text = item.place
+    func configureCell(_ item: DetailStudyActivity.Bottom?) {
+        startDateLabel.text = item?.startDate
+        endDateLabel.text = item?.endDate
+        placeLabel.text = item?.place
     }
     
 }

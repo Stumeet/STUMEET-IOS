@@ -139,12 +139,12 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
         
     }
     
-    func configureCell(_ item: DetailStudyActivityTop) {
-        dayLeftLabel.text = item.dayLeft
-        statusLabel.text = item.status
-        nameLabel.text = item.name
-        dateLabel.text = item.date
-        titleLabel.text = item.title
-        contentLabel.text = item.content
+    func configureCell(_ item: DetailStudyActivity.Top?) {
+        dayLeftLabel.text = item?.dayLeft
+        statusLabel.text = item?.status
+        nameLabel.text = item?.name
+        dateLabel.text = item?.date
+        titleLabel.text = item?.title
+        contentLabel.text = item?.content
     }
 }

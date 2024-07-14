@@ -43,7 +43,15 @@ final class DetailStudyActivityViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.setDetailActivityItem()
+        let items = useCase.getDetailActivityItem(studyID: studyID, activityID: activityID)
+            .map {
+                [
+                    DetailStudyActivitySectionItem.topCell($0.top),
+                    DetailStudyActivitySectionItem.photoCell($0.photo),
+                    DetailStudyActivitySectionItem.bottomCell($0.bottom)
+                ]
+            }
+            .eraseToAnyPublisher()
         
         let presentToPhotoListVC = input.didSelectedCell
             .filter { $0.section == 1 }

@@ -197,6 +197,7 @@ extension DetailStudyActivityViewController {
                 
                 cell.memberCountButton.tapPublisher.subscribe(self.memberButtonTapSubject)
                     .store(in: &self.cancellables)
+                
                 cell.configureCell(item)
                 return cell
             }

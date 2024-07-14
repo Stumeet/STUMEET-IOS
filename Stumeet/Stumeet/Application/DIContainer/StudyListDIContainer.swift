@@ -28,8 +28,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     func makeDetailsudyActivityRepository() -> DetailStudyActivityRepository {
-        // MARK: - TODO netwokring 후 Default로 교체
-        MockDetailStudyActivityRepository()
+        DefaultDetailStudyActivityRepository(provider: dependencies.provider.makeProvider())
     }
     
     func makeDetailActivityMemberRepository() -> DetailActivityMemberListRepository {

@@ -122,6 +122,8 @@
 		CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */; };
 		CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E7EE42B9311D1009C07FD /* Field.swift */; };
 		CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */; };
+		CA617BF72C44056D000A3698 /* DetailActivityRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA617BF62C44056D000A3698 /* DetailActivityRequestDTO.swift */; };
+		CA617BF92C44058E000A3698 /* DetailActivityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA617BF82C44058E000A3698 /* DetailActivityResponseDTO.swift */; };
 		CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CB2B863BB90090DD84 /* AppDelegate.swift */; };
 		CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447CC2B863BB90090DD84 /* SceneDelegate.swift */; };
 		CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447D22B863BB90090DD84 /* RegionRepository.swift */; };
@@ -365,6 +367,8 @@
 		CA4E7EE22B930E70009C07FD /* FieldResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldResponseDTO.swift; sourceTree = "<group>"; };
 		CA4E7EE42B9311D1009C07FD /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 		CA5C85D82BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCalendarUseCase.swift; sourceTree = "<group>"; };
+		CA617BF62C44056D000A3698 /* DetailActivityRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityRequestDTO.swift; sourceTree = "<group>"; };
+		CA617BF82C44058E000A3698 /* DetailActivityResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityResponseDTO.swift; sourceTree = "<group>"; };
 		CA6447C82B863BB90090DD84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA6447C92B863BB90090DD84 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA6447CB2B863BB90090DD84 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1521,6 +1525,8 @@
 			children = (
 				CA8C0DE12C33C98D005ECA55 /* AllStudyActivityRequestDTO.swift */,
 				CA342DC02C3830370055A9A4 /* PostActivityRequestDTO.swift */,
+				CA617BF82C44058E000A3698 /* DetailActivityResponseDTO.swift */,
+				CA617BF62C44056D000A3698 /* DetailActivityRequestDTO.swift */,
 				CA8C0DE32C33D126005ECA55 /* AllStudyActivityResponseDTO.swift */,
 				CA8C0DE72C33D81F005ECA55 /* BreifStudyActivityResponseDTO.swift */,
 				CA8C0DE92C33DDC1005ECA55 /* BriefStudyActivityResponseDTO.swift */,
@@ -2182,6 +2188,7 @@
 				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,
 				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
 				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
+				CA617BF92C44058E000A3698 /* DetailActivityResponseDTO.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
 				CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */,
 				353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */,
@@ -2192,6 +2199,7 @@
 				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */,
+				CA617BF72C44056D000A3698 /* DetailActivityRequestDTO.swift in Sources */,
 				CA8C0DE82C33D81F005ECA55 /* BreifStudyActivityResponseDTO.swift in Sources */,
 				CA8C0DEA2C33DDC1005ECA55 /* BriefStudyActivityResponseDTO.swift in Sources */,
 				CA9958572BB055BD00884615 /* ActivityCreateUseCase.swift in Sources */,
