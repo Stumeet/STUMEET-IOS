@@ -11,19 +11,20 @@ import Foundation
 final class MyStudyGroupListViewModel: ViewModelType {
     // MARK: - Input
     struct Input {
-        let viewWillAppear: AnyPublisher<Void, Never>
+        let loadStudyGroupData: AnyPublisher<String, Never>
         let didSelectedCell: AnyPublisher<IndexPath, Never>
     }
 
     // MARK: - Output
     struct Output {
         let studyGroupDataSource: AnyPublisher<[StudyGroup], Never>
-        let navigateToStudyMainVC: AnyPublisher<Int?, Never>
+        let navigateToStudyMainVC: AnyPublisher<Int, Never>
     }
     
     // MARK: - Properties
     private var useCase: MyStudyGroupListUseCase
-    private var studyGroupData: [StudyGroup] = []
+    private var studyGroupItemsSubject = CurrentValueSubject<[StudyGroup], Never>([])
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     init(useCase: MyStudyGroupListUseCase) {
@@ -31,32 +32,25 @@ final class MyStudyGroupListViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let studyGroupDataSource = input.viewWillAppear
-            .flatMap { [weak self] _ -> AnyPublisher<[StudyGroup], Never> in
-                guard let self = self
-                else { return Empty().eraseToAnyPublisher() }
-                return useCase.getStudyGroupItems(type: MyStudyGroupListType.active.description)
-            }
-            .map { [weak self] data -> [StudyGroup] in
-                guard let self = self else { return [] }
-                studyGroupData = data
-                return studyGroupData
-            }
-            .eraseToAnyPublisher()
+        let studyGroupDataSource = studyGroupItemsSubject.eraseToAnyPublisher()
         
         let navigateToStudyMainVC = input.didSelectedCell
-            .map { [weak self] index -> Int? in
-                guard let self = self,
-                      let studyGroup = studyGroupData[safe: index.row]
-                else { return nil }
-
-                return studyGroup.id
-            }
+            .compactMap(studyGroupId(for:))
             .eraseToAnyPublisher()
         
+        input.loadStudyGroupData
+            .flatMap(useCase.getStudyGroupItems)
+            .sink(receiveValue: studyGroupItemsSubject.send)
+            .store(in: &cancellables)
+    
         return Output(
             studyGroupDataSource: studyGroupDataSource,
             navigateToStudyMainVC: navigateToStudyMainVC
         )
+    }
+    
+    // MARK: - Function
+    private func studyGroupId(for indexPath: IndexPath) -> Int? {
+        return studyGroupItemsSubject.value[safe: indexPath.row]?.id
     }
 }

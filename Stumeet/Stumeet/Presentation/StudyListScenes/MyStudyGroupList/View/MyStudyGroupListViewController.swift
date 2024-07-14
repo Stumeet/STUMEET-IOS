@@ -33,7 +33,7 @@ class MyStudyGroupListViewController: BaseViewController {
     private weak var coordinator: MyStudyGroupListNavigation!
     private let viewModel: MyStudyGroupListViewModel
     private var studyGroupDataSource: UITableViewDiffableDataSource<MyStudyGroupListSection, StudyGroup>?
-    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let loadStudyGroupDataSubject = PassthroughSubject<String, Never>()
     
     // MARK: - Init
     init(coordinator: MyStudyGroupListNavigation,
@@ -83,13 +83,13 @@ class MyStudyGroupListViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewWillAppearSubject.send()
+        loadStudyGroupDataSubject.send(MyStudyGroupListType.active.description)
     }
     
     override func bind() {
         // MARK: - Input
         let input = MyStudyGroupListViewModel.Input(
-            viewWillAppear: viewWillAppearSubject.eraseToAnyPublisher(),
+            loadStudyGroupData: loadStudyGroupDataSubject.eraseToAnyPublisher(),
             didSelectedCell: studyGroupTableView.didSelectRowPublisher.eraseToAnyPublisher()
         )
         
@@ -103,12 +103,7 @@ class MyStudyGroupListViewController: BaseViewController {
         
         output.navigateToStudyMainVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] id in
-                guard let self = self,
-                      let id = id
-                else { return }
-                coordinator.goToStudyMain(with: id)
-            }
+            .sink(receiveValue: coordinator.goToStudyMain(with:))
             .store(in: &cancellables)
     }
     
