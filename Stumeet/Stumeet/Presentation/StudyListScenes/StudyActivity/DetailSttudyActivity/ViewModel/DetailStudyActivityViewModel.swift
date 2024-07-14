@@ -28,11 +28,15 @@ final class DetailStudyActivityViewModel: ViewModelType {
     // MARK: - Properties
     
     private let useCase: DetailStudyActivityUseCase
+    private let studyID: Int
+    private let activityID: Int
     
     // MARK: - Init
     
-    init(useCase: DetailStudyActivityUseCase) {
+    init(useCase: DetailStudyActivityUseCase, studyID: Int, activityID: Int) {
         self.useCase = useCase
+        self.studyID = studyID
+        self.activityID = activityID
     }
     
     // MARK: - Transform

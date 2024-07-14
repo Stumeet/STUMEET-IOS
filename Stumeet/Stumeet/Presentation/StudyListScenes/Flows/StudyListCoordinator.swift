@@ -10,7 +10,7 @@ import UIKit
 protocol StudyListCoordinatorDependencies {
     func makeStudyListVC(coordinator: StudyListNavigation) -> StudyListViewController
     func makeStudyActivityVC(coordinator: StudyListNavigation) -> StudyActivityViewController
-    func makeDetailStudyActivityListVC(coordinator: StudyListNavigation) -> DetailStudyActivityViewController
+    func makeDetailStudyActivityVC(coordinator: StudyListNavigation, studyID: Int, activityID: Int) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: StudyListNavigation) -> DetailActivityPhotoListViewController
     func makeDetailActivityMemberListVC(coordinator: StudyListNavigation) -> DetailActivityMemberListViewController
@@ -23,7 +23,7 @@ protocol StudyListNavigation: AnyObject {
     func presentToExitPopup(from viewController: UIViewController)
     func presentToInvitationPopup(from viewController: UIViewController)
     func goToStudyActivityList()
-    func goToDetailStudyActivityVC()
+    func goToDetailStudyActivityVC(studyID: Int, activityID: Int)
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
     func presentToDetailActivityMemberListVC()
     func startCreateActivityCoordinator()
@@ -90,8 +90,8 @@ extension StudyListCoordinator: StudyListNavigation {
         navigationController.pushViewController(studyActivityListVC, animated: true)
     }
     
-    func goToDetailStudyActivityVC() {
-        let detailStudyActivityVC = dependencies.makeDetailStudyActivityListVC(coordinator: self)
+    func goToDetailStudyActivityVC(studyID: Int, activityID: Int) {
+        let detailStudyActivityVC = dependencies.makeDetailStudyActivityVC(coordinator: self, studyID: studyID, activityID: activityID)
         navigationController.pushViewController(detailStudyActivityVC, animated: true)
     }
     

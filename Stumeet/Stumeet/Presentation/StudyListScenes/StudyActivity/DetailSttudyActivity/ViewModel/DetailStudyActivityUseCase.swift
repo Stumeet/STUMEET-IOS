@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol DetailStudyActivityUseCase {
-    func setDetailActivityItem() -> AnyPublisher<[DetailStudyActivitySectionItem], Never>
+    func getDetailActivityItem(studyID: Int, activityID: Int) -> AnyPublisher<[DetailStudyActivitySectionItem], Never>
     func setPresentedImage(indexPath: IndexPath, items: [DetailStudyActivitySectionItem]) -> AnyPublisher<([String], Int), Never>
 }
 
@@ -22,8 +22,8 @@ final class DefaultDetailStudyActivityUseCase: DetailStudyActivityUseCase {
         self.repository = repository
     }
     
-    func setDetailActivityItem() -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
-        return repository.fetchDetailActivityItems()
+    func getDetailActivityItem(studyID: Int, activityID: Int) -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
+        return repository.fetchDetailActivityItems(studyID: studyID, activityID: activityID)
     }
     
     func setPresentedImage(indexPath: IndexPath, items: [DetailStudyActivitySectionItem]) -> AnyPublisher<([String], Int), Never> {

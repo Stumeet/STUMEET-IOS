@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 final class DefaultDetailStudyActivityRepository: DetailStudyActivityRepository {
-    func fetchDetailActivityItems() -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
+    func fetchDetailActivityItems(studyID: Int, activityID: Int) -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
         return Empty().eraseToAnyPublisher()
     }
 }
@@ -18,7 +18,7 @@ final class MockDetailStudyActivityRepository: DetailStudyActivityRepository {
     
     // MARK: - Mock
     
-    func fetchDetailActivityItems() -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
+    func fetchDetailActivityItems(studyID: Int, activityID: Int) -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
         let top = DetailStudyActivityTop(
             dayLeft: "18일 남음",
             status: "미제출",

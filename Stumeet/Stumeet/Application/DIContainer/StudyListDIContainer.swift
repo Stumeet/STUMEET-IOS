@@ -99,14 +99,14 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     
     // MARK: - DetailStudyActivity
     
-    func makeDetailStudyActivityViewModel() -> DetailStudyActivityViewModel {
-        DetailStudyActivityViewModel(useCase: makeDetailStudyActivityUseCase())
+    func makeDetailStudyActivityViewModel(studyID: Int, activityID: Int) -> DetailStudyActivityViewModel {
+        DetailStudyActivityViewModel(useCase: makeDetailStudyActivityUseCase(), studyID: studyID, activityID: activityID)
     }
     
-    func makeDetailStudyActivityListVC(coordinator: Navigation) -> DetailStudyActivityViewController {
+    func makeDetailStudyActivityVC(coordinator: Navigation, studyID: Int, activityID: Int) -> DetailStudyActivityViewController {
         DetailStudyActivityViewController(
             coordinator: coordinator,
-            viewModel: makeDetailStudyActivityViewModel()
+            viewModel: makeDetailStudyActivityViewModel(studyID: studyID, activityID: activityID)
         )
     }
     

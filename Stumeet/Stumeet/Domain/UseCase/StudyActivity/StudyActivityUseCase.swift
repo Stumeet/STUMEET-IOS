@@ -12,6 +12,7 @@ protocol StudyActivityUseCase {
     func getAllActivityItems(items: [StudyActivitySectionItem]) -> AnyPublisher<[Activity], Never>
     func getGroupActivityItems(items: [StudyActivitySectionItem]) -> AnyPublisher<[Activity], Never>
     func getTaskActivityItems(items: [StudyActivitySectionItem]) -> AnyPublisher<[Activity], Never>
+    func getSelectedActivityID(selectedIndexPath: IndexPath, items: [StudyActivitySectionItem]?) -> AnyPublisher<(Int, Int), Never>
 }
 
 final class DefaultStudyActivityUseCase: StudyActivityUseCase {
@@ -44,6 +45,13 @@ final class DefaultStudyActivityUseCase: StudyActivityUseCase {
         return repository.fetchTaskActivityItems(size: size, page: nextPage)
             .map { items.map { $0.item } + $0 }
             .eraseToAnyPublisher()
+    }
+    
+    func getSelectedActivityID(selectedIndexPath: IndexPath, items: [StudyActivitySectionItem]?) -> AnyPublisher<(Int, Int), Never> {
+        guard let items = items else { return Empty().eraseToAnyPublisher() }
+        // TODO: - studyID:1 테스트용이므로 추후에 변경
+        let selectedID = (1, items[selectedIndexPath.item].item.id)
+        return Just(selectedID).eraseToAnyPublisher()
     }
 }
 
