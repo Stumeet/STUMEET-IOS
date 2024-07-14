@@ -1,5 +1,5 @@
 //
-//  StudyListDIContainer.swift
+//  MyStudyGroupListDIContainer.swift
 //  Stumeet
 //
 //  Created by 정지훈 on 5/10/24.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-final class StudyListDIContainer: StudyListCoordinatorDependencies {
+final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies {
     
-    typealias Navigation = StudyListNavigation
+    typealias Navigation = MyStudyGroupListNavigation
     
     struct Dependencies {
-        let provider: NetworkServiceProvider?
+        let provider: NetworkServiceProvider
     }
     
     let dependencies: Dependencies
@@ -22,6 +22,12 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     // MARK: - Repository
+    
+    func makeMyStudyGroupListRepository() -> MyStudyGroupListRepository {
+        DefaultMyStudyGroupListRepository(
+            provider: dependencies.provider.makeProvider()
+        )
+    }
     
     func makeStudyActivityRepository() -> StudyActivityRepository {
         DefaultStudyActivityRepository()
@@ -37,6 +43,10 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     // MARK: - UseCase
+    
+    func makeMyStudyGroupListUseCase() -> MyStudyGroupListUseCase {
+        DefaultMyStudyGroupListUseCase(repository: makeMyStudyGroupListRepository())
+    }
     
     func makeStudyActivityUseCase() -> StudyActivityUseCase {
         DefaultStudyActivityUseCase(repository: makeStudyActivityRepository())
@@ -54,10 +64,17 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         DefualtDetailActivityMemberListUseCase(repository: makeDetailActivityMemberRepository())
     }
     
-    // MARK: - StudyList
+    // MARK: - MyStudyGroupList
     
-    func makeStudyListVC(coordinator: Navigation) -> StudyListViewController {
-        StudyListViewController(coordinator: coordinator)
+    func makeMyStudyGroupListViewModel() -> MyStudyGroupListViewModel {
+        MyStudyGroupListViewModel(useCase: makeMyStudyGroupListUseCase())
+    }
+    
+    func makeMyStudyGroupListVC(coordinator: Navigation) -> MyStudyGroupListViewController {
+        MyStudyGroupListViewController(
+            coordinator:  coordinator,
+            viewModel: makeMyStudyGroupListViewModel()
+        )
     }
     
     // MARK: - StudyActivity
@@ -90,7 +107,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         ]
     }
     
-    func makeStudyActivityVC(coordinator: StudyListNavigation) -> StudyActivityViewController {
+    func makeStudyActivityVC(coordinator: MyStudyGroupListNavigation) -> StudyActivityViewController {
         StudyActivityViewController(
             viewControllers: makePageViewControllers(coordinator: coordinator),
             viewModel: StudyActivityViewModel(),
@@ -151,6 +168,13 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
         return CreateActivityCoordinator(
             navigationController: navigationController,
             dependencies: makeCreateActivityDIContainer()
+        )
+    }
+    
+    func makeMyStudyGroupListCoordinator(navigationController: UINavigationController) -> MyStudyGroupListCoordinator {
+        return MyStudyGroupListCoordinator(
+            navigationController: navigationController,
+            dependencies: self
         )
     }
 }

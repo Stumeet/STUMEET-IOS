@@ -1,5 +1,5 @@
 //
-//  StudyGroupListTableViewCell.swift
+//  MyStudyGroupListTableViewCell.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/04/15.
@@ -7,8 +7,9 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
-class StudyGroupListTableViewCell: BaseTableViewCell {
+class MyStudyGroupListTableViewCell: BaseTableViewCell {
     
     // MARK: - UIComponents
     private let rootHStackView: UIStackView = {
@@ -29,6 +30,7 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 16
         imageView.backgroundColor = .gray
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -122,10 +124,14 @@ class StudyGroupListTableViewCell: BaseTableViewCell {
     
     // MARK: - Function
     
-    func configureCell(_ item: Any) {
-        mainDetailsInfoTitleLabel.text = "자바를 자바"
-        mainDetailsInfoSubTitleLabel.text = "7"
-        mainDetailsPeriodLabel.text = "2023.10.20 ~ 2024.01.10"
+    func configureCell(_ item: StudyGroup) {
+        mainDetailsInfoTitleLabel.text = item.name
+        mainDetailsInfoSubTitleLabel.text = String(item.headcount)
+        mainDetailsPeriodLabel.text = "\(item.startDate) ~ \(item.endDate)"
+        // TODO: API 변경 필요
         newBadgeView.isHidden = false
+
+        let url = URL(string: item.image)
+        thumbnailImageView.kf.setImage(with: url)
     }
 }

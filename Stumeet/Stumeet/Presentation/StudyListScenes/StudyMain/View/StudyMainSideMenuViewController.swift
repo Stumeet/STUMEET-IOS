@@ -96,13 +96,13 @@ class StudyMainSideMenuViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private weak var coordinator: StudyListNavigation!
+    private weak var coordinator: MyStudyGroupListNavigation!
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var deviceWidthRatio = screenWidth * 0.7 // 디바이스 너비의 70%를 계산
     private var menuDataSource: UITableViewDiffableDataSource<StudyMainMenuSection, StudyMainMenu>?
     
     // MARK: - Init
-    init(coordinator: StudyListNavigation) {
+    init(coordinator: MyStudyGroupListNavigation) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }

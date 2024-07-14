@@ -24,11 +24,21 @@
 		353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */; };
 		353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */; };
 		35435BBA2C310FED00BED2A9 /* UserDefaults++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */; };
+		3544657E2C359B3700504C28 /* MyStudyGroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3544657D2C359B3700504C28 /* MyStudyGroupListViewModel.swift */; };
+		354465812C35A51900504C28 /* MyStudyGroupListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354465802C35A51900504C28 /* MyStudyGroupListUseCase.swift */; };
 		35446B0E2B9DB20B00252283 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 35446B0D2B9DB20B00252283 /* KakaoSDK */; };
 		35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B122B9F4B2000252283 /* LoginUseCase.swift */; };
 		35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B152B9F4BDA00252283 /* AppleLoginService.swift */; };
 		35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */; };
 		35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B192B9F506200252283 /* KakaoLoginService.swift */; };
+		355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BB2C3AB71500C50BA0 /* StudyService.swift */; };
+		355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */; };
+		355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */; };
+		355A75C52C3ABE8300C50BA0 /* StudyGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C42C3ABE8300C50BA0 /* StudyGroup.swift */; };
+		355A75C82C3AC07500C50BA0 /* DefaultMyStudyGroupListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C72C3AC07500C50BA0 /* DefaultMyStudyGroupListRepository.swift */; };
+		355A75CA2C3AC1F700C50BA0 /* StudiesResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C92C3AC1F700C50BA0 /* StudiesResponseDTO.swift */; };
+		355A75CD2C3AE2C700C50BA0 /* MyStudyGroupListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75CC2C3AE2C700C50BA0 /* MyStudyGroupListSection.swift */; };
+		355A75D02C3AF0E900C50BA0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 355A75CF2C3AF0E900C50BA0 /* Kingfisher */; };
 		355F51DD2BF89F9800782D17 /* StudyMainSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F51DC2BF89F9800782D17 /* StudyMainSideMenuViewController.swift */; };
 		355F51E12BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F51E02BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift */; };
 		355F51EB2BFE1C4600782D17 /* UINavigationController ++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F51EA2BFE1C4600782D17 /* UINavigationController ++Extension.swift */; };
@@ -40,7 +50,7 @@
 		356216432C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356216422C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift */; };
 		357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B832BB06B2C0079DCE6 /* RegisterCoordinator.swift */; };
 		357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */; };
-		357D1B8A2BB07BA20079DCE6 /* StudyListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B892BB07BA20079DCE6 /* StudyListCoordinator.swift */; };
+		357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */; };
 		357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */; };
 		357D1B902BB07D1D0079DCE6 /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B8F2BB07D1D0079DCE6 /* MyPageCoordinator.swift */; };
 		357D1B972BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B922BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift */; };
@@ -52,6 +62,7 @@
 		357D1BA92BB8119E0079DCE6 /* UserAuthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BA82BB8119E0079DCE6 /* UserAuthInfo.swift */; };
 		357D1BAD2BB81B0F0079DCE6 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1BAC2BB81B0F0079DCE6 /* LoginRepository.swift */; };
 		3587F02E2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3587F02D2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift */; };
+		35BC0B482C3D85A000F96A22 /* MyStudyGroupListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BC0B472C3D85A000F96A22 /* MyStudyGroupListType.swift */; };
 		35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */; };
 		35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */; };
 		35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */; };
@@ -64,8 +75,9 @@
 		35E4EA312BCA878A003A10D4 /* Config(release).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */; };
 		35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */; };
 		35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */; };
-		35E4EA3E2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA3D2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift */; };
+		35E4EA3E2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA3D2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift */; };
 		35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA3F2BCC2BF2003A10D4 /* BaseTableViewCell.swift */; };
+		35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35ED53D42C3D9BF3006DDBA7 /* Collection++Extension.swift */; };
 		35EF30032C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF30022C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		35EF30072C03841700F86052 /* StudyMainExitPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF30062C03841700F86052 /* StudyMainExitPopupViewController.swift */; };
 		35EF30092C03926F00F86052 /* StudyMainInvitationPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EF30082C03926F00F86052 /* StudyMainInvitationPopupViewController.swift */; };
@@ -120,7 +132,7 @@
 		CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447D92B863BB90090DD84 /* SelectRegionUseCase.swift */; };
 		CA6448332B863BB90090DD84 /* SelectFieldUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447DA2B863BB90090DD84 /* SelectFieldUseCase.swift */; };
 		CA6448352B863BB90090DD84 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447DF2B863BB90090DD84 /* HomeViewController.swift */; };
-		CA6448372B863BB90090DD84 /* StudyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447E32B863BB90090DD84 /* StudyListViewController.swift */; };
+		CA6448372B863BB90090DD84 /* MyStudyGroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447E32B863BB90090DD84 /* MyStudyGroupListViewController.swift */; };
 		CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447E72B863BB90090DD84 /* SelectRegionViewModel.swift */; };
 		CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447E82B863BB90090DD84 /* NicknameViewModel.swift */; };
 		CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6447E92B863BB90090DD84 /* ChangeProfileViewModel.swift */; };
@@ -182,7 +194,7 @@
 		CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */; };
 		CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */; };
 		CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */; };
-		CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */; };
+		CA98F6BC2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6BB2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift */; };
 		CA9958512BB00A9A00884615 /* CreateActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */; };
 		CA9958532BB010C000884615 /* UITextView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958522BB010C000884615 /* UITextView++Extension.swift */; };
 		CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9958542BB018CB00884615 /* ActivityCategory.swift */; };
@@ -251,10 +263,19 @@
 		353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
 		35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults++Extension.swift"; sourceTree = "<group>"; };
+		3544657D2C359B3700504C28 /* MyStudyGroupListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListViewModel.swift; sourceTree = "<group>"; };
+		354465802C35A51900504C28 /* MyStudyGroupListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListUseCase.swift; sourceTree = "<group>"; };
 		35446B122B9F4B2000252283 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		35446B152B9F4BDA00252283 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewModel.swift; sourceTree = "<group>"; };
 		35446B192B9F506200252283 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
+		355A75BB2C3AB71500C50BA0 /* StudyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyService.swift; sourceTree = "<group>"; };
+		355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesRequestDTO.swift; sourceTree = "<group>"; };
+		355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListRepository.swift; sourceTree = "<group>"; };
+		355A75C42C3ABE8300C50BA0 /* StudyGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroup.swift; sourceTree = "<group>"; };
+		355A75C72C3AC07500C50BA0 /* DefaultMyStudyGroupListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyStudyGroupListRepository.swift; sourceTree = "<group>"; };
+		355A75C92C3AC1F700C50BA0 /* StudiesResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesResponseDTO.swift; sourceTree = "<group>"; };
+		355A75CC2C3AE2C700C50BA0 /* MyStudyGroupListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListSection.swift; sourceTree = "<group>"; };
 		355F51DC2BF89F9800782D17 /* StudyMainSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainSideMenuViewController.swift; sourceTree = "<group>"; };
 		355F51E02BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainMenuTableViewCell.swift; sourceTree = "<group>"; };
 		355F51EA2BFE1C4600782D17 /* UINavigationController ++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController ++Extension.swift"; sourceTree = "<group>"; };
@@ -266,7 +287,7 @@
 		356216422C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		357D1B832BB06B2C0079DCE6 /* RegisterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCoordinator.swift; sourceTree = "<group>"; };
 		357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
-		357D1B892BB07BA20079DCE6 /* StudyListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListCoordinator.swift; sourceTree = "<group>"; };
+		357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListCoordinator.swift; sourceTree = "<group>"; };
 		357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
 		357D1B8F2BB07D1D0079DCE6 /* MyPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCoordinator.swift; sourceTree = "<group>"; };
 		357D1B922BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
@@ -278,6 +299,7 @@
 		357D1BA82BB8119E0079DCE6 /* UserAuthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthInfo.swift; sourceTree = "<group>"; };
 		357D1BAC2BB81B0F0079DCE6 /* LoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
 		3587F02D2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainPraiseReminderPopupView.swift; sourceTree = "<group>"; };
+		35BC0B472C3D85A000F96A22 /* MyStudyGroupListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListType.swift; sourceTree = "<group>"; };
 		35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewController.swift; sourceTree = "<group>"; };
 		35BDF6FF2B88D36D000B6DCB /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
@@ -291,8 +313,9 @@
 		35E4EA302BCA878A003A10D4 /* Config(debug).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
 		35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewController.swift; sourceTree = "<group>"; };
 		35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView++Extension.swift"; sourceTree = "<group>"; };
-		35E4EA3D2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupListTableViewCell.swift; sourceTree = "<group>"; };
+		35E4EA3D2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListTableViewCell.swift; sourceTree = "<group>"; };
 		35E4EA3F2BCC2BF2003A10D4 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		35ED53D42C3D9BF3006DDBA7 /* Collection++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection++Extension.swift"; sourceTree = "<group>"; };
 		35EF30022C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		35EF30062C03841700F86052 /* StudyMainExitPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainExitPopupViewController.swift; sourceTree = "<group>"; };
 		35EF30082C03926F00F86052 /* StudyMainInvitationPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainInvitationPopupViewController.swift; sourceTree = "<group>"; };
@@ -355,7 +378,7 @@
 		CA6447DD2B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		CA6447DF2B863BB90090DD84 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		CA6447E12B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CA6447E32B863BB90090DD84 /* StudyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyListViewController.swift; sourceTree = "<group>"; };
+		CA6447E32B863BB90090DD84 /* MyStudyGroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListViewController.swift; sourceTree = "<group>"; };
 		CA6447E72B863BB90090DD84 /* SelectRegionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRegionViewModel.swift; sourceTree = "<group>"; };
 		CA6447E82B863BB90090DD84 /* NicknameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		CA6447E92B863BB90090DD84 /* ChangeProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeProfileViewModel.swift; sourceTree = "<group>"; };
@@ -417,7 +440,7 @@
 		CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivity.swift; sourceTree = "<group>"; };
 		CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityDIContainer.swift; sourceTree = "<group>"; };
 		CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityCoordinator.swift; sourceTree = "<group>"; };
-		CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListDIContainer.swift; sourceTree = "<group>"; };
+		CA98F6BB2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListDIContainer.swift; sourceTree = "<group>"; };
 		CA9958502BB00A9A00884615 /* CreateActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityViewModel.swift; sourceTree = "<group>"; };
 		CA9958522BB010C000884615 /* UITextView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView++Extension.swift"; sourceTree = "<group>"; };
 		CA9958542BB018CB00884615 /* ActivityCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCategory.swift; sourceTree = "<group>"; };
@@ -463,6 +486,7 @@
 				CA6448692B863CD90090DD84 /* SnapKit in Frameworks */,
 				CA6448612B863CBE0090DD84 /* PretendardKit in Frameworks */,
 				CA64486C2B863CE20090DD84 /* CombineCocoa in Frameworks */,
+				355A75D02C3AF0E900C50BA0 /* Kingfisher in Frameworks */,
 				CA6448662B863CCB0090DD84 /* Moya in Frameworks */,
 				3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */,
 				35446B0E2B9DB20B00252283 /* KakaoSDK in Frameworks */,
@@ -535,7 +559,7 @@
 				353393162BC2947E0021FDF9 /* AppDIContainer.swift */,
 				353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */,
 				3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */,
-				CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */,
+				CA98F6BB2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift */,
 				CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */,
 			);
 			path = DIContainer;
@@ -557,6 +581,30 @@
 			path = Persistants;
 			sourceTree = "<group>";
 		};
+		3544657C2C359B0200504C28 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3544657D2C359B3700504C28 /* MyStudyGroupListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3544657F2C35A4D300504C28 /* MyStudyGroupList */ = {
+			isa = PBXGroup;
+			children = (
+				354465802C35A51900504C28 /* MyStudyGroupListUseCase.swift */,
+			);
+			path = MyStudyGroupList;
+			sourceTree = "<group>";
+		};
+		354465822C35A59200504C28 /* MyStudyGroupList */ = {
+			isa = PBXGroup;
+			children = (
+				355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */,
+			);
+			path = MyStudyGroupList;
+			sourceTree = "<group>";
+		};
 		35446B112B9F4AFB00252283 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +619,48 @@
 				35C992932BA3412C003B0AE7 /* Auth */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		355A75BA2C3AB6FA00C50BA0 /* Study */ = {
+			isa = PBXGroup;
+			children = (
+				355A75BB2C3AB71500C50BA0 /* StudyService.swift */,
+			);
+			path = Study;
+			sourceTree = "<group>";
+		};
+		355A75BD2C3ABB6C00C50BA0 /* Study */ = {
+			isa = PBXGroup;
+			children = (
+				355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */,
+				355A75C92C3AC1F700C50BA0 /* StudiesResponseDTO.swift */,
+			);
+			path = Study;
+			sourceTree = "<group>";
+		};
+		355A75C32C3ABE6000C50BA0 /* StudyGroup */ = {
+			isa = PBXGroup;
+			children = (
+				355A75C42C3ABE8300C50BA0 /* StudyGroup.swift */,
+			);
+			path = StudyGroup;
+			sourceTree = "<group>";
+		};
+		355A75C62C3AC01E00C50BA0 /* StudyGroup */ = {
+			isa = PBXGroup;
+			children = (
+				355A75C72C3AC07500C50BA0 /* DefaultMyStudyGroupListRepository.swift */,
+			);
+			path = StudyGroup;
+			sourceTree = "<group>";
+		};
+		355A75CB2C3AE28A00C50BA0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				355A75CC2C3AE2C700C50BA0 /* MyStudyGroupListSection.swift */,
+				35BC0B472C3D85A000F96A22 /* MyStudyGroupListType.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		355F51DE2BF8BE6500782D17 /* Component */ = {
@@ -604,7 +694,7 @@
 		357D1B852BB07A630079DCE6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				357D1B892BB07BA20079DCE6 /* StudyListCoordinator.swift */,
+				357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -810,7 +900,7 @@
 		35E4EA3C2BCC2B0F003A10D4 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				35E4EA3D2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift */,
+				35E4EA3D2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -970,6 +1060,7 @@
 		CA6447CF2B863BB90090DD84 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				354465822C35A59200504C28 /* MyStudyGroupList */,
 				CA9AB21C2B8C7EAD0027072E /* StudyActivity */,
 				352885F62BB9C9D900EFC0F6 /* UserToken */,
 				357D1BAB2BB81AF00079DCE6 /* AuthScene */,
@@ -992,6 +1083,7 @@
 		CA6447D42B863BB90090DD84 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				355A75C32C3ABE6000C50BA0 /* StudyGroup */,
 				CA1C92C92BC92E2D00ECF835 /* Calendar */,
 				CA86DC442B8DCBC40044DB6C /* StudyActivity */,
 				357D1BA72BB811180079DCE6 /* Auth */,
@@ -1004,6 +1096,7 @@
 		CA6447D62B863BB90090DD84 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				3544657F2C35A4D300504C28 /* MyStudyGroupList */,
 				CA9AB2182B8C7B890027072E /* StudyActivity */,
 				352886042BB9D2F200EFC0F6 /* UserToken */,
 				35446B112B9F4AFB00252283 /* Auth */,
@@ -1059,7 +1152,7 @@
 				357D1B852BB07A630079DCE6 /* Flows */,
 				35E4EA332BCA8D88003A10D4 /* StudyMain */,
 				CA6FADDE2B8717A0008BCEF7 /* StudyActivity */,
-				CA6FADDD2B871787008BCEF7 /* StudyList */,
+				CA6FADDD2B871787008BCEF7 /* MyStudyGroupList */,
 				CA6447E12B863BB90090DD84 /* .gitkeep */,
 			);
 			path = StudyListScenes;
@@ -1069,7 +1162,7 @@
 			isa = PBXGroup;
 			children = (
 				35E4EA3B2BCC2B07003A10D4 /* Component */,
-				CA6447E32B863BB90090DD84 /* StudyListViewController.swift */,
+				CA6447E32B863BB90090DD84 /* MyStudyGroupListViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1250,6 +1343,7 @@
 				352DBE512C1DF001008859D2 /* Notification++Extension.swift */,
 				352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */,
 				35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */,
+				35ED53D42C3D9BF3006DDBA7 /* Collection++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1295,6 +1389,7 @@
 		CA64481D2B863BB90090DD84 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				355A75C62C3AC01E00C50BA0 /* StudyGroup */,
 				CA9AB21B2B8C7E9E0027072E /* StudyActivity */,
 				352885F32BB9C93B00EFC0F6 /* UserToken */,
 				35C992982BA727DB003B0AE7 /* AuthScene */,
@@ -1326,6 +1421,7 @@
 		CA6448232B863BB90090DD84 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				355A75BD2C3ABB6C00C50BA0 /* Study */,
 				352885F92BB9CB3500EFC0F6 /* UserToken */,
 				357D1BA12BB7DFA10079DCE6 /* Auth */,
 				CA4E7EDB2B93080B009C07FD /* Register */,
@@ -1339,6 +1435,7 @@
 		CA6448252B863BB90090DD84 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				355A75BA2C3AB6FA00C50BA0 /* Study */,
 				352885F02BB9C75600EFC0F6 /* UserToken */,
 				357D1B9C2BB2FF140079DCE6 /* Auth */,
 				CA4E7EDA2B9307C4009C07FD /* Register */,
@@ -1358,12 +1455,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		CA6FADDD2B871787008BCEF7 /* StudyList */ = {
+		CA6FADDD2B871787008BCEF7 /* MyStudyGroupList */ = {
 			isa = PBXGroup;
 			children = (
+				355A75CB2C3AE28A00C50BA0 /* Model */,
+				3544657C2C359B0200504C28 /* ViewModel */,
 				CA6447E22B863BB90090DD84 /* View */,
 			);
-			path = StudyList;
+			path = MyStudyGroupList;
 			sourceTree = "<group>";
 		};
 		CA6FADDE2B8717A0008BCEF7 /* StudyActivity */ = {
@@ -1676,6 +1775,7 @@
 				CA6448682B863CD90090DD84 /* SnapKit */,
 				CA64486B2B863CE20090DD84 /* CombineCocoa */,
 				35446B0D2B9DB20B00252283 /* KakaoSDK */,
+				355A75CF2C3AF0E900C50BA0 /* Kingfisher */,
 			);
 			productName = Stumeet;
 			productReference = CAD495C22B863B6500AB61D9 /* Stumeet.app */;
@@ -1758,6 +1858,7 @@
 				CA6448672B863CD90090DD84 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				35446B0C2B9DB20B00252283 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				355A75CE2C3AF0E900C50BA0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = CAD495C32B863B6500AB61D9 /* Products */;
 			projectDirPath = "";
@@ -1933,7 +2034,7 @@
 				352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */,
 				CAF533582B9EB6D000A7B8B2 /* StartRepository.swift in Sources */,
 				353393192BC2975E0021FDF9 /* AuthSceneDIContainer.swift in Sources */,
-				CA6448372B863BB90090DD84 /* StudyListViewController.swift in Sources */,
+				CA6448372B863BB90090DD84 /* MyStudyGroupListViewController.swift in Sources */,
 				CA64484B2B863BB90090DD84 /* Coordinator.swift in Sources */,
 				357D1BA62BB809B40079DCE6 /* ResponseWithDataDTO.swift in Sources */,
 				35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */,
@@ -1956,6 +2057,7 @@
 				3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */,
 				357D1BA32BB7E68E0079DCE6 /* OauthResponseDTO.swift in Sources */,
 				355F51EF2BFE309B00782D17 /* UITabBarController++Extension.swift in Sources */,
+				355A75C82C3AC07500C50BA0 /* DefaultMyStudyGroupListRepository.swift in Sources */,
 				352885F82BB9C9E800EFC0F6 /* UserTokenRepository.swift in Sources */,
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
@@ -1995,22 +2097,28 @@
 				CAF533562B9EB5EE00A7B8B2 /* StartUseCase.swift in Sources */,
 				CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
-				357D1B8A2BB07BA20079DCE6 /* StudyListCoordinator.swift in Sources */,
+				357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
 				3562163F2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift in Sources */,
+				355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */,
+				355A75C52C3ABE8300C50BA0 /* StudyGroup.swift in Sources */,
 				CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */,
 				35C992972BA341FB003B0AE7 /* LoginService.swift in Sources */,
 				3587F02E2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift in Sources */,
+				354465812C35A51900504C28 /* MyStudyGroupListUseCase.swift in Sources */,
 				CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */,
 				CA6448502B863BB90090DD84 /* UILabel++Extension.swift in Sources */,
+				355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */,
 				CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */,
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
 				CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */,
 				352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */,
+				355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
 				355F51DD2BF89F9800782D17 /* StudyMainSideMenuViewController.swift in Sources */,
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
 				35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */,
+				35BC0B482C3D85A000F96A22 /* MyStudyGroupListType.swift in Sources */,
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,
@@ -2025,7 +2133,7 @@
 				357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */,
 				CAFBF3762B9C40A300507047 /* Register.swift in Sources */,
 				353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */,
-				35E4EA3E2BCC2B73003A10D4 /* StudyGroupListTableViewCell.swift in Sources */,
+				35E4EA3E2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift in Sources */,
 				352885FB2BB9CB5600EFC0F6 /* TokensRequestDTO.swift in Sources */,
 				35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
@@ -2039,6 +2147,7 @@
 				CA7D18DB2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* TokensResponseDTO.swift in Sources */,
 				CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */,
+				3544657E2C359B3700504C28 /* MyStudyGroupListViewModel.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityCell.swift in Sources */,
@@ -2064,11 +2173,12 @@
 				CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */,
 				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
+				35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
 				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
-				CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */,
+				CA98F6BC2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				CA64508E2C14643900E00665 /* StudyActivityViewModel.swift in Sources */,
 				357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */,
@@ -2079,6 +2189,7 @@
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
 				CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */,
 				CA9AB2142B8C6A480027072E /* AllStudyActivityViewModel.swift in Sources */,
+				355A75CD2C3AE2C700C50BA0 /* MyStudyGroupListSection.swift in Sources */,
 				CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */,
 				35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */,
 				357D1B902BB07D1D0079DCE6 /* MyPageCoordinator.swift in Sources */,
@@ -2088,6 +2199,7 @@
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
 				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,
 				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
+				355A75CA2C3AC1F700C50BA0 /* StudiesResponseDTO.swift in Sources */,
 				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
 				CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */,
@@ -2476,6 +2588,14 @@
 				minimumVersion = 2.21.0;
 			};
 		};
+		355A75CE2C3AF0E900C50BA0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 		CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/wookeon/PretendardKit.git";
@@ -2515,6 +2635,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35446B0C2B9DB20B00252283 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDK;
+		};
+		355A75CF2C3AF0E900C50BA0 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 355A75CE2C3AF0E900C50BA0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		CA6448602B863CBE0090DD84 /* PretendardKit */ = {
 			isa = XCSwiftPackageProductDependency;

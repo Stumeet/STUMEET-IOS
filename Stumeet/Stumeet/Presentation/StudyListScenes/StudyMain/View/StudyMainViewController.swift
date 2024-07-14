@@ -96,7 +96,7 @@ class StudyMainViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private weak var coordinator: StudyListNavigation!
+    private weak var coordinator: MyStudyGroupListNavigation!
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var tableHeaderHeight: CGFloat = (screenWidth * 0.542).rounded() // 디바이스 넓이 * 크기 비율
     private var constPopupBottom: Constraint!
@@ -107,7 +107,7 @@ class StudyMainViewController: BaseViewController {
     private var isActivity = false
 
     // MARK: - Init
-    init(coordinator: StudyListNavigation) {
+    init(coordinator: MyStudyGroupListNavigation) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
