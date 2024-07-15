@@ -14,7 +14,7 @@ struct DetailStudyActivity {
 
     struct Top: Hashable {
         let id: Int
-        let category: String
+        let category: ActivityCategory
         let dayLeft: String?
         let status: String
         let profileImageURL: String

@@ -59,7 +59,6 @@ final class DetailStudyActivityViewController: BaseViewController {
     // MARK: - SetUp
     override func setupStyles() {
         view.backgroundColor = .white
-        configureBackButtonTitleNavigationBarItems(title: "과제")
     }
     
     override func setupAddView() {
@@ -92,6 +91,11 @@ final class DetailStudyActivityViewController: BaseViewController {
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
         
+        output.category
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: configureBackButtonTitleNavigationBarItems)
+            .store(in: &cancellables)
+        
         output.presentToPhotoListVC
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.presentToDetailActivityPhotoListVC)
@@ -121,13 +125,12 @@ extension DetailStudyActivityViewController {
     }
     
     private func detailStudyActivityPhotoCellCompositionalLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .absolute(160))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(160), heightDimension: .estimated(0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(160), heightDimension: .estimated(0))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-    
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 16
@@ -186,7 +189,7 @@ extension DetailStudyActivityViewController {
                     withReuseIdentifier: DetailStudyActivityPhotoCell.identifer,
                     for: indexPath) as? DetailStudyActivityPhotoCell
                 else { return UICollectionViewCell() }
-                
+
                 return cell
                 
             case .bottomCell(let item):
@@ -195,7 +198,7 @@ extension DetailStudyActivityViewController {
                     for: indexPath) as? DetailStudyActivityBottomCell
                 else { return UICollectionViewCell() }
                 
-                cell.memberCountButton.tapPublisher.subscribe(self.memberButtonTapSubject)
+                cell.memberButton.tapPublisher.subscribe(self.memberButtonTapSubject)
                     .store(in: &self.cancellables)
                 
                 cell.configureCell(item)

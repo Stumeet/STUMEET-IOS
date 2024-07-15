@@ -29,7 +29,7 @@ extension DetailActivityResponseDTO {
     struct AuthorResponseDTO: Decodable {
         let memberId: Int
         let name: String
-        let prifileImageUrl: String
+        let profileImageUrl: String
     }
     
     struct ParticipantsMemeberResponseDTO: Decodable {
@@ -41,10 +41,10 @@ extension DetailActivityResponseDTO {
         
         detailActivity.top = DetailStudyActivity.Top(
             id: id,
-            category: category,
+            category: ActivityCategory(rawValue: category)!,
             dayLeft: nil,
             status: status,
-            profileImageURL: author.prifileImageUrl,
+            profileImageURL: author.profileImageUrl,
             name: author.name,
             date: createdAt,
             title: title,

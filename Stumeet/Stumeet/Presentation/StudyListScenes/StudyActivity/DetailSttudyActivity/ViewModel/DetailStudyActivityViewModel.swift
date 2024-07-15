@@ -21,6 +21,7 @@ final class DetailStudyActivityViewModel: ViewModelType {
     
     struct Output {
         let items: AnyPublisher<[DetailStudyActivitySectionItem], Never>
+        let category: AnyPublisher<String, Never>
         let presentToPhotoListVC: AnyPublisher<([String], Int), Never>
         let presentToMemeberListVC: AnyPublisher<Void, Never>
     }
@@ -53,6 +54,15 @@ final class DetailStudyActivityViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
         
+        let category = items
+            .compactMap { items in
+                if case .topCell(let topItem) = items[0]{
+                    return topItem?.category.title
+                }
+                return nil
+            }
+            .eraseToAnyPublisher()
+        
         let presentToPhotoListVC = input.didSelectedCell
             .filter { $0.section == 1 }
             .combineLatest(items)
@@ -64,6 +74,7 @@ final class DetailStudyActivityViewModel: ViewModelType {
         
         return Output(
             items: items,
+            category: category,
             presentToPhotoListVC: presentToPhotoListVC,
             presentToMemeberListVC: presentToMemeberListVC
         )

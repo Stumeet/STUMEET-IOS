@@ -12,50 +12,7 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
     
     // MARK: - UIComponents
     
-    private let firstProfileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .red
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
-        
-        return imageView
-    }()
-    
-    private let secondProfileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .orange
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
-        
-        return imageView
-    }()
-    
-    private let thirdProfileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .yellow
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
-        
-        return imageView
-    }()
-    
-    private let fourthProfileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .green
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
-        
-        return imageView
-    }()
-    
-    let memberCountButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("+2", for: .normal)
-        button.titleLabel?.font = StumeetFont.bodyMedium14.font
-        button.setTitleColor(StumeetColor.gray500.color, for: .normal)
-        
-        return button
-    }()
+    let memberButton = UIButton()
     
     private var separationLine: UIView = {
         let view = UIView()
@@ -94,11 +51,7 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
         
         
         [
-            fourthProfileImageView,
-            thirdProfileImageView,
-            secondProfileImageView,
-            firstProfileImageView,
-            memberCountButton,
+            memberButton,
             separationLine,
             startDateTextLabel,
             startDateLabel,
@@ -111,37 +64,15 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
     
     override func setupConstaints() {
         
-        firstProfileImageView.snp.makeConstraints { make in
+        memberButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.top.equalToSuperview()
-            make.width.height.equalTo(24)
+            make.height.equalTo(24)
+            make.width.lessThanOrEqualTo(109)
         }
         
-        secondProfileImageView.snp.makeConstraints { make in
-            make.leading.equalTo(firstProfileImageView.snp.trailing).offset(-8)
-            make.top.equalTo(firstProfileImageView)
-            make.width.height.equalTo(24)
-        }
-        
-        thirdProfileImageView.snp.makeConstraints { make in
-            make.leading.equalTo(secondProfileImageView.snp.trailing).offset(-8)
-            make.top.equalTo(firstProfileImageView)
-            make.width.height.equalTo(24)
-        }
-        
-        fourthProfileImageView.snp.makeConstraints { make in
-            make.leading.equalTo(thirdProfileImageView.snp.trailing).offset(-8)
-            make.top.equalTo(firstProfileImageView)
-            make.width.height.equalTo(24)
-        }
-        
-        memberCountButton.snp.makeConstraints { make in
-            make.leading.equalTo(fourthProfileImageView.snp.trailing).offset(4)
-            make.centerY.equalTo(firstProfileImageView)
-        }
         
         separationLine.snp.makeConstraints { make in
-            make.top.equalTo(firstProfileImageView.snp.bottom).offset(24)
+            make.top.equalTo(memberButton.snp.bottom).offset(24)
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(1)
         }
@@ -178,9 +109,84 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
     }
     
     func configureCell(_ item: DetailStudyActivity.Bottom?) {
-        startDateLabel.text = item?.startDate
-        endDateLabel.text = item?.endDate
-        placeLabel.text = item?.place
+        
+        if let startDate = item?.startDate {
+            startDateLabel.text = startDate
+        } else {
+            startDateLabel.isHidden = true
+            startDateTextLabel.isHidden = true
+        }
+        
+        if let endDate = item?.endDate {
+            endDateLabel.text = endDate
+        } else {
+            endDateLabel.isHidden = true
+            endDateTextLabel.isHidden = true
+        }
+        
+        if let place = item?.place {
+            placeLabel.text = place
+        } else {
+            placeLabel.isHidden = true
+            placeTextLabel.isHidden = true
+        }
+        
+        updateMemberButton(with: item?.memberImageURL ?? [])
+    }
+    
+    private func updateMemberButton(with members: [String]) {
+        
+        let memberStackView = createMemberImageView(members: members)
+        memberButton.addSubview(memberStackView)
+        
+        if members.count > 4 {
+            let count = members.count - 4
+            let othersMemberCountLabel = UILabel().setLabelProperty(text: "+\(count)", font: StumeetFont.bodyMedium14.font, color: .gray500)
+            
+            memberButton.addSubview(othersMemberCountLabel)
+            
+            othersMemberCountLabel.snp.makeConstraints { make in
+                make.trailing.equalToSuperview().inset(24)
+                make.centerY.equalToSuperview()
+            }
+            
+            memberStackView.snp.makeConstraints { make in
+                make.trailing.equalTo(othersMemberCountLabel.snp.leading).offset(-4)
+                make.centerY.equalToSuperview()
+            }
+        } else {
+            memberStackView.snp.makeConstraints { make in
+                make.trailing.equalToSuperview().inset(24)
+                make.centerY.equalToSuperview()
+            }
+        }
+    }
+    
+    private func createMemberImageView(members: [String]) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = -8
+        stackView.alignment = .trailing
+        stackView.isUserInteractionEnabled = false
+        
+        let colors = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green]
+        
+        for (index, member) in members.enumerated() {
+            if index >= 4 { break }
+            let imageView = UIImageView()
+            imageView.layer.cornerRadius = 12
+            imageView.clipsToBounds = true
+            imageView.contentMode = .scaleAspectFill
+            imageView.backgroundColor = colors[index]
+            stackView.addArrangedSubview(imageView)
+            imageView.layer.zPosition = CGFloat(-index)
+            
+            imageView.snp.makeConstraints { make in
+                make.width.height.equalTo(24)
+            }
+        }
+        
+        return stackView
     }
     
 }
