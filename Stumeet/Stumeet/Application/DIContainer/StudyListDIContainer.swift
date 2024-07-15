@@ -32,7 +32,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     func makeDetailActivityMemberRepository() -> DetailActivityMemberListRepository {
-        MockDetailActivityMemberListRepository()
+        MockDetailActivityMemberListRepository(provider: dependencies.provider.makeProvider())
     }
     
     // MARK: - UseCase
@@ -128,14 +128,18 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     
     // MARK: - DetailActivityMemberList
     
-    func makeDetailActivityMemberListViewModel() -> DetailActivityMemberListViewModel {
-        DetailActivityMemberListViewModel(useCase: makeDetailActivityMemberListUseCase())
+    func makeDetailActivityMemberListViewModel(studyID: Int, activityID: Int) -> DetailActivityMemberListViewModel {
+        DetailActivityMemberListViewModel(
+            useCase: makeDetailActivityMemberListUseCase(),
+            studyID: studyID,
+            activityID: activityID
+        )
     }
     
-    func makeDetailActivityMemberListVC(coordinator: Navigation) -> DetailActivityMemberListViewController {
+    func makeDetailActivityMemberListVC(coordinator: Navigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController {
         DetailActivityMemberListViewController(
             coordinator: coordinator,
-            viewModel: makeDetailActivityMemberListViewModel()
+            viewModel: makeDetailActivityMemberListViewModel(studyID: studyID, activityID: activityID)
         )
     }
     

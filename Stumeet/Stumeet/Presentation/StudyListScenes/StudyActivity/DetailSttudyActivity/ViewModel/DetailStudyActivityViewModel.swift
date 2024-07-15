@@ -23,7 +23,7 @@ final class DetailStudyActivityViewModel: ViewModelType {
         let items: AnyPublisher<[DetailStudyActivitySectionItem], Never>
         let category: AnyPublisher<String, Never>
         let presentToPhotoListVC: AnyPublisher<([String], Int), Never>
-        let presentToMemeberListVC: AnyPublisher<Void, Never>
+        let presentToMemeberListVC: AnyPublisher<(Int, Int), Never>
     }
     
     // MARK: - Properties
@@ -70,6 +70,7 @@ final class DetailStudyActivityViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let presentToMemeberListVC = input.didTapMemeberButton
+            .map { (self.activityID, self.activityID) }
             .eraseToAnyPublisher()
         
         return Output(

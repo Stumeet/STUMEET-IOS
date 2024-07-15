@@ -8,15 +8,16 @@
 import Combine
 import Foundation
 
+import CombineMoya
+import Moya
+
 final class MockDetailActivityMemberListRepository: DetailActivityMemberListRepository {
     
-    let members = [
-        DetailActivityMember(name: "홍길동1", state: "미수행"),
-        DetailActivityMember(name: "홍길동2", state: "수행"),
-        DetailActivityMember(name: "홍길동3", state: "수행"),
-        DetailActivityMember(name: "홍길동4", state: "수행"),
-        DetailActivityMember(name: "홍길동5", state: "미수행")
-    ]
+    private let provider: MoyaProvider<ActivityService>
+    
+    init(provider: MoyaProvider<ActivityService>) {
+        self.provider = provider
+    }
     
     func fetchMembers() -> AnyPublisher<[DetailActivityMember], Never> {
         return Just(members).eraseToAnyPublisher()

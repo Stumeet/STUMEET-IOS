@@ -27,21 +27,25 @@ final class DetailActivityMemberListViewModel: ViewModelType {
     // MARK: - Properties
     
     private let useCase: DetailActivityMemberListUseCase
+    private let studyID: Int
+    private let activityID: Int
     
     // MARK: - Init
     
-    init(useCase: DetailActivityMemberListUseCase) {
+    init(useCase: DetailActivityMemberListUseCase, studyID: Int, activityID: Int) {
         self.useCase = useCase
+        self.studyID = studyID
+        self.activityID = activityID
     }
 
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.setMembers()
+        let items = useCase.getMembers()
         
         let memberCount = items
-            .flatMap(useCase.setMemberCount)
+            .flatMap(useCase.getMemberCount)
             .eraseToAnyPublisher()
         
         let dismiss = input.didTapXButton.eraseToAnyPublisher()
