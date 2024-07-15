@@ -12,6 +12,7 @@ enum ActivityService {
     case fetchBriefActivities(BriefStudyActivityRequestDTO)
     case postActivity(PostActivityRequestDTO)
     case fetchDetailActivity(DetailActivityRequestDTO)
+    case fetchDetailActivityMember(DetailActivityRequestDTO)
 }
 
 extension ActivityService: BaseTargetType {
@@ -25,12 +26,14 @@ extension ActivityService: BaseTargetType {
             return "/api/v1/studies/1/activities"
         case .fetchDetailActivity(let requestDTO):
             return "/api/v1/studies/\(requestDTO.studyId)/activities/\(requestDTO.activityId)"
+        case .fetchDetailActivityMember(let requestDTO):
+            return "/api/v1/studies/\(requestDTO.studyId)/activities/\(requestDTO.activityId)/members"
         }
     }
     
     var method: Method {
         switch self {
-        case .fetchAllActivities, .fetchBriefActivities, .fetchDetailActivity:
+        case .fetchAllActivities, .fetchBriefActivities, .fetchDetailActivity, .fetchDetailActivityMember:
             return .get
         case .postActivity:
             return .post
@@ -52,6 +55,10 @@ extension ActivityService: BaseTargetType {
             return .requestParameters(parameters: dto, encoding: URLEncoding.queryString)
             
         case .fetchDetailActivity(let requestDTO):
+            guard let dto = requestDTO.toDictionary else { return .requestPlain }
+            return .requestParameters(parameters: dto, encoding: URLEncoding.queryString)
+            
+        case .fetchDetailActivityMember(let requestDTO):
             guard let dto = requestDTO.toDictionary else { return .requestPlain }
             return .requestParameters(parameters: dto, encoding: URLEncoding.queryString)
         }

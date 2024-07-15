@@ -196,6 +196,7 @@
 		CA8C0DE42C33D126005ECA55 /* AllStudyActivityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8C0DE32C33D126005ECA55 /* AllStudyActivityResponseDTO.swift */; };
 		CA8C0DE82C33D81F005ECA55 /* BreifStudyActivityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8C0DE72C33D81F005ECA55 /* BreifStudyActivityResponseDTO.swift */; };
 		CA8C0DEA2C33DDC1005ECA55 /* BriefStudyActivityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8C0DE92C33DDC1005ECA55 /* BriefStudyActivityResponseDTO.swift */; };
+		CA946B6F2C44DD5F00BDD377 /* DetailActivityMemberResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA946B6E2C44DD5F00BDD377 /* DetailActivityMemberResponseDTO.swift */; };
 		CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */; };
 		CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */; };
 		CA98F6BC2BEE1B3600C36772 /* StudyListDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */; };
@@ -447,6 +448,7 @@
 		CA8C0DE32C33D126005ECA55 /* AllStudyActivityResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStudyActivityResponseDTO.swift; sourceTree = "<group>"; };
 		CA8C0DE72C33D81F005ECA55 /* BreifStudyActivityResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreifStudyActivityResponseDTO.swift; sourceTree = "<group>"; };
 		CA8C0DE92C33DDC1005ECA55 /* BriefStudyActivityResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BriefStudyActivityResponseDTO.swift; sourceTree = "<group>"; };
+		CA946B6E2C44DD5F00BDD377 /* DetailActivityMemberResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailActivityMemberResponseDTO.swift; sourceTree = "<group>"; };
 		CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityDIContainer.swift; sourceTree = "<group>"; };
 		CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityCoordinator.swift; sourceTree = "<group>"; };
 		CA98F6BB2BEE1B3600C36772 /* StudyListDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyListDIContainer.swift; sourceTree = "<group>"; };
@@ -1527,6 +1529,7 @@
 				CA342DC02C3830370055A9A4 /* PostActivityRequestDTO.swift */,
 				CA617BF82C44058E000A3698 /* DetailActivityResponseDTO.swift */,
 				CA617BF62C44056D000A3698 /* DetailActivityRequestDTO.swift */,
+				CA946B6E2C44DD5F00BDD377 /* DetailActivityMemberResponseDTO.swift */,
 				CA8C0DE32C33D126005ECA55 /* AllStudyActivityResponseDTO.swift */,
 				CA8C0DE72C33D81F005ECA55 /* BreifStudyActivityResponseDTO.swift */,
 				CA8C0DE92C33DDC1005ECA55 /* BriefStudyActivityResponseDTO.swift */,
@@ -2089,6 +2092,7 @@
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
 				3562163F2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift in Sources */,
 				CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */,
+				CA946B6F2C44DD5F00BDD377 /* DetailActivityMemberResponseDTO.swift in Sources */,
 				35C992972BA341FB003B0AE7 /* LoginService.swift in Sources */,
 				3587F02E2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift in Sources */,
 				CA4E7EE12B930898009C07FD /* Encodable++Extension.swift in Sources */,

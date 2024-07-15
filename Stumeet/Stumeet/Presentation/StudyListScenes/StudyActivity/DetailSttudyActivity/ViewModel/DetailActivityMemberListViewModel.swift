@@ -42,7 +42,7 @@ final class DetailActivityMemberListViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.getMembers()
+        let items = useCase.getMembers(studyID: studyID, activityID: activityID)
         
         let memberCount = items
             .flatMap(useCase.getMemberCount)

@@ -32,7 +32,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     func makeDetailActivityMemberRepository() -> DetailActivityMemberListRepository {
-        MockDetailActivityMemberListRepository(provider: dependencies.provider.makeProvider())
+        DefaultDetailActivityMemberListRepository(provider: dependencies.provider.makeProvider())
     }
     
     // MARK: - UseCase

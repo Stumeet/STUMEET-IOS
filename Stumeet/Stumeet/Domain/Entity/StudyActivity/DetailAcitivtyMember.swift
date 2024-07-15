@@ -10,4 +10,5 @@ import Foundation
 struct DetailActivityMember: Hashable {
     let name: String
     let state: String
+    let profileImageURL: String
 }

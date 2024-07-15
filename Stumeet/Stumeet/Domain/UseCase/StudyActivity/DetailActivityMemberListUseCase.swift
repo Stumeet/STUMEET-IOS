@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol DetailActivityMemberListUseCase {
-    func getMembers() -> AnyPublisher<[DetailActivityMemberSectionItem], Never>
+    func getMembers(studyID: Int, activityID: Int) -> AnyPublisher<[DetailActivityMemberSectionItem], Never>
     func getMemberCount(members: [DetailActivityMemberSectionItem]) -> AnyPublisher<String?, Never>
 }
 
@@ -21,8 +21,8 @@ final class DefualtDetailActivityMemberListUseCase: DetailActivityMemberListUseC
         self.repository = repository
     }
     
-    func getMembers() -> AnyPublisher<[DetailActivityMemberSectionItem], Never> {
-        return repository.fetchMembers()
+    func getMembers(studyID: Int, activityID: Int) -> AnyPublisher<[DetailActivityMemberSectionItem], Never> {
+        return repository.fetchMembers(studyID: studyID, activityID: activityID)
             .map { $0.map { .memberCell($0) } }
             .eraseToAnyPublisher()
     }

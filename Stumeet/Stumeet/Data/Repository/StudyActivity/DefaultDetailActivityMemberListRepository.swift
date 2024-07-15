@@ -11,7 +11,7 @@ import Foundation
 import CombineMoya
 import Moya
 
-final class MockDetailActivityMemberListRepository: DetailActivityMemberListRepository {
+final class DefaultDetailActivityMemberListRepository: DetailActivityMemberListRepository {
     
     private let provider: MoyaProvider<ActivityService>
     
@@ -19,7 +19,14 @@ final class MockDetailActivityMemberListRepository: DetailActivityMemberListRepo
         self.provider = provider
     }
     
-    func fetchMembers() -> AnyPublisher<[DetailActivityMember], Never> {
-        return Just(members).eraseToAnyPublisher()
+    func fetchMembers(studyID: Int, activityID: Int) -> AnyPublisher<[DetailActivityMember], Never> {
+        
+        let requestDTO = DetailActivityRequestDTO(studyId: studyID, activityId: activityID)
+        
+        return provider.requestPublisher(.fetchDetailActivityMember(requestDTO))
+            .map(ResponseWithDataDTO<DetailActivityMemberResponseDTO>.self)
+            .compactMap { $0.data.map { $0.toDomain() } }
+            .replaceError(with: [])
+            .eraseToAnyPublisher()
     }
 }
