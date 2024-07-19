@@ -77,7 +77,8 @@ final class GroupStudyActivityViewController: BaseViewController {
     
     override func bind() {
         let input = GroupStudyActivityViewModel.Input(
-            reachedCollectionViewBottom: collectionView.reachedBottomPublisher()
+            reachedCollectionViewBottom: collectionView.reachedBottomPublisher(),
+            didSelectedActivityItem: collectionView.didSelectItemPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -92,6 +93,11 @@ final class GroupStudyActivityViewController: BaseViewController {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: switchHiddenEmptyView)
+            .store(in: &cancellables)
+        
+        output.selectedItemID
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
             .store(in: &cancellables)
     }
 }

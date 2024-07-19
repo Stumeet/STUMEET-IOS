@@ -31,6 +31,10 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         return provider.requestPublisher(.fetchAllActivities(requestDTO))
             .map(ResponseWithDataDTO<AllStudyActivityResponseDTO>.self)
             .compactMap { $0.data?.items.map { $0.toDomain() } }
+            .catch { error -> AnyPublisher<[Activity], Never> in
+                print("Error fetching detail activity items: \(error)")
+                return Just([]).eraseToAnyPublisher()
+            }
             .replaceError(with: [])
             .eraseToAnyPublisher()
     }
