@@ -18,5 +18,5 @@ struct Activity: Hashable {
     let image: String?
     let name: String?
     let day: String?
-    let status: String?
+    let status: ActivityState?
 }

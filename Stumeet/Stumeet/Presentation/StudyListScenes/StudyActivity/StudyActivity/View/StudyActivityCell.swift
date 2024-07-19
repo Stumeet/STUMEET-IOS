@@ -279,7 +279,6 @@ extension StudyActivityCell {
         configureTimeLabel(text: item.startTiem)
         
         titleLabel.text = item.title
-        statusLabel.text = item.status
         placeLabel.text = item.place
         
         if timeImageView.isHidden { timeImageView.isHidden = false }
@@ -331,24 +330,22 @@ extension StudyActivityCell {
     
     }
     
-    func updateStatusLabel(status: String) {
+    func updateStatusLabel(status: ActivityState) {
         switch status {
-        case "시작 전", "미참여":
-            statusLabel.textColor = StumeetColor.gray400.color
-            statusLabel.backgroundColor = StumeetColor.gray75.color
-        case "인정결석", "출석":
-            statusLabel.textColor = StumeetColor.primaryInfo.color
+        case .perform, .attendance, .okAbsent:
             statusLabel.backgroundColor = StumeetColor.primary50.color
-        case "결석", "미수행":
-            statusLabel.textColor = StumeetColor.danger500.color
+            statusLabel.textColor = StumeetColor.primary700.color
+        case .notperform, .absent:
             statusLabel.backgroundColor = StumeetColor.danger50.color
-        case "지각", "지각제출":
-            statusLabel.textColor = StumeetColor.warning500.color
+            statusLabel.textColor = StumeetColor.danger500.color
+        case .late, .okPerform:
             statusLabel.backgroundColor = StumeetColor.warning50.color
-        default: break
+            statusLabel.textColor = StumeetColor.warning500.color
+        case .noParticipation, .beforeStart:
+            statusLabel.backgroundColor = StumeetColor.gray75.color
+            statusLabel.textColor = StumeetColor.gray400.color
         }
-        
-        statusLabel.text = status
+        statusLabel.text = status.rawValue
     }
     
     func configureTagText(item: Activity) {
@@ -365,16 +362,11 @@ extension StudyActivityCell {
     }
     
     func configureTimeLabel(text: String?) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         guard let timeText = text
         else {
             timeImageView.isHidden = true
             return
         }
-        
-        guard let date = dateFormatter.date(from: timeText) else { return }
-        dateFormatter.dateFormat = "yyyy.MM.dd HH:mm"
-        timeLabel.text = dateFormatter.string(from: date)
+        timeLabel.text = timeText.formattedDateHHmm()
     }
 }

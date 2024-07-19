@@ -43,7 +43,7 @@ extension DetailActivityResponseDTO {
             id: id,
             category: ActivityCategory(rawValue: category)!,
             dayLeft: endDate,
-            status: status,
+            status: ActivityState(rawValue: status)!,
             profileImageURL: author.profileImageUrl,
             name: author.name,
             date: createdAt,

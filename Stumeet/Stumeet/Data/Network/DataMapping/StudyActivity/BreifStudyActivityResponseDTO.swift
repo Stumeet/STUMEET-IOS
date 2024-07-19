@@ -33,6 +33,6 @@ extension BreifStudyActivityResponseDTO.BreifActivityItemResponseDTO {
             image: nil,
             name: nil,
             day: createdAt,
-            status: status)
+            status: ActivityState(rawValue: status)!)
     }
 }

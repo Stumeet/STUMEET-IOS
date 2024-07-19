@@ -16,7 +16,7 @@ struct DetailStudyActivity {
         let id: Int
         let category: ActivityCategory
         let dayLeft: String?
-        let status: String
+        let status: ActivityState
         let profileImageURL: String
         let name: String
         let date: String

@@ -14,8 +14,8 @@ struct DetailActivityMemberResponseDTO: Decodable {
 extension DetailActivityMemberResponseDTO {
     struct MemberResponseDTO: Decodable {
         let id: Int
-        let name: String
-        let profileImageUrl: String
+        let name: String?
+        let profileImageUrl: String?
         let status: String
     }
     
@@ -23,7 +23,7 @@ extension DetailActivityMemberResponseDTO {
         participants.map { member in
             DetailActivityMember(
                 name: member.name,
-                state: member.status,
+                state: ActivityState(rawValue: member.status)!,
                 profileImageURL: member.profileImageUrl
             )
         }
