@@ -140,11 +140,23 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
     }
     
     func configureCell(_ item: DetailStudyActivity.Top?) {
-        dayLeftLabel.text = item?.dayLeft?.timeUntilSince()
         statusLabel.text = item?.status
         nameLabel.text = item?.name
         dateLabel.text = item?.date.formattedDateHHmm()
         titleLabel.text = item?.title
         contentLabel.text = item?.content
+        
+        if let dayLeft = item?.dayLeft {
+            dayLeftLabel.text = dayLeft.formattedDateHHmm()
+        } else {
+            dayLeftLabel.snp.removeConstraints()
+            statusLabel.snp.removeConstraints()
+            
+            profileImageView.snp.remakeConstraints { make in
+                make.top.equalToSuperview()
+                make.leading.equalToSuperview().inset(16)
+                make.width.height.equalTo(40)
+            }
+        }
     }
 }
