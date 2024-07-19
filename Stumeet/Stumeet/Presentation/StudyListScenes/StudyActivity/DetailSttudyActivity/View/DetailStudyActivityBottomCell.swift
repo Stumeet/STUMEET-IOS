@@ -134,10 +134,14 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
         updateMemberButton(with: item?.memberImageURL ?? [])
     }
     
-    private func updateMemberButton(with members: [String]) {
+    private func updateMemberButton(with members: [String?]) {
         
         let memberStackView = createMemberImageView(members: members)
         memberButton.addSubview(memberStackView)
+        
+        memberStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         if members.count > 4 {
             let count = members.count - 4
@@ -146,23 +150,13 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
             memberButton.addSubview(othersMemberCountLabel)
             
             othersMemberCountLabel.snp.makeConstraints { make in
-                make.trailing.equalToSuperview().inset(24)
-                make.centerY.equalToSuperview()
-            }
-            
-            memberStackView.snp.makeConstraints { make in
-                make.trailing.equalTo(othersMemberCountLabel.snp.leading).offset(-4)
-                make.centerY.equalToSuperview()
-            }
-        } else {
-            memberStackView.snp.makeConstraints { make in
-                make.trailing.equalToSuperview().inset(24)
+                make.leading.equalTo(memberStackView.snp.trailing).offset(4)
                 make.centerY.equalToSuperview()
             }
         }
     }
     
-    private func createMemberImageView(members: [String]) -> UIStackView {
+    private func createMemberImageView(members: [String?]) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = -8

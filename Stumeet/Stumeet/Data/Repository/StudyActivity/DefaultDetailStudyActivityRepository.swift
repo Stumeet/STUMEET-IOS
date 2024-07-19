@@ -30,8 +30,12 @@ final class DefaultDetailStudyActivityRepository: DetailStudyActivityRepository 
         return provider.requestPublisher(.fetchDetailActivity(requestDTO))
             .map(ResponseWithDataDTO<DetailActivityResponseDTO>.self)
             .compactMap { $0.data?.toDomain() }
-            .replaceError(with: nil)
-            .compactMap { $0 }
+//            .replaceError(with: nil)
+//            .compactMap { $0 }
+            .catch { error -> AnyPublisher<DetailStudyActivity, Never> in
+                print("Error fetching detail activity items: \(error)")
+                return Empty().eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 }

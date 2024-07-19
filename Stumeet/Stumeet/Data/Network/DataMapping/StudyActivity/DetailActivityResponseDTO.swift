@@ -33,7 +33,7 @@ extension DetailActivityResponseDTO {
     }
     
     struct ParticipantsMemeberResponseDTO: Decodable {
-        let profileImageUrl: String
+        let profileImageUrl: String?
     }
     
     func toDomain() -> DetailStudyActivity {

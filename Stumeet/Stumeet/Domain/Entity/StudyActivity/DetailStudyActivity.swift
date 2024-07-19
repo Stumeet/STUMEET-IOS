@@ -29,7 +29,7 @@ struct DetailStudyActivity {
     }
     
     struct Bottom: Hashable {
-        let memberImageURL: [String]
+        let memberImageURL: [String?]
         let startDate: String?
         let endDate: String?
         let place: String?
