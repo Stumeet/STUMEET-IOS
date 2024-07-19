@@ -42,7 +42,7 @@ extension DetailActivityResponseDTO {
         detailActivity.top = DetailStudyActivity.Top(
             id: id,
             category: ActivityCategory(rawValue: category)!,
-            dayLeft: nil,
+            dayLeft: endDate,
             status: status,
             profileImageURL: author.profileImageUrl,
             name: author.name,

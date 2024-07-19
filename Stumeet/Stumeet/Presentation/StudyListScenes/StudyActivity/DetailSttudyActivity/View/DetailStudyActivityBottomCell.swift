@@ -111,14 +111,14 @@ class DetailStudyActivityBottomCell: BaseCollectionViewCell {
     func configureCell(_ item: DetailStudyActivity.Bottom?) {
         
         if let startDate = item?.startDate {
-            startDateLabel.text = startDate
+            startDateLabel.text = startDate.formattedDateString()
         } else {
             startDateLabel.isHidden = true
             startDateTextLabel.isHidden = true
         }
         
         if let endDate = item?.endDate {
-            endDateLabel.text = endDate
+            endDateLabel.text = endDate.formattedDateString()
         } else {
             endDateLabel.isHidden = true
             endDateTextLabel.isHidden = true

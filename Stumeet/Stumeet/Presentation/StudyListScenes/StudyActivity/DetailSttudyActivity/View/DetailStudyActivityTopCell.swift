@@ -140,10 +140,10 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
     }
     
     func configureCell(_ item: DetailStudyActivity.Top?) {
-        dayLeftLabel.text = item?.dayLeft
+        dayLeftLabel.text = item?.dayLeft?.timeUntilSince()
         statusLabel.text = item?.status
         nameLabel.text = item?.name
-        dateLabel.text = item?.date
+        dateLabel.text = item?.date.formattedDateHHmm()
         titleLabel.text = item?.title
         contentLabel.text = item?.content
     }
