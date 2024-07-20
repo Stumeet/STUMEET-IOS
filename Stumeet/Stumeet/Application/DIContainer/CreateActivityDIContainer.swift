@@ -59,13 +59,16 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     }
     
     // MARK: - CreateActivity
-    func makeCreateActivityViewModel() -> CreateActivityViewModel {
-        CreateActivityViewModel(useCase: makeCreateActivityUseCase())
+    func makeCreateActivityViewModel(category: ActivityCategory) -> CreateActivityViewModel {
+        CreateActivityViewModel(
+            useCase: makeCreateActivityUseCase(),
+            category: category
+        )
     }
     
-    func makeCreateActivityViewController(coordinator: Navigation) -> CreateActivityViewController {
+    func makeCreateActivityViewController(coordinator: Navigation, category: ActivityCategory) -> CreateActivityViewController {
         CreateActivityViewController(
-            viewModel: makeCreateActivityViewModel(),
+            viewModel: makeCreateActivityViewModel(category: category),
             coordinator: coordinator
         )
     }

@@ -53,11 +53,13 @@ final class CreateActivityViewModel: ViewModelType {
     
     private let useCase: CreateActivityUseCase
     private var cancellables = Set<AnyCancellable>()
+    private let initialCategory: ActivityCategory
     
     // MARK: - Init
     
-    init(useCase: CreateActivityUseCase) {
+    init(useCase: CreateActivityUseCase, category: ActivityCategory) {
         self.useCase = useCase
+        self.initialCategory = category
     }
     
     // MARK: - Transform
@@ -67,7 +69,7 @@ final class CreateActivityViewModel: ViewModelType {
         let contentSubject = CurrentValueSubject<String, Never>("")
         let titleSubject = CurrentValueSubject<String, Never>("")
         let isNoticeSubject = CurrentValueSubject<Bool, Never>(false)
-        let selectedCategorySubject = CurrentValueSubject<ActivityCategory, Never>(.freedom)
+        let selectedCategorySubject = CurrentValueSubject<ActivityCategory, Never>(initialCategory)
         
         let photoSubject = CurrentValueSubject<[UIImage], Never>([])
         let exitPopUpSubject = PassthroughSubject<PopUp?, Never>()
