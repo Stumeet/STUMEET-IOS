@@ -30,7 +30,7 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     }
     
     func makeCreateActivityUseCase() -> CreateActivityUseCase {
-        DefaultCreateActivityUseCase()
+        DefaultCreateActivityUseCase(repository: makeStudyActivitySettingRepository())
     }
     
     func makeBottomSheetCalendarUseCase() -> BottomSheetCalendarUseCase {

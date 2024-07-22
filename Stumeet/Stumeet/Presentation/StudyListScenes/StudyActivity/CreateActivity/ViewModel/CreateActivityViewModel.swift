@@ -100,8 +100,6 @@ final class CreateActivityViewModel: ViewModelType {
                 newValue ? true : !isHidden
             }
             .eraseToAnyPublisher()
-
-        let selectedCategory = selectedCategorySubject.eraseToAnyPublisher()
         
         input.didTapCategoryItem
             .sink(receiveValue: selectedCategorySubject.send)
@@ -145,6 +143,8 @@ final class CreateActivityViewModel: ViewModelType {
                     participants: []
                 )
             }
+            .map { ($0, selectedCategorySubject.value) }
+            .flatMap(postOrGetCreateActivity)
             .eraseToAnyPublisher()
 
         let isEmptyPhotoItem = photoSubject
@@ -167,13 +167,10 @@ final class CreateActivityViewModel: ViewModelType {
             .sink(receiveValue: exitPopUpSubject.send)
             .store(in: &cancellables)
         
-        
-        let dismiss = input.didTapPopUpExitButton
-        
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
-            selectedCategory: selectedCategory,
+            selectedCategory: selectedCategorySubject.eraseToAnyPublisher(),
             maxLengthText: maxLengthText,
             exitPopUp: exitPopUpSubject.eraseToAnyPublisher(),
             isHiddenCategoryItems: isHiddenCategoryItems,
@@ -182,8 +179,25 @@ final class CreateActivityViewModel: ViewModelType {
             presentToLinkPopUpVC: input.didTapLinkButton.eraseToAnyPublisher(),
             isEmptyPhotoItem: isEmptyPhotoItem,
             linkText: linkSubject.compactMap { $0 }.eraseToAnyPublisher(),
-            dismiss: dismiss,
+            dismiss: input.didTapPopUpExitButton.eraseToAnyPublisher(),
             createActivityData: createActivityData
         )
+    }
+}
+
+
+// MARK: - Function
+
+extension CreateActivityViewModel {
+    // TODO: - Bool이 아닌 활동 아이템 응답 받기
+    private func postOrGetCreateActivity(data: CreateActivity, selectedCategory: ActivityCategory) -> AnyPublisher<CreateActivity, Never> {
+        if case .freedom = selectedCategory {
+            return useCase.postActivity(data: data)
+                .filter { $0 }
+                .flatMap { _ in Just(data) }
+                .eraseToAnyPublisher()
+        } else {
+            return Just(data).eraseToAnyPublisher()
+        }
     }
 }
