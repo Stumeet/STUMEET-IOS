@@ -11,7 +11,7 @@ import PhotosUI
 
 protocol CreateActivityCoordinatorDependencies {
     func makeCreateActivityViewController(coordinator: CreateActivityNavigation, category: ActivityCategory) -> CreateActivityViewController
-    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
+    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: CreateActivityNavigation) -> CreateActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
     func makeActivityMemberSettingViewController(member: [ActivityMember], coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
     func makeCreateActivityLinkPopUpViewController(coordinator: CreateActivityNavigation) -> CreateActivityLinkPopUpViewController

@@ -18,12 +18,12 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
     }
     
     func fetchAllActivityItems(size: Int, page: Int) -> AnyPublisher<[Activity], Never> {
-        // TODO: - 페이징 구현, 에러 처리, id 변경
+        // TODO: - 에러 처리, id 변경
         
         let requestDTO = AllStudyActivityRequestDTO(
             size: size,
             page: page,
-            isNotice: false,
+            isNotice: nil,
             studyId: 1,
             category: nil
         )
@@ -40,7 +40,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         let requestDTO = BriefStudyActivityRequestDTO(
             size: size,
             page: page,
-            isNotice: false,
+            isNotice: nil,
             studyId: 1,
             category: ActivityCategory.meeting.rawValue,
             fromDate: nil,
@@ -57,7 +57,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         let requestDTO = BriefStudyActivityRequestDTO(
             size: size,
             page: page,
-            isNotice: false,
+            isNotice: nil,
             studyId: 1,
             category: ActivityCategory.homework.rawValue,
             fromDate: nil,

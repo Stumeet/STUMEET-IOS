@@ -19,21 +19,27 @@ final class DefaultStudyActivitySettingRepository: StudyActivitySettingRepositor
         self.provider = provider
     }
     
-    // TODO: - api 수정되면 이어서 작업하기
+    // FIXME: studyID 임시 설정
     
     func postStudyActivity(activity: CreateActivity) -> AnyPublisher<Bool, Never> {
-//        let requestDTO = PostActivityRequestDTO(
-//            category: activity.category.title,
-//            title: activity.title,
-//            content: activity.content,
-//            images: activity.images,
-//            isNotice: activity.isNotice,
-//            startDate: activity.startDate,
-//            endDate: activity.endDate,
-//            location: activity.location,
-//            participants: activity.participants)
-        // 임시 코드
-        return Just(false).eraseToAnyPublisher()
+        
+        let requestDTO = PostActivityRequestDTO(
+            category: activity.category.rawValue,
+            title: activity.title,
+            content: activity.content,
+            images: [],
+            isNotice: activity.isNotice,
+            startDate: activity.startDate?.convertToISOFormat(),
+            endDate: activity.endDate?.convertToISOFormat(),
+            location: activity.location,
+            link: activity.link,
+            participants: activity.participants
+        )
+        
+        return provider.requestPublisher(.postActivity(requestDTO))
+            .map { _ in true }
+            .replaceError(with: false)
+            .eraseToAnyPublisher()
     }
     
     

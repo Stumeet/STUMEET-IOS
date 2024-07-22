@@ -26,7 +26,7 @@ final class CreateActivityViewModel: ViewModelType {
         let didSelectedPhotos: AnyPublisher<[UIImage], Never>
         let didTapCellXButton: AnyPublisher<UIImage, Never>
         let didTapLinkButton: AnyPublisher<Void, Never>
-        let didChangedLink: AnyPublisher<String, Never>
+        let didChangedLink: AnyPublisher<String?, Never>
         let didTapPopUpStayButton: AnyPublisher<Void, Never>
         let didTapPopUpExitButton: AnyPublisher<Void, Never>
     }
@@ -70,7 +70,7 @@ final class CreateActivityViewModel: ViewModelType {
         let titleSubject = CurrentValueSubject<String, Never>("")
         let isNoticeSubject = CurrentValueSubject<Bool, Never>(false)
         let selectedCategorySubject = CurrentValueSubject<ActivityCategory, Never>(initialCategory)
-        
+        let linkSubject = CurrentValueSubject<String?, Never>(nil)
         let photoSubject = CurrentValueSubject<[UIImage], Never>([])
         let exitPopUpSubject = PassthroughSubject<PopUp?, Never>()
         
@@ -107,10 +107,6 @@ final class CreateActivityViewModel: ViewModelType {
             .sink(receiveValue: selectedCategorySubject.send)
             .store(in: &cancellables)
         
-        let presentToPickerVC = input.didTapImageButton.eraseToAnyPublisher()
-        
-        let photosItem = photoSubject.eraseToAnyPublisher()
-        
         input.didSelectedPhotos
             .sink(receiveValue: photoSubject.send)
             .store(in: &cancellables)
@@ -123,6 +119,10 @@ final class CreateActivityViewModel: ViewModelType {
         
         input.didChangedNoticeSwitch
             .sink(receiveValue: isNoticeSubject.send)
+            .store(in: &cancellables)
+        
+        input.didChangedLink
+            .sink(receiveValue: linkSubject.send)
             .store(in: &cancellables)
         
         let isEnableNextButton = input.didTapNextButton
@@ -141,18 +141,15 @@ final class CreateActivityViewModel: ViewModelType {
                     startDate: nil,
                     endDate: nil,
                     location: nil,
-                    participants: nil
+                    link: linkSubject.value,
+                    participants: []
                 )
             }
             .eraseToAnyPublisher()
-        
-        let presentToLinkPopUpVC = input.didTapLinkButton.eraseToAnyPublisher()
-        
+
         let isEmptyPhotoItem = photoSubject
             .map { $0.isEmpty }
             .eraseToAnyPublisher()
-        
-        let exitPopUp = exitPopUpSubject.eraseToAnyPublisher()
         
         input.didTapXButton
             .map {
@@ -178,13 +175,13 @@ final class CreateActivityViewModel: ViewModelType {
             isEnableNextButton: isEnableNextButton,
             selectedCategory: selectedCategory,
             maxLengthText: maxLengthText,
-            exitPopUp: exitPopUp,
+            exitPopUp: exitPopUpSubject.eraseToAnyPublisher(),
             isHiddenCategoryItems: isHiddenCategoryItems,
-            presentToPickerVC: presentToPickerVC,
-            photosItem: photosItem,
-            presentToLinkPopUpVC: presentToLinkPopUpVC,
+            presentToPickerVC: input.didTapImageButton.eraseToAnyPublisher(),
+            photosItem: photoSubject.eraseToAnyPublisher(),
+            presentToLinkPopUpVC: input.didTapLinkButton.eraseToAnyPublisher(),
             isEmptyPhotoItem: isEmptyPhotoItem,
-            linkText: input.didChangedLink,
+            linkText: linkSubject.compactMap { $0 }.eraseToAnyPublisher(),
             dismiss: dismiss,
             createActivityData: createActivityData
         )

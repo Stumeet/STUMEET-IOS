@@ -16,5 +16,6 @@ struct CreateActivity: Equatable {
     var startDate: String?
     var endDate: String?
     var location: String?
-    var participants: [Int]?
+    var link: String?
+    var participants: [Int]
 }
