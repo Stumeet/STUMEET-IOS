@@ -27,7 +27,7 @@ final class DetailStudyActivityViewController: BaseViewController {
     // MARK: - Properties
     
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
-    private let coordinator: StudyListNavigation
+    private let coordinator: MyStudyGroupListNavigation
     private let viewModel: DetailStudyActivityViewModel
     
     // MARK: - Subject
@@ -36,7 +36,7 @@ final class DetailStudyActivityViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(coordinator: StudyListNavigation, viewModel: DetailStudyActivityViewModel) {
+    init(coordinator: MyStudyGroupListNavigation, viewModel: DetailStudyActivityViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         

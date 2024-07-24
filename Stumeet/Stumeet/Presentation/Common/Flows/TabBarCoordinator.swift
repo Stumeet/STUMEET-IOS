@@ -11,9 +11,13 @@ final class TabBarCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
+    private let appDIContainer: AppDIContainer
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         appDIContainer: AppDIContainer
+    ) {
         self.navigationController = navigationController
+        self.appDIContainer = appDIContainer
     }
     
     func start() {
@@ -33,13 +37,8 @@ final class TabBarCoordinator: Coordinator {
         homeNavigationController.tabBarItem = homeItem
         
         let studyListNavigationController = UINavigationController()
-        
-        // TODO: TabBar DI Container 만들기
-        let dependencies = StudyListDIContainer.Dependencies(provider: AppDIContainer().networkServiceProvider)
-        let studyListCoordinator = StudyListCoordinator(
-            navigationController: studyListNavigationController,
-            dependencies: StudyListDIContainer(dependencies: dependencies)
-        )
+        let studyListDIContainer = appDIContainer.makeMyStudyGroupListDIContainer()
+        let studyListCoordinator = studyListDIContainer.makeMyStudyGroupListCoordinator(navigationController: studyListNavigationController)
         studyListCoordinator.parentCoordinator = parentCoordinator
         
         let studyListItem = UITabBarItem()

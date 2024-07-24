@@ -91,7 +91,7 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     private let copyLinkContainerVStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = 8
         return stackView
     }()
     
@@ -115,7 +115,7 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     private let emailContainerVStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = 8
         return stackView
     }()
     
@@ -138,7 +138,7 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     private let kakaoTalkContainerVStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = 8
         return stackView
     }()
     
@@ -209,12 +209,11 @@ class StudyMainInvitationPopupViewController: BaseViewController {
     override func setupConstaints() {
         popupContainer.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview().inset(24)
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
         
         rootVStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(19)
-            $0.bottom.equalToSuperview().inset(26)
+            $0.verticalEdges.equalToSuperview().inset(24)
             $0.horizontalEdges.equalToSuperview().inset(24)
         }
         
@@ -230,13 +229,13 @@ class StudyMainInvitationPopupViewController: BaseViewController {
         }
         
         contentImageView.snp.makeConstraints {
-            $0.height.equalTo(contentImageView.snp.width).multipliedBy(121.0 / 316.0)
+            $0.height.equalTo(contentImageView.snp.width).multipliedBy(127.0 / 313.0)
         }
         
         textContentInnerContainerVStackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(19)
+            $0.top.equalToSuperview().inset(8)
+            $0.bottom.equalToSuperview().inset(16)
         }
         
         

@@ -1,5 +1,5 @@
 //
-//  StudyListCoordinator.swift
+//  MyStudyGroupListCoordinator.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/03/25.
@@ -7,18 +7,18 @@
 
 import UIKit
 
-protocol StudyListCoordinatorDependencies {
-    func makeStudyListVC(coordinator: StudyListNavigation) -> StudyListViewController
-    func makeStudyActivityVC(coordinator: StudyListNavigation) -> StudyActivityViewController
-    func makeDetailStudyActivityVC(coordinator: StudyListNavigation, studyID: Int, activityID: Int) -> DetailStudyActivityViewController
+protocol MyStudyGroupListCoordinatorDependencies {
+    func makeMyStudyGroupListVC(coordinator: MyStudyGroupListNavigation) -> MyStudyGroupListViewController
+    func makeStudyActivityVC(coordinator: MyStudyGroupListNavigation) -> StudyActivityViewController
+    func makeDetailStudyActivityVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController, activity: ActivityCategory) -> CreateActivityCoordinator
-    func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: StudyListNavigation) -> DetailActivityPhotoListViewController
-    func makeDetailActivityMemberListVC(coordinator: StudyListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
+    func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: MyStudyGroupListNavigation) -> DetailActivityPhotoListViewController
+    func makeDetailActivityMemberListVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
 }
 
-protocol StudyListNavigation: AnyObject {
-    func goToStudyList()
-    func goToStudyMain()
+protocol MyStudyGroupListNavigation: AnyObject {
+    func goToMyStudyGroupList()
+    func goToStudyMain(with id: Int)
     func presentToSideMenu(from viewController: UIViewController)
     func presentToExitPopup(from viewController: UIViewController)
     func presentToInvitationPopup(from viewController: UIViewController)
@@ -31,33 +31,34 @@ protocol StudyListNavigation: AnyObject {
     func dismiss()
 }
 
-final class StudyListCoordinator: Coordinator {
+final class MyStudyGroupListCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
     
-    private let dependencies: StudyListCoordinatorDependencies
+    private let dependencies: MyStudyGroupListCoordinatorDependencies
     
     init(navigationController: UINavigationController,
-         dependencies: StudyListCoordinatorDependencies
+         dependencies: MyStudyGroupListCoordinatorDependencies
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
     }
     
     func start() {
-        goToStudyList()
+        goToMyStudyGroupList()
     }
 }
 
-extension StudyListCoordinator: StudyListNavigation {
+extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
     
-    func goToStudyList() {
-        let studyListVC = dependencies.makeStudyListVC(coordinator: self)
+    func goToMyStudyGroupList() {
+        let studyListVC = dependencies.makeMyStudyGroupListVC(coordinator: self)
         navigationController.pushViewController(studyListVC, animated: true)
     }
     
-    func goToStudyMain() {
+    // TODO: 메인 화면 API 연결 시 수정
+    func goToStudyMain(with id: Int) {
         let studyMainVC = StudyMainViewController(coordinator: self)
         studyMainVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(studyMainVC, animated: true)

@@ -30,11 +30,11 @@ final class TaskStudyActivityViewController: BaseViewController {
     
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     private let viewModel: TaskStudyActivityViewModel
-    private let coordinator: StudyListNavigation
+    private let coordinator: MyStudyGroupListNavigation
     
     // MARK: - Init
     
-    init(viewModel: TaskStudyActivityViewModel, coordinator: StudyListNavigation) {
+    init(viewModel: TaskStudyActivityViewModel, coordinator: MyStudyGroupListNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         

@@ -27,15 +27,14 @@ final class AuthInterceptor: RequestInterceptor {
                completion: @escaping (RetryResult) -> Void) {
         guard let response = request.task?.response as? HTTPURLResponse,
               response.statusCode == 401,
-              let accessToken = keychainManager.getToken(for: .accessToken),
-              let refreshToken = keychainManager.getToken(for: .refreshToken)
+              let authTokens = keychainManager.getToken()
         else {
             completion(.doNotRetryWithError(error))
             return
         }
         
         useCase
-            .refreshAuthToken(accessToken: accessToken, refreshToken: refreshToken)
+            .refreshAuthToken(accessToken: authTokens.accessToken, refreshToken: authTokens.refreshToken)
             .sink { [weak self] success in
                 if success {
                     completion(.retry)
@@ -49,7 +48,12 @@ final class AuthInterceptor: RequestInterceptor {
     
     // TODO: - 토큰 만료 플로우 및 로그아웃 처리 기획이 나오는대로 수정
     private func logout() {
-        keychainManager.removeAllTokens()
+        // TODO: 오류 케이스 로직 추가 필요
+        if keychainManager.removeAllTokens() {
+            print("토큰 삭제 성공")
+        } else {
+            print("토큰 삭제 실패")
+        }
         NotificationCenter.default.post(name: .userDidLogout, object: nil)
     }
 }

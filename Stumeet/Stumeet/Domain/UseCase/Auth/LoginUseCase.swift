@@ -39,17 +39,14 @@ final class DefaultLoginUseCase: LoginUseCase {
     private var kakaoLoginService: LoginService
     private var appleLoginService: LoginService
     private let repository: LoginRepository
-    private var keychainManager: KeychainManageable
 
     init(kakaoLoginService: LoginService,
          appleLoginService: LoginService,
-         repository: LoginRepository,
-         keychainManager: KeychainManageable
+         repository: LoginRepository
     ) {
         self.kakaoLoginService = kakaoLoginService
         self.appleLoginService = appleLoginService
         self.repository = repository
-        self.keychainManager = keychainManager
     }
     
     func signIn(loginType: LoginType) -> AnyPublisher<Bool, Error> {
@@ -71,23 +68,9 @@ final class DefaultLoginUseCase: LoginUseCase {
                 guard let self = self else {
                     return Empty().eraseToAnyPublisher()
                 }
-                
-                // SNS 토큰을 Keychain에 저장
-                let isTokenSaved = keychainManager.saveToken(snsToken, for: .loginSnsToken)
-                guard isTokenSaved else {
-                    return Empty().eraseToAnyPublisher()
-                }
-                
-                // SNS 토큰 저장 성공 후 로그인 요청
-                return repository.requestLogin(loginType: loginType)
-                    .map { data in
-                        
-                        let isTokenSaved = self.keychainManager.saveToken(data.accessToken, for: .accessToken) &&
-                        self.keychainManager.saveToken(data.refreshToken, for: .refreshToken)
-                        let isNewUser = data.isFirstLogin
-                        
-                        return isTokenSaved && !isNewUser
-                    }
+
+                return repository.requestLogin(loginType: loginType, snsToken: snsToken)
+                    .map { $0 }
                     .catch { error in
                         Fail(error: error).eraseToAnyPublisher()
                     }

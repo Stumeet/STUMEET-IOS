@@ -23,8 +23,7 @@ final class AppDIContainer {
                             repository: DefaultUserTokenRepository(
                                 provider: NetworkServiceProvider(
                                     keychainManager: keychainManager,
-                                    isAccessTokenPlugin: false,
-                                    pluginTypes: [NetworkLoggerPlugin()]
+                                    networkLoggerPlugin: NetworkLoggerPlugin()
                                 ).makeProvider(),
                                 keychainManager: keychainManager
                             )
@@ -35,7 +34,7 @@ final class AppDIContainer {
     lazy var networkServiceProvider: NetworkServiceProvider = {
         NetworkServiceProvider(keychainManager: keychainManager,
                                interceptor: authInterceptor,
-                               pluginTypes: [NetworkLoggerPlugin()]
+                               networkLoggerPlugin: NetworkLoggerPlugin()
         )
     }()
 
@@ -55,5 +54,12 @@ final class AppDIContainer {
             provider: networkServiceProvider
         )
         return RegisterSceneDIContainer(dependencies: dependencies)
+    }
+    
+    func makeMyStudyGroupListDIContainer() -> MyStudyGroupListDIContainer {
+        let dependencies = MyStudyGroupListDIContainer.Dependencies(
+            provider: networkServiceProvider
+        )
+        return MyStudyGroupListDIContainer(dependencies: dependencies)
     }
 }
