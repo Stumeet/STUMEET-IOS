@@ -22,7 +22,7 @@ extension ActivityService: BaseTargetType {
             return "/api/v1/studies/activities/detail"
         case .fetchBriefActivities:
             return "/api/v1/studies/activities/brief"
-        case .postActivity(let requestDTO):
+        case .postActivity:
             return "/api/v1/studies/1/activities"
         case .fetchDetailActivity(let requestDTO):
             return "/api/v1/studies/\(requestDTO.studyId)/activities/\(requestDTO.activityId)"
@@ -51,8 +51,7 @@ extension ActivityService: BaseTargetType {
             return .requestParameters(parameters: dto, encoding: URLEncoding.queryString)
             
         case .postActivity(let requestDTO):
-            guard let dto = requestDTO.toDictionary else { return .requestPlain }
-            return .requestParameters(parameters: dto, encoding: URLEncoding.queryString)
+            return .requestJSONEncodable(requestDTO)
             
         case .fetchDetailActivity(let requestDTO):
             guard let dto = requestDTO.toDictionary else { return .requestPlain }
@@ -62,5 +61,9 @@ extension ActivityService: BaseTargetType {
             guard let dto = requestDTO.toDictionary else { return .requestPlain }
             return .requestParameters(parameters: dto, encoding: URLEncoding.queryString)
         }
+    }
+    
+    var headers: [String: String]? {
+        return ["Content-Type": "application/json"]
     }
 }

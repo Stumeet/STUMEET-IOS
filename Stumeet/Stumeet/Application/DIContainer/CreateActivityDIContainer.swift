@@ -30,7 +30,7 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     }
     
     func makeCreateActivityUseCase() -> CreateActivityUseCase {
-        DefaultCreateActivityUseCase()
+        DefaultCreateActivityUseCase(repository: makeStudyActivitySettingRepository())
     }
     
     func makeBottomSheetCalendarUseCase() -> BottomSheetCalendarUseCase {
@@ -59,28 +59,31 @@ final class CreateActivityDIContainer: CreateActivityCoordinatorDependencies {
     }
     
     // MARK: - CreateActivity
-    func makeCreateActivityViewModel() -> CreateActivityViewModel {
-        CreateActivityViewModel(useCase: makeCreateActivityUseCase())
+    func makeCreateActivityViewModel(category: ActivityCategory) -> CreateActivityViewModel {
+        CreateActivityViewModel(
+            useCase: makeCreateActivityUseCase(),
+            category: category
+        )
     }
     
-    func makeCreateActivityViewController(coordinator: Navigation) -> CreateActivityViewController {
+    func makeCreateActivityViewController(coordinator: Navigation, category: ActivityCategory) -> CreateActivityViewController {
         CreateActivityViewController(
-            viewModel: makeCreateActivityViewModel(),
+            viewModel: makeCreateActivityViewModel(category: category),
             coordinator: coordinator
         )
     }
     
     // MARK: - StudyActivitySetting
     
-    func makeStudyActivitySettingViewModel(activity: CreateActivity) -> StudyActivitySettingViewModel {
-        StudyActivitySettingViewModel(
+    func makeStudyActivitySettingViewModel(activity: CreateActivity) -> CreateActivitySettingViewModel {
+        CreateActivitySettingViewModel(
             activity: activity,
             useCase: makeStudyActivitySettingUseCase()
         )
     }
     
-    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: Navigation) -> StudyActivitySettingViewController {
-        StudyActivitySettingViewController(
+    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: Navigation) -> CreateActivitySettingViewController {
+        CreateActivitySettingViewController(
             viewModel: makeStudyActivitySettingViewModel(activity: activity),
             coordinator: coordinator
         )

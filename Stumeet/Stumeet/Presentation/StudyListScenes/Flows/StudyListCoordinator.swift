@@ -11,7 +11,7 @@ protocol StudyListCoordinatorDependencies {
     func makeStudyListVC(coordinator: StudyListNavigation) -> StudyListViewController
     func makeStudyActivityVC(coordinator: StudyListNavigation) -> StudyActivityViewController
     func makeDetailStudyActivityVC(coordinator: StudyListNavigation, studyID: Int, activityID: Int) -> DetailStudyActivityViewController
-    func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
+    func makeCreateActivityCoordinator(navigationController: UINavigationController, activity: ActivityCategory) -> CreateActivityCoordinator
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: StudyListNavigation) -> DetailActivityPhotoListViewController
     func makeDetailActivityMemberListVC(coordinator: StudyListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
 }
@@ -26,7 +26,7 @@ protocol StudyListNavigation: AnyObject {
     func goToDetailStudyActivityVC(studyID: Int, activityID: Int)
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
     func presentToDetailActivityMemberListVC(studyID: Int, activityID: Int)
-    func startCreateActivityCoordinator()
+    func startCreateActivityCoordinator(activity: ActivityCategory)
     func popViewController()
     func dismiss()
 }
@@ -95,13 +95,16 @@ extension StudyListCoordinator: StudyListNavigation {
         navigationController.pushViewController(detailStudyActivityVC, animated: true)
     }
     
-    func startCreateActivityCoordinator() {
+    func startCreateActivityCoordinator(activity: ActivityCategory) {
         let createActivityNVC = UINavigationController()
-        let flow = dependencies.makeCreateActivityCoordinator(navigationController: createActivityNVC)
+        let flow = dependencies.makeCreateActivityCoordinator(
+            navigationController: createActivityNVC,
+            activity: activity
+        )
         children.removeAll()
         flow.parentCoordinator = self
         children.append(flow)
-        flow.start()
+        flow.start(category: activity)
     }
     
     func presentToDetailActivityMemberListVC(studyID: Int, activityID: Int) {

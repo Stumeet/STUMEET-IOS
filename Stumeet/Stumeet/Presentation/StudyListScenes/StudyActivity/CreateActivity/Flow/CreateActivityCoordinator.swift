@@ -10,8 +10,8 @@ import UIKit
 import PhotosUI
 
 protocol CreateActivityCoordinatorDependencies {
-    func makeCreateActivityViewController(coordinator: CreateActivityNavigation) -> CreateActivityViewController
-    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: CreateActivityNavigation) -> StudyActivitySettingViewController
+    func makeCreateActivityViewController(coordinator: CreateActivityNavigation, category: ActivityCategory) -> CreateActivityViewController
+    func makeStudyActivitySettingViewController(activity: CreateActivity, coordinator: CreateActivityNavigation) -> CreateActivitySettingViewController
     func makeBottomSheetCalendarViewController(coordinator: CreateActivityNavigation, isStart: Bool) -> BottomSheetCalendarViewController
     func makeActivityMemberSettingViewController(member: [ActivityMember], coordinator: CreateActivityNavigation) -> ActivityMemberSettingViewController
     func makeCreateActivityLinkPopUpViewController(coordinator: CreateActivityNavigation) -> CreateActivityLinkPopUpViewController
@@ -20,7 +20,7 @@ protocol CreateActivityCoordinatorDependencies {
 }
 
 protocol CreateActivityNavigation: AnyObject {
-    func presentToCreateActivityVC()
+    func presentToCreateActivityVC(category: ActivityCategory)
     func goToStudyActivitySettingVC(activity: CreateActivity)
     func presentToBottomSheetCalendarVC(delegate: CreateActivityDelegate, isStart: Bool)
     func presentToActivityMemberSettingViewController(member: [ActivityMember], delegate: CreateActivityMemberDelegate)
@@ -47,14 +47,18 @@ final class CreateActivityCoordinator: Coordinator {
     }
     
     func start() {
-        presentToCreateActivityVC()
+        
+    }
+    
+    func start(category: ActivityCategory) {
+        presentToCreateActivityVC(category: category)
     }
 }
 
 extension CreateActivityCoordinator: CreateActivityNavigation {
     
-    func presentToCreateActivityVC() {
-        let createActivityVC = dependencies.makeCreateActivityViewController(coordinator: self)
+    func presentToCreateActivityVC(category: ActivityCategory) {
+        let createActivityVC = dependencies.makeCreateActivityViewController(coordinator: self, category: category)
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.viewControllers.append(createActivityVC)
         parentCoordinator?.navigationController.present(navigationController, animated: true)

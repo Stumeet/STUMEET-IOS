@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-final class StudyActivitySettingViewController: BaseViewController {
+final class CreateActivitySettingViewController: BaseViewController {
     
     // MARK: - UIComponents
     
@@ -69,17 +69,17 @@ final class StudyActivitySettingViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel: StudyActivitySettingViewModel
+    private let viewModel: CreateActivitySettingViewModel
     private let coordinator: CreateActivityNavigation
     
     // MARK: - Subject
     
     private let memberSubject = CurrentValueSubject<[ActivityMember], Never>([])
-    private let placeSubject = CurrentValueSubject<String, Never>("")
+    private let placeSubject = CurrentValueSubject<String?, Never>(nil)
     
     // MARK: - Init
     
-    init(viewModel: StudyActivitySettingViewModel, coordinator: CreateActivityNavigation) {
+    init(viewModel: CreateActivitySettingViewModel, coordinator: CreateActivityNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         
@@ -148,7 +148,7 @@ final class StudyActivitySettingViewController: BaseViewController {
     override func bind() {
         
         // Input
-        let input = StudyActivitySettingViewModel.Input(
+        let input = CreateActivitySettingViewModel.Input(
             didTapStartDateButton: startDateButton.tapPublisher,
             didTapEndDateButton: endDateButton.tapPublisher,
             didTapPlaceButton: placeButton.tapPublisher,
@@ -217,15 +217,24 @@ final class StudyActivitySettingViewController: BaseViewController {
             .store(in: &cancellables)
         
         output.snackBarText
+            .filter { !$0.isEmpty }
             .receive(on: RunLoop.main)
             .sink(receiveValue: showSnackBar)
+            .store(in: &cancellables)
+        
+        output.postActivity
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { _ in
+                print("활동 생성 성공")
+                self.dismiss(animated: true)
+            })
             .store(in: &cancellables)
     }
 }
 
 // MARK: - CalendarDelegate
 
-extension StudyActivitySettingViewController: CreateActivityDelegate {
+extension CreateActivitySettingViewController: CreateActivityDelegate {
     func didTapStartDateCompleteButton(date: String) {
         startDateLabel.text = date
     }
@@ -235,13 +244,13 @@ extension StudyActivitySettingViewController: CreateActivityDelegate {
     }
 }
 
-extension StudyActivitySettingViewController: CreateActivityMemberDelegate {
+extension CreateActivitySettingViewController: CreateActivityMemberDelegate {
     func didTapCompleteButton(members: [ActivityMember]) {
         memberSubject.send(members)
     }
 }
 
-extension StudyActivitySettingViewController: CreateActivityPlaceDelegate {
+extension CreateActivitySettingViewController: CreateActivityPlaceDelegate {
     func didTapCompleteButton(place: String) {
         placeSubject.send(place)
     }
@@ -249,7 +258,7 @@ extension StudyActivitySettingViewController: CreateActivityPlaceDelegate {
 
 // MARK: - UpdateUI
 
-extension StudyActivitySettingViewController {
+extension CreateActivitySettingViewController {
     private func createActivitySettingButton(title: String, subTitleLabel: UILabel) -> UIButton {
         let button = UIButton()
         

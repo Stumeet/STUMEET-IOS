@@ -13,8 +13,9 @@ struct PostActivityRequestDTO: Encodable {
     let content: String
     let images: [String]
     let isNotice: Bool
-    let startDate: String
-    let endDate: String
+    let startDate: String?
+    let endDate: String?
     let location: String?
+    let link: String?
     let participants: [Int]
 }

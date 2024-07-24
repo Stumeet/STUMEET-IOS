@@ -28,19 +28,33 @@ final class StudyActivityViewModel: ViewModelType {
         let selectedButtonIndex: AnyPublisher<Int, Never>
         let previousIndex: AnyPublisher<Int, Never>
         let slideIndex: AnyPublisher<Int, Never>
-        let presentToCreateActivityVC: AnyPublisher<Void, Never>
+        let presentToCreateActivityVC: AnyPublisher<ActivityCategory, Never>
         let popViewController: AnyPublisher<Void, Never>
     }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
         
-        let selectedButtonIndex = Publishers.Merge3(
+        let presentIndexSubject = CurrentValueSubject<Int, Never>(0)
+        
+        input.didSlideIndex
+            .sink(receiveValue: presentIndexSubject.send)
+            .store(in: &cancellables)
+        
+        let buttonTaps = Publishers.Merge3(
             input.didTapAllButton.map { 0 },
             input.didTapGroupButton.map { 1 },
             input.didTapTaskButton.map { 2 }
         )
+        
+        Publishers.Merge(buttonTaps, input.didSlideIndex)
+            .sink(receiveValue: presentIndexSubject.send)
+            .store(in: &cancellables)
+        
+        let selectedButtonIndex = buttonTaps
             .removeDuplicates()
             .eraseToAnyPublisher()
         
@@ -48,11 +62,25 @@ final class StudyActivityViewModel: ViewModelType {
             .removeDuplicates()
             .eraseToAnyPublisher()
         
+        let slideIndex = input.didSlideIndex.eraseToAnyPublisher()
+        
+        let presetnToCreateActivityVC = input.didTapFloatingButton
+            .map { presentIndexSubject.value }
+            .compactMap { index -> ActivityCategory? in
+                switch index {
+                case 0: return .freedom
+                case 1: return .meeting
+                case 2: return .homework
+                default: return nil
+                }
+            }
+            .eraseToAnyPublisher()
+        
         return Output(
             selectedButtonIndex: selectedButtonIndex,
             previousIndex: previousIndex,
-            slideIndex: input.didSlideIndex.eraseToAnyPublisher(),
-            presentToCreateActivityVC: input.didTapFloatingButton,
+            slideIndex: slideIndex,
+            presentToCreateActivityVC: presetnToCreateActivityVC,
             popViewController: input.didTapXButton
         )
     }

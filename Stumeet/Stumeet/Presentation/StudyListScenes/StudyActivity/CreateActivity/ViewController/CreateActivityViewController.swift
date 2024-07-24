@@ -170,7 +170,7 @@ final class CreateActivityViewController: BaseViewController {
     
     private let selecetedPhotoSubject = PassthroughSubject<[UIImage], Never>()
     private let cellXButtonTapSubject = PassthroughSubject<UIImage, Never>()
-    private let didChangedLinkSubject = CurrentValueSubject<String, Never>("")
+    private let didChangedLinkSubject = CurrentValueSubject<String?, Never>(nil)
     
     // MARK: - Init
     

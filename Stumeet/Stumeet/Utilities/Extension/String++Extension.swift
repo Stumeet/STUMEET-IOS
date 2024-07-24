@@ -112,4 +112,22 @@ extension String {
         
         return "0분 남음"
     }
+    
+    /// ISO형식으로 바꿔주는 함수입니다.
+    /// - Returns: yyyy-MM-dd'T'HH:mm:ss
+    func convertToISOFormat() -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.locale = Locale(identifier: "ko_KR")
+        inputFormatter.dateFormat = "yyyy. M. d(EEE) a h:mm"
+        
+        guard let date = inputFormatter.date(from: self) else {
+            return nil
+        }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let outputString = outputFormatter.string(from: date)
+        
+        return outputString
+    }
 }

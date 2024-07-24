@@ -150,7 +150,7 @@ final class StudyListDIContainer: StudyListCoordinatorDependencies {
     }
     
     // MARK: - Flow Coordinators
-    func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator {
+    func makeCreateActivityCoordinator(navigationController: UINavigationController, activity: ActivityCategory) -> CreateActivityCoordinator {
         return CreateActivityCoordinator(
             navigationController: navigationController,
             dependencies: makeCreateActivityDIContainer()
