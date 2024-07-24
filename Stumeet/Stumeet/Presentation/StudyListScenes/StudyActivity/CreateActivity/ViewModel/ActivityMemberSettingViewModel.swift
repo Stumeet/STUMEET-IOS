@@ -29,11 +29,12 @@ final class ActivityMemberSettingViewModel: ViewModelType {
     
     private let useCase: ActivityMemberSettingUseCase
     private var cancellables: Set<AnyCancellable> = []
-    
+    private let initSelectedMembers: [ActivityMember]
     // MARK: - Init
     
-    init(useCase: ActivityMemberSettingUseCase) {
+    init(members: [ActivityMember], useCase: ActivityMemberSettingUseCase) {
         self.useCase = useCase
+        self.initSelectedMembers = members
     }
     
     func transform(input: Input) -> Output {
@@ -43,7 +44,7 @@ final class ActivityMemberSettingViewModel: ViewModelType {
         let isSelectedAllButtonSubject = CurrentValueSubject<Bool, Never>(false)
         let members = filteredMemberSubject.eraseToAnyPublisher()
         
-        useCase.getMembers()
+        useCase.getMembers(members: initSelectedMembers)
             .handleEvents(receiveOutput: filteredMemberSubject.send)
             .sink(receiveValue: memberSubject.send)
             .store(in: &cancellables)

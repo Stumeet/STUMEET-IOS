@@ -8,26 +8,25 @@
 import Combine
 import Foundation
 
+import CombineMoya
+import Moya
+
 final class DefaultActivityMemberSettingRepository: ActivityMemberSettingRepository {
     
-    // TODO: - Networking
+    private let provider: MoyaProvider<StudyMemberService>
     
-    private let members: [ActivityMember] = [
-        ActivityMember(id: 1, imageURL: nil, name: "홍길1", isSelected: false),
-        ActivityMember(id: 2, imageURL: nil, name: "홍길2", isSelected: false),
-        ActivityMember(id: 3, imageURL: nil, name: "홍길3", isSelected: false),
-        ActivityMember(id: 4, imageURL: nil, name: "홍길4", isSelected: false),
-        ActivityMember(id: 5, imageURL: nil, name: "김개1", isSelected: false),
-        ActivityMember(id: 6, imageURL: nil, name: "김개2", isSelected: false),
-        ActivityMember(id: 7, imageURL: nil, name: "김개3", isSelected: false),
-        ActivityMember(id: 8, imageURL: nil, name: "김개4", isSelected: false),
-    ]
-    
-    func fetchMembers() -> AnyPublisher<[ActivityMember], Never> {
-        return Just(members).eraseToAnyPublisher()
+    init(provider: MoyaProvider<StudyMemberService>) {
+        self.provider = provider
     }
     
+    // TODO: - id 변경, error 처리
+    
+    func fetchMembers() -> AnyPublisher<[ActivityMember], Never> {
+        let requestDTO = StudyMemberRequestDTO(studyId: 1)
+        return provider.requestPublisher(.fetchStudyMembers(requestDTO))
+            .map(ResponseWithDataDTO<StudyMemberResponseDTO>.self)
+            .compactMap { $0.data?.studyMembers.map { $0.toDomain() } }
+            .replaceError(with: [])
+            .eraseToAnyPublisher()
+    }
 }
-
-
-

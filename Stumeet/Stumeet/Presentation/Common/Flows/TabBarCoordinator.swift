@@ -36,7 +36,6 @@ final class TabBarCoordinator: Coordinator {
         homeItem.image = UIImage(systemName: "house")
         homeNavigationController.tabBarItem = homeItem
         
-        // TODO: TabBar DI Container?
         let studyListNavigationController = UINavigationController()
         let studyListDIContainer = appDIContainer.makeMyStudyGroupListDIContainer()
         let studyListCoordinator = studyListDIContainer.makeMyStudyGroupListCoordinator(navigationController: studyListNavigationController)

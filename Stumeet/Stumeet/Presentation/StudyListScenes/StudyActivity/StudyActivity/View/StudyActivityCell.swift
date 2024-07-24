@@ -146,7 +146,7 @@ extension StudyActivityCell {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(tagLabel.snp.bottom).offset(14)
-            make.leading.equalToSuperview().inset(24)
+            make.horizontalEdges.equalToSuperview().inset(24)
         }
         
         contentLabel.snp.makeConstraints { make in
@@ -199,24 +199,17 @@ extension StudyActivityCell {
         
         allAddView()
         setUpAllConstaints()
+        configureTagText(item: item)
         
-        tagLabel.text = item.tag
         titleLabel.text = item.title
         contentLabel.text = item.content
-        timeLabel.text = item.time
         nameLabel.text = item.name
-        dayLabel.text = item.day
+        dayLabel.text = item.day?.timeAgoSince()
         
         if let place = item.place {
             placeLabel.text = place
         } else {
             placeImageView.isHidden = true
-        }
-        
-        if let time = item.time {
-            timeLabel.text = time
-        } else {
-            timeImageView.isHidden = true
         }
         
         if placeLabel.isHidden && timeLabel.isHidden {
@@ -248,6 +241,7 @@ extension StudyActivityCell {
     func setUpGroupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(24)
+            make.trailing.equalTo(statusLabel.snp.leading).offset(-17)
         }
         
         timeImageView.snp.makeConstraints { make in
@@ -282,10 +276,9 @@ extension StudyActivityCell {
         groupAddView()
         setUpGroupConstraints()
         updateStatusLabel(status: item.status!)
+        configureTimeLabel(text: item.startTiem)
         
         titleLabel.text = item.title
-        timeLabel.text = item.time
-        statusLabel.text = item.status
         placeLabel.text = item.place
         
         if timeImageView.isHidden { timeImageView.isHidden = false }
@@ -305,6 +298,7 @@ extension StudyActivityCell {
     func setUpTaskConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(24)
+            make.trailing.equalTo(statusLabel.snp.leading).offset(-17)
         }
         
         timeImageView.snp.makeConstraints { make in
@@ -323,36 +317,56 @@ extension StudyActivityCell {
             make.trailing.equalToSuperview().inset(24)
         }
     }
+    
     func configureTaskUI(item: Activity) {
-
         taskAddView()
         setUpTaskConstraints()
         updateStatusLabel(status: item.status!)
+        configureTimeLabel(text: item.endTime)
         
         titleLabel.text = item.title
-        timeLabel.text = item.time
         
         if timeImageView.isHidden { timeImageView.isHidden = false }
     
     }
     
-    func updateStatusLabel(status: String) {
+    func updateStatusLabel(status: ActivityState) {
         switch status {
-        case "시작 전", "미참여":
-            statusLabel.textColor = StumeetColor.gray400.color
-            statusLabel.backgroundColor = StumeetColor.gray50.color
-        case "인정결석", "출석":
-            statusLabel.textColor = StumeetColor.primaryInfo.color
+        case .perform, .attendance, .okAbsent:
             statusLabel.backgroundColor = StumeetColor.primary50.color
-        case "결석", "미수행":
-            statusLabel.textColor = StumeetColor.danger500.color
+            statusLabel.textColor = StumeetColor.primary700.color
+        case .notperform, .absent:
             statusLabel.backgroundColor = StumeetColor.danger50.color
-        case "지각", "지각제출":
-            statusLabel.textColor = StumeetColor.warning500.color
+            statusLabel.textColor = StumeetColor.danger500.color
+        case .late, .okPerform:
             statusLabel.backgroundColor = StumeetColor.warning50.color
+            statusLabel.textColor = StumeetColor.warning500.color
+        case .noParticipation, .beforeStart:
+            statusLabel.backgroundColor = StumeetColor.gray75.color
+            statusLabel.textColor = StumeetColor.gray400.color
+        }
+        statusLabel.text = status.rawValue
+    }
+    
+    func configureTagText(item: Activity) {
+        var time: String?
+        switch item.tag {
+        case .meeting:
+            time = item.startTiem
+        case .homework:
+            time = item.endTime?.appending(" 까지")
         default: break
         }
-        
-        statusLabel.text = status
+        tagLabel.text = item.tag?.title
+        configureTimeLabel(text: time)
+    }
+    
+    func configureTimeLabel(text: String?) {
+        guard let timeText = text
+        else {
+            timeImageView.isHidden = true
+            return
+        }
+        timeLabel.text = timeText.formattedDateHHmm()
     }
 }

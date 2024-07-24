@@ -19,13 +19,14 @@ final class CreateActivityViewModel: ViewModelType {
         let didBeginEditing: AnyPublisher<Void, Never>
         let didTapCategoryButton: AnyPublisher<Void, Never>
         let didTapCategoryItem: AnyPublisher<ActivityCategory, Never>
+        let didChangedNoticeSwitch: AnyPublisher<Bool, Never>
         let didTapXButton: AnyPublisher<Void, Never>
         let didTapNextButton: AnyPublisher<Void, Never>
         let didTapImageButton: AnyPublisher<Void, Never>
         let didSelectedPhotos: AnyPublisher<[UIImage], Never>
         let didTapCellXButton: AnyPublisher<UIImage, Never>
         let didTapLinkButton: AnyPublisher<Void, Never>
-        let didChangedLink: AnyPublisher<String, Never>
+        let didChangedLink: AnyPublisher<String?, Never>
         let didTapPopUpStayButton: AnyPublisher<Void, Never>
         let didTapPopUpExitButton: AnyPublisher<Void, Never>
     }
@@ -45,17 +46,20 @@ final class CreateActivityViewModel: ViewModelType {
         let isEmptyPhotoItem: AnyPublisher<Bool, Never>
         let linkText: AnyPublisher<String, Never>
         let dismiss: AnyPublisher<Void, Never>
+        let createActivityData: AnyPublisher<CreateActivity, Never>
     }
     
     // MARK: - Properties
     
     private let useCase: CreateActivityUseCase
     private var cancellables = Set<AnyCancellable>()
+    private let initialCategory: ActivityCategory
     
     // MARK: - Init
     
-    init(useCase: CreateActivityUseCase) {
+    init(useCase: CreateActivityUseCase, category: ActivityCategory) {
         self.useCase = useCase
+        self.initialCategory = category
     }
     
     // MARK: - Transform
@@ -64,6 +68,9 @@ final class CreateActivityViewModel: ViewModelType {
         
         let contentSubject = CurrentValueSubject<String, Never>("")
         let titleSubject = CurrentValueSubject<String, Never>("")
+        let isNoticeSubject = CurrentValueSubject<Bool, Never>(false)
+        let selectedCategorySubject = CurrentValueSubject<ActivityCategory, Never>(initialCategory)
+        let linkSubject = CurrentValueSubject<String?, Never>(nil)
         let photoSubject = CurrentValueSubject<[UIImage], Never>([])
         let exitPopUpSubject = PassthroughSubject<PopUp?, Never>()
         
@@ -82,11 +89,6 @@ final class CreateActivityViewModel: ViewModelType {
             .flatMap(useCase.setMaxLengthText)
             .eraseToAnyPublisher()
         
-        let isEnableNextButton = input.didTapNextButton
-            .map { (contentSubject.value, titleSubject.value) }
-            .flatMap(useCase.setIsEnableNextButton)
-            .eraseToAnyPublisher()
-        
         let isBeginEditing = input.didBeginEditing
             .map { _ in true }
             .eraseToAnyPublisher()
@@ -98,13 +100,10 @@ final class CreateActivityViewModel: ViewModelType {
                 newValue ? true : !isHidden
             }
             .eraseToAnyPublisher()
-
-        let selectedCategory = input.didTapCategoryItem
-            .eraseToAnyPublisher()
         
-        let presentToPickerVC = input.didTapImageButton.eraseToAnyPublisher()
-        
-        let photosItem = photoSubject.eraseToAnyPublisher()
+        input.didTapCategoryItem
+            .sink(receiveValue: selectedCategorySubject.send)
+            .store(in: &cancellables)
         
         input.didSelectedPhotos
             .sink(receiveValue: photoSubject.send)
@@ -116,13 +115,41 @@ final class CreateActivityViewModel: ViewModelType {
             .sink(receiveValue: photoSubject.send)
             .store(in: &cancellables)
         
-        let presentToLinkPopUpVC = input.didTapLinkButton.eraseToAnyPublisher()
+        input.didChangedNoticeSwitch
+            .sink(receiveValue: isNoticeSubject.send)
+            .store(in: &cancellables)
         
+        input.didChangedLink
+            .sink(receiveValue: linkSubject.send)
+            .store(in: &cancellables)
+        
+        let isEnableNextButton = input.didTapNextButton
+            .map { (titleSubject.value, contentSubject.value) }
+            .flatMap(useCase.setIsEnableNextButton)
+            .eraseToAnyPublisher()
+        
+        let createActivityData = input.didTapNextButton
+            .map {
+                CreateActivity(
+                    category: selectedCategorySubject.value,
+                    title: titleSubject.value,
+                    content: contentSubject.value,
+                    images: photoSubject.value.map { $0.jpegData(compressionQuality: 1.0)! },
+                    isNotice: isNoticeSubject.value,
+                    startDate: nil,
+                    endDate: nil,
+                    location: nil,
+                    link: linkSubject.value,
+                    participants: []
+                )
+            }
+            .map { ($0, selectedCategorySubject.value) }
+            .flatMap(postOrGetCreateActivity)
+            .eraseToAnyPublisher()
+
         let isEmptyPhotoItem = photoSubject
             .map { $0.isEmpty }
             .eraseToAnyPublisher()
-        
-        let exitPopUp = exitPopUpSubject.eraseToAnyPublisher()
         
         input.didTapXButton
             .map {
@@ -140,22 +167,37 @@ final class CreateActivityViewModel: ViewModelType {
             .sink(receiveValue: exitPopUpSubject.send)
             .store(in: &cancellables)
         
-        
-        let dismiss = input.didTapPopUpExitButton
-        
         return Output(
             isBeginEditing: isBeginEditing,
             isEnableNextButton: isEnableNextButton,
-            selectedCategory: selectedCategory,
+            selectedCategory: selectedCategorySubject.eraseToAnyPublisher(),
             maxLengthText: maxLengthText,
-            exitPopUp: exitPopUp,
+            exitPopUp: exitPopUpSubject.eraseToAnyPublisher(),
             isHiddenCategoryItems: isHiddenCategoryItems,
-            presentToPickerVC: presentToPickerVC,
-            photosItem: photosItem,
-            presentToLinkPopUpVC: presentToLinkPopUpVC,
+            presentToPickerVC: input.didTapImageButton.eraseToAnyPublisher(),
+            photosItem: photoSubject.eraseToAnyPublisher(),
+            presentToLinkPopUpVC: input.didTapLinkButton.eraseToAnyPublisher(),
             isEmptyPhotoItem: isEmptyPhotoItem,
-            linkText: input.didChangedLink,
-            dismiss: dismiss
+            linkText: linkSubject.compactMap { $0 }.eraseToAnyPublisher(),
+            dismiss: input.didTapPopUpExitButton.eraseToAnyPublisher(),
+            createActivityData: createActivityData
         )
+    }
+}
+
+
+// MARK: - Function
+
+extension CreateActivityViewModel {
+    // TODO: - Bool이 아닌 활동 아이템 응답 받기
+    private func postOrGetCreateActivity(data: CreateActivity, selectedCategory: ActivityCategory) -> AnyPublisher<CreateActivity, Never> {
+        if case .freedom = selectedCategory {
+            return useCase.postActivity(data: data)
+                .filter { $0 }
+                .flatMap { _ in Just(data) }
+                .eraseToAnyPublisher()
+        } else {
+            return Just(data).eraseToAnyPublisher()
+        }
     }
 }
