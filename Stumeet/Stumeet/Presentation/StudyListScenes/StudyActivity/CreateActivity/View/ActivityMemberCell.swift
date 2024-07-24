@@ -117,15 +117,22 @@ class ActivityMemberCell: UITableViewCell {
     func configureDetailMemeberCell(item: DetailActivityMember) {
         nameLabel.text = item.name
         stateLabel.isHidden = false
-        stateLabel.text = item.state
         
-        if item.state == "수행" {
+        switch item.state {
+        case .perform, .attendance, .okAbsent:
             stateLabel.backgroundColor = StumeetColor.primary50.color
             stateLabel.textColor = StumeetColor.primary700.color
-        } else {
+        case .notperform, .absent:
             stateLabel.backgroundColor = StumeetColor.danger50.color
             stateLabel.textColor = StumeetColor.danger500.color
+        case .late, .okPerform:
+            stateLabel.backgroundColor = StumeetColor.warning50.color
+            stateLabel.textColor = StumeetColor.warning500.color
+        case .noParticipation, .beforeStart:
+            stateLabel.backgroundColor = StumeetColor.gray75.color
+            stateLabel.textColor = StumeetColor.gray400.color
         }
+        stateLabel.text = item.state.rawValue
     }
     
 }

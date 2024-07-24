@@ -24,7 +24,7 @@ extension BreifStudyActivityResponseDTO.BreifActivityItemResponseDTO {
     func toDomain() -> Activity {
         return Activity(
             id: id,
-            tag: category,
+            tag: ActivityCategory(rawValue: category),
             title: title,
             content: nil,
             startTiem: startDate,
@@ -33,6 +33,6 @@ extension BreifStudyActivityResponseDTO.BreifActivityItemResponseDTO {
             image: nil,
             name: nil,
             day: createdAt,
-            status: status)
+            status: ActivityState(rawValue: status)!)
     }
 }

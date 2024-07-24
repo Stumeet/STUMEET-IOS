@@ -14,12 +14,14 @@ final class AllStudyActivityViewModel: ViewModelType {
     
     struct Input {
         let reachedCollectionViewBottom: AnyPublisher<Void, Never>
+        let didSelectedActivityItem: AnyPublisher<IndexPath, Never>
     }
     
     // MARK: - Output
     
     struct Output {
         let items: AnyPublisher<[StudyActivitySectionItem], Never>
+        let selectedItemID: AnyPublisher<(Int, Int), Never>
         let isEmptyItems: AnyPublisher<Bool, Never>
     }
     
@@ -58,12 +60,18 @@ final class AllStudyActivityViewModel: ViewModelType {
             .sink(receiveValue: itemSubject.send)
             .store(in: &cancellables)
         
+        let selectedID = input.didSelectedActivityItem
+            .map { ($0, itemSubject.value) }
+            .flatMap(useCase.getSelectedActivityID)
+            .eraseToAnyPublisher()
+        
         let isEmptyItems = itemSubject
             .compactMap { $0?.isEmpty }
             .eraseToAnyPublisher()
 
         return Output(
             items: items,
+            selectedItemID: selectedID,
             isEmptyItems: isEmptyItems
         )
     }

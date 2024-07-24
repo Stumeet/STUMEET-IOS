@@ -81,16 +81,11 @@ final class AllStudyActivityViewController: BaseViewController {
     override func bind() {
         
         let input = AllStudyActivityViewModel.Input(
-            reachedCollectionViewBottom: collectionView.reachedBottomPublisher()
+            reachedCollectionViewBottom: collectionView.reachedBottomPublisher(),
+            didSelectedActivityItem: collectionView.didSelectItemPublisher
         )
         
         let output = viewModel.transform(input: input)
-        
-        collectionView.didSelectItemPublisher
-            .map { _ in }
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
-            .store(in: &cancellables)
         
         output.items
             .removeDuplicates()
@@ -102,6 +97,11 @@ final class AllStudyActivityViewController: BaseViewController {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: switchHiddenEmptyView)
+            .store(in: &cancellables)
+        
+        output.selectedItemID
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
             .store(in: &cancellables)
     }
 }

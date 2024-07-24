@@ -9,10 +9,9 @@ import Combine
 import Foundation
 
 protocol DetailStudyActivityUseCase {
-    func setDetailActivityItem() -> AnyPublisher<[DetailStudyActivitySectionItem], Never>
+    func getDetailActivityItem(studyID: Int, activityID: Int) -> AnyPublisher<DetailStudyActivity, Never>
     func setPresentedImage(indexPath: IndexPath, items: [DetailStudyActivitySectionItem]) -> AnyPublisher<([String], Int), Never>
 }
-
 
 final class DefaultDetailStudyActivityUseCase: DetailStudyActivityUseCase {
     
@@ -22,18 +21,22 @@ final class DefaultDetailStudyActivityUseCase: DetailStudyActivityUseCase {
         self.repository = repository
     }
     
-    func setDetailActivityItem() -> AnyPublisher<[DetailStudyActivitySectionItem], Never> {
-        return repository.fetchDetailActivityItems()
+    func getDetailActivityItem(studyID: Int, activityID: Int) -> AnyPublisher<DetailStudyActivity, Never> {
+        return repository.fetchDetailActivityItems(studyID: studyID, activityID: activityID)
     }
     
     func setPresentedImage(indexPath: IndexPath, items: [DetailStudyActivitySectionItem]) -> AnyPublisher<([String], Int), Never> {
-        let images = items
-            .compactMap { if case .photoCell(let item) = $0 { return item.imageURL }
-                return nil
+        
+        var images: [String] = []
+        items.forEach {
+            if case .photoCell(let item) = $0, let imageURLs = item?.imageURL {
+                images = imageURLs
             }
-
+        }
+        
         let selectedRow = indexPath.item
         
-        return Just((images, selectedRow)).eraseToAnyPublisher()
+        return Just((images, selectedRow))
+            .eraseToAnyPublisher()
     }
 }

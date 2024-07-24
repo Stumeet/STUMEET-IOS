@@ -15,7 +15,7 @@ enum DetailStudyActivitySection {
 }
 
 enum DetailStudyActivitySectionItem: Hashable {
-    case topCell(DetailStudyActivityTop)
-    case photoCell(DetailStudyActivityPhoto)
-    case bottomCell(DetailStudyActivityBottom)
+    case topCell(DetailStudyActivity.Top?)
+    case photoCell(DetailStudyActivity.Photo?)
+    case bottomCell(DetailStudyActivity.Bottom?)
 }
