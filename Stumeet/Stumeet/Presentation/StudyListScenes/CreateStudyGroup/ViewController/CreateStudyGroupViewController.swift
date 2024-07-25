@@ -432,10 +432,10 @@ final class CreateStudyGroupViewController: BaseViewController {
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupFieldVC)
             .store(in: &cancellables)
         
-        // FIXME: - 디자인 나오면 고치기
         output.selectedField
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { print($0) })
+            .map { ($0.name, StumeetColor.primary700) }
+            .sink(receiveValue: fieldButton.updateConfiguration)
             .store(in: &cancellables)
     }
 }
@@ -483,6 +483,8 @@ extension CreateStudyGroupViewController {
         return textView
     }
 }
+
+// MARK: - Delegate
 
 extension CreateStudyGroupViewController: SelectStudyGroupFieldDelegate {
     func didTapCompleteButton(field: StudyField) {
