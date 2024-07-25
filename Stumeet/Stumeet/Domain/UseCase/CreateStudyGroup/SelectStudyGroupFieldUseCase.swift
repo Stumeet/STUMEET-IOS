@@ -10,6 +10,8 @@ import Foundation
 
 protocol SelectStudyGroupFieldUseCase {
     func getFieldItems() -> AnyPublisher<[StudyField], Never>
+    func getSelectedFields(indexPath: IndexPath, fields: [StudyField]) -> AnyPublisher<[StudyField], Never>
+    func getIsEnableCompleteButton(fields: [StudyField]) -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultSelectStudyGroupFieldUseCase: SelectStudyGroupFieldUseCase {
@@ -22,5 +24,23 @@ final class DefaultSelectStudyGroupFieldUseCase: SelectStudyGroupFieldUseCase {
     
     func getFieldItems() -> AnyPublisher<[StudyField], Never> {
         return repository.getFieldItems()
+    }
+    
+    func getSelectedFields(indexPath: IndexPath, fields: [StudyField]) -> AnyPublisher<[StudyField], Never> {
+        var selectedFields = fields
+        
+        selectedFields[indexPath.item].isSelected.toggle()
+        if selectedFields[indexPath.item].isSelected {
+            for index in selectedFields.indices where index != indexPath.item {
+                selectedFields[index].isSelected = false
+            }
+        }
+        
+        return Just(selectedFields).eraseToAnyPublisher()
+    }
+    
+    func getIsEnableCompleteButton(fields: [StudyField]) -> AnyPublisher<Bool, Never> {
+        Just(fields.contains(where: { $0.isSelected }))
+            .eraseToAnyPublisher()
     }
 }

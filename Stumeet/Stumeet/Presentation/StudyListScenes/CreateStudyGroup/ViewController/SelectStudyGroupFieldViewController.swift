@@ -93,13 +93,20 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     
     override func bind() {
         
-        let input = SelectStudyGroupFieldViewModel.Input()
+        let input = SelectStudyGroupFieldViewModel.Input(
+            didSelectedField: fieldCollectionView.didSelectItemPublisher
+        )
         
         let output = viewModel.transform(input: input)
         
         output.items
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCompleteButton)
             .store(in: &cancellables)
     }
 }
@@ -113,7 +120,7 @@ extension SelectStudyGroupFieldViewController {
             switch itemIdentifier {
             case .fieldCell(let item):
                 guard let cell = collectionView.dequeue(TagCell.self, for: indexPath) else { return UICollectionViewCell() }
-                cell.tagLabel.text = item.name
+                cell.configureTagCell(item: item)
                 
                 return cell
             }
@@ -126,7 +133,7 @@ extension SelectStudyGroupFieldViewController {
         snapshot.appendItems(items)
         
         guard let datasource = self.datasource else { return }
-        datasource.apply(snapshot, animatingDifferences: true)
+        datasource.apply(snapshot, animatingDifferences: false)
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -143,5 +150,14 @@ extension SelectStudyGroupFieldViewController {
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
+    }
+}
+
+// MARK: - UIUpdate
+
+extension SelectStudyGroupFieldViewController {
+    func updateCompleteButton(isEnable: Bool) {
+        completeButton.isEnabled = isEnable
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
     }
 }

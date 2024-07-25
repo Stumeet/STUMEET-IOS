@@ -14,19 +14,20 @@ final class SelectStudyGroupFieldViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
-        
+        let didSelectedField: AnyPublisher<IndexPath, Never>
     }
     
     // MARK: - Output
     
     struct Output {
         let items: AnyPublisher<[StudyFieldSectionItem], Never>
+        let isEnableCompleteButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
     
     private let useCase: SelectStudyGroupFieldUseCase
-    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -38,12 +39,29 @@ final class SelectStudyGroupFieldViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let items = useCase.getFieldItems()
+        let fieldSubject = CurrentValueSubject<[StudyField], Never>([])
+        
+        useCase.getFieldItems()
+            .sink(receiveValue: fieldSubject.send)
+            .store(in: &cancellables)
+        
+        let items = fieldSubject
             .map { $0.map { StudyFieldSectionItem.fieldCell($0) } }
             .eraseToAnyPublisher()
         
+        input.didSelectedField
+            .map { ($0, fieldSubject.value) }
+            .flatMap(useCase.getSelectedFields)
+            .sink(receiveValue: fieldSubject.send)
+            .store(in: &cancellables)
+        
+        let isEnable = fieldSubject
+            .flatMap(useCase.getIsEnableCompleteButton)
+            .eraseToAnyPublisher()
+        
         return Output(
-            items: items
+            items: items,
+            isEnableCompleteButton: isEnable
         )
     }
 }
