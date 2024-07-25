@@ -14,7 +14,8 @@ protocol CreateStudyGroupCoordinatorDependencies {
 
 protocol CreateStudyGroupNavigation: AnyObject {
     func presentToCreateStudyGroupVC()
-    func navigateToSelectStudyGroupFieldVC()
+    func navigateToSelectStudyGroupFieldVC(delegate: SelectStudyGroupFieldDelegate)
+    func popToCreateStudyGroupVC()
 }
 
 final class CreateStudyGroupCoordinator: Coordinator {
@@ -37,6 +38,7 @@ final class CreateStudyGroupCoordinator: Coordinator {
 }
 
 extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
+    
     func presentToCreateStudyGroupVC() {
         let createActivityVC = dependencies.makeCreateStudyGroupVC(coordinator: self)
         navigationController.modalPresentationStyle = .fullScreen
@@ -44,8 +46,13 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         parentCoordinator?.navigationController.present(navigationController, animated: true)
     }
     
-    func navigateToSelectStudyGroupFieldVC() {
+    func navigateToSelectStudyGroupFieldVC(delegate: SelectStudyGroupFieldDelegate) {
         let fieldVC = dependencies.makeSelectStudyGroupFieldVC(coordinator: self)
+        fieldVC.delegate = delegate
         navigationController.pushViewController(fieldVC, animated: true)
+    }
+    
+    func popToCreateStudyGroupVC() {
+        navigationController.popViewController(animated: true)
     }
 }

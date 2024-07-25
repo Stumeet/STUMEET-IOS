@@ -12,6 +12,7 @@ protocol SelectStudyGroupFieldUseCase {
     func getFieldItems() -> AnyPublisher<[StudyField], Never>
     func getSelectedFields(indexPath: IndexPath, fields: [StudyField]) -> AnyPublisher<[StudyField], Never>
     func getIsEnableCompleteButton(fields: [StudyField]) -> AnyPublisher<Bool, Never>
+    func getSelectedField(fields: [StudyField]) -> AnyPublisher<StudyField, Never>
 }
 
 final class DefaultSelectStudyGroupFieldUseCase: SelectStudyGroupFieldUseCase {
@@ -42,5 +43,9 @@ final class DefaultSelectStudyGroupFieldUseCase: SelectStudyGroupFieldUseCase {
     func getIsEnableCompleteButton(fields: [StudyField]) -> AnyPublisher<Bool, Never> {
         Just(fields.contains(where: { $0.isSelected }))
             .eraseToAnyPublisher()
+    }
+    
+    func getSelectedField(fields: [StudyField]) -> AnyPublisher<StudyField, Never> {
+        return Just(fields.filter { $0.isSelected }.first!).eraseToAnyPublisher()
     }
 }

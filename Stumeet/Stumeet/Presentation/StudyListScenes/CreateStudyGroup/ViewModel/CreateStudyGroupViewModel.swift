@@ -14,12 +14,14 @@ final class CreateStudyGroupViewModel: ViewModelType {
     
     struct Input {
         let didTapFieldButton: AnyPublisher<Void, Never>
+        let didSelectedField: AnyPublisher<StudyField, Never>
     }
     
     // MARK: - Output
     
     struct Output {
         let goToSelectStudyGroupFieldVC: AnyPublisher<Void, Never>
+        let selectedField: AnyPublisher<StudyField, Never>
     }
     
     // MARK: - Properties
@@ -30,7 +32,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         return Output(
-            goToSelectStudyGroupFieldVC: input.didTapFieldButton
+            goToSelectStudyGroupFieldVC: input.didTapFieldButton,
+            selectedField: input.didSelectedField
         )
     }
 }

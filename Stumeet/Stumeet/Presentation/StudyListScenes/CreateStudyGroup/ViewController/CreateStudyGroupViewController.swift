@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 7/24/24.
 //
 
+import Combine
 import UIKit
 
 final class CreateStudyGroupViewController: BaseViewController {
@@ -147,6 +148,9 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let coordinator: CreateStudyGroupNavigation
     private let viewModel: CreateStudyGroupViewModel
+    
+    // MARK: - Subject
+    private let fieldSubject = PassthroughSubject<StudyField, Never>()
     
     // MARK: - Init
     
@@ -416,14 +420,22 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     override func bind() {
         let input = CreateStudyGroupViewModel.Input(
-            didTapFieldButton: fieldButton.tapPublisher
+            didTapFieldButton: fieldButton.tapPublisher,
+            didSelectedField: fieldSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
         
         output.goToSelectStudyGroupFieldVC
+            .map { self }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupFieldVC)
+            .store(in: &cancellables)
+        
+        // FIXME: - 디자인 나오면 고치기
+        output.selectedField
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { print($0) })
             .store(in: &cancellables)
     }
 }
@@ -469,5 +481,11 @@ extension CreateStudyGroupViewController {
         textView.layer.cornerRadius = 16
             
         return textView
+    }
+}
+
+extension CreateStudyGroupViewController: SelectStudyGroupFieldDelegate {
+    func didTapCompleteButton(field: StudyField) {
+        fieldSubject.send(field)
     }
 }

@@ -15,6 +15,7 @@ final class SelectStudyGroupFieldViewModel: ViewModelType {
     
     struct Input {
         let didSelectedField: AnyPublisher<IndexPath, Never>
+        let didTapCompleteButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -22,6 +23,7 @@ final class SelectStudyGroupFieldViewModel: ViewModelType {
     struct Output {
         let items: AnyPublisher<[StudyFieldSectionItem], Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
+        let completeField: AnyPublisher<StudyField, Never>
     }
     
     // MARK: - Properties
@@ -59,9 +61,15 @@ final class SelectStudyGroupFieldViewModel: ViewModelType {
             .flatMap(useCase.getIsEnableCompleteButton)
             .eraseToAnyPublisher()
         
+        let completeField = input.didTapCompleteButton
+            .map { fieldSubject.value }
+            .flatMap(useCase.getSelectedField)
+            .eraseToAnyPublisher()
+        
         return Output(
             items: items,
-            isEnableCompleteButton: isEnable
+            isEnableCompleteButton: isEnable,
+            completeField: completeField
         )
     }
 }

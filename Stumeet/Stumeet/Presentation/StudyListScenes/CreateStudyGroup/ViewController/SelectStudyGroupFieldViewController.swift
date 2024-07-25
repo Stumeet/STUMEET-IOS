@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol SelectStudyGroupFieldDelegate: AnyObject {
+    func didTapCompleteButton(field: StudyField)
+}
+
 final class SelectStudyGroupFieldViewController: BaseViewController {
     
     typealias Section = StudyFieldSection
@@ -36,6 +40,7 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     private let coordinator: CreateStudyGroupNavigation
     private let viewModel: SelectStudyGroupFieldViewModel
+    weak var delegate: SelectStudyGroupFieldDelegate?
     
     // MARK: - Init
     
@@ -94,7 +99,8 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     override func bind() {
         
         let input = SelectStudyGroupFieldViewModel.Input(
-            didSelectedField: fieldCollectionView.didSelectItemPublisher
+            didSelectedField: fieldCollectionView.didSelectItemPublisher,
+            didTapCompleteButton: completeButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -107,6 +113,13 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
         output.isEnableCompleteButton
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateCompleteButton)
+            .store(in: &cancellables)
+        
+        output.completeField
+            .receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: delegate?.didTapCompleteButton)
+            .map { _ in }
+            .sink(receiveValue: coordinator.popToCreateStudyGroupVC)
             .store(in: &cancellables)
     }
 }
