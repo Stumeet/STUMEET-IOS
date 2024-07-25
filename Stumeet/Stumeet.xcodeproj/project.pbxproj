@@ -213,6 +213,8 @@
 		CA94FD792C50DE1700A11A8E /* CreateStudyGroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA94FD782C50DE1700A11A8E /* CreateStudyGroupCoordinator.swift */; };
 		CA94FD7B2C50DFDE00A11A8E /* CreateStudyGroupDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA94FD7A2C50DFDE00A11A8E /* CreateStudyGroupDIContainer.swift */; };
 		CA94FD7D2C50E07A00A11A8E /* CreateStudyGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA94FD7C2C50E07A00A11A8E /* CreateStudyGroupViewController.swift */; };
+		CA94FD842C526F4700A11A8E /* CreateStudyGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA94FD832C526F4700A11A8E /* CreateStudyGroupViewModel.swift */; };
+		CA94FD862C526F8700A11A8E /* SelectStudyGroupFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA94FD852C526F8700A11A8E /* SelectStudyGroupFieldViewController.swift */; };
 		CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */; };
 		CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */; };
 		CA98F6BC2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA98F6BB2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift */; };
@@ -480,6 +482,8 @@
 		CA94FD782C50DE1700A11A8E /* CreateStudyGroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyGroupCoordinator.swift; sourceTree = "<group>"; };
 		CA94FD7A2C50DFDE00A11A8E /* CreateStudyGroupDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyGroupDIContainer.swift; sourceTree = "<group>"; };
 		CA94FD7C2C50E07A00A11A8E /* CreateStudyGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyGroupViewController.swift; sourceTree = "<group>"; };
+		CA94FD832C526F4700A11A8E /* CreateStudyGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyGroupViewModel.swift; sourceTree = "<group>"; };
+		CA94FD852C526F8700A11A8E /* SelectStudyGroupFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyGroupFieldViewController.swift; sourceTree = "<group>"; };
 		CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityDIContainer.swift; sourceTree = "<group>"; };
 		CA98F6AF2BEE0AE100C36772 /* CreateActivityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityCoordinator.swift; sourceTree = "<group>"; };
 		CA98F6BB2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListDIContainer.swift; sourceTree = "<group>"; };
@@ -1654,6 +1658,7 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD7C2C50E07A00A11A8E /* CreateStudyGroupViewController.swift */,
+				CA94FD852C526F8700A11A8E /* SelectStudyGroupFieldViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1661,6 +1666,7 @@
 		CA94FD752C50DDFB00A11A8E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CA94FD832C526F4700A11A8E /* CreateStudyGroupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2271,6 +2277,7 @@
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
 				CAF533542B9EAF7D00A7B8B2 /* StartViewModel.swift in Sources */,
 				CAB8E6DC2C0D8B98001034DC /* SnackBar.swift in Sources */,
+				CA94FD862C526F8700A11A8E /* SelectStudyGroupFieldViewController.swift in Sources */,
 				35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */,
 				35C9929D2BA73D04003B0AE7 /* KeychainManager.swift in Sources */,
 				357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */,
@@ -2302,6 +2309,7 @@
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA94FD792C50DE1700A11A8E /* CreateStudyGroupCoordinator.swift in Sources */,
+				CA94FD842C526F4700A11A8E /* CreateStudyGroupViewModel.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
 				CA01B28B2C04614300A01CEA /* DetailAcitivtyMember.swift in Sources */,
 				CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */,

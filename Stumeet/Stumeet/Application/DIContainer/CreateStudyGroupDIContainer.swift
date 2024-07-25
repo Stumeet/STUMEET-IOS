@@ -23,8 +23,21 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - CreateStudyGroupVC
     
-    func makeCreateStudyGroupVC(coordinator: any CreateStudyGroupNavigation) -> CreateStudyGroupViewController {
-        CreateStudyGroupViewController()
+    func makeCreteStudyGroupVM() -> CreateStudyGroupViewModel {
+        CreateStudyGroupViewModel()
+    }
+    
+    func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController {
+        CreateStudyGroupViewController(
+            coordinator: coordinator,
+            viewModel: makeCreteStudyGroupVM()
+        )
+    }
+    
+    // MARK: - SelectStudyGroupField
+    
+    func makeSelectStudyGroupFieldVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyGroupFieldViewController {
+        SelectStudyGroupFieldViewController()
     }
     
     

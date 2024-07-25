@@ -145,8 +145,21 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private let coordinator: CreateStudyGroupNavigation
+    private let viewModel: CreateStudyGroupViewModel
     
     // MARK: - Init
+    
+    init(coordinator: CreateStudyGroupNavigation, viewModel: CreateStudyGroupViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycle
     
@@ -400,6 +413,19 @@ final class CreateStudyGroupViewController: BaseViewController {
 
     
     // MARK: - Bind
+    
+    override func bind() {
+        let input = CreateStudyGroupViewModel.Input(
+            didTapFieldButton: fieldButton.tapPublisher
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.goToSelectStudyGroupFieldVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.navigateToSelectStudyGroupFieldVC)
+            .store(in: &cancellables)
+    }
 }
 
 // MARK: - Configure Component

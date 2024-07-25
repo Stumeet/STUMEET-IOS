@@ -9,10 +9,12 @@ import UIKit
 
 protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
+    func makeSelectStudyGroupFieldVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyGroupFieldViewController
 }
 
 protocol CreateStudyGroupNavigation: AnyObject {
     func presentToCreateStudyGroupVC()
+    func navigateToSelectStudyGroupFieldVC()
 }
 
 final class CreateStudyGroupCoordinator: Coordinator {
@@ -40,5 +42,10 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.viewControllers.append(createActivityVC)
         parentCoordinator?.navigationController.present(navigationController, animated: true)
+    }
+    
+    func navigateToSelectStudyGroupFieldVC() {
+        let fieldVC = dependencies.makeSelectStudyGroupFieldVC(coordinator: self)
+        navigationController.pushViewController(fieldVC, animated: true)
     }
 }
