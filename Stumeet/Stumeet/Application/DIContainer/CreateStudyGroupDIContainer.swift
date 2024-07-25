@@ -21,6 +21,18 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         self.dependencies = dependencies
     }
     
+    // MARK: - Repository
+    
+    func makeSelectStudyGroupFieldRepository() -> SelectStudyGroupFieldRepository {
+        DefaultSelecteStudyGroupFieldRepository()
+    }
+    
+    // MARK: - UseCase
+    
+    func makeSelectStudyGroupFieldUseCase() -> SelectStudyGroupFieldUseCase {
+        DefaultSelectStudyGroupFieldUseCase(repository: makeSelectStudyGroupFieldRepository())
+    }
+    
     // MARK: - CreateStudyGroupVC
     
     func makeCreteStudyGroupVM() -> CreateStudyGroupViewModel {
@@ -36,8 +48,15 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - SelectStudyGroupField
     
+    func makeSelectStudyGroupFieldVM() -> SelectStudyGroupFieldViewModel {
+        SelectStudyGroupFieldViewModel(useCase: makeSelectStudyGroupFieldUseCase())
+    }
+    
     func makeSelectStudyGroupFieldVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyGroupFieldViewController {
-        SelectStudyGroupFieldViewController()
+        SelectStudyGroupFieldViewController(
+            coordinator: coordinator,
+            viewModel: makeSelectStudyGroupFieldVM()
+        )
     }
     
     

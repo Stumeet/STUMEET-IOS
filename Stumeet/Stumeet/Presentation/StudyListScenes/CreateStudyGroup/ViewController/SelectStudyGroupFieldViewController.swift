@@ -34,22 +34,21 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     
     // MARK: - Properties
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
-    
-    // FIXME: - repository로 옮기기
-    let fields = [
-        StudyField(name: "어학", isSelected: false),
-        StudyField(name: "취업", isSelected: false),
-        StudyField(name: "자격증", isSelected: false),
-        StudyField(name: "고시/공무원", isSelected: false),
-        StudyField(name: "취미/교양", isSelected: false),
-        StudyField(name: "프로그래밍", isSelected: false),
-        StudyField(name: "재테크/경제", isSelected: false),
-        StudyField(name: "수능", isSelected: false),
-        StudyField(name: "독서", isSelected: false),
-        StudyField(name: "자율", isSelected: false)
-    ]
+    private let coordinator: CreateStudyGroupNavigation
+    private let viewModel: SelectStudyGroupFieldViewModel
     
     // MARK: - Init
+    
+    init(coordinator: CreateStudyGroupNavigation, viewModel: SelectStudyGroupFieldViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycles
     
@@ -93,7 +92,12 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     }
     
     override func bind() {
-        Just(fields)
+        
+        let input = SelectStudyGroupFieldViewModel.Input()
+        
+        let output = viewModel.transform(input: input)
+        
+        output.items
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
@@ -116,10 +120,10 @@ extension SelectStudyGroupFieldViewController {
         })
     }
     
-    private func updateSnapshot(item: [StudyField]) {
+    private func updateSnapshot(items: [SectionItem]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
         snapshot.appendSections([.main])
-        item.forEach { snapshot.appendItems([.fieldCell($0)]) }
+        snapshot.appendItems(items)
         
         guard let datasource = self.datasource else { return }
         datasource.apply(snapshot, animatingDifferences: true)
