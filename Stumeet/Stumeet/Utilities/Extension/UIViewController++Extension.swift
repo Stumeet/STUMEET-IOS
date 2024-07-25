@@ -12,7 +12,7 @@ extension UIViewController {
     /// BackButton, Title navgationBar 생성
     func configureBackButtonTitleNavigationBarItems(title: String) {
         let backButton = UIBarButtonItem(
-            image: UIImage(named: "backButton"),
+            image: UIImage(resource: .backButton),
             style: .plain,
             target: self,
             action: #selector(popViewController)
@@ -24,10 +24,12 @@ extension UIViewController {
             font: StumeetFont.titleMedium.font,
             color: nil
         )
+        let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer.width = 24
         
         let navigationTitleItem = UIBarButtonItem(customView: titleLabel)
         
-        self.navigationItem.leftBarButtonItems = [backButton, navigationTitleItem]
+        self.navigationItem.leftBarButtonItems = [backButton, spacer, navigationTitleItem]
     }
     
     func configureXButtonTitleNavigationBarItems(button: UIBarButtonItem, title: String) {
