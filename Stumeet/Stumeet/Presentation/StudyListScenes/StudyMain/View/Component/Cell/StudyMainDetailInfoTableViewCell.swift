@@ -205,29 +205,20 @@ class StudyMainDetailInfoTableViewCell: BaseTableViewCell {
     
     // MARK: - Function
     // TODO: API 연동 시 수정
-    func configureCell() {
-        descriptionLabel.text = "테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트테스트테스트트"
-        periodLabel.text = "2023.01.01 ~ 2023.01.01"
-        recurringScheduleLabel.text = "매주 목요일 오전 9:00"
-        ruleLabel.text = """
-        - 📢 공지 확인 시 12시간 내에 답장
+    func configureCell(data: StudyMainViewDetailInfoItem) {
+        descriptionLabel.text = data.intro
+        periodLabel.text = data.period
+        recurringScheduleLabel.text = data.recurringMeetingTime
+        ruleLabel.text = data.rule
         
-        - 공지 확인 후 ✅ 표시하기
+        var datas: [StudyMainTag] = []
+        datas.append(StudyMainTag(id: 0, title: data.region))
         
-        - ✏️ 팀 내 회의, 전체 회의 등 회의 시에는 회의록에 기록하기
+        data.tags.enumerated().forEach { index, item in
+            datas.append(StudyMainTag(id: index + 1, title: item))
+        }
         
-        - 🗣 작업하다 모르는 내용 생기면 공유하고 서로 같이 고민하기
-        """
-        
-        updateDatasource(datas: [
-            StudyMainTag(id: 0, title: "서울"),
-            StudyMainTag(id: 1, title: "#프로그래밍"),
-            StudyMainTag(id: 2, title: "#프로그"),
-            StudyMainTag(id: 3, title: "#프로그래밍"),
-            StudyMainTag(id: 4, title: "#프"),
-            StudyMainTag(id: 5, title: "#프로그래밍"),
-            StudyMainTag(id: 6, title: "#프로그래밍" )
-        ])
+        updateDatasource(datas: datas)
     }
     
     // MARK: - DataSource

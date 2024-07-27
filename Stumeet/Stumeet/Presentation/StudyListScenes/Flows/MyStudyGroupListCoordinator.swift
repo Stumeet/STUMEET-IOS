@@ -9,6 +9,7 @@ import UIKit
 
 protocol MyStudyGroupListCoordinatorDependencies {
     func makeMyStudyGroupListVC(coordinator: MyStudyGroupListNavigation) -> MyStudyGroupListViewController
+    func makeStudyMainVC(coordinator: MyStudyGroupListNavigation, studyId: Int) -> StudyMainViewController
     func makeStudyActivityVC(coordinator: MyStudyGroupListNavigation) -> StudyActivityViewController
     func makeDetailStudyActivityListVC(coordinator: MyStudyGroupListNavigation) -> DetailStudyActivityViewController
     func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
@@ -58,7 +59,7 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
     
     // TODO: 메인 화면 API 연결 시 수정
     func goToStudyMain(with id: Int) {
-        let studyMainVC = StudyMainViewController(coordinator: self)
+        let studyMainVC = dependencies.makeStudyMainVC(coordinator: self, studyId: id)
         studyMainVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(studyMainVC, animated: true)
     }

@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Combine
+import Kingfisher
 
 // TODO: API 연동 시 수정
 enum StudyMainViewCellStyle {
@@ -47,8 +49,8 @@ class StudyMainViewController: BaseViewController {
     
     private let headerImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .StudyGroupMain.testHeaderImg)
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -68,8 +70,6 @@ class StudyMainViewController: BaseViewController {
         let label = UILabel()
         label.font = StumeetFont.titleSemibold.font
         label.textColor = StumeetColor.gray800.color
-        // TODO: API 연동 시 수정
-        label.text = "자바를 자바"
         return label
     }()
     
@@ -97,18 +97,24 @@ class StudyMainViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: MyStudyGroupListNavigation!
+    private let viewModel: StudyMainViewModel
+    private let loadStudyGroupDetailData = PassthroughSubject<Void, Never>()
+    
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var tableHeaderHeight: CGFloat = (screenWidth * 0.542).rounded() // 디바이스 넓이 * 크기 비율
     private var constPopupBottom: Constraint!
     // TODO: API 연동 시 수정
-    private var dataSource: [StudyMainViewCellStyle] = [.activity]
     private var activityList: [StudyMainViewCellStyle] = [.activity, .activity, .activity, .activity, .activity, .activity]
-    private var detailInfoList: [StudyMainViewCellStyle] = [.detailInfo]
-    private var isActivity = false
+    private var detailInfoData: [StudyMainViewDetailInfoItem] = []
+    private var isActivity = true
+    
 
     // MARK: - Init
-    init(coordinator: MyStudyGroupListNavigation) {
+    init(coordinator: MyStudyGroupListNavigation,
+         viewModel: StudyMainViewModel
+    ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -182,15 +188,49 @@ class StudyMainViewController: BaseViewController {
         }
     }
     
+    override func bind() {
+        // MARK: - Input
+        let input = StudyMainViewModel.Input(
+            loadStudyGroupDetailData: loadStudyGroupDetailData.eraseToAnyPublisher()
+        )
+        
+        // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.studyGroupDetailHeaderDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateHeaderView)
+            .store(in: &cancellables)
+        
+        output.studyGroupDetailInfoDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateInfoView)
+            .store(in: &cancellables)
+
+    }
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         newActivityFloatingButton.setRoundCorner()
         // TODO: API 연동 시 수정
-        dataSource = activityList
+        loadStudyGroupDetailData.send()
     }
     
     // MARK: - Function
+    private func updateHeaderView(data: StudyMainViewHeaderItem?) {
+        guard let data = data else { return }
+        sectionHeaderTitleLabel.text = data.title
+        
+        let url = URL(string: data.thumbnailImageUrl)
+        headerImageView.kf.setImage(with: url)
+    }
+    
+    private func updateInfoView(data: StudyMainViewDetailInfoItem?) {
+        guard let data = data else { return }
+        detailInfoData = [data]
+    }
+    
     private func updateHeaderView() {
         var tableWidth = 0.0
         
@@ -235,7 +275,7 @@ class StudyMainViewController: BaseViewController {
     
     // TODO: API 연동 시 수정
     private func reloadTableView() {
-        dataSource = isActivity ? activityList : detailInfoList
+        isActivity.toggle()
         animateButtonImage(to: UIImage(resource: isActivity ? .StudyGroupMain.iconArrowDown : .StudyGroupMain.iconArrowUp), for: detailInfoOpenButton)
         animateControlAlpha(for: newActivityFloatingButton, isHidden: !isActivity)
         animateControlAlpha(for: praiseReminderFloatingPopupView, isHidden: !isActivity)
@@ -260,7 +300,6 @@ class StudyMainViewController: BaseViewController {
             
         }, completion: { [weak self] _ in
             guard let self = self else { return }
-            isActivity.toggle()
             detailInfoOpenButton.isEnabled = true
         })
     }
@@ -283,7 +322,8 @@ extension StudyMainViewController:
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        
+        return isActivity ? activityList.count : detailInfoData.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -296,11 +336,11 @@ extension StudyMainViewController:
     
     // TODO: API 연동 시 수정
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = dataSource[indexPath.row]
         
-        switch data {
-        case .activity:
+        
+        if isActivity {
             guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath)
+//                  let activityData = activityList[safe: indexPath.row]
             else { return UITableViewCell() }
             
             switch indexPath.row {
@@ -314,15 +354,18 @@ extension StudyMainViewController:
             }
             
             return cell
-        case .detailInfo:
-            guard let cell = tableView.dequeue(StudyMainDetailInfoTableViewCell.self, for: indexPath)
+        } else {
+            
+            guard let cell = tableView.dequeue(StudyMainDetailInfoTableViewCell.self, for: indexPath),
+                  let activityData = detailInfoData[safe: indexPath.row]
             else { return UITableViewCell() }
             cell.onHeightChanged = {
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
-            cell.configureCell()
+            cell.configureCell(data: activityData)
             return cell
+            
         }
     }
     
