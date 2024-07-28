@@ -42,6 +42,7 @@ class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
     override func setupConstaints() {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+            make.size.equalTo(0)
         }
     }
     
@@ -55,6 +56,9 @@ class DetailStudyActivityPhotoCell: BaseCollectionViewCell {
             xButton.snp.makeConstraints { make in
                 make.top.trailing.equalToSuperview().inset(12)
             }
+        }
+        imageView.snp.updateConstraints { make in
+            make.size.equalTo(160)
         }
         imageView.image = image
     }

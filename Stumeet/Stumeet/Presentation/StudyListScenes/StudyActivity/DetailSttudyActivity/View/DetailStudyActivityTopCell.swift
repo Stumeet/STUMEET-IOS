@@ -139,12 +139,42 @@ class DetailStudyActivityTopCell: BaseCollectionViewCell {
         
     }
     
-    func configureCell(_ item: DetailStudyActivityTop) {
-        dayLeftLabel.text = item.dayLeft
-        statusLabel.text = item.status
-        nameLabel.text = item.name
-        dateLabel.text = item.date
-        titleLabel.text = item.title
-        contentLabel.text = item.content
+    func configureCell(_ item: DetailStudyActivity.Top?) {
+        nameLabel.text = item?.name
+        dateLabel.text = item?.date.formattedDateHHmm()
+        titleLabel.text = item?.title
+        contentLabel.text = item?.content
+        updateStatusLabel(status: item!.status)
+        
+        if let dayLeft = item?.dayLeft {
+            dayLeftLabel.text = dayLeft.timeUntilSince()
+        } else {
+            dayLeftLabel.snp.removeConstraints()
+            statusLabel.snp.removeConstraints()
+            
+            profileImageView.snp.remakeConstraints { make in
+                make.top.equalToSuperview()
+                make.leading.equalToSuperview().inset(16)
+                make.width.height.equalTo(40)
+            }
+        }
+    }
+    
+    func updateStatusLabel(status: ActivityState) {
+        switch status {
+        case .perform, .attendance, .okAbsent:
+            statusLabel.backgroundColor = StumeetColor.primary50.color
+            statusLabel.textColor = StumeetColor.primary700.color
+        case .notperform, .absent:
+            statusLabel.backgroundColor = StumeetColor.danger50.color
+            statusLabel.textColor = StumeetColor.danger500.color
+        case .late, .okPerform:
+            statusLabel.backgroundColor = StumeetColor.warning50.color
+            statusLabel.textColor = StumeetColor.warning500.color
+        case .noParticipation, .beforeStart:
+            statusLabel.backgroundColor = StumeetColor.gray75.color
+            statusLabel.textColor = StumeetColor.gray400.color
+        }
+        statusLabel.text = status.rawValue
     }
 }

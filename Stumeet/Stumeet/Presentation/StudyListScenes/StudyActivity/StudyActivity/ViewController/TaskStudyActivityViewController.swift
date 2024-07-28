@@ -19,9 +19,12 @@ final class TaskStudyActivityViewController: BaseViewController {
         collectionView.register(StudyActivityCell.self, forCellWithReuseIdentifier: StudyActivityCell.identifier)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isHidden = true
         
         return collectionView
     }()
+    
+    private let emptyView = StudyActivityEmptyView()
     
     // MARK: - Properties
     
@@ -48,7 +51,6 @@ final class TaskStudyActivityViewController: BaseViewController {
         super.viewDidLoad()
 
         configureDatasource()
-        view.backgroundColor = .red
     }
     
     override func setupStyles() {
@@ -57,7 +59,8 @@ final class TaskStudyActivityViewController: BaseViewController {
     
     override func setupAddView() {
         [
-            collectionView
+            collectionView,
+            emptyView
         ]   .forEach(view.addSubview)
     }
     
@@ -65,11 +68,18 @@ final class TaskStudyActivityViewController: BaseViewController {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     
     override func bind() {
-        let input = TaskStudyActivityViewModel.Input()
+        let input = TaskStudyActivityViewModel.Input(
+            reachedCollectionViewBottom: collectionView.reachedBottomPublisher(),
+            didSelectedActivityItem: collectionView.didSelectItemPublisher
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -77,6 +87,17 @@ final class TaskStudyActivityViewController: BaseViewController {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.isEmptyItems
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: switchHiddenEmptyView)
+            .store(in: &cancellables)
+        
+        output.selectedItemID
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.goToDetailStudyActivityVC)
             .store(in: &cancellables)
     }
 }
@@ -93,7 +114,7 @@ extension TaskStudyActivityViewController {
             
             switch item {
             case .task(let item):
-                cell.configureGroupUI(item: item!)
+                cell.configureTaskUI(item: item)
                 
             default: break
             }
@@ -104,7 +125,6 @@ extension TaskStudyActivityViewController {
     
     private func updateSnapshot(items: [StudyActivitySectionItem]) {
         guard let datasource = self.datasource else { return }
-        
         var snapshot = NSDiffableDataSourceSnapshot<StudyActivitySection, StudyActivitySectionItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
@@ -129,5 +149,13 @@ extension TaskStudyActivityViewController {
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
+    }
+}
+
+
+extension TaskStudyActivityViewController {
+    private func switchHiddenEmptyView(isEmpty: Bool) {
+        collectionView.isHidden = isEmpty
+        emptyView.isHidden = !isEmpty
     }
 }

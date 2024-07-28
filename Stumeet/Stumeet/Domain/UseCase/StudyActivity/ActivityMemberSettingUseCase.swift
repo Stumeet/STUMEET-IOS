@@ -4,7 +4,7 @@ import Combine
 import Foundation
 
 protocol ActivityMemberSettingUseCase {
-    func getMembers() -> AnyPublisher<[ActivityMemberSectionItem], Never>
+    func getMembers(members: [ActivityMember]) -> AnyPublisher<[ActivityMemberSectionItem], Never>
     func toggleSelection(
         indexPath: IndexPath,
         members: [ActivityMemberSectionItem],
@@ -28,9 +28,15 @@ final class DefaultActivityMemberSettingUseCase: ActivityMemberSettingUseCase {
         self.repository = repository
     }
     
-    func getMembers() -> AnyPublisher<[ActivityMemberSectionItem], Never> {
+    func getMembers(members: [ActivityMember]) -> AnyPublisher<[ActivityMemberSectionItem], Never> {
         return repository.fetchMembers()
-            .map { $0.map { ActivityMemberSectionItem.memberCell($0) } }
+            .map { fetchedMembers in
+                fetchedMembers.map { fetchedMember in
+                    members.first(where: { $0.id == fetchedMember.id }).map {
+                        ActivityMemberSectionItem.memberCell($0)
+                    } ?? ActivityMemberSectionItem.memberCell(fetchedMember)
+                }
+            }
             .eraseToAnyPublisher()
     }
     

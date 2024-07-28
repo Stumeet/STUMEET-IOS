@@ -8,17 +8,25 @@
 import Combine
 import Foundation
 
-final class MockDetailActivityMemberListRepository: DetailActivityMemberListRepository {
+import CombineMoya
+import Moya
+
+final class DefaultDetailActivityMemberListRepository: DetailActivityMemberListRepository {
     
-    let members = [
-        DetailActivityMember(name: "홍길동1", state: "미수행"),
-        DetailActivityMember(name: "홍길동2", state: "수행"),
-        DetailActivityMember(name: "홍길동3", state: "수행"),
-        DetailActivityMember(name: "홍길동4", state: "수행"),
-        DetailActivityMember(name: "홍길동5", state: "미수행")
-    ]
+    private let provider: MoyaProvider<ActivityService>
     
-    func fetchMembers() -> AnyPublisher<[DetailActivityMember], Never> {
-        return Just(members).eraseToAnyPublisher()
+    init(provider: MoyaProvider<ActivityService>) {
+        self.provider = provider
+    }
+    
+    func fetchMembers(studyID: Int, activityID: Int) -> AnyPublisher<[DetailActivityMember], Never> {
+        
+        let requestDTO = DetailActivityRequestDTO(studyId: studyID, activityId: activityID)
+        
+        return provider.requestPublisher(.fetchDetailActivityMember(requestDTO))
+            .map(ResponseWithDataDTO<DetailActivityMemberResponseDTO>.self)
+            .compactMap { $0.data.map { $0.toDomain() } }
+            .replaceError(with: [])
+            .eraseToAnyPublisher()
     }
 }

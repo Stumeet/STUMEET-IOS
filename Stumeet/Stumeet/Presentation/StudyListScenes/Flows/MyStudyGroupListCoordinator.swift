@@ -11,10 +11,10 @@ protocol MyStudyGroupListCoordinatorDependencies {
     func makeMyStudyGroupListVC(coordinator: MyStudyGroupListNavigation) -> MyStudyGroupListViewController
     func makeStudyMainVC(coordinator: MyStudyGroupListNavigation, studyId: Int) -> StudyMainViewController
     func makeStudyActivityVC(coordinator: MyStudyGroupListNavigation) -> StudyActivityViewController
-    func makeDetailStudyActivityListVC(coordinator: MyStudyGroupListNavigation) -> DetailStudyActivityViewController
-    func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator
+    func makeDetailStudyActivityVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailStudyActivityViewController
+    func makeCreateActivityCoordinator(navigationController: UINavigationController, activity: ActivityCategory) -> CreateActivityCoordinator
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: MyStudyGroupListNavigation) -> DetailActivityPhotoListViewController
-    func makeDetailActivityMemberListVC(coordinator: MyStudyGroupListNavigation) -> DetailActivityMemberListViewController
+    func makeDetailActivityMemberListVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
 }
 
 protocol MyStudyGroupListNavigation: AnyObject {
@@ -24,10 +24,11 @@ protocol MyStudyGroupListNavigation: AnyObject {
     func presentToExitPopup(from viewController: UIViewController)
     func presentToInvitationPopup(from viewController: UIViewController)
     func goToStudyActivityList()
-    func goToDetailStudyActivityVC()
+    func goToDetailStudyActivityVC(studyID: Int, activityID: Int)
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
-    func presentToDetailActivityMemberListVC()
-    func startCreateActivityCoordinator()
+    func presentToDetailActivityMemberListVC(studyID: Int, activityID: Int)
+    func startCreateActivityCoordinator(activity: ActivityCategory)
+    func popViewController()
     func dismiss()
 }
 
@@ -91,24 +92,27 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         navigationController.pushViewController(studyActivityListVC, animated: true)
     }
     
-    func goToDetailStudyActivityVC() {
-        let detailStudyActivityVC = dependencies.makeDetailStudyActivityListVC(coordinator: self)
+    func goToDetailStudyActivityVC(studyID: Int, activityID: Int) {
+        let detailStudyActivityVC = dependencies.makeDetailStudyActivityVC(coordinator: self, studyID: studyID, activityID: activityID)
         navigationController.pushViewController(detailStudyActivityVC, animated: true)
     }
     
-    func startCreateActivityCoordinator() {
+    func startCreateActivityCoordinator(activity: ActivityCategory) {
         let createActivityNVC = UINavigationController()
-        let flow = dependencies.makeCreateActivityCoordinator(navigationController: createActivityNVC)
+        let flow = dependencies.makeCreateActivityCoordinator(
+            navigationController: createActivityNVC,
+            activity: activity
+        )
         children.removeAll()
         flow.parentCoordinator = self
         children.append(flow)
-        flow.start()
+        flow.start(category: activity)
     }
     
-    func presentToDetailActivityMemberListVC() {
+    func presentToDetailActivityMemberListVC(studyID: Int, activityID: Int) {
         guard let lastVC = navigationController.viewControllers.last else { return }
         
-        let memberListVC = dependencies.makeDetailActivityMemberListVC(coordinator: self)
+        let memberListVC = dependencies.makeDetailActivityMemberListVC(coordinator: self, studyID: studyID, activityID: activityID)
         memberListVC.modalPresentationStyle = .fullScreen
         lastVC.present(memberListVC, animated: true)
     }
@@ -119,6 +123,10 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         let detailActivityPhotoListVC = dependencies.makeDetailActivityPhotoListVC(with: imageURLs, selectedRow: row, coordinator: self)
         detailActivityPhotoListVC.modalPresentationStyle = .overFullScreen
         lastVC.present(detailActivityPhotoListVC, animated: true)
+    }
+    
+    func popViewController() {
+        navigationController.popViewController(animated: true)
     }
     
     func dismiss() {

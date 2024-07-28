@@ -36,16 +36,15 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     }
     
     func makeStudyActivityRepository() -> StudyActivityRepository {
-        DefaultStudyActivityRepository()
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
     }
     
     func makeDetailsudyActivityRepository() -> DetailStudyActivityRepository {
-        // MARK: - TODO netwokring 후 Default로 교체
-        MockDetailStudyActivityRepository()
+        DefaultDetailStudyActivityRepository(provider: dependencies.provider.makeProvider())
     }
     
     func makeDetailActivityMemberRepository() -> DetailActivityMemberListRepository {
-        MockDetailActivityMemberListRepository()
+        DefaultDetailActivityMemberListRepository(provider: dependencies.provider.makeProvider())
     }
     
     // MARK: - UseCase
@@ -141,14 +140,14 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     
     // MARK: - DetailStudyActivity
     
-    func makeDetailStudyActivityViewModel() -> DetailStudyActivityViewModel {
-        DetailStudyActivityViewModel(useCase: makeDetailStudyActivityUseCase())
+    func makeDetailStudyActivityViewModel(studyID: Int, activityID: Int) -> DetailStudyActivityViewModel {
+        DetailStudyActivityViewModel(useCase: makeDetailStudyActivityUseCase(), studyID: studyID, activityID: activityID)
     }
     
-    func makeDetailStudyActivityListVC(coordinator: Navigation) -> DetailStudyActivityViewController {
+    func makeDetailStudyActivityVC(coordinator: Navigation, studyID: Int, activityID: Int) -> DetailStudyActivityViewController {
         DetailStudyActivityViewController(
             coordinator: coordinator,
-            viewModel: makeDetailStudyActivityViewModel()
+            viewModel: makeDetailStudyActivityViewModel(studyID: studyID, activityID: activityID)
         )
     }
     
@@ -171,25 +170,29 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     
     // MARK: - DetailActivityMemberList
     
-    func makeDetailActivityMemberListViewModel() -> DetailActivityMemberListViewModel {
-        DetailActivityMemberListViewModel(useCase: makeDetailActivityMemberListUseCase())
+    func makeDetailActivityMemberListViewModel(studyID: Int, activityID: Int) -> DetailActivityMemberListViewModel {
+        DetailActivityMemberListViewModel(
+            useCase: makeDetailActivityMemberListUseCase(),
+            studyID: studyID,
+            activityID: activityID
+        )
     }
     
-    func makeDetailActivityMemberListVC(coordinator: Navigation) -> DetailActivityMemberListViewController {
+    func makeDetailActivityMemberListVC(coordinator: Navigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController {
         DetailActivityMemberListViewController(
             coordinator: coordinator,
-            viewModel: makeDetailActivityMemberListViewModel()
+            viewModel: makeDetailActivityMemberListViewModel(studyID: studyID, activityID: activityID)
         )
     }
     
     // MARK: - DIContainer
     func makeCreateActivityDIContainer() -> CreateActivityDIContainer {
-        let dependencies = CreateActivityDIContainer.Dependencies(provider: nil)
+        let dependencies = CreateActivityDIContainer.Dependencies(provider: dependencies.provider)
         return CreateActivityDIContainer(dependencies: dependencies)
     }
     
     // MARK: - Flow Coordinators
-    func makeCreateActivityCoordinator(navigationController: UINavigationController) -> CreateActivityCoordinator {
+    func makeCreateActivityCoordinator(navigationController: UINavigationController, activity: ActivityCategory) -> CreateActivityCoordinator {
         return CreateActivityCoordinator(
             navigationController: navigationController,
             dependencies: makeCreateActivityDIContainer()

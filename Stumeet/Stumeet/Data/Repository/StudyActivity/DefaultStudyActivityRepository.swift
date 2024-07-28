@@ -6,31 +6,68 @@
 //
 
 import Combine
-import Foundation
+import CombineMoya
+import Moya
 
 final class DefaultStudyActivityRepository: StudyActivityRepository {
     
-    private var items: [StudyActivitySectionItem] = []
-    private var activityItemsSubject = CurrentValueSubject<[StudyActivitySectionItem], Never>([])
+    private let provider: MoyaProvider<ActivityService>
     
-    func fetchActivityItems(type: StudyActivitySectionItem) -> AnyPublisher<[StudyActivitySectionItem], Never> {
+    init(provider: MoyaProvider<ActivityService>) {
+        self.provider = provider
+    }
+    
+    func fetchAllActivityItems(size: Int, page: Int) -> AnyPublisher<[Activity], Never> {
+        // TODO: - 에러 처리, id 변경
         
-        switch type {
+        let requestDTO = AllStudyActivityRequestDTO(
+            size: size,
+            page: page,
+            isNotice: nil,
+            studyId: 1,
+            category: nil
+        )
+        
+        return provider.requestPublisher(.fetchAllActivities(requestDTO))
+            .map(ResponseWithDataDTO<AllStudyActivityResponseDTO>.self)
+            .compactMap { $0.data?.items.map { $0.toDomain() } }
+            .replaceError(with: [])
+            .eraseToAnyPublisher()
+    }
             
-        case .all:
-            items = Activity.allData.map { StudyActivitySectionItem.all($0) }
-            activityItemsSubject.send(items)
-            return activityItemsSubject.eraseToAnyPublisher()
-            
-        case .group:
-            items = Activity.groupData.map { StudyActivitySectionItem.group($0) }
-            activityItemsSubject.send(items)
-            return activityItemsSubject.eraseToAnyPublisher()
-            
-        case .task:
-            items = Activity.taskData.map { StudyActivitySectionItem.task($0) }
-            activityItemsSubject.send(items)
-            return activityItemsSubject.eraseToAnyPublisher()
-        }
+    func fetchGroupActivityItems(size: Int, page: Int) -> AnyPublisher<[Activity], Never> {
+        
+        let requestDTO = BriefStudyActivityRequestDTO(
+            size: size,
+            page: page,
+            isNotice: nil,
+            studyId: 1,
+            category: ActivityCategory.meeting.rawValue,
+            fromDate: nil,
+            toDate: nil
+        )
+        
+        return provider.requestPublisher(.fetchBriefActivities(requestDTO))
+            .map(ResponseWithDataDTO<BreifStudyActivityResponseDTO>.self)
+            .compactMap { $0.data?.items.map { $0.toDomain() } }
+            .replaceError(with: [])
+            .eraseToAnyPublisher()
+    }
+    func fetchTaskActivityItems(size: Int, page: Int) -> AnyPublisher<[Activity], Never> {
+        let requestDTO = BriefStudyActivityRequestDTO(
+            size: size,
+            page: page,
+            isNotice: nil,
+            studyId: 1,
+            category: ActivityCategory.homework.rawValue,
+            fromDate: nil,
+            toDate: nil
+        )
+        
+        return provider.requestPublisher(.fetchBriefActivities(requestDTO))
+            .map(ResponseWithDataDTO<BreifStudyActivityResponseDTO>.self)
+            .compactMap { $0.data?.items.map { $0.toDomain() } }
+            .replaceError(with: [])
+            .eraseToAnyPublisher()
     }
 }

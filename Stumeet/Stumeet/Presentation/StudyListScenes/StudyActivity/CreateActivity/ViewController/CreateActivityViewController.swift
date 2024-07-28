@@ -170,7 +170,7 @@ final class CreateActivityViewController: BaseViewController {
     
     private let selecetedPhotoSubject = PassthroughSubject<[UIImage], Never>()
     private let cellXButtonTapSubject = PassthroughSubject<UIImage, Never>()
-    private let didChangedLinkSubject = CurrentValueSubject<String, Never>("")
+    private let didChangedLinkSubject = CurrentValueSubject<String?, Never>(nil)
     
     // MARK: - Init
     
@@ -372,6 +372,7 @@ final class CreateActivityViewController: BaseViewController {
             didBeginEditing: contentTextView.didBeginEditingPublisher,
             didTapCategoryButton: categoryButton.tapPublisher,
             didTapCategoryItem: categoryButtonTaps.eraseToAnyPublisher(),
+            didChangedNoticeSwitch: noticeSwitch.isOnPublisher,
             didTapXButton: xButton.tapPublisher,
             didTapNextButton: nextButton.tapPublisher,
             didTapImageButton: imageButton.tapPublisher,
@@ -382,7 +383,6 @@ final class CreateActivityViewController: BaseViewController {
             didTapPopUpStayButton: exitPopUpView.leftButtonTapSubject.eraseToAnyPublisher(),
             didTapPopUpExitButton: exitPopUpView.rightButtonTapSubject.eraseToAnyPublisher()
         )
-        
         
         // MARK: - Output
         
@@ -399,6 +399,7 @@ final class CreateActivityViewController: BaseViewController {
         
         // 다음 버튼 enable 설정
         output.isEnableNextButton
+            .zip(output.createActivityData)
             .receive(on: RunLoop.main)
             .sink(receiveValue: checkNavigateToSettingVC)
             .store(in: &cancellables)
@@ -544,9 +545,14 @@ extension CreateActivityViewController {
         categoryStackViewContainer.isHidden = isHidden
     }
     
-    private func checkNavigateToSettingVC(isEnable: Bool) {
+    private func checkNavigateToSettingVC(isEnable: Bool, activity: CreateActivity) {
         if isEnable {
-            coordinator.goToStudyActivitySettingVC()
+            switch activity.category {
+            case .freedom:
+                coordinator.dismiss()
+            case .homework, .meeting:
+                coordinator.goToStudyActivitySettingVC(activity: activity)
+            }
         } else {
             showSnackBar(text: "! 활동 작성이 완료되지 않았어요.")
         }
