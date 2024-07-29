@@ -9,6 +9,7 @@ import Foundation
 
 struct AllStudyActivityResponseDTO: Decodable {
     let items: [ActivityItemResponseDTO]
+    let pageInfo: PageInfoResponseDTO
 }
 
 extension AllStudyActivityResponseDTO {
@@ -19,6 +20,13 @@ extension AllStudyActivityResponseDTO {
         let location: String?
         let author: AuthorResponseDTO
         let createdAt: String
+    }
+}
+
+extension AllStudyActivityResponseDTO {
+    func toDomain() -> ActivityPage {
+        return .init(pageInfo: pageInfo.toDomain(),
+                     activitys: items.map { $0.toDomain() })
     }
 }
 

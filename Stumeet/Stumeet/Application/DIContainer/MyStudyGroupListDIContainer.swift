@@ -54,7 +54,10 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     }
     
     func makeMyStudyGroupListUseCase() -> StudyGroupMainUseCase {
-        DefaultStudyGroupMainUseCase(repository: makeStudyGroupMainRepository())
+        DefaultStudyGroupMainUseCase(
+            studyMainRepository: makeStudyGroupMainRepository(),
+            studyActivityRepository: makeStudyActivityRepository()
+        )
     }
     
     func makeStudyActivityUseCase() -> StudyActivityUseCase {

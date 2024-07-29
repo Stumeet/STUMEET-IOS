@@ -10,12 +10,6 @@ import SnapKit
 import Combine
 import Kingfisher
 
-// TODO: API 연동 시 수정
-enum StudyMainViewCellStyle {
-    case activity
-    case detailInfo
-}
-
 class StudyMainViewController: BaseViewController {
     
     // MARK: - UIComponents
@@ -43,7 +37,6 @@ class StudyMainViewController: BaseViewController {
     
     private let headerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
         return view
     }()
     
@@ -99,14 +92,16 @@ class StudyMainViewController: BaseViewController {
     private weak var coordinator: MyStudyGroupListNavigation!
     private let viewModel: StudyMainViewModel
     private let loadStudyGroupDetailData = PassthroughSubject<Void, Never>()
+    private let tableReachedBottomSubject = PassthroughSubject<Void, Never>()
     
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var tableHeaderHeight: CGFloat = (screenWidth * 0.542).rounded() // 디바이스 넓이 * 크기 비율
     private var constPopupBottom: Constraint!
     // TODO: API 연동 시 수정
-    private var activityList: [StudyMainViewCellStyle] = [.activity, .activity, .activity, .activity, .activity, .activity]
+    private var activityList: [StudyMainViewActivityItem] = []
     private var detailInfoData: [StudyMainViewDetailInfoItem] = []
     private var isActivity = true
+    private var isNextPageLoading = false
     
 
     // MARK: - Init
@@ -191,9 +186,10 @@ class StudyMainViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMainViewModel.Input(
-            loadStudyGroupDetailData: loadStudyGroupDetailData.eraseToAnyPublisher()
+            loadStudyGroupDetailData: loadStudyGroupDetailData.eraseToAnyPublisher(),
+            reachedCollectionViewBottom: tableReachedBottomSubject.eraseToAnyPublisher()
         )
-        
+                
         // MARK: - Output
         let output = viewModel.transform(input: input)
         
@@ -206,7 +202,11 @@ class StudyMainViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateInfoView)
             .store(in: &cancellables)
-
+        
+        output.studyActivityDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateActivityView)
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -229,6 +229,13 @@ class StudyMainViewController: BaseViewController {
     private func updateInfoView(data: StudyMainViewDetailInfoItem?) {
         guard let data = data else { return }
         detailInfoData = [data]
+    }
+    
+    private func updateActivityView(data: [StudyMainViewActivityItem]?) {
+        guard let data = data else { return }
+        activityList = data
+        tableView.reloadData()
+        isNextPageLoading = false
     }
     
     private func updateHeaderView() {
@@ -337,25 +344,13 @@ extension StudyMainViewController:
     // TODO: API 연동 시 수정
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
         if isActivity {
-            guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath)
-//                  let activityData = activityList[safe: indexPath.row]
+            guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath),
+                  let activityData = activityList[safe: indexPath.row]
             else { return UITableViewCell() }
-            
-            switch indexPath.row {
-            case 0:
-                cell.configureCell(style: .notice)
-                
-            case 1:
-                cell.configureCell(style: .activityFirstCell)
-            default:
-                cell.configureCell(style: .normal)
-            }
-            
+            cell.configureCell(data: activityData)
             return cell
         } else {
-            
             guard let cell = tableView.dequeue(StudyMainDetailInfoTableViewCell.self, for: indexPath),
                   let activityData = detailInfoData[safe: indexPath.row]
             else { return UITableViewCell() }
@@ -373,6 +368,14 @@ extension StudyMainViewController:
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateHeaderView()
         
+        let yDelta = tableView.contentOffset.y + tableView.contentInset.top
+        let threshold = max(0, (tableView.contentSize.height - tableHeaderHeight - tableView.contentInset.bottom) * 0.3)
+        
+        if !isNextPageLoading && yDelta > threshold {
+            isNextPageLoading = true
+            tableReachedBottomSubject.send()
+        }
+        
         let offsetY = scrollView.contentOffset.y + tableHeaderHeight
         let maxOffsetY: CGFloat = 100
 
@@ -387,17 +390,6 @@ extension StudyMainViewController:
         
         menuOpenButton.tintColor = barButtonColor
         navigationController?.updateBarColor(backgroundColor: barColor, backButtonColor: barButtonColor)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.alpha = 0
-
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0.05 * Double(indexPath.row),
-            animations: {
-                cell.alpha = 1
-        })
     }
     
     // MARK: - StudyMainPraiseReminderPopupViewDelegate

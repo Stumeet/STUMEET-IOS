@@ -20,3 +20,8 @@ struct Activity: Hashable {
     let day: String?
     let status: ActivityState?
 }
+
+struct ActivityPage: Equatable {
+    let pageInfo: PageInfo
+    let activitys: [Activity]
+}
