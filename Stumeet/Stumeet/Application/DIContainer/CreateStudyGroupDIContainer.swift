@@ -66,5 +66,11 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         )
     }
     
+    // MARK: - SetStudyGroupPeriod
+    
+    func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation) -> SetStudyGroupPeriodViewController  {
+        SetStudyGroupPeriodViewController()
+    }
+    
     
 }

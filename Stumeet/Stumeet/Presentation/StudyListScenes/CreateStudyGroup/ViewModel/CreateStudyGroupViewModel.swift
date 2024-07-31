@@ -20,6 +20,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didTapTagXButton: AnyPublisher<String, Never>
         let didTapRegionButton: AnyPublisher<Void, Never>
         let didSelectedRegion: AnyPublisher<SelectStudyItem, Never>
+        let didTapPeriodStartButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -33,6 +34,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let goToSelectStudyGroupRegionVC: AnyPublisher<CreateStudySelectItemType, Never>
         let selectedRegion: AnyPublisher<SelectStudyItem, Never>
         let startDate: AnyPublisher<String, Never>
+        let goToSetStudyGroupPeriodVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -100,7 +102,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             isEmptyTags: isEmptyTags,
             goToSelectStudyGroupRegionVC: goToSelectStudyGroupRegionVC,
             selectedRegion: input.didSelectedRegion,
-            startDate: startDate
+            startDate: startDate,
+            goToSetStudyGroupPeriodVC: input.didTapPeriodStartButton
         )
     }
 }

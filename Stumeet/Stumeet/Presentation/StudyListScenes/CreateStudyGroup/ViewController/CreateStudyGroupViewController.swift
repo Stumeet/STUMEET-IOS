@@ -450,7 +450,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapAddTagButton: tagAddButton.tapPublisher,
             didTapTagXButton: didTapTagXButtonSubject.eraseToAnyPublisher(),
             didTapRegionButton: regionButton.tapPublisher,
-            didSelectedRegion: regionSubject.eraseToAnyPublisher()
+            didSelectedRegion: regionSubject.eraseToAnyPublisher(),
+            didTapPeriodStartButton: periodStartButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -497,6 +498,11 @@ final class CreateStudyGroupViewController: BaseViewController {
             .map { (self.periodStartButton, $0) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateDateButton)
+            .store(in: &cancellables)
+        
+        output.goToSetStudyGroupPeriodVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSetPeriodCalendarVC)
             .store(in: &cancellables)
     }
 }

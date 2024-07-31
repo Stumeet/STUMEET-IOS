@@ -10,12 +10,14 @@ import UIKit
 protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
     func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController
+    func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation) -> SetStudyGroupPeriodViewController
 }
 
 protocol CreateStudyGroupNavigation: AnyObject {
     func presentToCreateStudyGroupVC()
     func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType)
     func popToCreateStudyGroupVC()
+    func presentToSetPeriodCalendarVC()
 }
 
 final class CreateStudyGroupCoordinator: Coordinator {
@@ -54,5 +56,12 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
     
     func popToCreateStudyGroupVC() {
         navigationController.popViewController(animated: true)
+    }
+    
+    func presentToSetPeriodCalendarVC() {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let calendarVC = dependencies.makeSetStudyGroupPeriodVC(coordinator: self)
+        calendarVC.modalPresentationStyle = .overFullScreen
+        navigationController.present(calendarVC, animated: true)
     }
 }
