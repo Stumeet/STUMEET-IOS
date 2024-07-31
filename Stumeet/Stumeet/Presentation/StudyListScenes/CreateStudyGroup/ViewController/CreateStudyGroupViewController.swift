@@ -580,7 +580,7 @@ extension CreateStudyGroupViewController {
         titleAttributes.foregroundColor = StumeetColor.primary700.color
         config.attributedTitle = titleAttributes
         
-        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 62)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -44, bottom: 0, trailing: 0)
         
         regionButton.configuration = config
         regionButton.layer.borderColor = StumeetColor.primary700.color.cgColor
