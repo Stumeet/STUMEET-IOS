@@ -12,13 +12,21 @@ class TagCell: BaseCollectionViewCell {
     
     // MARK: - UIComponents
     
-    private let tagLabel: UILabel = {
+    let tagLabel: UILabel = {
         let label = UILabel()
         label.font = StumeetFont.bodyMedium14.font
         label.textAlignment = .center
         label.textColor = StumeetColor.gray600.color
         
         return label
+    }()
+    
+    private let xButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(resource: .xMark).resized(to: .init(width: 16, height: 16)).withTintColor(StumeetColor.primary700.color), for: .normal)
+        button.isHidden = true
+        
+        return button
     }()
     
     // MARK: - Init
@@ -38,7 +46,10 @@ class TagCell: BaseCollectionViewCell {
     }
     
     override func setupAddView() {
-        addSubview(tagLabel)
+        [
+            tagLabel,
+            xButton
+        ]   .forEach(addSubview)
     }
     
     override func layoutSubviews() {
@@ -48,8 +59,8 @@ class TagCell: BaseCollectionViewCell {
     
     override func setupConstaints() {
         tagLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.centerY.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(16)
         }
     }
     
@@ -60,7 +71,20 @@ class TagCell: BaseCollectionViewCell {
     }
     
     func configureCreateStudyTagCell(tag: String) {
+        xButton.isHidden = false
         tagLabel.text = tag
         tagLabel.textColor = StumeetColor.primary700.color
+        
+        tagLabel.snp.remakeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(16)
+        }
+        
+        xButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(tagLabel.snp.trailing).offset(4)
+            make.trailing.equalToSuperview().inset(16)
+        }
+        
     }
 }
