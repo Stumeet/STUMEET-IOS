@@ -9,12 +9,12 @@ import UIKit
 
 protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
-    func makeSelectStudyGroupFieldVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyGroupFieldViewController
+    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController
 }
 
 protocol CreateStudyGroupNavigation: AnyObject {
     func presentToCreateStudyGroupVC()
-    func navigateToSelectStudyGroupFieldVC(delegate: SelectStudyGroupFieldDelegate)
+    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType)
     func popToCreateStudyGroupVC()
 }
 
@@ -46,8 +46,8 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         parentCoordinator?.navigationController.present(navigationController, animated: true)
     }
     
-    func navigateToSelectStudyGroupFieldVC(delegate: SelectStudyGroupFieldDelegate) {
-        let fieldVC = dependencies.makeSelectStudyGroupFieldVC(coordinator: self)
+    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType) {
+        let fieldVC = dependencies.makeSelectStudyGroupItemVC(coordinator: self, type: type)
         fieldVC.delegate = delegate
         navigationController.pushViewController(fieldVC, animated: true)
     }

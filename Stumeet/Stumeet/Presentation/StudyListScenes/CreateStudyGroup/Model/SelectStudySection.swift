@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum StudyFieldSection {
+enum SelectStudySection {
     case main
 }
 
-enum StudyFieldSectionItem: Hashable {
-    case fieldCell(StudyField)
+enum SelectStudySectionItem: Hashable {
+    case itemCell(SelectStudyItem)
 }

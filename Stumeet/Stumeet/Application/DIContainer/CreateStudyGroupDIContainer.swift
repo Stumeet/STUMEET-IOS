@@ -23,14 +23,14 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - Repository
     
-    func makeSelectStudyGroupFieldRepository() -> SelectStudyGroupFieldRepository {
-        DefaultSelecteStudyGroupFieldRepository()
+    func makeSelectStudyGroupItemRepository() -> SelectStudyGroupItemRepository {
+        DefaultSelectStudyGroupItemRepository()
     }
     
     // MARK: - UseCase
     
-    func makeSelectStudyGroupFieldUseCase() -> SelectStudyGroupFieldUseCase {
-        DefaultSelectStudyGroupFieldUseCase(repository: makeSelectStudyGroupFieldRepository())
+    func makeSelectStudyGroupItemUseCase() -> SelectStudyGroupItemUseCase {
+        DefaultSelectStudyItemUseCase(repository: makeSelectStudyGroupItemRepository())
     }
     
     func makeCreateStudyGroupUseCase() -> CreateStudyGroupUseCase {
@@ -50,16 +50,19 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         )
     }
     
-    // MARK: - SelectStudyGroupField
+    // MARK: - SelectStudyGroupItem
     
-    func makeSelectStudyGroupFieldVM() -> SelectStudyGroupFieldViewModel {
-        SelectStudyGroupFieldViewModel(useCase: makeSelectStudyGroupFieldUseCase())
+    func makeSelectStudyGroupItemVM(type: CreateStudySelectItemType) -> SelectStudyItemViewModel {
+        SelectStudyItemViewModel(
+            useCase: makeSelectStudyGroupItemUseCase(),
+            type: type
+        )
     }
     
-    func makeSelectStudyGroupFieldVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyGroupFieldViewController {
-        SelectStudyGroupFieldViewController(
+    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController {
+        SelectStudyGroupItemViewController(
             coordinator: coordinator,
-            viewModel: makeSelectStudyGroupFieldVM()
+            viewModel: makeSelectStudyGroupItemVM(type: type)
         )
     }
     

@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 
-protocol SelectStudyGroupFieldRepository {
-    func getFieldItems() -> AnyPublisher<[StudyField], Never>
+protocol SelectStudyGroupItemRepository {
+    func getFieldItems() -> AnyPublisher<[SelectStudyItem], Never>
+    func getRegionItems() -> AnyPublisher<[SelectStudyItem], Never>
 }

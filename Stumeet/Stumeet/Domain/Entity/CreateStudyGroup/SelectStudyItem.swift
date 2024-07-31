@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StudyField: Hashable {
+struct SelectStudyItem: Hashable {
     let name: String
     var isSelected: Bool
 }
