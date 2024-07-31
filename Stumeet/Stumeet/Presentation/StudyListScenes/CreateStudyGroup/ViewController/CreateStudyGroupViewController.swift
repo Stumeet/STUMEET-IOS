@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 7/24/24.
 //
 
+import Combine
 import UIKit
 
 final class CreateStudyGroupViewController: BaseViewController {
@@ -145,8 +146,24 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private let coordinator: CreateStudyGroupNavigation
+    private let viewModel: CreateStudyGroupViewModel
+    
+    // MARK: - Subject
+    private let fieldSubject = PassthroughSubject<StudyField, Never>()
     
     // MARK: - Init
+    
+    init(coordinator: CreateStudyGroupNavigation, viewModel: CreateStudyGroupViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycle
     
@@ -400,6 +417,27 @@ final class CreateStudyGroupViewController: BaseViewController {
 
     
     // MARK: - Bind
+    
+    override func bind() {
+        let input = CreateStudyGroupViewModel.Input(
+            didTapFieldButton: fieldButton.tapPublisher,
+            didSelectedField: fieldSubject.eraseToAnyPublisher()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.goToSelectStudyGroupFieldVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.navigateToSelectStudyGroupFieldVC)
+            .store(in: &cancellables)
+        
+        output.selectedField
+            .receive(on: RunLoop.main)
+            .map { ($0.name, StumeetColor.primary700) }
+            .sink(receiveValue: fieldButton.updateConfiguration)
+            .store(in: &cancellables)
+    }
 }
 
 // MARK: - Configure Component
@@ -443,5 +481,13 @@ extension CreateStudyGroupViewController {
         textView.layer.cornerRadius = 16
             
         return textView
+    }
+}
+
+// MARK: - Delegate
+
+extension CreateStudyGroupViewController: SelectStudyGroupFieldDelegate {
+    func didTapCompleteButton(field: StudyField) {
+        fieldSubject.send(field)
     }
 }
