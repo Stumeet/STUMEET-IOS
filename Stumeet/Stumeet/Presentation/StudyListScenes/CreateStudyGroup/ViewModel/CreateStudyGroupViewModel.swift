@@ -16,6 +16,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didTapFieldButton: AnyPublisher<Void, Never>
         let didSelectedField: AnyPublisher<StudyField, Never>
         let didChangedTagTextField: AnyPublisher<String?, Never>
+        let didTapAddTagButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -24,6 +25,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let goToSelectStudyGroupFieldVC: AnyPublisher<Void, Never>
         let selectedField: AnyPublisher<StudyField, Never>
         let isEnableTagAddButton: AnyPublisher<Bool, Never>
+        let addedTags: AnyPublisher<[String], Never>
+        let isEmptyTags: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -42,6 +45,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         
         let tagTextSubject = CurrentValueSubject<String, Never>("")
+        let addedTagsSubject = CurrentValueSubject<[String], Never>([])
         
         input.didChangedTagTextField
             .compactMap { $0 }
@@ -52,11 +56,22 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .flatMap(useCase.getIsEnableTagAddButton)
             .eraseToAnyPublisher()
         
+        input.didTapAddTagButton
+            .map { _ in (addedTagsSubject.value, tagTextSubject.value) }
+            .flatMap(useCase.addTag)
+            .sink(receiveValue: addedTagsSubject.send)
+            .store(in: &cancellables)
+        
+        let isEmptyTags = addedTagsSubject
+            .map { $0.isEmpty }.eraseToAnyPublisher()
+        
         
         return Output(
             goToSelectStudyGroupFieldVC: input.didTapFieldButton,
             selectedField: input.didSelectedField,
-            isEnableTagAddButton: isEnableTagAddButton
+            isEnableTagAddButton: isEnableTagAddButton,
+            addedTags: addedTagsSubject.removeDuplicates().eraseToAnyPublisher(),
+            isEmptyTags: isEmptyTags
         )
     }
 }

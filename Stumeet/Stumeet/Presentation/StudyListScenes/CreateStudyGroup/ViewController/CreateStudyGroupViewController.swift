@@ -10,6 +10,9 @@ import UIKit
 
 final class CreateStudyGroupViewController: BaseViewController {
 
+    typealias Section = CreateStudyTagSection
+    typealias SectionItem = CreateStudyTagSectionItem
+    
     // MARK: - UIComponents
     
     private let xButton: UIButton = {
@@ -115,6 +118,13 @@ final class CreateStudyGroupViewController: BaseViewController {
         
         return button
     }()
+    private lazy var tagCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.registerCell(TagCell.self)
+        collectionView.isScrollEnabled = false
+        
+        return collectionView
+    }()
     
     private let explainContainerView = UIView()
     private let explainLabel = UILabel().setLabelProperty(text: "스터디 소개", font: StumeetFont.bodysemibold.font, color: .gray800)
@@ -148,6 +158,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let coordinator: CreateStudyGroupNavigation
     private let viewModel: CreateStudyGroupViewModel
+    private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     
     // MARK: - Subject
     private let fieldSubject = PassthroughSubject<StudyField, Never>()
@@ -169,6 +180,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     // MARK: - SetUp
@@ -199,7 +211,8 @@ final class CreateStudyGroupViewController: BaseViewController {
         [
             tagLabel,
             tagTextField,
-            tagAddButton
+            tagAddButton,
+            tagCollectionView
         ]   .forEach(tagContainerView.addSubview)
         
         [
@@ -323,7 +336,13 @@ final class CreateStudyGroupViewController: BaseViewController {
             make.leading.equalTo(tagTextField.snp.trailing).offset(8)
             make.height.equalTo(49)
             make.width.equalTo(92)
+        }
+        
+        tagCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(tagTextField.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
+            make.height.equalTo(0)
         }
 
         explainLabel.snp.makeConstraints { $0.top.leading.equalToSuperview() }
@@ -419,10 +438,13 @@ final class CreateStudyGroupViewController: BaseViewController {
     // MARK: - Bind
     
     override func bind() {
+        configureDatasource()
+        
         let input = CreateStudyGroupViewModel.Input(
             didTapFieldButton: fieldButton.tapPublisher,
             didSelectedField: fieldSubject.eraseToAnyPublisher(),
-            didChangedTagTextField: tagTextField.textPublisher
+            didChangedTagTextField: tagTextField.textPublisher,
+            didTapAddTagButton: tagAddButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -442,6 +464,16 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.isEnableTagAddButton
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateTagAddButton)
+            .store(in: &cancellables)
+        
+        output.addedTags
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.isEmptyTags
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateTagCollectionViewConstraints)
             .store(in: &cancellables)
     }
 }
@@ -501,8 +533,57 @@ extension CreateStudyGroupViewController: SelectStudyGroupFieldDelegate {
 // MARK: - UIUpdate
 
 extension CreateStudyGroupViewController {
-    func updateTagAddButton(isEnable: Bool) {
+    private func updateTagAddButton(isEnable: Bool) {
         tagAddButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
         tagAddButton.isEnabled = isEnable
+    }
+    
+    private func updateTagCollectionViewConstraints(isEmpty: Bool) {
+        if isEmpty {
+            tagCollectionView.snp.updateConstraints { $0.height.equalTo(0) }
+        } else {
+            let contentHeight = tagCollectionView.collectionViewLayout.collectionViewContentSize.height
+            tagCollectionView.snp.updateConstraints { make in
+                make.height.equalTo(max(contentHeight, 33))
+            }
+        }
+    }
+}
+
+// MARK: - Datasource
+
+extension CreateStudyGroupViewController {
+    private func createLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(33))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(33))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(8)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 8
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
+    
+    private func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource<Section, SectionItem>(collectionView: tagCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .tagCell(let tag):
+                guard let cell = collectionView.dequeue(TagCell.self, for: indexPath) else { return UICollectionViewCell() }
+                cell.configureCreateStudyTagCell(tag: tag)
+                return cell
+            }
+        })
+    }
+    
+    private func updateSnapshot(tags: [String]) {
+        guard let datasource = datasource else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
+        snapshot.appendSections([.main])
+        tags.forEach { snapshot.appendItems([.tagCell($0)], toSection: .main) }
+        datasource.apply(snapshot, animatingDifferences: false)
     }
 }
