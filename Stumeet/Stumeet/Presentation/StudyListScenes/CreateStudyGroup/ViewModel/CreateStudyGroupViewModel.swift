@@ -17,6 +17,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didSelectedField: AnyPublisher<StudyField, Never>
         let didChangedTagTextField: AnyPublisher<String?, Never>
         let didTapAddTagButton: AnyPublisher<Void, Never>
+        let didTapTagXButton: AnyPublisher<String, Never>
     }
     
     // MARK: - Output
@@ -25,7 +26,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let goToSelectStudyGroupFieldVC: AnyPublisher<Void, Never>
         let selectedField: AnyPublisher<StudyField, Never>
         let isEnableTagAddButton: AnyPublisher<Bool, Never>
-        let addedTags: AnyPublisher<[String], Never>
+        let addedTags: AnyPublisher<[CreateStudyTagSectionItem], Never>
         let isEmptyTags: AnyPublisher<Bool, Never>
     }
     
@@ -65,12 +66,23 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let isEmptyTags = addedTagsSubject
             .map { $0.isEmpty }.eraseToAnyPublisher()
         
+        input.didTapTagXButton
+            .map { (addedTagsSubject.value, $0) }
+            .flatMap(useCase.removeTag)
+            .sink(receiveValue: addedTagsSubject.send)
+            .store(in: &cancellables)
+        
+        let addedTags = addedTagsSubject
+            .removeDuplicates()
+            .map { $0.map { CreateStudyTagSectionItem.tagCell($0) } }
+            .eraseToAnyPublisher()
+        
         
         return Output(
             goToSelectStudyGroupFieldVC: input.didTapFieldButton,
             selectedField: input.didSelectedField,
             isEnableTagAddButton: isEnableTagAddButton,
-            addedTags: addedTagsSubject.removeDuplicates().eraseToAnyPublisher(),
+            addedTags: addedTags,
             isEmptyTags: isEmptyTags
         )
     }

@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 2/12/24.
 //
 
+import Combine
 import UIKit
 
 class TagCell: BaseCollectionViewCell {
@@ -21,13 +22,17 @@ class TagCell: BaseCollectionViewCell {
         return label
     }()
     
-    private let xButton: UIButton = {
+    let xButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(resource: .xMark).resized(to: .init(width: 16, height: 16)).withTintColor(StumeetColor.primary700.color), for: .normal)
         button.isHidden = true
         
         return button
     }()
+    
+    // MARK: - Properties
+    
+    var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
@@ -37,6 +42,11 @@ class TagCell: BaseCollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellables = Set<AnyCancellable>()
     }
     
     // MARK: - Setup

@@ -161,7 +161,9 @@ final class CreateStudyGroupViewController: BaseViewController {
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     
     // MARK: - Subject
+    
     private let fieldSubject = PassthroughSubject<StudyField, Never>()
+    private let didTapTagXButtonSubject = PassthroughSubject<String, Never>()
     
     // MARK: - Init
     
@@ -444,7 +446,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapFieldButton: fieldButton.tapPublisher,
             didSelectedField: fieldSubject.eraseToAnyPublisher(),
             didChangedTagTextField: tagTextField.textPublisher,
-            didTapAddTagButton: tagAddButton.tapPublisher
+            didTapAddTagButton: tagAddButton.tapPublisher,
+            didTapTagXButton: didTapTagXButtonSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -574,16 +577,22 @@ extension CreateStudyGroupViewController {
             case .tagCell(let tag):
                 guard let cell = collectionView.dequeue(TagCell.self, for: indexPath) else { return UICollectionViewCell() }
                 cell.configureCreateStudyTagCell(tag: tag)
+                
+                cell.xButton.tapPublisher
+                    .map { tag }
+                    .sink(receiveValue: self.didTapTagXButtonSubject.send)
+                    .store(in: &cell.cancellables)
+                
                 return cell
             }
         })
     }
     
-    private func updateSnapshot(tags: [String]) {
+    private func updateSnapshot(tags: [SectionItem]) {
         guard let datasource = datasource else { return }
         var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
         snapshot.appendSections([.main])
-        tags.forEach { snapshot.appendItems([.tagCell($0)], toSection: .main) }
+        snapshot.appendItems(tags)
         datasource.apply(snapshot, animatingDifferences: false)
     }
 }

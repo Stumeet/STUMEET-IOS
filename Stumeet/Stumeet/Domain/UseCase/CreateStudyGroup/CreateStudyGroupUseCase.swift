@@ -11,6 +11,7 @@ import Foundation
 protocol CreateStudyGroupUseCase {
     func getIsEnableTagAddButton(text: String) -> AnyPublisher<Bool, Never>
     func addTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
+    func removeTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
 }
 
 final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
@@ -21,9 +22,15 @@ final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
     
     func addTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never> {
         var updatedTags = tags
-        if !updatedTags.contains(where: { $0 == newTag }) {
+        if !updatedTags.contains(where: { $0 == newTag }) && updatedTags.count < 5 {
             updatedTags.append(newTag)
         }
         return Just(updatedTags).eraseToAnyPublisher()
+    }
+    
+    func removeTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never> {
+        var removedTags = tags
+        removedTags.removeAll(where: { $0 == newTag })
+        return Just(removedTags).eraseToAnyPublisher()
     }
 }
