@@ -109,7 +109,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         let button = UIButton()
         button.setTitle("추가", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = StumeetColor.primary700.color
+        button.backgroundColor = StumeetColor.gray200.color
         button.titleLabel?.font = StumeetFont.bodyMedium14.font
         button.layer.cornerRadius = 16
         
@@ -421,7 +421,8 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func bind() {
         let input = CreateStudyGroupViewModel.Input(
             didTapFieldButton: fieldButton.tapPublisher,
-            didSelectedField: fieldSubject.eraseToAnyPublisher()
+            didSelectedField: fieldSubject.eraseToAnyPublisher(),
+            didChangedTagTextField: tagTextField.textPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -436,6 +437,11 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .map { ($0.name, StumeetColor.primary700) }
             .sink(receiveValue: fieldButton.updateConfiguration)
+            .store(in: &cancellables)
+        
+        output.isEnableTagAddButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateTagAddButton)
             .store(in: &cancellables)
     }
 }
@@ -489,5 +495,14 @@ extension CreateStudyGroupViewController {
 extension CreateStudyGroupViewController: SelectStudyGroupFieldDelegate {
     func didTapCompleteButton(field: StudyField) {
         fieldSubject.send(field)
+    }
+}
+
+// MARK: - UIUpdate
+
+extension CreateStudyGroupViewController {
+    func updateTagAddButton(isEnable: Bool) {
+        tagAddButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
+        tagAddButton.isEnabled = isEnable
     }
 }
