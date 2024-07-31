@@ -32,6 +32,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let isEmptyTags: AnyPublisher<Bool, Never>
         let goToSelectStudyGroupRegionVC: AnyPublisher<CreateStudySelectItemType, Never>
         let selectedRegion: AnyPublisher<SelectStudyItem, Never>
+        let startDate: AnyPublisher<String, Never>
     }
     
     // MARK: - Properties
@@ -89,6 +90,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .map { CreateStudySelectItemType.region }
             .eraseToAnyPublisher()
         
+        let startDate = useCase.getCurrentDate()
+        
         return Output(
             goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
@@ -96,7 +99,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             addedTags: addedTags,
             isEmptyTags: isEmptyTags,
             goToSelectStudyGroupRegionVC: goToSelectStudyGroupRegionVC,
-            selectedRegion: input.didSelectedRegion
+            selectedRegion: input.didSelectedRegion,
+            startDate: startDate
         )
     }
 }
