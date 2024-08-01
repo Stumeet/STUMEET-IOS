@@ -27,6 +27,10 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         DefaultSelectStudyGroupItemRepository()
     }
     
+    func makeSetStudyGroupPeriodRepository() -> SetStudyGroupPeriodRepository {
+        DefaultSetStudyGroupPeriodRepository()
+    }
+    
     // MARK: - UseCase
     
     func makeSelectStudyGroupItemUseCase() -> SelectStudyGroupItemUseCase {
@@ -35,6 +39,10 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     func makeCreateStudyGroupUseCase() -> CreateStudyGroupUseCase {
         DefaultCreateStudyGroupUseCase()
+    }
+    
+    func makeSetStudyGroupPeriodUseCase() -> SetStudyGroupPeriodUseCase {
+        DefaultSetStudyGroupPeriodUseCase(repository: makeSetStudyGroupPeriodRepository())
     }
     
     // MARK: - CreateStudyGroupVC
@@ -68,8 +76,17 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - SetStudyGroupPeriod
     
-    func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation) -> SetStudyGroupPeriodViewController  {
-        SetStudyGroupPeriodViewController()
+    func makeSetStudyGroupPeriodVM(startDate: String) -> SetStudyGroupPeriodViewModel {
+        SetStudyGroupPeriodViewModel(
+            useCase: makeSetStudyGroupPeriodUseCase(),
+            startDate: startDate
+        )
+    }
+    func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, startDate: String) -> SetStudyGroupPeriodViewController  {
+        SetStudyGroupPeriodViewController(
+            coordinator: coordinator,
+            viewModel: makeSetStudyGroupPeriodVM(startDate: startDate)
+        )
     }
     
     

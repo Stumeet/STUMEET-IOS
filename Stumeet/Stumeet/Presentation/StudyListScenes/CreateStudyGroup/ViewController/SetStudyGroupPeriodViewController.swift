@@ -9,6 +9,9 @@ import UIKit
 
 class SetStudyGroupPeriodViewController: BaseViewController {
     
+    typealias Section = CalendarSection
+    typealias SectionItem = CalendarSectionItem
+    
     // MARK: - UIComponents
     
     private let backgroundButton: UIButton = {
@@ -47,7 +50,7 @@ class SetStudyGroupPeriodViewController: BaseViewController {
         config.image = UIImage(resource: .calendar)
         var titleAttributes = AttributedString()
         titleAttributes.font = StumeetFont.bodyMedium14.font
-        titleAttributes.foregroundColor = StumeetColor.primary700.color
+        config.baseForegroundColor = StumeetColor.primary700.color
         config.attributedTitle = titleAttributes
         
         button.configuration = config
@@ -87,13 +90,28 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private let coordinator: CreateStudyGroupNavigation
+    private let viewModel: SetStudyGroupPeriodViewModel
+    private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
+    
     // MARK: - Init
+    
+    init(coordinator: CreateStudyGroupNavigation, viewModel: SetStudyGroupPeriodViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureDatasource()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -184,7 +202,72 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     }
     
     override func bind() {
+        let input = SetStudyGroupPeriodViewModel.Input()
         
+        let output = viewModel.transform(input: input)
+        
+        output.calendarSectionItems
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.yearMonthTitle
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: calendarView.setYearMonthButtonTitle)
+            .store(in: &cancellables)
+        
+        output.selectedStartDate
+            .receive(on: RunLoop.main)
+            .assign(to: \.configuration!.attributedTitle, on: startDateButton)
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Datasource 
+
+extension SetStudyGroupPeriodViewController {
+    
+    private func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource(
+            collectionView: calendarView.calendarCollectionView) { collectionView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .weekCell(let week):
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CalendarCell.identifier,
+                    for: indexPath) as? CalendarCell
+                else { return UICollectionViewCell() }
+                
+                cell.configureWeekCell(text: week)
+                return cell
+                
+            case .dayCell(let calendarDate):
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CalendarCell.identifier,
+                    for: indexPath) as? CalendarCell
+                else { return UICollectionViewCell() }
+                
+                cell.configureDayCell(item: calendarDate)
+                
+                return cell
+            }
+        }
+    }
+    
+    private func updateSnapshot(items: [CalendarSectionItem]) {
+        guard let datasource = datasource else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<CalendarSection, CalendarSectionItem>()
+        snapshot.appendSections([.week, .day])
+        
+        items.forEach {
+            switch $0 {
+            case .weekCell(let week):
+                snapshot.appendItems([.weekCell(week)], toSection: .week)
+            case .dayCell(let item):
+                snapshot.appendItems([.dayCell(item)], toSection: .day)
+            }
+        }
+        
+        datasource.apply(snapshot, animatingDifferences: false)
     }
 }
 
