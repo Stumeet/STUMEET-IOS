@@ -12,6 +12,11 @@ protocol SetStudyGroupPeriodUseCase {
     func setCalendarItem(cal: Calendar, components: DateComponents, selectedDate: Date?) -> AnyPublisher<CalendarData, Never>
     func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never>
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never>
+    func setSelectedCalendarCell(
+        indexPath: IndexPath,
+        item: [CalendarDate],
+        components: DateComponents,
+        cal: Calendar) -> AnyPublisher<CalendarData, Never>
 }
 
 final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
@@ -65,10 +70,38 @@ final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
         return Just(makeMonthDateFormmater().string(from: cal.date(from: components)!)).eraseToAnyPublisher()
     }
     
+    
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never> {
         let currentMonth = cal.component(.month, from: Date())
         let selectedMonth = components.month
         return Just(selectedMonth != currentMonth).eraseToAnyPublisher()
+    }
+    
+    func setSelectedCalendarCell(
+        indexPath: IndexPath,
+        item: [CalendarDate],
+        components: DateComponents,
+        cal: Calendar) -> AnyPublisher<CalendarData, Never> {
+        
+        let dateIndex = indexPath.item
+        var components = components
+        components.day = Int(item[dateIndex].date)!
+        var selectedDate: Date?
+        
+        var updatedItems = item
+        var selectedItem = updatedItems[dateIndex]
+        
+        selectedItem.isSelected.toggle()
+        updatedItems[dateIndex] = selectedItem
+        
+        if selectedItem.isSelected {
+            selectedDate = cal.date(from: components)
+            for index in updatedItems.indices where updatedItems[index].isSelected && index != (dateIndex) {
+                updatedItems[index].isSelected = false
+            }
+        }
+        let calendarData = CalendarData(selectedDate: selectedDate, data: updatedItems)
+        return Just(calendarData).eraseToAnyPublisher()
     }
 }
 

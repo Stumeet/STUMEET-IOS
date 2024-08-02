@@ -15,6 +15,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
     struct Input {
         let didTapNextMonthButton: AnyPublisher<Void, Never>
         let didTapBackMonthButton: AnyPublisher<Void, Never>
+        let didSelectedCalendarCell: AnyPublisher<IndexPath, Never>
     }
     
     // MARK: - Output
@@ -97,6 +98,15 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             .flatMap(useCase.setIsEnableBackMonthButton)
             .eraseToAnyPublisher()
         
+        input.didSelectedCalendarCell
+            .map { ($0, calendarDateItemSubject.value, componentsSubject.value, self.cal) }
+            .flatMap(useCase.setSelectedCalendarCell)
+            .sink(receiveValue: { data in
+                selectedStartDateSubject.send(data.selectedDate)
+                calendarDateItemSubject.send(data.data)
+            })
+            .store(in: &cancellable)
+        
         return Output(
             calendarSectionItems: calendarSectionItems,
             yearMonthTitle: yearMonthTitle,
@@ -144,4 +154,5 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         dateFormatter.dateFormat = "yyyy.M.d"
         return dateFormatter.string(from: date)
     }
+    
 }

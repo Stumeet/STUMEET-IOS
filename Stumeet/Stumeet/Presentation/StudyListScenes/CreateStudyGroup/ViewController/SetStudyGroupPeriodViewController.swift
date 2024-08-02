@@ -203,7 +203,8 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     
     override func bind() {
         let input = SetStudyGroupPeriodViewModel.Input(
-            didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher, didTapBackMonthButton: calendarView.backMonthButton.tapPublisher
+            didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher, didTapBackMonthButton: calendarView.backMonthButton.tapPublisher,
+            didSelectedCalendarCell: calendarView.calendarCollectionView.didSelectItemPublisher
         )
         
         let output = viewModel.transform(input: input)
