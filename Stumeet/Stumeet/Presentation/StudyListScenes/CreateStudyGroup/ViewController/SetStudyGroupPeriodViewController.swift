@@ -202,7 +202,9 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = SetStudyGroupPeriodViewModel.Input()
+        let input = SetStudyGroupPeriodViewModel.Input(
+            didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher, didTapBackMonthButton: calendarView.backMonthButton.tapPublisher
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -219,6 +221,12 @@ class SetStudyGroupPeriodViewController: BaseViewController {
         output.selectedStartDate
             .receive(on: RunLoop.main)
             .assign(to: \.configuration!.attributedTitle, on: startDateButton)
+            .store(in: &cancellables)
+        
+        output.isEnableBackMonthButton
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: calendarView.setEnableBackMonthButton)
             .store(in: &cancellables)
     }
 }

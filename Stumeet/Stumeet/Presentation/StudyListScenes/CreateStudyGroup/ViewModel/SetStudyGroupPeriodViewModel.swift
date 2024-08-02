@@ -13,7 +13,8 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
     // MARK: - Input
     
     struct Input {
-        
+        let didTapNextMonthButton: AnyPublisher<Void, Never>
+        let didTapBackMonthButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -22,6 +23,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let calendarSectionItems: AnyPublisher<[CalendarSectionItem], Never>
         let yearMonthTitle: AnyPublisher<String, Never>
         let selectedStartDate: AnyPublisher<AttributedString?, Never>
+        let isEnableBackMonthButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -43,7 +45,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let calendarDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
         let componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
-        let selectedStartDateSubject = CurrentValueSubject<String, Never>(startDate)
+        let selectedStartDateSubject = CurrentValueSubject<Date?, Never>(initDate(date: startDate))
         
         useCase.setCalendarItem(cal: cal, components: componentsSubject.value, selectedDate: nil)
             .map { $0.data }
@@ -60,21 +62,52 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let selectedStartDate = selectedStartDateSubject
+            .compactMap(dateToString)
             .map { date -> AttributedString? in
                 AttributedString(date)
             }
             .eraseToAnyPublisher()
         
+        input.didTapNextMonthButton
+            .map { (+1, componentsSubject.value, selectedStartDateSubject.value) }
+            .map(updateComponentMonth)
+            .map {
+                componentsSubject.send($1)
+                return ($0, $1, $2)
+            }
+            .flatMap(useCase.setCalendarItem)
+            .map { $0.data }
+            .sink(receiveValue: calendarDateItemSubject.send)
+            .store(in: &cancellable)
+        
+        input.didTapBackMonthButton
+            .map { (-1, componentsSubject.value, selectedStartDateSubject.value) }
+            .map(updateComponentMonth)
+            .map {
+                componentsSubject.send($1)
+                return ($0, $1, $2)
+            }
+            .flatMap(useCase.setCalendarItem)
+            .map { $0.data }
+            .sink(receiveValue: calendarDateItemSubject.send)
+            .store(in: &cancellable)
+        
+        let isEnableBackMonthButton = componentsSubject
+            .map { ($0, self.cal) }
+            .flatMap(useCase.setIsEnableBackMonthButton)
+            .eraseToAnyPublisher()
+        
         return Output(
             calendarSectionItems: calendarSectionItems,
             yearMonthTitle: yearMonthTitle,
-            selectedStartDate: selectedStartDate
+            selectedStartDate: selectedStartDate,
+            isEnableBackMonthButton: isEnableBackMonthButton
         )
     }
     
     // MARK: - Function
 
-    func makeComponents() -> DateComponents {
+    private func makeComponents() -> DateComponents {
         var component = DateComponents()
         let now = Date()
         component.year = cal.component(.year, from: now)
@@ -84,10 +117,31 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         return component
     }
     
-    func setSectionItems(dateItems: [CalendarDate]) -> [CalendarSectionItem] {
+    private func setSectionItems(dateItems: [CalendarDate]) -> [CalendarSectionItem] {
         var sectionItems: [CalendarSectionItem] = []
         sectionItems.append(contentsOf: dateItems.map { .dayCell($0) })
         sectionItems.append(contentsOf: CalendarWeek.weeks.map { .weekCell($0) })
         return sectionItems
+    }
+    
+    private func updateComponentMonth(increment: Int, components: DateComponents, date: Date?) -> (Calendar, DateComponents, Date?) {
+        var components = components
+        components.month! += increment
+        return (cal, components, date)
+    }
+    
+    private func initDate(date: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.M.d"
+        let dateString = dateFormatter.date(from: date)
+        
+        return dateString
+    }
+    
+    private func dateToString(_ date: Date?) -> String? {
+        guard let date = date else { return nil }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.M.d"
+        return dateFormatter.string(from: date)
     }
 }

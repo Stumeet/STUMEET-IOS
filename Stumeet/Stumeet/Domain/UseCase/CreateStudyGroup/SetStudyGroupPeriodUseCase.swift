@@ -10,7 +10,8 @@ import Foundation
 
 protocol SetStudyGroupPeriodUseCase {
     func setCalendarItem(cal: Calendar, components: DateComponents, selectedDate: Date?) -> AnyPublisher<CalendarData, Never>
-    func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never> 
+    func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never>
+    func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
@@ -62,6 +63,12 @@ final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
     
     func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never> {
         return Just(makeMonthDateFormmater().string(from: cal.date(from: components)!)).eraseToAnyPublisher()
+    }
+    
+    func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never> {
+        let currentMonth = cal.component(.month, from: Date())
+        let selectedMonth = components.month
+        return Just(selectedMonth != currentMonth).eraseToAnyPublisher()
     }
 }
 
