@@ -18,6 +18,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let didSelectedCalendarCell: AnyPublisher<IndexPath, Never>
         let didTapStartDateButton: AnyPublisher<Void, Never>
         let didTapEndDateButton: AnyPublisher<Void, Never>
+        let didTapCompleteButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -30,6 +31,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let isEnableBackMonthButton: AnyPublisher<Bool, Never>
         let isSelectedStartDateButton: AnyPublisher<Bool, Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
+        let selectedPeriod: AnyPublisher<(startDate: Date, endDate: Date), Never>
     }
     
     // MARK: - Properties
@@ -171,6 +173,10 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             .flatMap(useCase.getIsEnableCompleteButton)
             .eraseToAnyPublisher()
         
+        let selectedPeriod = input.didTapCompleteButton
+            .map { (startDate: selectedStartDateSubject.value!, endDate: selectedEndDateSubject.value!) }
+            .eraseToAnyPublisher()
+        
         return Output(
             calendarSectionItems: calendarSectionItems,
             yearMonthTitle: yearMonthTitle,
@@ -178,7 +184,8 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             selectedEndDate: selectedEndDate,
             isEnableBackMonthButton: isEnableBackMonthButton,
             isSelectedStartDateButton: isStartDateSelected.eraseToAnyPublisher(),
-            isEnableCompleteButton: isEnableCompleteButton
+            isEnableCompleteButton: isEnableCompleteButton,
+            selectedPeriod: selectedPeriod
         )
     }
     

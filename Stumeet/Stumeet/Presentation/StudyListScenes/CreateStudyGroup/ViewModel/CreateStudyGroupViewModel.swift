@@ -21,6 +21,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didTapRegionButton: AnyPublisher<Void, Never>
         let didSelectedRegion: AnyPublisher<SelectStudyItem, Never>
         let didTapPeriodStartButton: AnyPublisher<Void, Never>
+        let didSelecetedPeriod: AnyPublisher<(startDate: Date, endDate: Date), Never>
     }
     
     // MARK: - Output
@@ -35,6 +36,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let selectedRegion: AnyPublisher<SelectStudyItem, Never>
         let startDate: AnyPublisher<String, Never>
         let goToSetStudyGroupPeriodVC: AnyPublisher<String, Never>
+        let periodAttributedStrings: AnyPublisher<(start: AttributedString, end: AttributedString), Never>
     }
     
     // MARK: - Properties
@@ -98,6 +100,10 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .flatMap { startDate }
             .eraseToAnyPublisher()
         
+        let periodAttributedStrings = input.didSelecetedPeriod
+            .map(dateToAttributedString)
+            .eraseToAnyPublisher()
+        
         return Output(
             goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
@@ -107,7 +113,20 @@ final class CreateStudyGroupViewModel: ViewModelType {
             goToSelectStudyGroupRegionVC: goToSelectStudyGroupRegionVC,
             selectedRegion: input.didSelectedRegion,
             startDate: startDate,
-            goToSetStudyGroupPeriodVC: goToSetStudyGroupPeriodVC
+            goToSetStudyGroupPeriodVC: goToSetStudyGroupPeriodVC,
+            periodAttributedStrings: periodAttributedStrings
         )
+    }
+    
+    // MARK: - Function
+    private func dateToAttributedString(start: Date, end: Date) -> (start: AttributedString, end: AttributedString){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy,M.d"
+        
+        let startAttributedString = AttributedString(dateFormatter.string(from: start))
+        let endAttributedString = AttributedString(dateFormatter.string(from: end))
+        
+        return (startAttributedString, endAttributedString)
+        
     }
 }

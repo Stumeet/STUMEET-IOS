@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SetStudyGroupPeriodDelegate: AnyObject {
+    func didTapCompleteButton(startDate: Date, endDate: Date)
+}
+
 class SetStudyGroupPeriodViewController: BaseViewController {
     
     typealias Section = CalendarSection
@@ -93,6 +97,7 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     private let coordinator: CreateStudyGroupNavigation
     private let viewModel: SetStudyGroupPeriodViewModel
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
+    weak var delegate: SetStudyGroupPeriodDelegate?
     
     // MARK: - Init
     
@@ -206,7 +211,8 @@ class SetStudyGroupPeriodViewController: BaseViewController {
             didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher, didTapBackMonthButton: calendarView.backMonthButton.tapPublisher,
             didSelectedCalendarCell: calendarView.calendarCollectionView.didSelectItemPublisher,
             didTapStartDateButton: startDateButton.tapPublisher,
-            didTapEndDateButton: endDateButton.tapPublisher
+            didTapEndDateButton: endDateButton.tapPublisher,
+            didTapCompleteButton: completeButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -246,6 +252,14 @@ class SetStudyGroupPeriodViewController: BaseViewController {
         output.isEnableCompleteButton
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateCompleteEnableButton)
+            .store(in: &cancellables)
+        
+        output.selectedPeriod
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] period in
+                self?.delegate?.didTapCompleteButton(startDate: period.startDate, endDate: period.endDate)
+                self?.coordinator.dismiss()
+            })
             .store(in: &cancellables)
     }
 }
