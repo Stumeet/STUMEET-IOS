@@ -9,6 +9,8 @@ import Combine
 import Foundation
 
 protocol SetStudyGroupPeriodUseCase {
+    func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never>
+    func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat) -> AnyPublisher<Bool, Never>
     func setCalendarItem(cal: Calendar, components: DateComponents, selectedDate: Date?) -> AnyPublisher<CalendarData, Never>
     func setYearMonthTitle(cal: Calendar, components: DateComponents) -> AnyPublisher<String, Never>
     func setIsEnableBackMonthButton(components: DateComponents, cal: Calendar) -> AnyPublisher<Bool, Never>
@@ -26,6 +28,15 @@ final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
     
     init(repository: SetStudyGroupPeriodRepository) {
         self.repository = repository
+    }
+    
+    func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never> {
+        return Just(max(0, min(536, bottomSheetHeight - translationY)))
+            .eraseToAnyPublisher()
+    }
+    
+    func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat) -> AnyPublisher<Bool, Never> {
+        return Just((velocityY > 1500 || bottomSheetHeight < 268)).eraseToAnyPublisher()
     }
     
     func setCalendarItem(cal: Calendar, components: DateComponents, selectedDate: Date?) -> AnyPublisher<CalendarData, Never> {

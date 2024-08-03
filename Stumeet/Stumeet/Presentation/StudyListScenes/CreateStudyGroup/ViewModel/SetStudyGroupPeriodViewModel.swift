@@ -10,9 +10,25 @@ import Foundation
 
 final class SetStudyGroupPeriodViewModel: ViewModelType {
     
+    enum DragState {
+        case began
+        case changed
+        case ended
+        case cancelled
+    }
+    
+    struct DragInfo {
+        let state: DragState
+        let translationY: CGFloat
+        let velocityY: CGFloat
+        let bottomSheetViewHeight: CGFloat
+    }
+    
     // MARK: - Input
     
     struct Input {
+        let didTapBackgroundButton: AnyPublisher<Void, Never>
+        let didDragEvent: AnyPublisher<DragInfo, Never>
         let didTapNextMonthButton: AnyPublisher<Void, Never>
         let didTapBackMonthButton: AnyPublisher<Void, Never>
         let didSelectedCalendarCell: AnyPublisher<IndexPath, Never>
@@ -24,6 +40,9 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
+        let dismiss: AnyPublisher<Void, Never>
+        let adjustHeight: AnyPublisher<CGFloat, Never>
+        let isRestoreBottomSheetView: AnyPublisher<Bool, Never>
         let calendarSectionItems: AnyPublisher<[CalendarSectionItem], Never>
         let yearMonthTitle: AnyPublisher<String, Never>
         let selectedStartDate: AnyPublisher<AttributedString?, Never>
@@ -65,6 +84,20 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let selectedEndDateSubject = CurrentValueSubject<Date?, Never>(dates.endDate)
         
         let isStartDateSelected = CurrentValueSubject<Bool, Never>(dates.isStart)
+        
+        let dismiss = input.didTapBackgroundButton
+        
+        let adjustHeight = input.didDragEvent
+            .filter { $0.state == .changed }
+            .map { ($0.bottomSheetViewHeight, $0.translationY)}
+            .flatMap(useCase.setAdjustHeight)
+            .eraseToAnyPublisher()
+        
+        let isRestoreBottomSheetView = input.didDragEvent
+            .filter { $0.state == .ended || $0.state == .cancelled }
+            .map { ($0.velocityY, $0.bottomSheetViewHeight)}
+            .flatMap(useCase.setIsRestoreBottomSheetView)
+            .eraseToAnyPublisher()
         
         isStartDateSelected
             .combineLatest(startDateItemSubject, endDateItemSubject)
@@ -178,6 +211,9 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         return Output(
+            dismiss: dismiss,
+            adjustHeight: adjustHeight,
+            isRestoreBottomSheetView: isRestoreBottomSheetView,
             calendarSectionItems: calendarSectionItems,
             yearMonthTitle: yearMonthTitle,
             selectedStartDate: selectedStartDate,

@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 7/31/24.
 //
 
+import Combine
 import UIKit
 
 protocol SetStudyGroupPeriodDelegate: AnyObject {
@@ -99,6 +100,10 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     weak var delegate: SetStudyGroupPeriodDelegate?
     
+    // MARK: - Subject
+    
+    private let dragEventSubject = PassthroughSubject<SetStudyGroupPeriodViewModel.DragInfo, Never>()
+    
     // MARK: - Init
     
     init(coordinator: CreateStudyGroupNavigation, viewModel: SetStudyGroupPeriodViewModel) {
@@ -146,6 +151,9 @@ class SetStudyGroupPeriodViewController: BaseViewController {
             backgroundButton,
             bottomSheetView
         ]   .forEach { view.addSubview($0) }
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        dragIndicatorContainerView.addGestureRecognizer(panGesture)
         
     }
     
@@ -208,6 +216,8 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     
     override func bind() {
         let input = SetStudyGroupPeriodViewModel.Input(
+            didTapBackgroundButton: backgroundButton.tapPublisher,
+            didDragEvent: dragEventSubject.eraseToAnyPublisher(),
             didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher, didTapBackMonthButton: calendarView.backMonthButton.tapPublisher,
             didSelectedCalendarCell: calendarView.calendarCollectionView.didSelectItemPublisher,
             didTapStartDateButton: startDateButton.tapPublisher,
@@ -216,6 +226,25 @@ class SetStudyGroupPeriodViewController: BaseViewController {
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: hideBottomSheet)
+            .store(in: &cancellables)
+        
+        output.adjustHeight
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: adjustBottomSheetHeight)
+            .store(in: &cancellables)
+    
+        output.isRestoreBottomSheetView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isRestore in
+                if isRestore {
+                    self?.hideBottomSheet()
+                } else { self?.showBottomSheet() }
+            }
+            .store(in: &cancellables)
         
         output.calendarSectionItems
             .receive(on: RunLoop.main)
@@ -315,6 +344,15 @@ extension SetStudyGroupPeriodViewController {
 // MARK: - UIUpdate
 
 extension SetStudyGroupPeriodViewController {
+    
+    // bottomSheetView 드래그에 맞게 높이 조정
+    private func adjustBottomSheetHeight(_ height: CGFloat) {
+        self.bottomSheetView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+        self.view.layoutIfNeeded()
+    }
+    
     private func showBottomSheet() {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.snp.updateConstraints { make in
@@ -323,6 +361,22 @@ extension SetStudyGroupPeriodViewController {
             self.backgroundButton.alpha = 0.1
             self.view.layoutIfNeeded()
         })
+    }
+    
+    // bottomSheetView 숨기기
+    private func hideBottomSheet() {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.bottomSheetView.snp.updateConstraints { make in
+                    make.height.equalTo(0)
+                }
+                self.backgroundButton.alpha = 0
+                self.view.layoutIfNeeded()
+            },
+            completion: { _ in
+                self.coordinator.dismiss()
+            })
     }
     
     private func updateStartEndDateButton(isStart: Bool) {
@@ -340,5 +394,33 @@ extension SetStudyGroupPeriodViewController {
     private func updateCompleteEnableButton(isEnable: Bool) {
         completeButton.isEnabled = isEnable
         completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
+    }
+}
+
+// MARK: - ObjcFunc
+
+extension SetStudyGroupPeriodViewController {
+    
+    // indicatorView 드래그 감지
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let state: SetStudyGroupPeriodViewModel.DragState
+        switch gesture.state {
+        case .began: state = .began
+        case .changed: state = .changed
+        case .ended: state = .ended
+        case .cancelled: state = .cancelled
+        default: return
+        }
+        
+        let translation = gesture.translation(in: self.view)
+        let velocity = gesture.velocity(in: self.view)
+        let dragInfo = SetStudyGroupPeriodViewModel.DragInfo(
+            state: state,
+            translationY: translation.y,
+            velocityY: velocity.y,
+            bottomSheetViewHeight: self.bottomSheetView.frame.height)
+        
+        dragEventSubject.send(dragInfo)
+        gesture.setTranslation(.zero, in: self.view)
     }
 }
