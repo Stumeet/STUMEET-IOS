@@ -76,16 +76,16 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - SetStudyGroupPeriod
     
-    func makeSetStudyGroupPeriodVM(startDate: String) -> SetStudyGroupPeriodViewModel {
+    func makeSetStudyGroupPeriodVM(dates: (isStart: Bool, startDate: Date, endDate: Date?)) -> SetStudyGroupPeriodViewModel {
         SetStudyGroupPeriodViewModel(
             useCase: makeSetStudyGroupPeriodUseCase(),
-            startDate: startDate
+            dates: dates
         )
     }
-    func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, startDate: String) -> SetStudyGroupPeriodViewController  {
+    func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, dates: (isStart: Bool, startDate: Date, endDate: Date?)) -> SetStudyGroupPeriodViewController  {
         SetStudyGroupPeriodViewController(
             coordinator: coordinator,
-            viewModel: makeSetStudyGroupPeriodVM(startDate: startDate)
+            viewModel: makeSetStudyGroupPeriodVM(dates: dates)
         )
     }
     

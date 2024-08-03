@@ -37,15 +37,15 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
     // MARK: - Properties
     
     private let useCase: SetStudyGroupPeriodUseCase
-    private let startDate: String
+    private let dates: (isStart: Bool, startDate: Date, endDate: Date?)
     private let cal: Calendar = Calendar.current
     private var cancellable = Set<AnyCancellable>()
     
     // MARK: - Init
     
-    init(useCase: SetStudyGroupPeriodUseCase, startDate: String) {
+    init(useCase: SetStudyGroupPeriodUseCase, dates: (isStart: Bool, startDate: Date, endDate: Date?)) {
         self.useCase = useCase
-        self.startDate = startDate
+        self.dates = dates
     }
     
     // MARK: - Transform
@@ -61,10 +61,10 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let endComponentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
         
         let selectedDateSubject = CurrentValueSubject<Date?, Never>(nil)
-        let selectedStartDateSubject = CurrentValueSubject<Date?, Never>(initDate(isStart: true))
-        let selectedEndDateSubject = CurrentValueSubject<Date?, Never>(initDate(isStart: false))
+        let selectedStartDateSubject = CurrentValueSubject<Date?, Never>(dates.startDate)
+        let selectedEndDateSubject = CurrentValueSubject<Date?, Never>(dates.endDate)
         
-        let isStartDateSelected = CurrentValueSubject<Bool, Never>(true)
+        let isStartDateSelected = CurrentValueSubject<Bool, Never>(dates.isStart)
         
         isStartDateSelected
             .combineLatest(startDateItemSubject, endDateItemSubject)
@@ -212,15 +212,6 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         var components = components
         components.month! += increment
         return (cal, components, date)
-    }
-    
-    private func initDate(isStart: Bool) -> Date? {
-        guard let date = isStart ? startDate : nil else { return nil}
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.M.d"
-        let dateString = dateFormatter.date(from: date)
-        
-        return dateString
     }
     
     private func dateToString(_ date: Date?) -> String? {

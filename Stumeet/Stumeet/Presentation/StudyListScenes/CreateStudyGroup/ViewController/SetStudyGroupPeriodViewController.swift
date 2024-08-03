@@ -326,19 +326,15 @@ extension SetStudyGroupPeriodViewController {
     }
     
     private func updateStartEndDateButton(isStart: Bool) {
-        let startBorderColor = isStart ? StumeetColor.primary700.color.cgColor : StumeetColor.gray75.color.cgColor
-        let endBorderColor = isStart ? StumeetColor.gray75.color.cgColor : StumeetColor.primary700.color.cgColor
-        let startForegroundColor = isStart ? StumeetColor.primary700.color : StumeetColor.gray400.color
-        let endForegroundColor = isStart ? StumeetColor.gray400.color : StumeetColor.primary700.color
-        let startImage = isStart ? UIImage(resource: .calendar) : UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color)
-        let endImage = isStart ? UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color) : UIImage(resource: .calendar)
         
-        startDateButton.layer.borderColor = startBorderColor
-        startDateButton.configuration?.baseForegroundColor = startForegroundColor
-        endDateButton.layer.borderColor = endBorderColor
-        endDateButton.configuration?.baseForegroundColor = endForegroundColor
-        startDateButton.configuration?.image = startImage
-        endDateButton.configuration?.image = endImage
+        let image = UIImage(resource: .calendar)
+        
+        startDateButton.layer.borderColor = isStart ? StumeetColor.primary700.color.cgColor : StumeetColor.gray75.color.cgColor
+        startDateButton.configuration?.baseForegroundColor = isStart ? StumeetColor.primary700.color : StumeetColor.gray400.color
+        endDateButton.layer.borderColor = isStart ? StumeetColor.gray75.color.cgColor : StumeetColor.primary700.color.cgColor
+        endDateButton.configuration?.baseForegroundColor = isStart ? StumeetColor.gray400.color : StumeetColor.primary700.color
+        startDateButton.configuration?.image =  isStart ? image : image.withTintColor(StumeetColor.gray400.color)
+        endDateButton.configuration?.image = isStart ? image.withTintColor(StumeetColor.gray400.color) : image
     }
     
     private func updateCompleteEnableButton(isEnable: Bool) {

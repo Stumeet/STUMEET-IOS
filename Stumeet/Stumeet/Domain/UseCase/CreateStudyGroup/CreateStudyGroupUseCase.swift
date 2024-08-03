@@ -12,7 +12,7 @@ protocol CreateStudyGroupUseCase {
     func getIsEnableTagAddButton(text: String) -> AnyPublisher<Bool, Never>
     func addTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
     func removeTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
-    func getCurrentDate() -> AnyPublisher<String, Never>
+    func getCurrentDate() -> Date
 }
 
 final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
@@ -35,11 +35,12 @@ final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
         return Just(removedTags).eraseToAnyPublisher()
     }
     
-    func getCurrentDate() -> AnyPublisher<String, Never> {
+    func getCurrentDate() -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy.M.d"
         let date = Date()
         let formattedDate = dateFormatter.string(from: date)
-        return Just(formattedDate).eraseToAnyPublisher()
+        return dateFormatter.date(from: formattedDate)!
     }
+
 }

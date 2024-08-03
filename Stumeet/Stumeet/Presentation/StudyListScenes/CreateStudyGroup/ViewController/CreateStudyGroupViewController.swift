@@ -452,6 +452,7 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapRegionButton: regionButton.tapPublisher,
             didSelectedRegion: regionSubject.eraseToAnyPublisher(),
             didTapPeriodStartButton: periodStartButton.tapPublisher,
+            didTapPeriodEndButton: periodEndButton.tapPublisher,
             didSelecetedPeriod: periodSubject.eraseToAnyPublisher()
         )
         
@@ -493,12 +494,6 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.selectedRegion
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateRegionButton)
-            .store(in: &cancellables)
-        
-        output.startDate
-            .map { (self.periodStartButton, $0) }
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateDateButton)
             .store(in: &cancellables)
         
         output.goToSetStudyGroupPeriodVC
@@ -609,27 +604,17 @@ extension CreateStudyGroupViewController {
         regionButton.layer.borderColor = StumeetColor.primary700.color.cgColor
     }
     
-    private func updateDateButton(button: UIButton, date: String) {
-        guard var config = button.configuration else { return }
-        
-        var titleAttributes = AttributedString(date)
-        titleAttributes.font = StumeetFont.bodyMedium14.font
-        titleAttributes.foregroundColor = StumeetColor.primary700.color
-        config.attributedTitle = titleAttributes
-        
-        button.configuration = config
-        button.layer.borderColor = StumeetColor.primary700.color.cgColor
-    }
-    
-    private func updatePeriodButton(start: AttributedString, end: AttributedString) {
+    private func updatePeriodButton(start: AttributedString, end: AttributedString?) {
         let buttons = [periodStartButton, periodEndButton]
         let titles = [start, end]
-        
         zip(buttons, titles).forEach { button, title in
-            button.configuration?.baseForegroundColor = StumeetColor.primary700.color
-            button.layer.borderColor = StumeetColor.primary700.color.cgColor
-            button.configuration?.image = UIImage(resource: .calendar)
-            button.configuration?.attributedTitle = title
+            let isNilEnd = title == nil
+            
+            button.configuration?.baseForegroundColor = isNilEnd ? StumeetColor.gray400.color : StumeetColor.primary700.color
+            button.layer.borderColor = isNilEnd ? StumeetColor.gray75.color.cgColor : StumeetColor.primary700.color.cgColor
+            button.configuration?.image = isNilEnd ? UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color) : UIImage(resource: .calendar)
+            button.configuration?.attributedTitle = isNilEnd ? "선택 없음" : title
+            button.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
         }
     }
 }
