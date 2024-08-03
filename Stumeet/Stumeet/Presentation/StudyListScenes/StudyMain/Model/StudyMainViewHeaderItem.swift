@@ -8,6 +8,8 @@
 import Foundation
 
 struct StudyMainViewHeaderItem {
-    let title: String
-    let thumbnailImageUrl: String
+    
+    let studyGroupDetail: StudyGroupDetail
+    var title: String { studyGroupDetail.name }
+    var thumbnailImageUrl: String { studyGroupDetail.image }
 }

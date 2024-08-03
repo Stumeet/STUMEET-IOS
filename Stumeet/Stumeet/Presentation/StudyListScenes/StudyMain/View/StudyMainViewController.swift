@@ -98,11 +98,15 @@ class StudyMainViewController: BaseViewController {
     private lazy var tableHeaderHeight: CGFloat = (screenWidth * 0.542).rounded() // 디바이스 넓이 * 크기 비율
     private var constPopupBottom: Constraint!
     // TODO: API 연동 시 수정
-    private var activityList: [StudyMainViewActivityItem] = []
-    private var detailInfoData: [StudyMainViewDetailInfoItem] = []
+    private var detailInfoDataSource: [StudyMainViewDetailInfoItem] = []
+    private var activityNoticeDataSource: StudyMainViewActivityItem?
+    private var activityListDataSource: [StudyMainViewActivityItem] = []
     private var isActivity = true
     private var isNextPageLoading = false
     
+    private var activityTotalCount: Int {
+        (activityNoticeDataSource != nil ? 1 : 0) + activityListDataSource.count
+    }
 
     // MARK: - Init
     init(coordinator: MyStudyGroupListNavigation,
@@ -203,6 +207,11 @@ class StudyMainViewController: BaseViewController {
             .sink(receiveValue: updateInfoView)
             .store(in: &cancellables)
         
+        output.studyActivityNoticeDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateActivityNoticeView)
+            .store(in: &cancellables)
+        
         output.studyActivityDataSource
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateActivityView)
@@ -228,12 +237,18 @@ class StudyMainViewController: BaseViewController {
     
     private func updateInfoView(data: StudyMainViewDetailInfoItem?) {
         guard let data = data else { return }
-        detailInfoData = [data]
+        detailInfoDataSource = [data]
+    }
+    
+    private func updateActivityNoticeView(data: StudyMainViewActivityItem?) {
+        guard let data = data else { return }
+        activityNoticeDataSource = data
+        tableView.reloadData()
     }
     
     private func updateActivityView(data: [StudyMainViewActivityItem]?) {
         guard let data = data else { return }
-        activityList = data
+        activityListDataSource = data
         tableView.reloadData()
         isNextPageLoading = false
     }
@@ -291,7 +306,7 @@ class StudyMainViewController: BaseViewController {
 
         var indexPaths = [IndexPath]()
         
-        for index in 0..<activityList.count {
+        for index in 0..<activityTotalCount {
             let indexPath = IndexPath(row: index, section: 0)
             indexPaths.append(indexPath)
         }
@@ -329,8 +344,7 @@ extension StudyMainViewController:
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return isActivity ? activityList.count : detailInfoData.count
+        return isActivity ? activityTotalCount : detailInfoDataSource.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -345,14 +359,19 @@ extension StudyMainViewController:
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if isActivity {
-            guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath),
-                  let activityData = activityList[safe: indexPath.row]
+            guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath)
             else { return UITableViewCell() }
-            cell.configureCell(data: activityData)
+            
+            if let notice = activityNoticeDataSource, indexPath.row == 0 {
+                cell.configureCell(data: notice)
+            } else if let activityData = activityListDataSource[safe: indexPath.row] {
+                cell.configureCell(data: activityData)
+            }
+            
             return cell
         } else {
             guard let cell = tableView.dequeue(StudyMainDetailInfoTableViewCell.self, for: indexPath),
-                  let activityData = detailInfoData[safe: indexPath.row]
+                  let activityData = detailInfoDataSource[safe: indexPath.row]
             else { return UITableViewCell() }
             cell.onHeightChanged = {
                 tableView.beginUpdates()

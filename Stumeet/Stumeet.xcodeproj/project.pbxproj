@@ -72,6 +72,7 @@
 		358D24352C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24342C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift */; };
 		358D24372C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24362C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift */; };
 		358D243A2C46B062001EFB51 /* StudyGroupMainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24392C46B062001EFB51 /* StudyGroupMainUseCase.swift */; };
+		35BB24232C5E5B6D00B498C2 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 35BB24222C5E5B6D00B498C2 /* Algorithms */; };
 		35BC0B482C3D85A000F96A22 /* MyStudyGroupListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BC0B472C3D85A000F96A22 /* MyStudyGroupListType.swift */; };
 		35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */; };
 		35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */; };
@@ -542,6 +543,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35BB24232C5E5B6D00B498C2 /* Algorithms in Frameworks */,
 				CA6448642B863CCB0090DD84 /* CombineMoya in Frameworks */,
 				CA6448692B863CD90090DD84 /* SnapKit in Frameworks */,
 				CA6448612B863CBE0090DD84 /* PretendardKit in Frameworks */,
@@ -1954,6 +1956,7 @@
 				CA64486B2B863CE20090DD84 /* CombineCocoa */,
 				35446B0D2B9DB20B00252283 /* KakaoSDK */,
 				355A75CF2C3AF0E900C50BA0 /* Kingfisher */,
+				35BB24222C5E5B6D00B498C2 /* Algorithms */,
 			);
 			productName = Stumeet;
 			productReference = CAD495C22B863B6500AB61D9 /* Stumeet.app */;
@@ -2037,6 +2040,7 @@
 				CA64486A2B863CE20090DD84 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				35446B0C2B9DB20B00252283 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				355A75CE2C3AF0E900C50BA0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				35BB24212C5E5B6D00B498C2 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = CAD495C32B863B6500AB61D9 /* Products */;
 			projectDirPath = "";
@@ -2806,6 +2810,14 @@
 				minimumVersion = 7.12.0;
 			};
 		};
+		35BB24212C5E5B6D00B498C2 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		CA64485F2B863CBE0090DD84 /* XCRemoteSwiftPackageReference "PretendardKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/wookeon/PretendardKit.git";
@@ -2850,6 +2862,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 355A75CE2C3AF0E900C50BA0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		35BB24222C5E5B6D00B498C2 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35BB24212C5E5B6D00B498C2 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
 		};
 		CA6448602B863CBE0090DD84 /* PretendardKit */ = {
 			isa = XCSwiftPackageProductDependency;

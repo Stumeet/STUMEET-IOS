@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Algorithms
 
 final class StudyMainViewModel: ViewModelType {
     // MARK: - Input
@@ -19,6 +20,7 @@ final class StudyMainViewModel: ViewModelType {
     struct Output {
         let studyGroupDetailHeaderDataSource: AnyPublisher<StudyMainViewHeaderItem?, Never>
         let studyGroupDetailInfoDataSource: AnyPublisher<StudyMainViewDetailInfoItem?, Never>
+        let studyActivityNoticeDataSource: AnyPublisher<StudyMainViewActivityItem?, Never>
         let studyActivityDataSource: AnyPublisher<[StudyMainViewActivityItem]?, Never>
     }
     
@@ -31,7 +33,9 @@ final class StudyMainViewModel: ViewModelType {
     private var useCase: StudyGroupMainUseCase
     private var studyMainViewHeaderItemSubject = CurrentValueSubject<StudyMainViewHeaderItem?, Never>(nil)
     private var studyMainViewDetailInfoItemSubject = CurrentValueSubject<StudyMainViewDetailInfoItem?, Never>(nil)
+    private var studyMainViewActivityNoticeItemSubject = CurrentValueSubject<StudyMainViewActivityItem?, Never>(nil)
     private var studyMainViewActivityItemSubject = CurrentValueSubject<[StudyMainViewActivityItem]?, Never>(nil)
+    
     private var cancellables = Set<AnyCancellable>()
     private var studyID: Int
     
@@ -47,36 +51,53 @@ final class StudyMainViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let studyGroupDetailHeaderDataSource = studyMainViewHeaderItemSubject.eraseToAnyPublisher()
         let studyGroupDetailInfoDataSource = studyMainViewDetailInfoItemSubject.eraseToAnyPublisher()
+        let studyActivityNoticeDataSource = studyMainViewActivityNoticeItemSubject.eraseToAnyPublisher()
         let studyActivityDataSource = studyMainViewActivityItemSubject.eraseToAnyPublisher()
         
         input.loadStudyGroupDetailData
-            .map { self.studyID }
+            .compactMap { [weak self] in self?.studyID }
             .flatMap(useCase.getStudyGroupDetail)
-            .sink(receiveValue: updateStudyGroupDetailView(receiveValue:))
+            .sink(receiveValue: updateHeaderAndDetailInfo(receiveValue:))
             .store(in: &cancellables)
-        
         
         input.loadStudyGroupDetailData
             .handleEvents(receiveOutput: resetPages )
             .map { (self.nextPage, self.studyID) }
             .flatMap(useCase.getActivityItems(page:studyId:))
-            .sink(receiveValue: updateStudyGroupActivityView(receiveValue:))
+            .map(updateActivityPageData(receiveValue:))
+            .sink(receiveValue: studyMainViewActivityItemSubject.send)
+            .store(in: &cancellables)
+        
+        input.loadStudyGroupDetailData
+            .compactMap { [weak self] in self?.studyID }
+            .flatMap(useCase.getActivityNoticeItem(studyId:))
+            .compactMap { [weak self] receiveValue in
+                self?.convertToActivityViewItems(
+                from: receiveValue,
+                cellType: .notice
+            ).first
+            }
+            .sink(receiveValue: studyMainViewActivityNoticeItemSubject.send)
             .store(in: &cancellables)
         
         input.reachedCollectionViewBottom
-            .filter { self.hasMorePages }
+            .filter { [weak self] in self?.hasMorePages ?? false }
             .map { (self.nextPage, self.studyID) }
             .flatMap(useCase.getActivityItems(page:studyId:))
-            .sink(receiveValue: updateStudyGroupActivityView(receiveValue:))
+            .handleEvents(receiveOutput: { [weak self] in self?.appendPage($0.pageInfo) })
+            .map(updateActivityPageData(receiveValue:))
+            .sink(receiveValue: studyMainViewActivityItemSubject.send)
             .store(in: &cancellables)
     
         return Output(
             studyGroupDetailHeaderDataSource: studyGroupDetailHeaderDataSource,
             studyGroupDetailInfoDataSource: studyGroupDetailInfoDataSource,
+            studyActivityNoticeDataSource: studyActivityNoticeDataSource,
             studyActivityDataSource: studyActivityDataSource
         )
     }
     
+    // MARK: - Function
     private func appendPage(_ pageInfo: PageInfo) {
         currentPage = pageInfo.currentPage
         totalPageCount = pageInfo.totalPages
@@ -88,69 +109,39 @@ final class StudyMainViewModel: ViewModelType {
         studyMainViewActivityItemSubject.send(nil)
     }
     
-    private func updateStudyGroupDetailView(receiveValue: StudyGroupDetail) {
-        studyMainViewHeaderItemSubject
-            .send(
-                StudyMainViewHeaderItem(
-                    title: receiveValue.name,
-                    thumbnailImageUrl: receiveValue.image
-                )
+    private func convertToActivityViewItems(
+        from activityPage: ActivityPage,
+        cellType: StudyMainViewActivityItem.StudyMainActivityCellStyle
+    ) -> [StudyMainViewActivityItem] {
+        return activityPage.activitys.map {
+            StudyMainViewActivityItem(
+                activity: $0,
+                cellType: cellType
             )
-        
-        studyMainViewDetailInfoItemSubject
-            .send(
-                StudyMainViewDetailInfoItem(
-                    intro: receiveValue.intro,
-                    rule: receiveValue.rule,
-                    region: receiveValue.region,
-                    tags: receiveValue.tags.map { "#\($0)" },
-                    startDate: receiveValue.startDate,
-                    endDate: receiveValue.endDate,
-                    meetingTime: receiveValue.meetingTime,
-                    meetingRepetitionType: .init(rawValue: receiveValue.meetingRepetitionType),
-                    meetingRepetitionDates: receiveValue.meetingRepetitionDates
-                )
-            )
+        }
     }
     
-    private func updateStudyGroupActivityView(receiveValue: ActivityPage) {
-        appendPage(receiveValue.pageInfo)
+    private func updateHeaderAndDetailInfo(receiveValue: StudyGroupDetail) {
+        studyMainViewHeaderItemSubject
+            .send(StudyMainViewHeaderItem(studyGroupDetail: receiveValue))
         
-        let newItems = receiveValue.activitys.map {
-            StudyMainViewActivityItem(
-                id: $0.id,
-                type: $0.tag ?? .freedom,
-                title: $0.title,
-                content: $0.content ?? "",
-                startTiem: $0.startTiem,
-                endTime: $0.endTime,
-                place: $0.place,
-                authorProfileImage: $0.image,
-                authorName: $0.name ?? "익명",
-                createdAt: $0.day ?? "",
-                cellType: .normal
-            )
+        studyMainViewDetailInfoItemSubject
+            .send(StudyMainViewDetailInfoItem(studyGroupDetail: receiveValue))
+    }
+     
+    private func updateActivityPageData(receiveValue: ActivityPage) -> [StudyMainViewActivityItem]? {
+        let newItems = convertToActivityViewItems(from: receiveValue, cellType: .normal)
+        
+        var updateDataSource = studyMainViewActivityItemSubject.value ?? []
+        
+        updateDataSource.append(contentsOf: newItems)
+        
+        let uniquedData = Array(updateDataSource.uniqued())
+        
+        return uniquedData.enumerated().map { index, item in
+            var updatedItem = item
+            updatedItem.cellType = index == 0 ? .activityFirstCell : .normal
+            return updatedItem
         }
-            
-        var resultData = studyMainViewActivityItemSubject.value ?? []
-        
-        resultData.append(contentsOf: newItems)
-        
-        let updatedResultData = resultData.enumerated().map { index, item in
-            StudyMainViewActivityItem(
-                id: item.id,
-                type: item.type,
-                title: item.title,
-                content: item.content,
-                startTiem: item.startTiem,
-                endTime: item.endTime,
-                place: item.place,
-                authorProfileImage: item.authorProfileImage,
-                authorName: item.authorName,
-                createdAt: item.createdAt,
-                cellType: index == 0 ? .activityFirstCell : .normal
-            )
-        }
-        studyMainViewActivityItemSubject.send(updatedResultData)
     }
 }

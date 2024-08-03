@@ -72,8 +72,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             .eraseToAnyPublisher()
     }
     
-    // TODO: - 임시: 스터디 그룹 메인용
-    func fetchActivityDetailItems(
+    func fetchActivityList(
         size: Int,
         page: Int,
         isNotice: Bool?,

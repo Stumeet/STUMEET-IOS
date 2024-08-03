@@ -8,15 +8,17 @@
 import Foundation
 
 struct StudyMainViewDetailInfoItem {
-    let intro: String
-    let rule: String
-    let region: String
-    let tags: [String]
-    let startDate: String
-    let endDate: String
-    let meetingTime: String
-    let meetingRepetitionType: RepetitionType?
-    let meetingRepetitionDates: [String]
+    
+    let studyGroupDetail: StudyGroupDetail
+    var intro: String { studyGroupDetail.intro }
+    var rule: String { studyGroupDetail.rule }
+    var region: String { studyGroupDetail.region }
+    var tags: [String] { studyGroupDetail.tags.map { "#\($0)" } }
+    var startDate: String { studyGroupDetail.startDate }
+    var endDate: String { studyGroupDetail.endDate }
+    var meetingTime: String { studyGroupDetail.meetingTime }
+    var meetingRepetitionType: RepetitionType? { .init(rawValue: studyGroupDetail.meetingRepetitionType) }
+    var meetingRepetitionDates: [String] { studyGroupDetail.meetingRepetitionDates }
     
     enum RepetitionType: String, CustomStringConvertible {
         case daily = "DAILY"

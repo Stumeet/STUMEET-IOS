@@ -237,11 +237,11 @@ class ActivityInfoBoxView: UIView {
 
     // MARK: - Function
     func configureView(data: StudyMainViewActivityItem) {
-        typeLabel.text = data.type.title
-        mainTitleLabel.text = data.title
-        mainSubtitleLabel.text = data.content
+        typeLabel.text = data.displayType.title
+        mainTitleLabel.text = data.activity.title
+        mainSubtitleLabel.text = data.activity.content
         
-        switch data.type {
+        switch data.displayType {
         case .freedom:
             dateContentHStackView.isHidden = true
             dateLabel.text = ""
@@ -253,7 +253,7 @@ class ActivityInfoBoxView: UIView {
             dateLabel.text = data.displayStartTiem
         }
         
-        if let displayPlace = data.place {
+        if let displayPlace = data.activity.place {
             locationContentHStackView.isHidden = false
             locationLabel.text = displayPlace
         } else {
@@ -261,12 +261,12 @@ class ActivityInfoBoxView: UIView {
             locationLabel.text = ""
         }
         
-        if let imageUrl = data.authorProfileImage {
+        if let imageUrl = data.activity.image {
             let url = URL(string: imageUrl)
             profileInfoImageView.kf.setImage(with: url)
         }
         
-        profileInfoNameLabel.text = data.authorName
+        profileInfoNameLabel.text = data.displayAuthorName
         profileInfoDateLabel.text = data.displayCreatedAt
     }
 }

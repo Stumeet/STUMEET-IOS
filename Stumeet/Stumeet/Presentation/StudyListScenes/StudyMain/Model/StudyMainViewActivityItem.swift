@@ -7,30 +7,30 @@
 
 import Foundation
 
-struct StudyMainViewActivityItem {
+struct StudyMainViewActivityItem: Hashable, Identifiable {
+    
+    let activity: Activity
+    var id: Int { activity.id }
+    var cellType: StudyMainActivityCellStyle
 
-    let id: Int
-    let type: ActivityCategory
-    let title: String
-    let content: String
-    let startTiem: String?
-    let endTime: String?
-    let place: String?
-    let authorProfileImage: String?
-    let authorName: String
-    let createdAt: String
-    let cellType: StudyMainActivityCellStyle
+    var displayAuthorName: String {
+        activity.name ?? "악명"
+    }
+    
+    var displayType: ActivityCategory {
+        activity.tag ?? .freedom
+    }
     
     var displayCreatedAt: String? {
-        createdAt.timeAgoSince()
+        activity.day?.timeAgoSince()
     }
     
     var displayStartTiem: String? {
-        startTiem?.formattedDateHHmm()
+        activity.startTiem?.formattedDateHHmm()
     }
     
     var displayEndTime: String? {
-        endTime?.formattedDateHHmm()
+        activity.endTime?.formattedDateHHmm()
     }
     
     enum StudyMainActivityCellStyle {
@@ -39,29 +39,8 @@ struct StudyMainViewActivityItem {
         case normal
     }
     
-    internal init(
-        id: Int,
-        type: ActivityCategory,
-        title: String,
-        content: String,
-        startTiem: String? = nil,
-        endTime: String? = nil,
-        place: String? = nil,
-        authorProfileImage: String? = nil,
-        authorName: String,
-        createdAt: String,
-        cellType: StudyMainActivityCellStyle
-    ) {
-        self.id = id
-        self.type = type
-        self.title = title
-        self.content = content
-        self.startTiem = startTiem
-        self.endTime = endTime
-        self.place = place
-        self.authorProfileImage = authorProfileImage
-        self.authorName = authorName
-        self.createdAt = createdAt
+    internal init(activity: Activity, cellType: StudyMainViewActivityItem.StudyMainActivityCellStyle) {
+        self.activity = activity
         self.cellType = cellType
     }
 }
