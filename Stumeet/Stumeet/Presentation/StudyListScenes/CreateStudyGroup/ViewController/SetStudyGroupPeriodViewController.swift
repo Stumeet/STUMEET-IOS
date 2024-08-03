@@ -226,6 +226,11 @@ class SetStudyGroupPeriodViewController: BaseViewController {
             .assign(to: \.configuration!.attributedTitle, on: startDateButton)
             .store(in: &cancellables)
         
+        output.selectedEndDate
+            .receive(on: RunLoop.main)
+            .assign(to: \.configuration!.attributedTitle, on: endDateButton)
+            .store(in: &cancellables)
+        
         output.isEnableBackMonthButton
             .removeDuplicates()
             .receive(on: RunLoop.main)

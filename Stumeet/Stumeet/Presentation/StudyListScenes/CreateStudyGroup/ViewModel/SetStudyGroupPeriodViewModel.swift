@@ -26,6 +26,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let calendarSectionItems: AnyPublisher<[CalendarSectionItem], Never>
         let yearMonthTitle: AnyPublisher<String, Never>
         let selectedStartDate: AnyPublisher<AttributedString?, Never>
+        let selectedEndDate: AnyPublisher<AttributedString?, Never>
         let isEnableBackMonthButton: AnyPublisher<Bool, Never>
         let isSelectedStartDateButton: AnyPublisher<Bool, Never>
     }
@@ -95,6 +96,13 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
         
+        let selectedEndDate = selectedEndDateSubject
+            .compactMap(dateToString)
+            .map { date -> AttributedString? in
+                AttributedString(date)
+            }
+            .eraseToAnyPublisher()
+        
         input.didTapNextMonthButton
             .map { isStartDateSelected.value ? selectedStartDateSubject.value : selectedEndDateSubject.value }
             .map { (+1, componentsSubject.value, $0) }
@@ -144,6 +152,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             calendarSectionItems: calendarSectionItems,
             yearMonthTitle: yearMonthTitle,
             selectedStartDate: selectedStartDate,
+            selectedEndDate: selectedEndDate,
             isEnableBackMonthButton: isEnableBackMonthButton,
             isSelectedStartDateButton: isStartDateSelected.eraseToAnyPublisher()
         )
