@@ -242,6 +242,11 @@ class SetStudyGroupPeriodViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateStartEndDateButton)
             .store(in: &cancellables)
+        
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCompleteEnableButton)
+            .store(in: &cancellables)
     }
 }
 
@@ -320,5 +325,10 @@ extension SetStudyGroupPeriodViewController {
         endDateButton.configuration?.baseForegroundColor = endForegroundColor
         startDateButton.configuration?.image = startImage
         endDateButton.configuration?.image = endImage
+    }
+    
+    private func updateCompleteEnableButton(isEnable: Bool) {
+        completeButton.isEnabled = isEnable
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
     }
 }

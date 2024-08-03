@@ -29,6 +29,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let selectedEndDate: AnyPublisher<AttributedString?, Never>
         let isEnableBackMonthButton: AnyPublisher<Bool, Never>
         let isSelectedStartDateButton: AnyPublisher<Bool, Never>
+        let isEnableCompleteButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -166,13 +167,18 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             })
             .store(in: &cancellable)
         
+        let isEnableCompleteButton = Publishers.CombineLatest(selectedStartDateSubject, selectedEndDateSubject)
+            .flatMap(useCase.getIsEnableCompleteButton)
+            .eraseToAnyPublisher()
+        
         return Output(
             calendarSectionItems: calendarSectionItems,
             yearMonthTitle: yearMonthTitle,
             selectedStartDate: selectedStartDate,
             selectedEndDate: selectedEndDate,
             isEnableBackMonthButton: isEnableBackMonthButton,
-            isSelectedStartDateButton: isStartDateSelected.eraseToAnyPublisher()
+            isSelectedStartDateButton: isStartDateSelected.eraseToAnyPublisher(),
+            isEnableCompleteButton: isEnableCompleteButton
         )
     }
     

@@ -17,6 +17,7 @@ protocol SetStudyGroupPeriodUseCase {
         item: [CalendarDate],
         components: DateComponents,
         cal: Calendar) -> AnyPublisher<CalendarData, Never>
+    func getIsEnableCompleteButton(start: Date?, end: Date?) -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
@@ -102,6 +103,10 @@ final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
         }
         let calendarData = CalendarData(selectedDate: selectedDate, data: updatedItems)
         return Just(calendarData).eraseToAnyPublisher()
+    }
+    
+    func getIsEnableCompleteButton(start: Date?, end: Date?) -> AnyPublisher<Bool, Never> {
+        return Just(start != nil && end != nil).eraseToAnyPublisher()
     }
 }
 
