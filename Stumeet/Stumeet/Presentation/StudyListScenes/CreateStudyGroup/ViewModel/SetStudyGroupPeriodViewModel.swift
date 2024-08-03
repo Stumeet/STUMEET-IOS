@@ -16,6 +16,8 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let didTapNextMonthButton: AnyPublisher<Void, Never>
         let didTapBackMonthButton: AnyPublisher<Void, Never>
         let didSelectedCalendarCell: AnyPublisher<IndexPath, Never>
+        let didTapStartDateButton: AnyPublisher<Void, Never>
+        let didTapEndDateButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -25,6 +27,7 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         let yearMonthTitle: AnyPublisher<String, Never>
         let selectedStartDate: AnyPublisher<AttributedString?, Never>
         let isEnableBackMonthButton: AnyPublisher<Bool, Never>
+        let isSelectedStartDateButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -46,11 +49,34 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let calendarDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
         let componentsSubject = CurrentValueSubject<DateComponents, Never>(makeComponents())
-        let selectedStartDateSubject = CurrentValueSubject<Date?, Never>(initDate(date: startDate))
+        let selectedStartDateSubject = CurrentValueSubject<Date?, Never>(initDate(isStart: true))
+        let selectedEndDateSubject = CurrentValueSubject<Date?, Never>(initDate(isStart: false))
         
-        useCase.setCalendarItem(cal: cal, components: componentsSubject.value, selectedDate: nil)
-            .map { $0.data }
+        let startDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
+        let endDateItemSubject = CurrentValueSubject<[CalendarDate], Never>([])
+        let isStartDateSelected = CurrentValueSubject<Bool, Never>(true)
+        
+        isStartDateSelected
+            .combineLatest(startDateItemSubject, endDateItemSubject)
+            .map { isStartSelected, startItem, endItem in
+                isStartSelected ? startItem : endItem
+            }
             .sink(receiveValue: calendarDateItemSubject.send)
+            .store(in: &cancellable)
+        
+        input.didTapStartDateButton
+            .map { true }
+            .merge(with: input.didTapEndDateButton.map { false })
+            .removeDuplicates()
+            .sink(receiveValue: isStartDateSelected.send)
+            .store(in: &cancellable)
+        
+        isStartDateSelected
+            .map { $0 ? selectedStartDateSubject.value : selectedEndDateSubject.value }
+            .map { (self.cal, componentsSubject.value, $0) }
+            .flatMap(useCase.setCalendarItem)
+            .map { ($0.data, isStartDateSelected.value, startDateItemSubject, endDateItemSubject)}
+            .sink(receiveValue: sendDateItems)
             .store(in: &cancellable)
         
         let calendarSectionItems = calendarDateItemSubject
@@ -70,27 +96,29 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         input.didTapNextMonthButton
-            .map { (+1, componentsSubject.value, selectedStartDateSubject.value) }
+            .map { isStartDateSelected.value ? selectedStartDateSubject.value : selectedEndDateSubject.value }
+            .map { (+1, componentsSubject.value, $0) }
             .map(updateComponentMonth)
             .map {
                 componentsSubject.send($1)
                 return ($0, $1, $2)
             }
             .flatMap(useCase.setCalendarItem)
-            .map { $0.data }
-            .sink(receiveValue: calendarDateItemSubject.send)
+            .map { ($0.data, isStartDateSelected.value, startDateItemSubject, endDateItemSubject)}
+            .sink(receiveValue: sendDateItems)
             .store(in: &cancellable)
         
         input.didTapBackMonthButton
-            .map { (-1, componentsSubject.value, selectedStartDateSubject.value) }
+            .map { isStartDateSelected.value ? selectedStartDateSubject.value : selectedEndDateSubject.value }
+            .map { (-1, componentsSubject.value, $0) }
             .map(updateComponentMonth)
             .map {
                 componentsSubject.send($1)
                 return ($0, $1, $2)
             }
             .flatMap(useCase.setCalendarItem)
-            .map { $0.data }
-            .sink(receiveValue: calendarDateItemSubject.send)
+            .map { ($0.data, isStartDateSelected.value, startDateItemSubject, endDateItemSubject)}
+            .sink(receiveValue: sendDateItems)
             .store(in: &cancellable)
         
         let isEnableBackMonthButton = componentsSubject
@@ -102,8 +130,13 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             .map { ($0, calendarDateItemSubject.value, componentsSubject.value, self.cal) }
             .flatMap(useCase.setSelectedCalendarCell)
             .sink(receiveValue: { data in
-                selectedStartDateSubject.send(data.selectedDate)
-                calendarDateItemSubject.send(data.data)
+                if isStartDateSelected.value {
+                    selectedStartDateSubject.send(data.selectedDate)
+                    startDateItemSubject.send(data.data)
+                } else {
+                    selectedEndDateSubject.send(data.selectedDate)
+                    endDateItemSubject.send(data.data)
+                }
             })
             .store(in: &cancellable)
         
@@ -111,7 +144,8 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
             calendarSectionItems: calendarSectionItems,
             yearMonthTitle: yearMonthTitle,
             selectedStartDate: selectedStartDate,
-            isEnableBackMonthButton: isEnableBackMonthButton
+            isEnableBackMonthButton: isEnableBackMonthButton,
+            isSelectedStartDateButton: isStartDateSelected.eraseToAnyPublisher()
         )
     }
     
@@ -140,7 +174,8 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         return (cal, components, date)
     }
     
-    private func initDate(date: String) -> Date? {
+    private func initDate(isStart: Bool) -> Date? {
+        guard let date = isStart ? startDate : nil else { return nil}
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy.M.d"
         let dateString = dateFormatter.date(from: date)
@@ -155,4 +190,16 @@ final class SetStudyGroupPeriodViewModel: ViewModelType {
         return dateFormatter.string(from: date)
     }
     
+    private func sendDateItems(
+        data: [CalendarDate],
+        isStartDateSelected: Bool,
+        startDateItemSubject: CurrentValueSubject<[CalendarDate], Never>,
+        endDateItemSubject: CurrentValueSubject<[CalendarDate], Never>
+    ) {
+        if isStartDateSelected {
+            startDateItemSubject.send(data)
+        } else {
+            endDateItemSubject.send(data)
+        }
+    }
 }

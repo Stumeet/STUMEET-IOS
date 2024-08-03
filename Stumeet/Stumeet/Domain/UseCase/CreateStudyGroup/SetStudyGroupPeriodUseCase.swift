@@ -51,7 +51,7 @@ final class DefaultSetStudyGroupPeriodUseCase: SetStudyGroupPeriodUseCase {
             components.day = date
             let compareDate = cal.date(from: components)!
             
-            if cal.isDate(actualSelectedDate, inSameDayAs: compareDate) {
+            if let selectedDate = selectedDate, cal.isDate(selectedDate, inSameDayAs: compareDate) {
                 calendarDates.append(CalendarDate(date: String(date), isSelected: true))
             } else if cal.isDate(compareDate, inSameDayAs: now) {
                 calendarDates.append(CalendarDate(date: String(date)))

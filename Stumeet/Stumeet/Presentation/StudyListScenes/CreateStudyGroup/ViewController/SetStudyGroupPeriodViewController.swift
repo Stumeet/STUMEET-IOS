@@ -48,6 +48,7 @@ class SetStudyGroupPeriodViewController: BaseViewController {
         
         config.imagePadding = 4
         config.image = UIImage(resource: .calendar)
+        
         var titleAttributes = AttributedString()
         titleAttributes.font = StumeetFont.bodyMedium14.font
         config.baseForegroundColor = StumeetColor.primary700.color
@@ -73,7 +74,6 @@ class SetStudyGroupPeriodViewController: BaseViewController {
         
         var titleAttributes = AttributedString("날짜 선택...")
         titleAttributes.font = StumeetFont.bodyMedium14.font
-        titleAttributes.foregroundColor = StumeetColor.gray400.color
         config.attributedTitle = titleAttributes
         
         button.configuration = config
@@ -204,7 +204,9 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     override func bind() {
         let input = SetStudyGroupPeriodViewModel.Input(
             didTapNextMonthButton: calendarView.nextMonthButton.tapPublisher, didTapBackMonthButton: calendarView.backMonthButton.tapPublisher,
-            didSelectedCalendarCell: calendarView.calendarCollectionView.didSelectItemPublisher
+            didSelectedCalendarCell: calendarView.calendarCollectionView.didSelectItemPublisher,
+            didTapStartDateButton: startDateButton.tapPublisher,
+            didTapEndDateButton: endDateButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -228,6 +230,12 @@ class SetStudyGroupPeriodViewController: BaseViewController {
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: calendarView.setEnableBackMonthButton)
+            .store(in: &cancellables)
+        
+        output.isSelectedStartDateButton
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateStartEndDateButton)
             .store(in: &cancellables)
     }
 }
@@ -291,5 +299,21 @@ extension SetStudyGroupPeriodViewController {
             self.backgroundButton.alpha = 0.1
             self.view.layoutIfNeeded()
         })
+    }
+    
+    private func updateStartEndDateButton(isStart: Bool) {
+        let startBorderColor = isStart ? StumeetColor.primary700.color.cgColor : StumeetColor.gray75.color.cgColor
+        let endBorderColor = isStart ? StumeetColor.gray75.color.cgColor : StumeetColor.primary700.color.cgColor
+        let startForegroundColor = isStart ? StumeetColor.primary700.color : StumeetColor.gray400.color
+        let endForegroundColor = isStart ? StumeetColor.gray400.color : StumeetColor.primary700.color
+        let startImage = isStart ? UIImage(resource: .calendar) : UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color)
+        let endImage = isStart ? UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color) : UIImage(resource: .calendar)
+        
+        startDateButton.layer.borderColor = startBorderColor
+        startDateButton.configuration?.baseForegroundColor = startForegroundColor
+        endDateButton.layer.borderColor = endBorderColor
+        endDateButton.configuration?.baseForegroundColor = endForegroundColor
+        startDateButton.configuration?.image = startImage
+        endDateButton.configuration?.image = endImage
     }
 }
