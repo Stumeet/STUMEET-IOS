@@ -29,12 +29,11 @@ final class StudyMainViewModel: ViewModelType {
     }
     
     // MARK: - Properties
-    var currentPage: Int = 0
-    var totalPageCount: Int = 1
-    var hasMorePages: Bool { currentPage < totalPageCount - 1}
-    var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
     var isActivity: Bool = true
-    
+    private var currentPage: Int = 0
+    private var totalPageCount: Int = 1
+    private var hasMorePages: Bool { currentPage < totalPageCount - 1}
+    private var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
     private var useCase: StudyGroupMainUseCase
     private var studyMainViewHeaderItemSubject = CurrentValueSubject<StudyMainViewHeaderItem?, Never>(nil)
     private var studyMainViewDetailInfoItemSubject = CurrentValueSubject<StudyMainViewDetailInfoItem?, Never>(nil)
