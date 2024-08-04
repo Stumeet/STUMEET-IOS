@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class OnboardingCollectionViewCell: BaseCollectionViewCell {
     
@@ -14,8 +15,6 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
-        stackView.spacing =  33
-        
         return stackView
     }()
     
@@ -35,11 +34,11 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.font = StumeetFont.titleMedium.font
-        label.textColor = StumeetColor.gray800.color
-        label.numberOfLines = 0
+        label.textColor = StumeetColor.primary700.color
+        label.numberOfLines = 2
         return label
     }()
-    
+
     override func setupAddView() {
         contentView.addSubview(rootView)
         titleLabelContainer.addSubview(titleLabel)
@@ -55,18 +54,42 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
             $0.edges.equalToSuperview()
         }
         
-        imageView.snp.makeConstraints {
-            $0.height.equalTo(imageView.snp.width).multipliedBy(1.3463)
+//        imageView.snp.makeConstraints {
+//            $0.height.equalTo(imageView.snp.width).multipliedBy(1.3463)
+//        }
+        
+        titleLabelContainer.snp.makeConstraints {
+            $0.height.equalTo(105)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
 
-    func configure(text: String, imageName: String) {
-        titleLabel.text = text
-        imageView.image = UIImage(named: imageName)
+    func configure(text: String, imageName: ImageResource) {
+        titleLabel.setTextWithLineHeight(text: text, lineHeight: 23.9)
+        imageView.image = UIImage(resource: imageName)
+    }
+}
+
+// TODO: - 공통으로 이전
+extension UILabel {
+     func setTextWithLineHeight(text: String?, lineHeight: CGFloat) {
+        if let text = text {
+            let style = NSMutableParagraphStyle()
+            style.maximumLineHeight = lineHeight
+            style.minimumLineHeight = lineHeight
+            style.alignment = textAlignment
+
+            let attributes: [NSAttributedString.Key: Any] = [
+                .paragraphStyle: style,
+                .baselineOffset: (lineHeight - font.lineHeight) / 4
+            ]
+            
+            let attrString = NSAttributedString(string: text,
+                                                attributes: attributes)
+            self.attributedText = attrString
+        }
     }
 }
