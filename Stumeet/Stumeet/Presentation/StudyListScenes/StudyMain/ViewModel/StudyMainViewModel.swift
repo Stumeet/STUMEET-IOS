@@ -14,14 +14,18 @@ final class StudyMainViewModel: ViewModelType {
     struct Input {
         let loadStudyGroupDetailData: AnyPublisher<Void, Never>
         let reachedCollectionViewBottom: AnyPublisher<Void, Never>
+        let didTapToggleActivityButton: AnyPublisher<Void, Never>
+        let didTapMenuOpenButton: AnyPublisher<Void, Never>
     }
-
+    
     // MARK: - Output
     struct Output {
         let studyGroupDetailHeaderDataSource: AnyPublisher<StudyMainViewHeaderItem?, Never>
         let studyGroupDetailInfoDataSource: AnyPublisher<StudyMainViewDetailInfoItem?, Never>
         let studyActivityNoticeDataSource: AnyPublisher<StudyMainViewActivityItem?, Never>
         let studyActivityDataSource: AnyPublisher<[StudyMainViewActivityItem]?, Never>
+        let switchedViewToActivity: AnyPublisher<Bool, Never>
+        let presentToSideMenuVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -29,6 +33,7 @@ final class StudyMainViewModel: ViewModelType {
     var totalPageCount: Int = 1
     var hasMorePages: Bool { currentPage < totalPageCount - 1}
     var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
+    var isActivity: Bool = true
     
     private var useCase: StudyGroupMainUseCase
     private var studyMainViewHeaderItemSubject = CurrentValueSubject<StudyMainViewHeaderItem?, Never>(nil)
@@ -53,6 +58,10 @@ final class StudyMainViewModel: ViewModelType {
         let studyGroupDetailInfoDataSource = studyMainViewDetailInfoItemSubject.eraseToAnyPublisher()
         let studyActivityNoticeDataSource = studyMainViewActivityNoticeItemSubject.eraseToAnyPublisher()
         let studyActivityDataSource = studyMainViewActivityItemSubject.eraseToAnyPublisher()
+        let switchedViewToActivity = input.didTapToggleActivityButton
+            .map(toggleActivityState)
+            .eraseToAnyPublisher()
+        let presentToSideMenuVC = input.didTapMenuOpenButton.eraseToAnyPublisher()
         
         input.loadStudyGroupDetailData
             .compactMap { [weak self] in self?.studyID }
@@ -93,7 +102,9 @@ final class StudyMainViewModel: ViewModelType {
             studyGroupDetailHeaderDataSource: studyGroupDetailHeaderDataSource,
             studyGroupDetailInfoDataSource: studyGroupDetailInfoDataSource,
             studyActivityNoticeDataSource: studyActivityNoticeDataSource,
-            studyActivityDataSource: studyActivityDataSource
+            studyActivityDataSource: studyActivityDataSource,
+            switchedViewToActivity: switchedViewToActivity,
+            presentToSideMenuVC: presentToSideMenuVC
         )
     }
     
@@ -107,6 +118,11 @@ final class StudyMainViewModel: ViewModelType {
         currentPage = 0
         totalPageCount = 1
         studyMainViewActivityItemSubject.send(nil)
+    }
+    
+    private func toggleActivityState() -> Bool {
+        isActivity.toggle()
+        return isActivity
     }
     
     private func convertToActivityViewItems(

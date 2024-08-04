@@ -13,10 +13,9 @@ import Kingfisher
 class StudyMainViewController: BaseViewController {
     
     // MARK: - UIComponents
-    private lazy var menuOpenButton: UIButton = {
+    private var menuOpenButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(resource: .StudyGroupMain.iconHamburgerMenu), for: .normal)
-        button.addTarget(self, action: #selector(menuOpenButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -66,10 +65,9 @@ class StudyMainViewController: BaseViewController {
         return label
     }()
     
-    private lazy var detailInfoOpenButton: UIButton = {
+    private var toggleActivityOpenButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(resource: .StudyGroupMain.iconArrowDown), for: .normal)
-        button.addTarget(self, action: #selector(detailInfoOpenButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -92,20 +90,22 @@ class StudyMainViewController: BaseViewController {
     private weak var coordinator: MyStudyGroupListNavigation!
     private let viewModel: StudyMainViewModel
     private let loadStudyGroupDetailData = PassthroughSubject<Void, Never>()
-    private let tableReachedBottomSubject = PassthroughSubject<Void, Never>()
-    
+    private let tableReachedBottomSubject = PassthroughSubject<Void, Never>()    
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var tableHeaderHeight: CGFloat = (screenWidth * 0.542).rounded() // 디바이스 넓이 * 크기 비율
     private var constPopupBottom: Constraint!
-    // TODO: API 연동 시 수정
     private var detailInfoDataSource: [StudyMainViewDetailInfoItem] = []
     private var activityNoticeDataSource: StudyMainViewActivityItem?
     private var activityListDataSource: [StudyMainViewActivityItem] = []
-    private var isActivity = true
     private var isNextPageLoading = false
-    
-    private var activityTotalCount: Int {
-        (activityNoticeDataSource != nil ? 1 : 0) + activityListDataSource.count
+
+    private var activityTotalList: [StudyMainViewActivityItem] {
+        var totalList = [StudyMainViewActivityItem]()
+        if let notice = activityNoticeDataSource {
+            totalList.append(notice)
+        }
+        totalList.append(contentsOf: activityListDataSource)
+        return totalList
     }
 
     // MARK: - Init
@@ -140,7 +140,7 @@ class StudyMainViewController: BaseViewController {
         headerView.addSubview(headerImageView)
  
         sectionHeaderView.addSubview(sectionHeaderTitleLabel)
-        sectionHeaderView.addSubview(detailInfoOpenButton)
+        sectionHeaderView.addSubview(toggleActivityOpenButton)
         sectionHeaderView.addSubview(sectionHeaderSeparatorView)
     }
     
@@ -154,9 +154,6 @@ class StudyMainViewController: BaseViewController {
             $0.trailing.equalTo(praiseReminderFloatingPopupView)
             $0.bottom.equalTo(praiseReminderFloatingPopupView.snp.top).offset(-16).priority(.high)
             $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(24)
-        }
-        
-        newActivityFloatingButton.snp.makeConstraints {
             $0.size.equalTo(72)
         }
         
@@ -170,11 +167,11 @@ class StudyMainViewController: BaseViewController {
         
         sectionHeaderTitleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(24)
-            $0.trailing.equalTo(detailInfoOpenButton.snp.leading)
+            $0.trailing.equalTo(toggleActivityOpenButton.snp.leading)
             $0.centerY.equalToSuperview()
         }
         
-        detailInfoOpenButton.snp.makeConstraints {
+        toggleActivityOpenButton.snp.makeConstraints {
             $0.size.equalTo(48)
             $0.centerX.equalTo(sectionHeaderView.snp.right).inset(36)
             $0.centerY.equalToSuperview()
@@ -191,7 +188,9 @@ class StudyMainViewController: BaseViewController {
         // MARK: - Input
         let input = StudyMainViewModel.Input(
             loadStudyGroupDetailData: loadStudyGroupDetailData.eraseToAnyPublisher(),
-            reachedCollectionViewBottom: tableReachedBottomSubject.eraseToAnyPublisher()
+            reachedCollectionViewBottom: tableReachedBottomSubject.eraseToAnyPublisher(),
+            didTapToggleActivityButton: toggleActivityOpenButton.tapPublisher,
+            didTapMenuOpenButton: menuOpenButton.tapPublisher
         )
                 
         // MARK: - Output
@@ -216,13 +215,23 @@ class StudyMainViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateActivityView)
             .store(in: &cancellables)
+        
+        output.switchedViewToActivity
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: toggleActivityView(isActivity:))
+            .store(in: &cancellables)
+        
+        output.presentToSideMenuVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSideMenu(from:))
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         newActivityFloatingButton.setRoundCorner()
-        // TODO: API 연동 시 수정
         loadStudyGroupDetailData.send()
     }
     
@@ -295,45 +304,38 @@ class StudyMainViewController: BaseViewController {
             })
     }
     
-    // TODO: API 연동 시 수정
-    private func reloadTableView() {
-        isActivity.toggle()
-        animateButtonImage(to: UIImage(resource: isActivity ? .StudyGroupMain.iconArrowDown : .StudyGroupMain.iconArrowUp), for: detailInfoOpenButton)
-        animateControlAlpha(for: newActivityFloatingButton, isHidden: !isActivity)
-        animateControlAlpha(for: praiseReminderFloatingPopupView, isHidden: !isActivity)
+    private func toggleActivityView(isActivity: Bool) {
+        updateUIForToggleActivityButton(isActivity)
+        animateFloatingControlVisibility(isActivity)
         
-        detailInfoOpenButton.isEnabled = false
-
-        var indexPaths = [IndexPath]()
-        
-        for index in 0..<activityTotalCount {
-            let indexPath = IndexPath(row: index, section: 0)
-            indexPaths.append(indexPath)
-        }
-        
+        toggleActivityOpenButton.isEnabled = false
         tableView.performBatchUpdates({
-            if isActivity {
-                tableView.insertRows(at: indexPaths, with: .bottom)
-                tableView.deleteRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
-            } else {
-                tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
-                tableView.deleteRows(at: indexPaths, with: .fade)
-            }
-            
+            switchActivityTableViewContents(isActivity)
         }, completion: { [weak self] _ in
-            guard let self = self else { return }
-            detailInfoOpenButton.isEnabled = true
+            self?.toggleActivityOpenButton.isEnabled = true
         })
     }
-    
-    // TODO: API 연동 시 수정
-    @objc func menuOpenButtonTapped(_ sender: UIButton) {
-        coordinator.presentToSideMenu(from: self)
+
+    private func updateUIForToggleActivityButton(_ isActivity: Bool) {
+        let buttonImage = isActivity ? UIImage(resource: .StudyGroupMain.iconArrowDown) : UIImage(resource: .StudyGroupMain.iconArrowUp)
+        animateButtonImage(to: buttonImage, for: toggleActivityOpenButton)
     }
-    
-    // TODO: API 연동 시 수정
-    @objc func detailInfoOpenButtonTapped(_ sender: UIButton) {
-        reloadTableView()
+
+    private func animateFloatingControlVisibility(_ isActivity: Bool) {
+        animateControlAlpha(for: newActivityFloatingButton, isHidden: !isActivity)
+        animateControlAlpha(for: praiseReminderFloatingPopupView, isHidden: !isActivity)
+    }
+
+    private func switchActivityTableViewContents(_ isActivity: Bool) {
+        let indexPaths = (0..<activityTotalList.count).map { IndexPath(row: $0, section: 0) }
+
+        if isActivity {
+            tableView.insertRows(at: indexPaths, with: .bottom)
+            tableView.deleteRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+        } else {
+            tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
+            tableView.deleteRows(at: indexPaths, with: .fade)
+        }
     }
 }
 
@@ -344,7 +346,7 @@ extension StudyMainViewController:
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isActivity ? activityTotalCount : detailInfoDataSource.count
+        return viewModel.isActivity ? activityTotalList.count : detailInfoDataSource.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -355,19 +357,13 @@ extension StudyMainViewController:
         return 56
     }
     
-    // TODO: API 연동 시 수정
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if isActivity {
-            guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath)
+        if viewModel.isActivity {
+            guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath),
+                  let activityData = activityTotalList[safe: indexPath.row]
             else { return UITableViewCell() }
-            
-            if let notice = activityNoticeDataSource, indexPath.row == 0 {
-                cell.configureCell(data: notice)
-            } else if let activityData = activityListDataSource[safe: indexPath.row] {
-                cell.configureCell(data: activityData)
-            }
-            
+            cell.configureCell(data: activityData)
             return cell
         } else {
             guard let cell = tableView.dequeue(StudyMainDetailInfoTableViewCell.self, for: indexPath),

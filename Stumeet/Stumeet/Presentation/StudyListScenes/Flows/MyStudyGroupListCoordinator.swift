@@ -58,7 +58,6 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         navigationController.pushViewController(studyListVC, animated: true)
     }
     
-    // TODO: 메인 화면 API 연결 시 수정
     func goToStudyMain(with id: Int) {
         let studyMainVC = dependencies.makeStudyMainVC(coordinator: self, studyId: id)
         studyMainVC.hidesBottomBarWhenPushed = true

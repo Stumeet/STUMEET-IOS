@@ -175,8 +175,9 @@ class StudyMainDetailInfoTableViewCell: BaseTableViewCell {
     
     override func setupConstaints() {
         rootVStackView.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(16)
-            $0.horizontalEdges.equalToSuperview().inset(24)
+            $0.top.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(16).priority(.high)
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
         
         periodContainerView.snp.makeConstraints {
