@@ -22,26 +22,26 @@ final class StudyMainViewModel: ViewModelType {
     struct Output {
         let studyGroupDetailHeaderDataSource: AnyPublisher<StudyMainViewHeaderItem?, Never>
         let studyGroupDetailInfoDataSource: AnyPublisher<StudyMainViewDetailInfoItem?, Never>
-        let studyActivityNoticeDataSource: AnyPublisher<StudyMainViewActivityItem?, Never>
-        let studyActivityDataSource: AnyPublisher<[StudyMainViewActivityItem]?, Never>
+        let studyActivityDataSource: AnyPublisher<[StudyMainViewActivityItem], Never>
         let switchedViewToActivity: AnyPublisher<Bool, Never>
         let presentToSideMenuVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
     var isActivity: Bool = true
+    private var isNextPageLoading: Bool = false
     private var currentPage: Int = 0
     private var totalPageCount: Int = 1
-    private var hasMorePages: Bool { currentPage < totalPageCount - 1}
+    private var hasMorePages: Bool { currentPage < totalPageCount}
     private var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
+    private var canLoadMorePages: Bool { hasMorePages && !isNextPageLoading }
     private var useCase: StudyGroupMainUseCase
     private var studyMainViewHeaderItemSubject = CurrentValueSubject<StudyMainViewHeaderItem?, Never>(nil)
     private var studyMainViewDetailInfoItemSubject = CurrentValueSubject<StudyMainViewDetailInfoItem?, Never>(nil)
     private var studyMainViewActivityNoticeItemSubject = CurrentValueSubject<StudyMainViewActivityItem?, Never>(nil)
     private var studyMainViewActivityItemSubject = CurrentValueSubject<[StudyMainViewActivityItem]?, Never>(nil)
-    
-    private var cancellables = Set<AnyCancellable>()
     private var studyID: Int
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     init(
@@ -55,11 +55,19 @@ final class StudyMainViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let studyGroupDetailHeaderDataSource = studyMainViewHeaderItemSubject.eraseToAnyPublisher()
         let studyGroupDetailInfoDataSource = studyMainViewDetailInfoItemSubject.eraseToAnyPublisher()
-        let studyActivityNoticeDataSource = studyMainViewActivityNoticeItemSubject.eraseToAnyPublisher()
-        let studyActivityDataSource = studyMainViewActivityItemSubject.eraseToAnyPublisher()
+        
+        let studyActivityDataSource = Publishers
+            .CombineLatest(
+                studyMainViewActivityNoticeItemSubject,
+                studyMainViewActivityItemSubject
+            )
+            .map(combineActivityItems(noticeItem:activityItems:))
+            .eraseToAnyPublisher()
+        
         let switchedViewToActivity = input.didTapToggleActivityButton
             .map(toggleActivityState)
             .eraseToAnyPublisher()
+        
         let presentToSideMenuVC = input.didTapMenuOpenButton.eraseToAnyPublisher()
         
         input.loadStudyGroupDetailData
@@ -70,7 +78,7 @@ final class StudyMainViewModel: ViewModelType {
         
         input.loadStudyGroupDetailData
             .handleEvents(receiveOutput: resetPages )
-            .map { (self.nextPage, self.studyID) }
+            .map { (self.currentPage, self.studyID) }
             .flatMap(useCase.getActivityItems(page:studyId:))
             .map(updateActivityPageData(receiveValue:))
             .sink(receiveValue: studyMainViewActivityItemSubject.send)
@@ -89,18 +97,19 @@ final class StudyMainViewModel: ViewModelType {
             .store(in: &cancellables)
         
         input.reachedCollectionViewBottom
-            .filter { [weak self] in self?.hasMorePages ?? false }
+            .filter { [weak self] in self?.canLoadMorePages ?? false }
+            .handleEvents(receiveOutput: { [weak self] in self?.isNextPageLoading = true })
             .map { (self.nextPage, self.studyID) }
             .flatMap(useCase.getActivityItems(page:studyId:))
             .handleEvents(receiveOutput: { [weak self] in self?.appendPage($0.pageInfo) })
             .map(updateActivityPageData(receiveValue:))
+            .handleEvents(receiveOutput: { [weak self] _ in self?.isNextPageLoading = false })
             .sink(receiveValue: studyMainViewActivityItemSubject.send)
             .store(in: &cancellables)
     
         return Output(
             studyGroupDetailHeaderDataSource: studyGroupDetailHeaderDataSource,
             studyGroupDetailInfoDataSource: studyGroupDetailInfoDataSource,
-            studyActivityNoticeDataSource: studyActivityNoticeDataSource,
             studyActivityDataSource: studyActivityDataSource,
             switchedViewToActivity: switchedViewToActivity,
             presentToSideMenuVC: presentToSideMenuVC
@@ -134,6 +143,20 @@ final class StudyMainViewModel: ViewModelType {
                 cellType: cellType
             )
         }
+    }
+    
+    func combineActivityItems(
+        noticeItem: StudyMainViewActivityItem?,
+        activityItems: [StudyMainViewActivityItem]?
+    ) -> [StudyMainViewActivityItem] {
+        var totalList = [StudyMainViewActivityItem]()
+        if let notice = noticeItem {
+            totalList.append(notice)
+        }
+        if let items = activityItems {
+            totalList.append(contentsOf: items)
+        }
+        return totalList
     }
     
     private func updateHeaderAndDetailInfo(receiveValue: StudyGroupDetail) {

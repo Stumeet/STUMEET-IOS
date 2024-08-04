@@ -90,23 +90,12 @@ class StudyMainViewController: BaseViewController {
     private weak var coordinator: MyStudyGroupListNavigation!
     private let viewModel: StudyMainViewModel
     private let loadStudyGroupDetailData = PassthroughSubject<Void, Never>()
-    private let tableReachedBottomSubject = PassthroughSubject<Void, Never>()    
+    private let tableReachedBottomSubject = PassthroughSubject<Void, Never>()
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var tableHeaderHeight: CGFloat = (screenWidth * 0.542).rounded() // 디바이스 넓이 * 크기 비율
     private var constPopupBottom: Constraint!
     private var detailInfoDataSource: [StudyMainViewDetailInfoItem] = []
-    private var activityNoticeDataSource: StudyMainViewActivityItem?
     private var activityListDataSource: [StudyMainViewActivityItem] = []
-    private var isNextPageLoading = false
-
-    private var activityTotalList: [StudyMainViewActivityItem] {
-        var totalList = [StudyMainViewActivityItem]()
-        if let notice = activityNoticeDataSource {
-            totalList.append(notice)
-        }
-        totalList.append(contentsOf: activityListDataSource)
-        return totalList
-    }
 
     // MARK: - Init
     init(coordinator: MyStudyGroupListNavigation,
@@ -206,11 +195,6 @@ class StudyMainViewController: BaseViewController {
             .sink(receiveValue: updateInfoView)
             .store(in: &cancellables)
         
-        output.studyActivityNoticeDataSource
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateActivityNoticeView)
-            .store(in: &cancellables)
-        
         output.studyActivityDataSource
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateActivityView)
@@ -249,17 +233,9 @@ class StudyMainViewController: BaseViewController {
         detailInfoDataSource = [data]
     }
     
-    private func updateActivityNoticeView(data: StudyMainViewActivityItem?) {
-        guard let data = data else { return }
-        activityNoticeDataSource = data
-        tableView.reloadData()
-    }
-    
-    private func updateActivityView(data: [StudyMainViewActivityItem]?) {
-        guard let data = data else { return }
+    private func updateActivityView(data: [StudyMainViewActivityItem]) {
         activityListDataSource = data
         tableView.reloadData()
-        isNextPageLoading = false
     }
     
     private func updateHeaderView() {
@@ -327,7 +303,7 @@ class StudyMainViewController: BaseViewController {
     }
 
     private func switchActivityTableViewContents(_ isActivity: Bool) {
-        let indexPaths = (0..<activityTotalList.count).map { IndexPath(row: $0, section: 0) }
+        let indexPaths = (0..<activityListDataSource.count).map { IndexPath(row: $0, section: 0) }
 
         if isActivity {
             tableView.insertRows(at: indexPaths, with: .bottom)
@@ -346,7 +322,7 @@ extension StudyMainViewController:
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.isActivity ? activityTotalList.count : detailInfoDataSource.count
+        return viewModel.isActivity ? activityListDataSource.count : detailInfoDataSource.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -361,7 +337,7 @@ extension StudyMainViewController:
         
         if viewModel.isActivity {
             guard let cell = tableView.dequeue(StudyMainActivityTableViewCell.self, for: indexPath),
-                  let activityData = activityTotalList[safe: indexPath.row]
+                  let activityData = activityListDataSource[safe: indexPath.row]
             else { return UITableViewCell() }
             cell.configureCell(data: activityData)
             return cell
@@ -386,10 +362,7 @@ extension StudyMainViewController:
         let yDelta = tableView.contentOffset.y + tableView.contentInset.top
         let threshold = max(0, (tableView.contentSize.height - tableHeaderHeight - tableView.contentInset.bottom) * 0.3)
         
-        if !isNextPageLoading && yDelta > threshold {
-            isNextPageLoading = true
-            tableReachedBottomSubject.send()
-        }
+        if yDelta > threshold { tableReachedBottomSubject.send() }
         
         let offsetY = scrollView.contentOffset.y + tableHeaderHeight
         let maxOffsetY: CGFloat = 100
