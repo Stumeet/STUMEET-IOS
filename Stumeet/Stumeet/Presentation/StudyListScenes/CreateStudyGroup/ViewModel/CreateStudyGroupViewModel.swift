@@ -58,7 +58,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         input.didTapAddTagButton
-            .map { _ in (addedTagsSubject.value, tagTextSubject.value) }
+            .map { (addedTagsSubject.value, tagTextSubject.value) }
             .flatMap(useCase.addTag)
             .sink(receiveValue: addedTagsSubject.send)
             .store(in: &cancellables)
