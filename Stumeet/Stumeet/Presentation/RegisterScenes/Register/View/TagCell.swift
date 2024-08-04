@@ -74,7 +74,7 @@ class TagCell: BaseCollectionViewCell {
         }
     }
     
-    func configureTagCell(item: StudyField) {
+    func configureTagCell(item: SelectStudyItem) {
         backgroundColor = item.isSelected ? StumeetColor.primaryInfo.color : StumeetColor.primary50.color
         tagLabel.textColor = item.isSelected ? .white : StumeetColor.gray800.color
         tagLabel.text = item.name

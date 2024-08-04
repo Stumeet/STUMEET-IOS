@@ -14,20 +14,24 @@ final class CreateStudyGroupViewModel: ViewModelType {
     
     struct Input {
         let didTapFieldButton: AnyPublisher<Void, Never>
-        let didSelectedField: AnyPublisher<StudyField, Never>
+        let didSelectedField: AnyPublisher<SelectStudyItem, Never>
         let didChangedTagTextField: AnyPublisher<String?, Never>
         let didTapAddTagButton: AnyPublisher<Void, Never>
         let didTapTagXButton: AnyPublisher<String, Never>
+        let didTapRegionButton: AnyPublisher<Void, Never>
+        let didSelectedRegion: AnyPublisher<SelectStudyItem, Never>
     }
     
     // MARK: - Output
     
     struct Output {
-        let goToSelectStudyGroupFieldVC: AnyPublisher<Void, Never>
-        let selectedField: AnyPublisher<StudyField, Never>
+        let goToSelectStudyGroupFieldVC: AnyPublisher<CreateStudySelectItemType, Never>
+        let selectedField: AnyPublisher<SelectStudyItem, Never>
         let isEnableTagAddButton: AnyPublisher<Bool, Never>
         let addedTags: AnyPublisher<[CreateStudyTagSectionItem], Never>
         let isEmptyTags: AnyPublisher<Bool, Never>
+        let goToSelectStudyGroupRegionVC: AnyPublisher<CreateStudySelectItemType, Never>
+        let selectedRegion: AnyPublisher<SelectStudyItem, Never>
     }
     
     // MARK: - Properties
@@ -77,13 +81,22 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .map { $0.map { CreateStudyTagSectionItem.tagCell($0) } }
             .eraseToAnyPublisher()
         
+        let goToSelectStudyGroupFieldVC = input.didTapFieldButton
+            .map { CreateStudySelectItemType.field }
+            .eraseToAnyPublisher()
+        
+        let goToSelectStudyGroupRegionVC = input.didTapRegionButton
+            .map { CreateStudySelectItemType.region }
+            .eraseToAnyPublisher()
         
         return Output(
-            goToSelectStudyGroupFieldVC: input.didTapFieldButton,
+            goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
             isEnableTagAddButton: isEnableTagAddButton,
             addedTags: addedTags,
-            isEmptyTags: isEmptyTags
+            isEmptyTags: isEmptyTags,
+            goToSelectStudyGroupRegionVC: goToSelectStudyGroupRegionVC,
+            selectedRegion: input.didSelectedRegion
         )
     }
 }

@@ -162,8 +162,9 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     // MARK: - Subject
     
-    private let fieldSubject = PassthroughSubject<StudyField, Never>()
+    private let fieldSubject = PassthroughSubject<SelectStudyItem, Never>()
     private let didTapTagXButtonSubject = PassthroughSubject<String, Never>()
+    private let regionSubject = PassthroughSubject<SelectStudyItem, Never>()
     
     // MARK: - Init
     
@@ -447,15 +448,17 @@ final class CreateStudyGroupViewController: BaseViewController {
             didSelectedField: fieldSubject.eraseToAnyPublisher(),
             didChangedTagTextField: tagTextField.textPublisher,
             didTapAddTagButton: tagAddButton.tapPublisher,
-            didTapTagXButton: didTapTagXButtonSubject.eraseToAnyPublisher()
+            didTapTagXButton: didTapTagXButtonSubject.eraseToAnyPublisher(),
+            didTapRegionButton: regionButton.tapPublisher,
+            didSelectedRegion: regionSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
         
         output.goToSelectStudyGroupFieldVC
-            .map { self }
+            .map { (self, $0) }
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.navigateToSelectStudyGroupFieldVC)
+            .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
             .store(in: &cancellables)
         
         output.selectedField
@@ -478,6 +481,17 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateTagCollectionViewConstraints)
             .store(in: &cancellables)
+        
+        output.goToSelectStudyGroupRegionVC
+            .map { (self, $0) }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
+            .store(in: &cancellables)
+        
+        output.selectedRegion
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateRegionButton)
+            .store(in: &cancellables)
     }
 }
 
@@ -493,7 +507,7 @@ extension CreateStudyGroupViewController {
     private static func createConfigButton(title: String, image: UIImage, radius: CGFloat) -> UIButton {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
-        config.title = title
+        
         config.image = image
         config.imagePadding = 6
         
@@ -527,9 +541,13 @@ extension CreateStudyGroupViewController {
 
 // MARK: - Delegate
 
-extension CreateStudyGroupViewController: SelectStudyGroupFieldDelegate {
-    func didTapCompleteButton(field: StudyField) {
+extension CreateStudyGroupViewController: SelectStudyGroupItemDelegate {
+    func didTapFileldCompleteButton(field: SelectStudyItem) {
         fieldSubject.send(field)
+    }
+    
+    func didTapRegionCompleteButton(region: SelectStudyItem) {
+        regionSubject.send(region)
     }
 }
 
@@ -550,6 +568,22 @@ extension CreateStudyGroupViewController {
                 make.height.equalTo(max(contentHeight, 33))
             }
         }
+    }
+    
+    private func updateRegionButton(item: SelectStudyItem) {
+        guard var config = regionButton.configuration else { return }
+        
+        config.image = config.image? .withTintColor(StumeetColor.primary700.color)
+        
+        var titleAttributes = AttributedString(item.name)
+        titleAttributes.font = StumeetFont.bodyMedium14.font
+        titleAttributes.foregroundColor = StumeetColor.primary700.color
+        config.attributedTitle = titleAttributes
+        
+        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -44, bottom: 0, trailing: 0)
+        
+        regionButton.configuration = config
+        regionButton.layer.borderColor = StumeetColor.primary700.color.cgColor
     }
 }
 

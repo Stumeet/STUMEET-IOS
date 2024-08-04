@@ -8,18 +8,19 @@
 import Combine
 import UIKit
 
-protocol SelectStudyGroupFieldDelegate: AnyObject {
-    func didTapCompleteButton(field: StudyField)
+protocol SelectStudyGroupItemDelegate: AnyObject {
+    func didTapFileldCompleteButton(field: SelectStudyItem)
+    func didTapRegionCompleteButton(region: SelectStudyItem)
 }
 
-final class SelectStudyGroupFieldViewController: BaseViewController {
+final class SelectStudyGroupItemViewController: BaseViewController {
     
-    typealias Section = StudyFieldSection
-    typealias SectionItem = StudyFieldSectionItem
+    typealias Section = SelectStudySection
+    typealias SectionItem = SelectStudySectionItem
     
     // MARK: - UIComponents
     
-    private let titleLabel = UILabel().setLabelProperty(text: "분야를 선택해주세요", font: StumeetFont.titleMedium.font, color: .gray800)
+    private let titleLabel = UILabel().setLabelProperty(text: nil, font: StumeetFont.titleMedium.font, color: .gray800)
     
     private lazy var fieldCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -39,12 +40,12 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     // MARK: - Properties
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     private let coordinator: CreateStudyGroupNavigation
-    private let viewModel: SelectStudyGroupFieldViewModel
-    weak var delegate: SelectStudyGroupFieldDelegate?
+    private let viewModel: SelectStudyItemViewModel
+    weak var delegate: SelectStudyGroupItemDelegate?
     
     // MARK: - Init
     
-    init(coordinator: CreateStudyGroupNavigation, viewModel: SelectStudyGroupFieldViewModel) {
+    init(coordinator: CreateStudyGroupNavigation, viewModel: SelectStudyItemViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         
@@ -65,8 +66,9 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     
     override func setupStyles() {
         view.backgroundColor = .white
-        configureBackButtonTitleNavigationBarItems(title: "분야 선택")
         configureDatasource()
+        configureBackButtonTitleNavigationBarItems(title: viewModel.itemType.naviTitle)
+        titleLabel.text = viewModel.itemType.explain
     }
     
     override func setupAddView() {
@@ -98,8 +100,8 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
     
     override func bind() {
         
-        let input = SelectStudyGroupFieldViewModel.Input(
-            didSelectedField: fieldCollectionView.didSelectItemPublisher,
+        let input = SelectStudyItemViewModel.Input(
+            didSelectedItem: fieldCollectionView.didSelectItemPublisher,
             didTapCompleteButton: completeButton.tapPublisher
         )
         
@@ -115,23 +117,29 @@ final class SelectStudyGroupFieldViewController: BaseViewController {
             .sink(receiveValue: updateCompleteButton)
             .store(in: &cancellables)
         
-        output.completeField
+        output.completeItem
             .receive(on: RunLoop.main)
-            .handleEvents(receiveOutput: delegate?.didTapCompleteButton)
-            .map { _ in }
-            .sink(receiveValue: coordinator.popToCreateStudyGroupVC)
+            .sink(receiveValue: { [weak self] item, type in
+                switch type {
+                case .field:
+                    self?.delegate?.didTapFileldCompleteButton(field: item)
+                case .region:
+                    self?.delegate?.didTapRegionCompleteButton(region: item)
+                }
+                self?.coordinator.popToCreateStudyGroupVC()
+            })
             .store(in: &cancellables)
     }
 }
 
 // MARK: - Datasource
 
-extension SelectStudyGroupFieldViewController {
+extension SelectStudyGroupItemViewController {
     
     private func configureDatasource() {
         datasource = UICollectionViewDiffableDataSource(collectionView: fieldCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .fieldCell(let item):
+            case .itemCell(let item):
                 guard let cell = collectionView.dequeue(TagCell.self, for: indexPath) else { return UICollectionViewCell() }
                 cell.configureTagCell(item: item)
                 
@@ -151,10 +159,10 @@ extension SelectStudyGroupFieldViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(40))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(60), heightDimension: .absolute(35))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(40))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(35))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(8)
         
@@ -168,7 +176,7 @@ extension SelectStudyGroupFieldViewController {
 
 // MARK: - UIUpdate
 
-extension SelectStudyGroupFieldViewController {
+extension SelectStudyGroupItemViewController {
     func updateCompleteButton(isEnable: Bool) {
         completeButton.isEnabled = isEnable
         completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
