@@ -33,10 +33,14 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         DefaultSelectStudyGroupFieldUseCase(repository: makeSelectStudyGroupFieldRepository())
     }
     
+    func makeCreateStudyGroupUseCase() -> CreateStudyGroupUseCase {
+        DefaultCreateStudyGroupUseCase()
+    }
+    
     // MARK: - CreateStudyGroupVC
     
     func makeCreteStudyGroupVM() -> CreateStudyGroupViewModel {
-        CreateStudyGroupViewModel()
+        CreateStudyGroupViewModel(useCase: makeCreateStudyGroupUseCase())
     }
     
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController {
