@@ -53,11 +53,7 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
         rootView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-//        imageView.snp.makeConstraints {
-//            $0.height.equalTo(imageView.snp.width).multipliedBy(1.3463)
-//        }
-        
+                
         titleLabelContainer.snp.makeConstraints {
             $0.height.equalTo(105)
         }
