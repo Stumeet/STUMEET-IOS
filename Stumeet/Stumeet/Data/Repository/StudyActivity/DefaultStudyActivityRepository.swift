@@ -53,6 +53,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             .replaceError(with: [])
             .eraseToAnyPublisher()
     }
+    
     func fetchTaskActivityItems(size: Int, page: Int) -> AnyPublisher<[Activity], Never> {
         let requestDTO = BriefStudyActivityRequestDTO(
             size: size,
@@ -68,6 +69,31 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             .map(ResponseWithDataDTO<BreifStudyActivityResponseDTO>.self)
             .compactMap { $0.data?.items.map { $0.toDomain() } }
             .replaceError(with: [])
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchActivityList(
+        size: Int,
+        page: Int,
+        isNotice: Bool?,
+        studyId: Int?,
+        category: String?
+    ) -> AnyPublisher<ActivityPage, MoyaError> {
+        let requestDTO = AllStudyActivityRequestDTO(
+            size: size,
+            page: page,
+            isNotice: isNotice,
+            studyId: studyId,
+            category: category
+        )
+        
+        return provider.requestPublisher(.fetchAllActivities(requestDTO))
+            .map(ResponseWithDataDTO<AllStudyActivityResponseDTO>.self)
+            .tryMap { response -> ActivityPage in
+                guard let data = response.data else { throw MoyaError.requestMapping("Data is nil") }
+                return data.toDomain()
+            }
+            .mapError { $0 as? MoyaError ?? MoyaError.underlying($0, nil) }
             .eraseToAnyPublisher()
     }
 }

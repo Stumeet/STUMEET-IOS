@@ -29,6 +29,12 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         )
     }
     
+    func makeStudyGroupMainRepository() -> StudyGroupMainRepository {
+        DefaultStudyGroupMainRepository(
+            provider: dependencies.provider.makeProvider()
+        )
+    }
+    
     func makeStudyActivityRepository() -> StudyActivityRepository {
         DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
     }
@@ -45,6 +51,13 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     
     func makeMyStudyGroupListUseCase() -> MyStudyGroupListUseCase {
         DefaultMyStudyGroupListUseCase(repository: makeMyStudyGroupListRepository())
+    }
+    
+    func makeMyStudyGroupListUseCase() -> StudyGroupMainUseCase {
+        DefaultStudyGroupMainUseCase(
+            studyMainRepository: makeStudyGroupMainRepository(),
+            studyActivityRepository: makeStudyActivityRepository()
+        )
     }
     
     func makeStudyActivityUseCase() -> StudyActivityUseCase {
@@ -73,6 +86,21 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         MyStudyGroupListViewController(
             coordinator:  coordinator,
             viewModel: makeMyStudyGroupListViewModel()
+        )
+    }
+    
+    // MARK: - StudyMain
+    func makeStudyMainViewModel(studyId: Int) -> StudyMainViewModel {
+        StudyMainViewModel(
+            useCase: makeMyStudyGroupListUseCase(),
+            studyID: studyId
+        )
+    }
+    
+    func makeStudyMainVC(coordinator: Navigation, studyId: Int) -> StudyMainViewController {
+        StudyMainViewController(
+            coordinator:  coordinator,
+            viewModel: makeStudyMainViewModel(studyId: studyId)
         )
     }
     
