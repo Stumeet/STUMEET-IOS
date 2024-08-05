@@ -84,7 +84,8 @@ class SnsLoginViewController: BaseViewController {
     }
     
     override func setupStyles() {
-        self.view.backgroundColor = .white
+        view.backgroundColor = .white
+        navigationItem.hidesBackButton = true
     }
     
     override func setupAddView() {
