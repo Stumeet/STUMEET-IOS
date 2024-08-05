@@ -171,6 +171,11 @@ final class SelectStudyTimeViewController: BaseViewController {
                 self?.updatePmTimeView(isSelected: isSelected)
             })
             .store(in: &cancellables)
+        
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCompleteButton)
+            .store(in: &cancellables)
     }
 }
 
@@ -212,5 +217,10 @@ extension SelectStudyTimeViewController {
             timeView.pmButton.layer.borderWidth = 1
             timeView.pmButton.backgroundColor = .white
         }
+    }
+    
+    private func updateCompleteButton(isEnable: Bool) {
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
+        completeButton.isEnabled = isEnable
     }
 }

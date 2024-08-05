@@ -25,6 +25,7 @@ final class SelectStudyTimeViewModel: ViewModelType {
         let isSelectedHours: AnyPublisher<[Bool], Never>
         let isSelectedMinute: AnyPublisher<[Bool], Never>
         let isSelectedAmButton: AnyPublisher<Bool, Never>
+        let isEnableCompleteButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -64,13 +65,13 @@ final class SelectStudyTimeViewModel: ViewModelType {
         
         input.didTapHourButton
             .map { ($0, isSelectedHoursSubject.value) }
-            .flatMap(useCase.setSelectedTimeButton)
+            .flatMap(useCase.getSelectedTimeButton)
             .sink(receiveValue: isSelectedHoursSubject.send)
             .store(in: &cancellables)
         
         input.didTapMinuteButton
             .map { ($0, isSelectedMinuteSubject.value) }
-            .flatMap(useCase.setSelectedTimeButton)
+            .flatMap(useCase.getSelectedTimeButton)
             .sink(receiveValue: isSelectedMinuteSubject.send)
             .store(in: &cancellables)
         
@@ -81,10 +82,16 @@ final class SelectStudyTimeViewModel: ViewModelType {
         .store(in: &cancellables)
         
         
+        let isEnableCompleteButton = Publishers.CombineLatest( isSelectedHoursSubject, isSelectedMinuteSubject)
+            .flatMap(useCase.getIsEnableCompleteButton)
+            .eraseToAnyPublisher()
+        
+        
         return Output(
             isSelectedHours: isSelectedHours,
             isSelectedMinute: isSelectedMinutes,
-            isSelectedAmButton: isSelectedAmButton
+            isSelectedAmButton: isSelectedAmButton,
+            isEnableCompleteButton: isEnableCompleteButton
         )
     }
 }

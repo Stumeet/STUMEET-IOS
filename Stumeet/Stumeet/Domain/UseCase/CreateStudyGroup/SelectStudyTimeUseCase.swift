@@ -9,15 +9,16 @@ import Combine
 import Foundation
 
 protocol SelectStudyTimeUseCase {
-    func setSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
+    func getSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
     func initIsAm() -> AnyPublisher<Bool, Never>
     func initHourSelecteds() -> AnyPublisher<[Bool], Never>
     func initMinuteSelecteds() -> AnyPublisher<[Bool], Never>
+    func getIsEnableCompleteButton(hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
 }
 
 
 final class DefaultSelectStudyTimeUseCase: SelectStudyTimeUseCase {
-    func setSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never> {
+    func getSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never> {
         var updatedTimeSelecteds = timeSelecteds
         updatedTimeSelecteds[selectedIndex].toggle()
         
@@ -49,8 +50,8 @@ final class DefaultSelectStudyTimeUseCase: SelectStudyTimeUseCase {
         return Just(isAm).eraseToAnyPublisher()
     }
     
-    func
-}
-
-extension DefaultSelectStudyTimeUseCase {
+    func getIsEnableCompleteButton(hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never> {
+        
+        return Just(hours.contains(true) && minutes.contains(true)).eraseToAnyPublisher()
+    }
 }
