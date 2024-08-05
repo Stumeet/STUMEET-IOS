@@ -113,6 +113,8 @@
 		CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */; };
 		CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF02B919341009D4064 /* RegisterService.swift */; };
 		CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */; };
+		CA107A652C60F6D700163407 /* SelectStudyTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */; };
+		CA107A672C60F8A200163407 /* SelectStudyTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */; };
 		CA194E902BCA60A50090E97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA194E912BCA619C0090E97C /* RegionSection.swift */; };
 		CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */; };
@@ -391,6 +393,8 @@
 		CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNicknameRepository.swift; sourceTree = "<group>"; };
 		CA0A0AF02B919341009D4064 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
+		CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewController.swift; sourceTree = "<group>"; };
+		CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewModel.swift; sourceTree = "<group>"; };
 		CA194E912BCA619C0090E97C /* RegionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSection.swift; sourceTree = "<group>"; };
 		CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -1693,6 +1697,7 @@
 				CA94FD7C2C50E07A00A11A8E /* CreateStudyGroupViewController.swift */,
 				CA31EC622C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift */,
 				CA94FD852C526F8700A11A8E /* SelectStudyGroupItemViewController.swift */,
+				CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1703,6 +1708,7 @@
 				CA94FD832C526F4700A11A8E /* CreateStudyGroupViewModel.swift */,
 				CAA883EA2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift */,
 				CA94FD8D2C528F5A00A11A8E /* SelectStudyItemViewModel.swift */,
+				CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2274,6 +2280,7 @@
 				CA01B2872C0452DB00A01CEA /* DetailActivityMemberListViewController.swift in Sources */,
 				357D1BAD2BB81B0F0079DCE6 /* LoginRepository.swift in Sources */,
 				357D1B972BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift in Sources */,
+				CA107A672C60F8A200163407 /* SelectStudyTimeViewModel.swift in Sources */,
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
 				CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
@@ -2324,6 +2331,7 @@
 				352885F22BB9C79600EFC0F6 /* UserTokenService.swift in Sources */,
 				CA94FD7B2C50DFDE00A11A8E /* CreateStudyGroupDIContainer.swift in Sources */,
 				CAFBF3712B9C319200507047 /* RegisterRequestDTO.swift in Sources */,
+				CA107A652C60F6D700163407 /* SelectStudyTimeViewController.swift in Sources */,
 				CA31EC5B2C59E6AA004D79A8 /* CreateStudyGroupUseCase.swift in Sources */,
 				CAF533562B9EB5EE00A7B8B2 /* StartUseCase.swift in Sources */,
 				CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */,

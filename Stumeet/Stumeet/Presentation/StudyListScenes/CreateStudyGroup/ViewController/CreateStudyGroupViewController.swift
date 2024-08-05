@@ -453,7 +453,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didSelectedRegion: regionSubject.eraseToAnyPublisher(),
             didTapPeriodStartButton: periodStartButton.tapPublisher,
             didTapPeriodEndButton: periodEndButton.tapPublisher,
-            didSelecetedPeriod: periodSubject.eraseToAnyPublisher()
+            didSelecetedPeriod: periodSubject.eraseToAnyPublisher(),
+            didTapTimeButton: timeButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -505,6 +506,11 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.periodAttributedStrings
             .receive(on: RunLoop.main)
             .sink(receiveValue: updatePeriodButton)
+            .store(in: &cancellables)
+        
+        output.goToSelectStudyTimeVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSelectStudyTimeVC)
             .store(in: &cancellables)
     }
 }
