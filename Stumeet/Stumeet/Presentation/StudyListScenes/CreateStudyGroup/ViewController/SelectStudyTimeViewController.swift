@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 8/5/24.
 //
 
+import Combine
 import UIKit
 
 final class SelectStudyTimeViewController: BaseViewController {
@@ -137,6 +138,39 @@ final class SelectStudyTimeViewController: BaseViewController {
     
     override func bind() {
         
+        let didTapHourButtonPublisher = Publishers.MergeMany(timeView.hourButtons.enumerated()
+            .map { index, button in button.tapPublisher.map { index } })
+        
+        let didTapMinuteButtonPublisher = Publishers.MergeMany(timeView.minuteButtons.enumerated()
+            .map { index, button in button.tapPublisher.map { index } })
+        
+        let input = SelectStudyTimeViewModel.Input(
+            didTapHourButton: didTapHourButtonPublisher.eraseToAnyPublisher(),
+            didTapMinuteButton: didTapMinuteButtonPublisher.eraseToAnyPublisher(),
+            didTapAmButtonTapPublisher: timeView.amButton.tapPublisher,
+            didTapPmButtonTapPublisher: timeView.pmButton.tapPublisher
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isSelectedHours
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: timeView.updateHourButton)
+            .store(in: &cancellables)
+        
+        // 분 버튼 UI 업데이트
+        output.isSelectedMinute
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: timeView.updateMinuteButton)
+            .store(in: &cancellables)
+        
+        output.isSelectedAmButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] isSelected in
+                self?.updateAmTimeView(isSelected: isSelected)
+                self?.updatePmTimeView(isSelected: isSelected)
+            })
+            .store(in: &cancellables)
     }
 }
 
@@ -152,5 +186,31 @@ extension SelectStudyTimeViewController {
             self.backgroundButton.alpha = 0.1
             self.view.layoutIfNeeded()
         })
+    }
+    
+    private func updateAmTimeView(isSelected: Bool) {
+        if isSelected {
+            timeView.amButton.setTitleColor(StumeetColor.primary700.color, for: .normal)
+            timeView.amButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+            timeView.amButton.layer.borderWidth = 1
+            timeView.amButton.backgroundColor = .white
+        } else {
+            timeView.amButton.setTitleColor(StumeetColor.gray400.color, for: .normal)
+            timeView.amButton.backgroundColor = StumeetColor.gray75.color
+            timeView.amButton.layer.borderWidth = 0
+        }
+    }
+
+    private func updatePmTimeView(isSelected: Bool) {
+        if isSelected {
+            timeView.pmButton.setTitleColor(StumeetColor.gray400.color, for: .normal)
+            timeView.pmButton.backgroundColor = StumeetColor.gray75.color
+            timeView.pmButton.layer.borderWidth = 0
+        } else {
+            timeView.pmButton.setTitleColor(StumeetColor.primary700.color, for: .normal)
+            timeView.pmButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+            timeView.pmButton.layer.borderWidth = 1
+            timeView.pmButton.backgroundColor = .white
+        }
     }
 }
