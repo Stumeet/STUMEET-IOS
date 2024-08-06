@@ -10,9 +10,25 @@ import Foundation
 
 final class SelectStudyTimeViewModel: ViewModelType {
     
+    enum DragState {
+        case began
+        case changed
+        case ended
+        case cancelled
+    }
+    
+    struct DragInfo {
+        let state: DragState
+        let translationY: CGFloat
+        let velocityY: CGFloat
+        let bottomSheetViewHeight: CGFloat
+    }
+    
     // MARK: - Input
     
     struct Input {
+        let didTapBackgroundButton: AnyPublisher<Void, Never>
+        let didDragEvent: AnyPublisher<DragInfo, Never>
         let didTapHourButton: AnyPublisher<Int, Never>
         let didTapMinuteButton: AnyPublisher<Int, Never>
         let didTapAmButtonTapPublisher: AnyPublisher<Void, Never>
@@ -23,6 +39,9 @@ final class SelectStudyTimeViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
+        let dismiss: AnyPublisher<Void, Never>
+        let adjustHeight: AnyPublisher<CGFloat, Never>
+        let isRestoreBottomSheetView: AnyPublisher<Bool, Never>
         let isSelectedHours: AnyPublisher<[Bool], Never>
         let isSelectedMinute: AnyPublisher<[Bool], Never>
         let isSelectedAmButton: AnyPublisher<Bool, Never>
@@ -52,6 +71,20 @@ final class SelectStudyTimeViewModel: ViewModelType {
         let isSelectedHours = isSelectedHoursSubject.eraseToAnyPublisher()
         let isSelectedMinutes = isSelectedMinuteSubject.eraseToAnyPublisher()
         let isSelectedAmButton = isAmSubject.eraseToAnyPublisher()
+        
+        let dismiss = input.didTapBackgroundButton
+        
+        let adjustHeight = input.didDragEvent
+            .filter { $0.state == .changed }
+            .map { ($0.bottomSheetViewHeight, $0.translationY)}
+            .flatMap(useCase.setAdjustHeight)
+            .eraseToAnyPublisher()
+        
+        let isRestoreBottomSheetView = input.didDragEvent
+            .filter { $0.state == .ended || $0.state == .cancelled }
+            .map { ($0.velocityY, $0.bottomSheetViewHeight)}
+            .flatMap(useCase.setIsRestoreBottomSheetView)
+            .eraseToAnyPublisher()
         
         useCase.initHourSelecteds()
             .sink(receiveValue: isSelectedHoursSubject.send)
@@ -101,6 +134,9 @@ final class SelectStudyTimeViewModel: ViewModelType {
         
         
         return Output(
+            dismiss: dismiss,
+            adjustHeight: adjustHeight,
+            isRestoreBottomSheetView: isRestoreBottomSheetView,
             isSelectedHours: isSelectedHours,
             isSelectedMinute: isSelectedMinutes,
             isSelectedAmButton: isSelectedAmButton,

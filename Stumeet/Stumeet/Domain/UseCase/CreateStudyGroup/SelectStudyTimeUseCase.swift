@@ -9,6 +9,8 @@ import Combine
 import Foundation
 
 protocol SelectStudyTimeUseCase {
+    func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never>
+    func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat) -> AnyPublisher<Bool, Never>
     func getSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
     func initIsAm() -> AnyPublisher<Bool, Never>
     func initHourSelecteds() -> AnyPublisher<[Bool], Never>
@@ -19,6 +21,16 @@ protocol SelectStudyTimeUseCase {
 
 
 final class DefaultSelectStudyTimeUseCase: SelectStudyTimeUseCase {
+    
+    func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never> {
+        return Just(max(0, min(456, bottomSheetHeight - translationY)))
+            .eraseToAnyPublisher()
+    }
+    
+    func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat) -> AnyPublisher<Bool, Never> {
+        return Just((velocityY > 1500 || bottomSheetHeight < 228)).eraseToAnyPublisher()
+    }
+    
     func getSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never> {
         var updatedTimeSelecteds = timeSelecteds
         updatedTimeSelecteds[selectedIndex].toggle()

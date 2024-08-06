@@ -54,6 +54,10 @@ final class SelectStudyTimeViewController: BaseViewController {
     private let viewModel: SelectStudyTimeViewModel
     weak var delegate: SelectStudyTimeDelegate?
     
+    // MARK: - Subject
+    
+    private let dragEventSubject = PassthroughSubject<SelectStudyTimeViewModel.DragInfo, Never>()
+    
     // MARK: - Init
     
     init(coordinator: CreateStudyGroupNavigation, viewModel: SelectStudyTimeViewModel) {
@@ -100,6 +104,9 @@ final class SelectStudyTimeViewController: BaseViewController {
             backgroundButton,
             bottomSheetView
         ]   .forEach(view.addSubview)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        dragIndicatorContainerView.addGestureRecognizer(panGesture)
     }
     
     override func setupConstaints() {
@@ -149,6 +156,8 @@ final class SelectStudyTimeViewController: BaseViewController {
             .map { index, button in button.tapPublisher.map { index } })
         
         let input = SelectStudyTimeViewModel.Input(
+            didTapBackgroundButton: backgroundButton.tapPublisher,
+            didDragEvent: dragEventSubject.eraseToAnyPublisher(),
             didTapHourButton: didTapHourButtonPublisher.eraseToAnyPublisher(),
             didTapMinuteButton: didTapMinuteButtonPublisher.eraseToAnyPublisher(),
             didTapAmButtonTapPublisher: timeView.amButton.tapPublisher,
@@ -157,6 +166,25 @@ final class SelectStudyTimeViewController: BaseViewController {
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: hideBottomSheet)
+            .store(in: &cancellables)
+        
+        output.adjustHeight
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: adjustBottomSheetHeight)
+            .store(in: &cancellables)
+    
+        output.isRestoreBottomSheetView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isRestore in
+                if isRestore {
+                    self?.hideBottomSheet()
+                } else { self?.showBottomSheet() }
+            }
+            .store(in: &cancellables)
         
         output.isSelectedHours
             .receive(on: RunLoop.main)
@@ -186,7 +214,7 @@ final class SelectStudyTimeViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] time in
                 self?.delegate?.didTapCompleteButton(time: time)
-                self?.coordinator.dismiss()
+                self?.hideBottomSheet()
             }
             .store(in: &cancellables)
     }
@@ -196,6 +224,14 @@ final class SelectStudyTimeViewController: BaseViewController {
 // MARK: - UIUpdate
 
 extension SelectStudyTimeViewController {
+    
+    private func adjustBottomSheetHeight(_ height: CGFloat) {
+        self.bottomSheetView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+        self.view.layoutIfNeeded()
+    }
+    
     private func showBottomSheet() {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.snp.updateConstraints { make in
@@ -204,6 +240,21 @@ extension SelectStudyTimeViewController {
             self.backgroundButton.alpha = 0.1
             self.view.layoutIfNeeded()
         })
+    }
+    
+    private func hideBottomSheet() {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.bottomSheetView.snp.updateConstraints { make in
+                    make.height.equalTo(0)
+                }
+                self.backgroundButton.alpha = 0
+                self.view.layoutIfNeeded()
+            },
+            completion: { _ in
+                self.coordinator.dismiss()
+            })
     }
     
     private func updateAmTimeView(isSelected: Bool) {
@@ -235,5 +286,32 @@ extension SelectStudyTimeViewController {
     private func updateCompleteButton(isEnable: Bool) {
         completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
         completeButton.isEnabled = isEnable
+    }
+}
+
+// MARK: - ObjcFunc
+
+extension SelectStudyTimeViewController {
+
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let state: SelectStudyTimeViewModel.DragState
+        switch gesture.state {
+        case .began: state = .began
+        case .changed: state = .changed
+        case .ended: state = .ended
+        case .cancelled: state = .cancelled
+        default: return
+        }
+        
+        let translation = gesture.translation(in: self.view)
+        let velocity = gesture.velocity(in: self.view)
+        let dragInfo = SelectStudyTimeViewModel.DragInfo(
+            state: state,
+            translationY: translation.y,
+            velocityY: velocity.y,
+            bottomSheetViewHeight: self.bottomSheetView.frame.height)
+        
+        dragEventSubject.send(dragInfo)
+        gesture.setTranslation(.zero, in: self.view)
     }
 }
