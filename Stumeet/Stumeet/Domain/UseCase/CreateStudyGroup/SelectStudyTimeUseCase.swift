@@ -14,6 +14,7 @@ protocol SelectStudyTimeUseCase {
     func initHourSelecteds() -> AnyPublisher<[Bool], Never>
     func initMinuteSelecteds() -> AnyPublisher<[Bool], Never>
     func getIsEnableCompleteButton(hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
+    func getCompletedTimeText(isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never>
 }
 
 
@@ -53,5 +54,18 @@ final class DefaultSelectStudyTimeUseCase: SelectStudyTimeUseCase {
     func getIsEnableCompleteButton(hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never> {
         
         return Just(hours.contains(true) && minutes.contains(true)).eraseToAnyPublisher()
+    }
+    
+    func getCompletedTimeText(isAm: Bool, hours: [Bool], minutes: [Bool]) -> AnyPublisher<String, Never> {
+        let ampm = isAm ? "오전" : "오후"
+        let hour = hours
+            .firstIndex(where: { $0 })
+            .map { String(format: "%02d", $0 + 1) }
+        let minute = minutes
+            .firstIndex(where: { $0 })
+            .map { String(format: "%02d", $0 * 5)}
+        
+        let result = "\(ampm) \(hour!):\(minute!)"
+        return Just(result).eraseToAnyPublisher()
     }
 }

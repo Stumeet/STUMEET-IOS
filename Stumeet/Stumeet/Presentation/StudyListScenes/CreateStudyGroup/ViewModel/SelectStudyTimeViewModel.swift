@@ -17,6 +17,7 @@ final class SelectStudyTimeViewModel: ViewModelType {
         let didTapMinuteButton: AnyPublisher<Int, Never>
         let didTapAmButtonTapPublisher: AnyPublisher<Void, Never>
         let didTapPmButtonTapPublisher: AnyPublisher<Void, Never>
+        let didTapCompleteButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -26,6 +27,7 @@ final class SelectStudyTimeViewModel: ViewModelType {
         let isSelectedMinute: AnyPublisher<[Bool], Never>
         let isSelectedAmButton: AnyPublisher<Bool, Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
+        let completedTime: AnyPublisher<String, Never>
     }
     
     // MARK: - Properties
@@ -86,12 +88,24 @@ final class SelectStudyTimeViewModel: ViewModelType {
             .flatMap(useCase.getIsEnableCompleteButton)
             .eraseToAnyPublisher()
         
+        let completedTime = input.didTapCompleteButton
+            .map { _ in
+                (
+                    isAmSubject.value,
+                    isSelectedHoursSubject.value,
+                    isSelectedMinuteSubject.value
+                )
+            }
+            .flatMap(useCase.getCompletedTimeText)
+            .eraseToAnyPublisher()
+        
         
         return Output(
             isSelectedHours: isSelectedHours,
             isSelectedMinute: isSelectedMinutes,
             isSelectedAmButton: isSelectedAmButton,
-            isEnableCompleteButton: isEnableCompleteButton
+            isEnableCompleteButton: isEnableCompleteButton,
+            completedTime: completedTime
         )
     }
 }

@@ -24,6 +24,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didTapPeriodEndButton: AnyPublisher<Void, Never>
         let didSelecetedPeriod: AnyPublisher<(startDate: Date, endDate: Date), Never>
         let didTapTimeButton: AnyPublisher<Void, Never>
+        let didSelectedTime: AnyPublisher<String, Never>
     }
     
     // MARK: - Output
@@ -39,6 +40,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let goToSetStudyGroupPeriodVC: AnyPublisher<(isStart: Bool, startDate: Date, endDate: Date?), Never>
         let periodAttributedStrings: AnyPublisher<(start: AttributedString, end: AttributedString?), Never>
         let goToSelectStudyTimeVC: AnyPublisher<Void, Never>
+        let timeAttributedString: AnyPublisher<AttributedString, Never>
     }
     
     // MARK: - Properties
@@ -112,6 +114,10 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .map(dateToAttributedString)
             .eraseToAnyPublisher()
         
+        let timeAttributedString = input.didSelectedTime
+            .map { AttributedString($0) }
+            .eraseToAnyPublisher()
+        
         return Output(
             goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
@@ -122,7 +128,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             selectedRegion: input.didSelectedRegion,
             goToSetStudyGroupPeriodVC: goToSetStudyGroupPeriodVC,
             periodAttributedStrings: periodAttributedStrings,
-            goToSelectStudyTimeVC: input.didTapTimeButton
+            goToSelectStudyTimeVC: input.didTapTimeButton,
+            timeAttributedString: timeAttributedString
         )
     }
     

@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol SelectStudyTimeDelegate: AnyObject {
+    func didTapCompleteButton(time: String)
+}
+
 final class SelectStudyTimeViewController: BaseViewController {
     
     // MARK: - UIComponents
@@ -48,6 +52,7 @@ final class SelectStudyTimeViewController: BaseViewController {
     
     private let coordinator: CreateStudyGroupNavigation
     private let viewModel: SelectStudyTimeViewModel
+    weak var delegate: SelectStudyTimeDelegate?
     
     // MARK: - Init
     
@@ -77,7 +82,6 @@ final class SelectStudyTimeViewController: BaseViewController {
     // MARK: - SetUp
     
     override func setupStyles() {
-        view.backgroundColor = .white
     }
     
     override func setupAddView() {
@@ -148,7 +152,8 @@ final class SelectStudyTimeViewController: BaseViewController {
             didTapHourButton: didTapHourButtonPublisher.eraseToAnyPublisher(),
             didTapMinuteButton: didTapMinuteButtonPublisher.eraseToAnyPublisher(),
             didTapAmButtonTapPublisher: timeView.amButton.tapPublisher,
-            didTapPmButtonTapPublisher: timeView.pmButton.tapPublisher
+            didTapPmButtonTapPublisher: timeView.pmButton.tapPublisher,
+            didTapCompleteButton: completeButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -175,6 +180,14 @@ final class SelectStudyTimeViewController: BaseViewController {
         output.isEnableCompleteButton
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateCompleteButton)
+            .store(in: &cancellables)
+        
+        output.completedTime
+            .receive(on: RunLoop.main)
+            .sink { [weak self] time in
+                self?.delegate?.didTapCompleteButton(time: time)
+                self?.coordinator.dismiss()
+            }
             .store(in: &cancellables)
     }
 }

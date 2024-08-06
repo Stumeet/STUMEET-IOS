@@ -19,7 +19,7 @@ protocol CreateStudyGroupNavigation: AnyObject {
     func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType)
     func popToCreateStudyGroupVC()
     func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?))
-    func presentToSelectStudyTimeVC()
+    func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate)
     func dismiss()
 }
 
@@ -69,16 +69,17 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         navigationController.present(calendarVC, animated: false)
     }
     
-    func presentToSelectStudyTimeVC() {
+    func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate) {
         guard let lastVC = navigationController.viewControllers.last else { return }
         let selectTimeVC = dependencies.makeSelectStudyTimeVC(coordinator: self)
         selectTimeVC.modalPresentationStyle = .overFullScreen
+        selectTimeVC.delegate = delegate
         navigationController.present(selectTimeVC, animated: false)
     }
     
     func dismiss() {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        lastVC.dismiss(animated: true)
+        lastVC.dismiss(animated: false)
     }
     
     
