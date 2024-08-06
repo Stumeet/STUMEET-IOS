@@ -9,11 +9,7 @@ import Combine
 import UIKit
 
 class OnboardingViewController: BaseViewController {
-    // TODO: - viewmodel 연결
-    let pages: [(String, ImageResource)] = [("스터디를 생성하고 초대할 수 있어요", .Onboarding.onboardingImg1),
-                                            ("칭찬을 주고 받으며 포도알을 채워나가요!", .Onboarding.onboardingImg2),
-                                            ("스터밋으로 공부하고\n나의 포도나무를 성장시켜 보세요!", .Onboarding.onboardingImg3)]
-    
+
     // MARK: - UIComponents
     private let rootVStackView: UIStackView = {
         let stackView = UIStackView()
@@ -68,6 +64,9 @@ class OnboardingViewController: BaseViewController {
     // MARK: - Properties
     private let viewModel: OnboardingViewModel
     private weak var coordinator: AuthNavigation!
+    private let pages: [(String, ImageResource)] = [("스터디를 생성하고 초대할 수 있어요", .Onboarding.onboardingImg1),
+                                            ("칭찬을 주고 받으며 포도알을 채워나가요!", .Onboarding.onboardingImg2),
+                                            ("스터밋으로 공부하고\n나의 포도나무를 성장시켜 보세요!", .Onboarding.onboardingImg3)]
         
     // MARK: - Init
     init(viewModel: OnboardingViewModel,
