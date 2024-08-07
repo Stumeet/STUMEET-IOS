@@ -13,12 +13,14 @@ final class MyStudyGroupListViewModel: ViewModelType {
     struct Input {
         let loadStudyGroupData: AnyPublisher<String, Never>
         let didSelectedCell: AnyPublisher<IndexPath, Never>
+        let didTapCreateStudyButton: AnyPublisher<Void, Never>
     }
 
     // MARK: - Output
     struct Output {
         let studyGroupDataSource: AnyPublisher<[StudyGroup], Never>
         let navigateToStudyMainVC: AnyPublisher<Int, Never>
+        let presentToCreateStudyGroupVC: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -45,7 +47,8 @@ final class MyStudyGroupListViewModel: ViewModelType {
     
         return Output(
             studyGroupDataSource: studyGroupDataSource,
-            navigateToStudyMainVC: navigateToStudyMainVC
+            navigateToStudyMainVC: navigateToStudyMainVC,
+            presentToCreateStudyGroupVC: input.didTapCreateStudyButton
         )
     }
     

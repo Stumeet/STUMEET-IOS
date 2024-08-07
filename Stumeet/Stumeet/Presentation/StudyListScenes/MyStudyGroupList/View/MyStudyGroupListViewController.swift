@@ -34,6 +34,7 @@ class MyStudyGroupListViewController: BaseViewController {
     private let viewModel: MyStudyGroupListViewModel
     private var studyGroupDataSource: UITableViewDiffableDataSource<MyStudyGroupListSection, StudyGroup>?
     private let loadStudyGroupDataSubject = PassthroughSubject<String, Never>()
+    private let didTapCreateStudyButtonSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
     init(coordinator: MyStudyGroupListNavigation,
@@ -90,7 +91,8 @@ class MyStudyGroupListViewController: BaseViewController {
         // MARK: - Input
         let input = MyStudyGroupListViewModel.Input(
             loadStudyGroupData: loadStudyGroupDataSubject.eraseToAnyPublisher(),
-            didSelectedCell: studyGroupTableView.didSelectRowPublisher.eraseToAnyPublisher()
+            didSelectedCell: studyGroupTableView.didSelectRowPublisher.eraseToAnyPublisher(),
+            didTapCreateStudyButton: didTapCreateStudyButtonSubject.eraseToAnyPublisher()
         )
         
         // MARK: - Output
@@ -105,6 +107,12 @@ class MyStudyGroupListViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.goToStudyMain(with:))
             .store(in: &cancellables)
+        
+        output.presentToCreateStudyGroupVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.startCreateStudyGroupCoordinator)
+            .store(in: &cancellables)
+        
     }
     
     // MARK: - Function
@@ -112,6 +120,11 @@ class MyStudyGroupListViewController: BaseViewController {
         let button = UIButton()
         let image = UIImage(named: imageName)
         button.setImage(image, for: .normal)
+        
+        button.tapPublisher
+            .sink(receiveValue: didTapCreateStudyButtonSubject.send)
+            .store(in: &cancellables)
+        
         return UIBarButtonItem(customView: button)
     }
 }

@@ -27,6 +27,21 @@ extension UIButton {
     func applyStyle(_ style: ButtonStyle) {
         style.apply(to: self)
     }
+    
+    
+    /// UIButton Configuration으로 만든 text의 속성을 바꿔주는 함수입니다.
+    /// - Parameters:
+    ///   - text: 바꿀 텍스트
+    ///   - textColor: 바꿀 컬러
+    func updateConfiguration(withText text: String, textColor: StumeetColor) {
+        guard var config = self.configuration else { return }
+        
+        var titleAttributes = AttributedString(text)
+        titleAttributes.foregroundColor = textColor.color
+        
+        config.attributedTitle = titleAttributes
+        self.configuration = config
+    }
 }
 
 enum ButtonStyle {

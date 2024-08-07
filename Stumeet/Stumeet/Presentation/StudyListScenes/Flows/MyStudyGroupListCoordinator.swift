@@ -15,6 +15,7 @@ protocol MyStudyGroupListCoordinatorDependencies {
     func makeCreateActivityCoordinator(navigationController: UINavigationController, activity: ActivityCategory) -> CreateActivityCoordinator
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: MyStudyGroupListNavigation) -> DetailActivityPhotoListViewController
     func makeDetailActivityMemberListVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
+    func makeCreateStudyGroupCoordinator(navigationController: UINavigationController) -> CreateStudyGroupCoordinator
 }
 
 protocol MyStudyGroupListNavigation: AnyObject {
@@ -28,6 +29,7 @@ protocol MyStudyGroupListNavigation: AnyObject {
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
     func presentToDetailActivityMemberListVC(studyID: Int, activityID: Int)
     func startCreateActivityCoordinator(activity: ActivityCategory)
+    func startCreateStudyGroupCoordinator()
     func popViewController()
     func dismiss()
 }
@@ -106,6 +108,17 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         flow.parentCoordinator = self
         children.append(flow)
         flow.start(category: activity)
+    }
+    
+    func startCreateStudyGroupCoordinator() {
+        let createStudyGroupNVC = UINavigationController()
+        let flow = dependencies.makeCreateStudyGroupCoordinator(
+            navigationController: createStudyGroupNVC
+        )
+        children.removeAll()
+        flow.parentCoordinator = self
+        children.append(flow)
+        flow.start()
     }
     
     func presentToDetailActivityMemberListVC(studyID: Int, activityID: Int) {

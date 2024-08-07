@@ -194,6 +194,11 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         return CreateActivityDIContainer(dependencies: dependencies)
     }
     
+    func makeCreateActivityDIContainer() -> CreateStudyGroupDIContainer {
+        let dependencies = CreateStudyGroupDIContainer.Dependencies(provider: dependencies.provider)
+        return CreateStudyGroupDIContainer(dependencies: dependencies)
+    }
+    
     // MARK: - Flow Coordinators
     func makeCreateActivityCoordinator(navigationController: UINavigationController, activity: ActivityCategory) -> CreateActivityCoordinator {
         return CreateActivityCoordinator(
@@ -206,6 +211,13 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         return MyStudyGroupListCoordinator(
             navigationController: navigationController,
             dependencies: self
+        )
+    }
+    
+    func makeCreateStudyGroupCoordinator(navigationController: UINavigationController) -> CreateStudyGroupCoordinator {
+        return CreateStudyGroupCoordinator(
+            navigationController: navigationController,
+            dependencies: makeCreateActivityDIContainer()
         )
     }
 }
