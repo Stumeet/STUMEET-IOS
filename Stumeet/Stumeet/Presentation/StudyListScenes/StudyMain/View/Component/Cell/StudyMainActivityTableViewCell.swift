@@ -8,13 +8,6 @@
 import UIKit
 import SnapKit
 
-// TODO: API 연동 시 수정
-enum StudyMainActivityCellStyle {
-    case notice
-    case activityFirstCell
-    case normal
-}
-
 class StudyMainActivityTableViewCell: BaseTableViewCell {
 
     // MARK: - UIComponents
@@ -88,9 +81,8 @@ class StudyMainActivityTableViewCell: BaseTableViewCell {
     }
     
     // MARK: - Function
-    // TODO: API 연동 시 수정
-    func configureCell(style: StudyMainActivityCellStyle = .normal) {
-        switch style {
+    func configureCell(data: StudyMainViewActivityItem) {
+        switch data.cellType {
         case .notice:
             registeredNoticeContentHStackView.isHidden = false
             constRootTop.update(inset: 8)
@@ -108,7 +100,7 @@ class StudyMainActivityTableViewCell: BaseTableViewCell {
             constRootBottom.update(inset: 8)
         }
         
-        activityInfoView.configureView()
+        activityInfoView.configureView(data: data)
     }
 
 }

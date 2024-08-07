@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class ActivityInfoBoxView: UIView {
     
@@ -235,17 +236,37 @@ class ActivityInfoBoxView: UIView {
     }
 
     // MARK: - Function
-    // TODO: API 연동 시 수정
-    func configureView(isMain: Bool = true) {
-        subContentVStackView.isHidden = isMain
+    func configureView(data: StudyMainViewActivityItem) {
+        typeLabel.text = data.displayType.title
+        mainTitleLabel.text = data.activity.title
+        mainSubtitleLabel.text = data.activity.content
         
-        typeLabel.text = "모임"
-        mainTitleLabel.text = "캠스터디"
-        mainSubtitleLabel.text = "이번주 캠 스터디 진행합니다. 참여하시는 분들은 디스코"
-        dateLabel.text = "2024.02.00 00:00"
-        locationLabel.text = "서울여자대학교"
-        profileInfoImageView.image = UIImage(resource: .StudyGroupMain.testHeaderImg)
-        profileInfoNameLabel.text = "김철수"
-        profileInfoDateLabel.text = "2일 전"
+        switch data.displayType {
+        case .freedom:
+            dateContentHStackView.isHidden = true
+            dateLabel.text = ""
+        case .homework:
+            dateContentHStackView.isHidden = false
+            dateLabel.text = data.displayEndTime
+        case .meeting:
+            dateContentHStackView.isHidden = false
+            dateLabel.text = data.displayStartTiem
+        }
+        
+        if let displayPlace = data.activity.place {
+            locationContentHStackView.isHidden = false
+            locationLabel.text = displayPlace
+        } else {
+            locationContentHStackView.isHidden = true
+            locationLabel.text = ""
+        }
+        
+        if let imageUrl = data.activity.image {
+            let url = URL(string: imageUrl)
+            profileInfoImageView.kf.setImage(with: url)
+        }
+        
+        profileInfoNameLabel.text = data.displayAuthorName
+        profileInfoDateLabel.text = data.displayCreatedAt
     }
 }

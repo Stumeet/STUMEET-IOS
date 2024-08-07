@@ -22,7 +22,7 @@ final class DefaultMyStudyGroupListRepository: MyStudyGroupListRepository {
             .map(ResponseWithDataDTO<StudiesResponseDTO>.self)
             .map { response -> [StudyGroup] in
                 guard let data = response.data?.studySimpleResponses else { return [] }
-                let list = data.map { $0.toDomain() }                
+                let list = data.map { $0.toDomain() }
                 return list
             }
             .mapError { $0 as MoyaError }
