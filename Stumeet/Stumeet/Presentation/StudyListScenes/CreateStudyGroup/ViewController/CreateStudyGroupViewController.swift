@@ -166,6 +166,8 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let didTapTagXButtonSubject = PassthroughSubject<String, Never>()
     private let regionSubject = PassthroughSubject<SelectStudyItem, Never>()
     private let periodSubject = PassthroughSubject<(startDate: Date, endDate: Date), Never>()
+    private let timeSubject = PassthroughSubject<String, Never>()
+    
     // MARK: - Init
     
     init(coordinator: CreateStudyGroupNavigation, viewModel: CreateStudyGroupViewModel) {
@@ -453,7 +455,9 @@ final class CreateStudyGroupViewController: BaseViewController {
             didSelectedRegion: regionSubject.eraseToAnyPublisher(),
             didTapPeriodStartButton: periodStartButton.tapPublisher,
             didTapPeriodEndButton: periodEndButton.tapPublisher,
-            didSelecetedPeriod: periodSubject.eraseToAnyPublisher()
+            didSelecetedPeriod: periodSubject.eraseToAnyPublisher(),
+            didTapTimeButton: timeButton.tapPublisher,
+            didSelectedTime: timeSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -506,6 +510,17 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updatePeriodButton)
             .store(in: &cancellables)
+        
+        output.goToSelectStudyTimeVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSelectStudyTimeVC)
+            .store(in: &cancellables)
+        
+        output.timeAttributedString
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateTimeButton)
+            .store(in: &cancellables)
     }
 }
 
@@ -555,7 +570,11 @@ extension CreateStudyGroupViewController {
 
 // MARK: - Delegate
 
-extension CreateStudyGroupViewController: SelectStudyGroupItemDelegate, SetStudyGroupPeriodDelegate {
+extension CreateStudyGroupViewController: 
+    SelectStudyGroupItemDelegate,
+    SetStudyGroupPeriodDelegate,
+    SelectStudyTimeDelegate {
+    
     func didTapFileldCompleteButton(field: SelectStudyItem) {
         fieldSubject.send(field)
     }
@@ -566,6 +585,10 @@ extension CreateStudyGroupViewController: SelectStudyGroupItemDelegate, SetStudy
     
     func didTapCompleteButton(startDate: Date, endDate: Date) {
         periodSubject.send((startDate: startDate, endDate: endDate))
+    }
+    
+    func didTapCompleteButton(time: String) {
+        timeSubject.send(time)
     }
 }
 
@@ -616,6 +639,16 @@ extension CreateStudyGroupViewController {
             button.configuration?.attributedTitle = isNilEnd ? "선택 없음" : title
             button.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
         }
+    }
+    
+    
+    
+    private func updateTimeButton(time: AttributedString) {
+        timeButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+        timeButton.configuration?.image = UIImage(resource: .CreateStudyGroup.clock).withTintColor(StumeetColor.primary700.color)
+        timeButton.configuration?.attributedTitle = time
+        timeButton.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
+        timeButton.configuration?.baseForegroundColor = StumeetColor.primary700.color
     }
 }
 

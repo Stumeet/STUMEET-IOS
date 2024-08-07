@@ -11,6 +11,7 @@ protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
     func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController
     func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, dates: (isStart: Bool, startDate: Date, endDate: Date?)) -> SetStudyGroupPeriodViewController
+    func makeSelectStudyTimeVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyTimeViewController
 }
 
 protocol CreateStudyGroupNavigation: AnyObject {
@@ -18,6 +19,7 @@ protocol CreateStudyGroupNavigation: AnyObject {
     func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType)
     func popToCreateStudyGroupVC()
     func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?))
+    func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate)
     func dismiss()
 }
 
@@ -64,11 +66,21 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         let calendarVC = dependencies.makeSetStudyGroupPeriodVC(coordinator: self, dates: dates)
         calendarVC.delegate = delegate
         calendarVC.modalPresentationStyle = .overFullScreen
-        navigationController.present(calendarVC, animated: true)
+        navigationController.present(calendarVC, animated: false)
+    }
+    
+    func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let selectTimeVC = dependencies.makeSelectStudyTimeVC(coordinator: self)
+        selectTimeVC.modalPresentationStyle = .overFullScreen
+        selectTimeVC.delegate = delegate
+        navigationController.present(selectTimeVC, animated: false)
     }
     
     func dismiss() {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        lastVC.dismiss(animated: true)
+        lastVC.dismiss(animated: false)
     }
+    
+    
 }

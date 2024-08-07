@@ -209,4 +209,11 @@ extension TimeView {
             hourButtons[index].backgroundColor = isSelecteds[index] ? StumeetColor.primary700.color : StumeetColor.gray75.color
         }
     }
+    
+    func updateMinuteButton(isSelecteds: [Bool]) {
+        for index in isSelecteds.indices {
+            minuteButtons[index].isSelected = isSelecteds[index]
+            minuteButtons[index].backgroundColor = isSelecteds[index] ? StumeetColor.primary700.color : StumeetColor.gray75.color
+        }
+    }
 }

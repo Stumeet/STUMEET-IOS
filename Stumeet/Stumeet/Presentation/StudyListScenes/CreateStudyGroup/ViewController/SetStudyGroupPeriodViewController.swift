@@ -402,6 +402,7 @@ extension SetStudyGroupPeriodViewController {
 extension SetStudyGroupPeriodViewController {
     
     // indicatorView 드래그 감지
+
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let state: SetStudyGroupPeriodViewModel.DragState
         switch gesture.state {
