@@ -10,12 +10,15 @@ import UIKit
 protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
     func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController
+    func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, dates: (isStart: Bool, startDate: Date, endDate: Date?)) -> SetStudyGroupPeriodViewController
 }
 
 protocol CreateStudyGroupNavigation: AnyObject {
     func presentToCreateStudyGroupVC()
     func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType)
     func popToCreateStudyGroupVC()
+    func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?))
+    func dismiss()
 }
 
 final class CreateStudyGroupCoordinator: Coordinator {
@@ -54,5 +57,18 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
     
     func popToCreateStudyGroupVC() {
         navigationController.popViewController(animated: true)
+    }
+    
+    func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?)) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let calendarVC = dependencies.makeSetStudyGroupPeriodVC(coordinator: self, dates: dates)
+        calendarVC.delegate = delegate
+        calendarVC.modalPresentationStyle = .overFullScreen
+        navigationController.present(calendarVC, animated: true)
+    }
+    
+    func dismiss() {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        lastVC.dismiss(animated: true)
     }
 }

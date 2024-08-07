@@ -20,6 +20,9 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didTapTagXButton: AnyPublisher<String, Never>
         let didTapRegionButton: AnyPublisher<Void, Never>
         let didSelectedRegion: AnyPublisher<SelectStudyItem, Never>
+        let didTapPeriodStartButton: AnyPublisher<Void, Never>
+        let didTapPeriodEndButton: AnyPublisher<Void, Never>
+        let didSelecetedPeriod: AnyPublisher<(startDate: Date, endDate: Date), Never>
     }
     
     // MARK: - Output
@@ -32,6 +35,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let isEmptyTags: AnyPublisher<Bool, Never>
         let goToSelectStudyGroupRegionVC: AnyPublisher<CreateStudySelectItemType, Never>
         let selectedRegion: AnyPublisher<SelectStudyItem, Never>
+        let goToSetStudyGroupPeriodVC: AnyPublisher<(isStart: Bool, startDate: Date, endDate: Date?), Never>
+        let periodAttributedStrings: AnyPublisher<(start: AttributedString, end: AttributedString?), Never>
     }
     
     // MARK: - Properties
@@ -51,6 +56,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         
         let tagTextSubject = CurrentValueSubject<String, Never>("")
         let addedTagsSubject = CurrentValueSubject<[String], Never>([])
+        let periodDateSubject = CurrentValueSubject<(startDate: Date, endDate: Date?), Never>((useCase.getCurrentDate(), nil))
         
         input.didChangedTagTextField
             .compactMap { $0 }
@@ -89,6 +95,21 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .map { CreateStudySelectItemType.region }
             .eraseToAnyPublisher()
         
+        let goToSetStudyGroupPeriodVC = Publishers.Merge(
+            input.didTapPeriodStartButton.map { true },
+            input.didTapPeriodEndButton.map { false }
+        )
+            .map { (isStart: $0, startDate: periodDateSubject.value.startDate, endDate: periodDateSubject.value.endDate) }
+            .eraseToAnyPublisher()
+
+        input.didSelecetedPeriod
+            .sink(receiveValue: periodDateSubject.send)
+            .store(in: &cancellables)
+        
+        let periodAttributedStrings = periodDateSubject
+            .map(dateToAttributedString)
+            .eraseToAnyPublisher()
+        
         return Output(
             goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
@@ -96,7 +117,23 @@ final class CreateStudyGroupViewModel: ViewModelType {
             addedTags: addedTags,
             isEmptyTags: isEmptyTags,
             goToSelectStudyGroupRegionVC: goToSelectStudyGroupRegionVC,
-            selectedRegion: input.didSelectedRegion
+            selectedRegion: input.didSelectedRegion,
+            goToSetStudyGroupPeriodVC: goToSetStudyGroupPeriodVC,
+            periodAttributedStrings: periodAttributedStrings
         )
+    }
+    
+    // MARK: - Function
+    
+    private func dateToAttributedString(start: Date, end: Date?) -> (start: AttributedString, end: AttributedString?){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy,M.d"
+        
+        let startAttributedString = AttributedString(dateFormatter.string(from: start))
+        guard let end = end else { return (startAttributedString, nil) }
+        let endAttributedString = AttributedString(dateFormatter.string(from: end))
+        
+        return (startAttributedString, endAttributedString)
+        
     }
 }

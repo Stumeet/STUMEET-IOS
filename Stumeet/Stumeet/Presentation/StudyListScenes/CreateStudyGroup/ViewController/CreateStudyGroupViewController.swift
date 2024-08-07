@@ -139,7 +139,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let periodLabel: UILabel = createEssentialLabel(text: "진행 기간 *")
     private let periodStartButton = createConfigButton(title: "2024.01.08", image: UIImage(resource: .calendar), radius: 16)
     private let periodIngLabel = UILabel().setLabelProperty(text: "~", font: StumeetFont.bodyMedium15.font, color: .gray800)
-    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .calendar), radius: 16)
+    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color), radius: 16)
     
     private let studyMeetingContainerView = UIView()
     private let studyMeetingLabel = createEssentialLabel(text: "스터디 정기 모임 *")
@@ -165,7 +165,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let fieldSubject = PassthroughSubject<SelectStudyItem, Never>()
     private let didTapTagXButtonSubject = PassthroughSubject<String, Never>()
     private let regionSubject = PassthroughSubject<SelectStudyItem, Never>()
-    
+    private let periodSubject = PassthroughSubject<(startDate: Date, endDate: Date), Never>()
     // MARK: - Init
     
     init(coordinator: CreateStudyGroupNavigation, viewModel: CreateStudyGroupViewModel) {
@@ -450,7 +450,10 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapAddTagButton: tagAddButton.tapPublisher,
             didTapTagXButton: didTapTagXButtonSubject.eraseToAnyPublisher(),
             didTapRegionButton: regionButton.tapPublisher,
-            didSelectedRegion: regionSubject.eraseToAnyPublisher()
+            didSelectedRegion: regionSubject.eraseToAnyPublisher(),
+            didTapPeriodStartButton: periodStartButton.tapPublisher,
+            didTapPeriodEndButton: periodEndButton.tapPublisher,
+            didSelecetedPeriod: periodSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -491,6 +494,17 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.selectedRegion
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateRegionButton)
+            .store(in: &cancellables)
+        
+        output.goToSetStudyGroupPeriodVC
+            .map { (self, $0) }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSetPeriodCalendarVC)
+            .store(in: &cancellables)
+        
+        output.periodAttributedStrings
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updatePeriodButton)
             .store(in: &cancellables)
     }
 }
@@ -541,13 +555,17 @@ extension CreateStudyGroupViewController {
 
 // MARK: - Delegate
 
-extension CreateStudyGroupViewController: SelectStudyGroupItemDelegate {
+extension CreateStudyGroupViewController: SelectStudyGroupItemDelegate, SetStudyGroupPeriodDelegate {
     func didTapFileldCompleteButton(field: SelectStudyItem) {
         fieldSubject.send(field)
     }
     
     func didTapRegionCompleteButton(region: SelectStudyItem) {
         regionSubject.send(region)
+    }
+    
+    func didTapCompleteButton(startDate: Date, endDate: Date) {
+        periodSubject.send((startDate: startDate, endDate: endDate))
     }
 }
 
@@ -573,7 +591,7 @@ extension CreateStudyGroupViewController {
     private func updateRegionButton(item: SelectStudyItem) {
         guard var config = regionButton.configuration else { return }
         
-        config.image = config.image? .withTintColor(StumeetColor.primary700.color)
+        config.image = config.image?.withTintColor(StumeetColor.primary700.color)
         
         var titleAttributes = AttributedString(item.name)
         titleAttributes.font = StumeetFont.bodyMedium14.font
@@ -584,6 +602,20 @@ extension CreateStudyGroupViewController {
         
         regionButton.configuration = config
         regionButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+    }
+    
+    private func updatePeriodButton(start: AttributedString, end: AttributedString?) {
+        let buttons = [periodStartButton, periodEndButton]
+        let titles = [start, end]
+        zip(buttons, titles).forEach { button, title in
+            let isNilEnd = title == nil
+            
+            button.configuration?.baseForegroundColor = isNilEnd ? StumeetColor.gray400.color : StumeetColor.primary700.color
+            button.layer.borderColor = isNilEnd ? StumeetColor.gray75.color.cgColor : StumeetColor.primary700.color.cgColor
+            button.configuration?.image = isNilEnd ? UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color) : UIImage(resource: .calendar)
+            button.configuration?.attributedTitle = isNilEnd ? "선택 없음" : title
+            button.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
+        }
     }
 }
 

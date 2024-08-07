@@ -123,6 +123,7 @@
 		CA31EC5B2C59E6AA004D79A8 /* CreateStudyGroupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31EC5A2C59E6AA004D79A8 /* CreateStudyGroupUseCase.swift */; };
 		CA31EC5D2C59F557004D79A8 /* CreateStudyTagSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31EC5C2C59F557004D79A8 /* CreateStudyTagSection.swift */; };
 		CA31EC612C5A25E2004D79A8 /* CreateStudySelectItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31EC602C5A25E2004D79A8 /* CreateStudySelectItemType.swift */; };
+		CA31EC632C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA31EC622C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift */; };
 		CA342DAB2C3552990055A9A4 /* String++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAA2C3552990055A9A4 /* String++Extension.swift */; };
 		CA342DAD2C365E980055A9A4 /* StudyActivityEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */; };
 		CA342DAF2C36842B0055A9A4 /* CreateActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA342DAE2C36842A0055A9A4 /* CreateActivity.swift */; };
@@ -237,6 +238,10 @@
 		CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */; };
 		CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */; };
 		CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */; };
+		CAA883EB2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA883EA2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift */; };
+		CAA883ED2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA883EC2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift */; };
+		CAA883EF2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA883EE2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift */; };
+		CAA883F12C5B46B100EF4CE5 /* SetStudyGroupPeriodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA883F02C5B46B100EF4CE5 /* SetStudyGroupPeriodRepository.swift */; };
 		CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */; };
 		CAB8E6DC2C0D8B98001034DC /* SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */; };
 		CAD45A092BB40674006BCB4A /* CreateActivitySettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD45A082BB40674006BCB4A /* CreateActivitySettingViewModel.swift */; };
@@ -395,6 +400,7 @@
 		CA31EC5A2C59E6AA004D79A8 /* CreateStudyGroupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyGroupUseCase.swift; sourceTree = "<group>"; };
 		CA31EC5C2C59F557004D79A8 /* CreateStudyTagSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyTagSection.swift; sourceTree = "<group>"; };
 		CA31EC602C5A25E2004D79A8 /* CreateStudySelectItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudySelectItemType.swift; sourceTree = "<group>"; };
+		CA31EC622C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStudyGroupPeriodViewController.swift; sourceTree = "<group>"; };
 		CA342DAA2C3552990055A9A4 /* String++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String++Extension.swift"; sourceTree = "<group>"; };
 		CA342DAC2C365E980055A9A4 /* StudyActivityEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityEmptyView.swift; sourceTree = "<group>"; };
 		CA342DAE2C36842A0055A9A4 /* CreateActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivity.swift; sourceTree = "<group>"; };
@@ -515,6 +521,10 @@
 		CA9AB21D2B8C7EBF0027072E /* StudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivityRepository.swift; sourceTree = "<group>"; };
 		CA9AB21F2B8C7EF10027072E /* DefaultStudyActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStudyActivityRepository.swift; sourceTree = "<group>"; };
 		CA9EBA682C0DBD8E00D01A16 /* CreateActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivitySection.swift; sourceTree = "<group>"; };
+		CAA883EA2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStudyGroupPeriodViewModel.swift; sourceTree = "<group>"; };
+		CAA883EC2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStudyGroupPeriodUseCase.swift; sourceTree = "<group>"; };
+		CAA883EE2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSetStudyGroupPeriodRepository.swift; sourceTree = "<group>"; };
+		CAA883F02C5B46B100EF4CE5 /* SetStudyGroupPeriodRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStudyGroupPeriodRepository.swift; sourceTree = "<group>"; };
 		CAB0EC0C2BDF681400CD6C61 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		CAB8E6DB2C0D8B98001034DC /* SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBar.swift; sourceTree = "<group>"; };
 		CAD45A082BB40674006BCB4A /* CreateActivitySettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivitySettingViewModel.swift; sourceTree = "<group>"; };
@@ -1681,6 +1691,7 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD7C2C50E07A00A11A8E /* CreateStudyGroupViewController.swift */,
+				CA31EC622C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift */,
 				CA94FD852C526F8700A11A8E /* SelectStudyGroupItemViewController.swift */,
 			);
 			path = ViewController;
@@ -1690,6 +1701,7 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD832C526F4700A11A8E /* CreateStudyGroupViewModel.swift */,
+				CAA883EA2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift */,
 				CA94FD8D2C528F5A00A11A8E /* SelectStudyItemViewModel.swift */,
 			);
 			path = ViewModel;
@@ -1732,6 +1744,7 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD902C528FC900A11A8E /* SelectStudyGroupItemUseCase.swift */,
+				CAA883EC2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift */,
 				CA31EC5A2C59E6AA004D79A8 /* CreateStudyGroupUseCase.swift */,
 			);
 			path = CreateStudyGroup;
@@ -1741,6 +1754,7 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD932C52905A00A11A8E /* SelecteStudyGroupFieldRepository.swift */,
+				CAA883F02C5B46B100EF4CE5 /* SetStudyGroupPeriodRepository.swift */,
 			);
 			path = CreateStudyGroup;
 			sourceTree = "<group>";
@@ -1749,6 +1763,7 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD962C52908C00A11A8E /* DefaultSelectStudyGroupItemRepository.swift */,
+				CAA883EE2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift */,
 			);
 			path = CreateStudyGroup;
 			sourceTree = "<group>";
@@ -2243,6 +2258,7 @@
 				352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */,
 				CAF533582B9EB6D000A7B8B2 /* StartRepository.swift in Sources */,
 				353393192BC2975E0021FDF9 /* AuthSceneDIContainer.swift in Sources */,
+				CAA883ED2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift in Sources */,
 				CA8C0DE42C33D126005ECA55 /* AllStudyActivityResponseDTO.swift in Sources */,
 				CA6448372B863BB90090DD84 /* MyStudyGroupListViewController.swift in Sources */,
 				CA64484B2B863BB90090DD84 /* Coordinator.swift in Sources */,
@@ -2390,6 +2406,7 @@
 				3562163D2C0208B100CAB23F /* ActivityInfoBoxView.swift in Sources */,
 				CA94FD972C52908C00A11A8E /* DefaultSelectStudyGroupItemRepository.swift in Sources */,
 				352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */,
+				CAA883EB2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift in Sources */,
 				CA94FD8E2C528F5A00A11A8E /* SelectStudyItemViewModel.swift in Sources */,
 				CA342DB92C37B0940055A9A4 /* StudyMemberService.swift in Sources */,
 				35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */,
@@ -2405,6 +2422,7 @@
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
+				CA31EC632C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift in Sources */,
 				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
@@ -2418,6 +2436,7 @@
 				35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */,
 				CA6448552B863BB90090DD84 /* StumeetColor.swift in Sources */,
 				CA8C0DDF2C33C7F5005ECA55 /* ActivityService.swift in Sources */,
+				CAA883EF2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift in Sources */,
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
 				CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */,
 				CA9AB2142B8C6A480027072E /* AllStudyActivityViewModel.swift in Sources */,
@@ -2447,6 +2466,7 @@
 				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */,
+				CAA883F12C5B46B100EF4CE5 /* SetStudyGroupPeriodRepository.swift in Sources */,
 				CA617BF72C44056D000A3698 /* DetailActivityRequestDTO.swift in Sources */,
 				CA8C0DE82C33D81F005ECA55 /* BreifStudyActivityResponseDTO.swift in Sources */,
 				CA8C0DEA2C33DDC1005ECA55 /* BriefStudyActivityResponseDTO.swift in Sources */,
