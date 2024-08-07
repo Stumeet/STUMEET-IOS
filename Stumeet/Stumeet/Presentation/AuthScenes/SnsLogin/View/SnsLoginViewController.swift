@@ -7,13 +7,13 @@
 
 import UIKit
 import Combine
+import SnapKit
 
 class SnsLoginViewController: BaseViewController {
     // MARK: - UIComponents
     private let rootVStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 24
         return stackView
     }()
     
@@ -21,7 +21,7 @@ class SnsLoginViewController: BaseViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "changeProfileCharacter")
+        imageView.image = UIImage(resource: .Onboarding.onboardingImg4)
         return imageView
     }()
     
@@ -54,15 +54,15 @@ class SnsLoginViewController: BaseViewController {
     
     private let kakaoLoginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .yellow
-        button.setTitle("카카오", for: .normal)
+        button.backgroundColor = .white
+        button.setImage(UIImage(resource: .Onboarding.kakaoButton), for: .normal)
         return button
     }()
     
     private let appleLoginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .black
-        button.setTitle("애플", for: .normal)
+        button.backgroundColor = .white
+        button.setImage(UIImage(resource: .Onboarding.appleidButton), for: .normal)
         return button
     }()
     
@@ -84,7 +84,8 @@ class SnsLoginViewController: BaseViewController {
     }
     
     override func setupStyles() {
-        self.view.backgroundColor = .white
+        view.backgroundColor = .white
+        navigationItem.hidesBackButton = true
     }
     
     override func setupAddView() {
@@ -111,17 +112,16 @@ class SnsLoginViewController: BaseViewController {
             $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        imageView.snp.makeConstraints {
-            $0.height.equalTo(imageView.snp.width).multipliedBy(1.3463)
-        }
-        
         titleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(46)
+            $0.bottom.equalToSuperview().inset(24)
         }
         
         buttonHStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.verticalEdges.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(79)
         }
         
         [
@@ -160,7 +160,7 @@ class SnsLoginViewController: BaseViewController {
                 guard let self = self else { return }
 
                 if isLoggedIn {
-                    coordinator.goToHomeVC()                    
+                    coordinator.goToHomeVC()
                 } else {
                     coordinator.goToRegisterVC()
                 }
