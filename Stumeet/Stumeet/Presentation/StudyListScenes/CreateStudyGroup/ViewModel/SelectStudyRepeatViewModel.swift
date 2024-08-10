@@ -1,0 +1,55 @@
+//
+//  SelectStudyRepeatViewModel.swift
+//  Stumeet
+//
+//  Created by 정지훈 on 8/10/24.
+//
+
+import Combine
+import Foundation
+
+final class SelectStudyRepeatViewModel: ViewModelType {
+    
+    // MARK: - Input
+    
+    struct Input {
+        let didTapDailyButton: AnyPublisher<Void, Never>
+        let didTapWeeklyButton: AnyPublisher<Void, Never>
+        let didTapMonthlyButton: AnyPublisher<Void, Never>
+    }
+    
+    // MARK: - Output
+    
+    struct Output {
+        let dailyViewHeight: AnyPublisher<CGFloat, Never>
+        let weeklyViewHeight: AnyPublisher<CGFloat, Never>
+        let monthlyViewHeight: AnyPublisher<CGFloat, Never>
+    }
+    
+    // MARK: - Properties
+    
+    // MARK: - Init
+    
+    // MARK: - Transform
+    
+    func transform(input: Input) -> Output {
+        
+        let dailyViewHeight = input.didTapDailyButton
+            .map { CGFloat(245) }
+            .eraseToAnyPublisher()
+        
+        let weeklyViewHeight = input.didTapWeeklyButton
+            .map { CGFloat(301) }
+            .eraseToAnyPublisher()
+        
+        let monthlyViewHeight = input.didTapMonthlyButton
+            .map { CGFloat(518) }
+            .eraseToAnyPublisher()
+        
+        return Output(
+            dailyViewHeight: dailyViewHeight,
+            weeklyViewHeight: weeklyViewHeight,
+            monthlyViewHeight: monthlyViewHeight
+        )
+    }
+}

@@ -56,7 +56,6 @@ final class SelectStudyRepeatViewController: BaseViewController {
     private lazy var weeklyButton = makeRepeatTypeButton(text: "매주")
     private lazy var monthlyButton = makeRepeatTypeButton(text: "매월")
     
-    
     private var weeklyButtons: [UIButton] = []
     
     private lazy var weeklyStackView: UIStackView = {
@@ -106,9 +105,22 @@ final class SelectStudyRepeatViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private let coordinator: CreateStudyGroupNavigation
+    private let viewModel: SelectStudyRepeatViewModel
     weak var delegate: SelectStudyRepeatDelegate?
     
     // MARK: - Init
+    
+    init(coordinator: CreateStudyGroupNavigation, viewModel: SelectStudyRepeatViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycles
     
@@ -118,7 +130,7 @@ final class SelectStudyRepeatViewController: BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        showBottomSheet()
+        showBottomSheet(height: 245)
     }
     
     // MARK: - SetUp
@@ -203,13 +215,34 @@ final class SelectStudyRepeatViewController: BaseViewController {
         
         completeButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.top.equalTo(repeatTypeStackView.snp.bottom).offset(32)
+            make.top.equalTo(repeatTypeStackView.snp.bottom).offset(34)
             make.height.equalTo(72)
         }
     }
     
     override func bind() {
+        let input = SelectStudyRepeatViewModel.Input(
+            didTapDailyButton: dailyButton.tapPublisher,
+            didTapWeeklyButton: weeklyButton.tapPublisher,
+            didTapMonthlyButton: monthlyButton.tapPublisher
+        )
         
+        let output = viewModel.transform(input: input)
+        
+        output.dailyViewHeight
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateDailyView)
+            .store(in: &cancellables)
+        
+        output.weeklyViewHeight
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateWeeklyView)
+            .store(in: &cancellables)
+                  
+        output.monthlyViewHeight
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateMonthlyView)
+            .store(in: &cancellables)
     }
 }
 
@@ -244,18 +277,75 @@ extension SelectStudyRepeatViewController {
         
         return layout
     }
+    
+    private func remakeCompleteButtonConstraints() {
+        completeButton.snp.remakeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(34)
+            make.height.equalTo(72)
+        }
+    }
 }
+                
 
 // MARK: - UpdateUI
 
 extension SelectStudyRepeatViewController {
-    private func showBottomSheet() {
+    
+    private func adjustBottomSheetHeight(_ height: CGFloat) {
+        self.bottomSheetView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+        self.view.layoutIfNeeded()
+    }
+    
+    private func showBottomSheet(height: CGFloat) {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.snp.updateConstraints { make in
-                make.height.equalTo(245)
+                make.height.equalTo(height)
             }
             self.backgroundButton.alpha = 0.1
             self.view.layoutIfNeeded()
         })
+    }
+    
+    private func hideBottomSheet() {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.bottomSheetView.snp.updateConstraints { make in
+                    make.height.equalTo(0)
+                }
+                self.backgroundButton.alpha = 0
+                self.view.layoutIfNeeded()
+            },
+            completion: { _ in
+                self.coordinator.dismiss()
+            })
+    }
+
+    private func updateDailyView(height: CGFloat) {
+        updateRepeatButtons(selectedButton: dailyButton, height: height)
+    }
+
+    private func updateWeeklyView(height: CGFloat) {
+        updateRepeatButtons(selectedButton: weeklyButton, height: height)
+    }
+
+    private func updateMonthlyView(height: CGFloat) {
+        updateRepeatButtons(selectedButton: monthlyButton, height: height)
+    }
+    
+    private func updateRepeatButtons(selectedButton: UIButton, height: CGFloat) {
+        showBottomSheet(height: height)
+        remakeCompleteButtonConstraints()
+        
+        let buttons = [dailyButton, weeklyButton, monthlyButton]
+        buttons.forEach { button in
+            button.isSelected = false
+            button.layer.borderColor = StumeetColor.gray75.color.cgColor
+        }
+        selectedButton.isSelected = true
+        selectedButton.layer.borderColor = StumeetColor.primary700.color.cgColor
     }
 }

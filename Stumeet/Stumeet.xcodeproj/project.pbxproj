@@ -130,6 +130,7 @@
 		CA107A672C60F8A200163407 /* SelectStudyTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */; };
 		CA107A692C6105CF00163407 /* SelectStudyTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */; };
 		CA107A6B2C672F0E00163407 /* SelectStudyRepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A6A2C672F0E00163407 /* SelectStudyRepeatViewController.swift */; };
+		CA107A6D2C6767CC00163407 /* SelectStudyRepeatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A6C2C6767CC00163407 /* SelectStudyRepeatViewModel.swift */; };
 		CA194E902BCA60A50090E97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA194E912BCA619C0090E97C /* RegionSection.swift */; };
 		CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */; };
@@ -424,6 +425,7 @@
 		CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewModel.swift; sourceTree = "<group>"; };
 		CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeUseCase.swift; sourceTree = "<group>"; };
 		CA107A6A2C672F0E00163407 /* SelectStudyRepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyRepeatViewController.swift; sourceTree = "<group>"; };
+		CA107A6C2C6767CC00163407 /* SelectStudyRepeatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyRepeatViewModel.swift; sourceTree = "<group>"; };
 		CA194E912BCA619C0090E97C /* RegionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSection.swift; sourceTree = "<group>"; };
 		CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -1806,6 +1808,7 @@
 			children = (
 				CA94FD832C526F4700A11A8E /* CreateStudyGroupViewModel.swift */,
 				CAA883EA2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift */,
+				CA107A6C2C6767CC00163407 /* SelectStudyRepeatViewModel.swift */,
 				CA94FD8D2C528F5A00A11A8E /* SelectStudyItemViewModel.swift */,
 				CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */,
 			);
@@ -2525,6 +2528,7 @@
 				3562163D2C0208B100CAB23F /* ActivityInfoBoxView.swift in Sources */,
 				CA94FD972C52908C00A11A8E /* DefaultSelectStudyGroupItemRepository.swift in Sources */,
 				352885FF2BB9CF3700EFC0F6 /* AuthToken.swift in Sources */,
+				CA107A6D2C6767CC00163407 /* SelectStudyRepeatViewModel.swift in Sources */,
 				CAA883EB2C5B458400EF4CE5 /* SetStudyGroupPeriodViewModel.swift in Sources */,
 				CA94FD8E2C528F5A00A11A8E /* SelectStudyItemViewModel.swift in Sources */,
 				CA342DB92C37B0940055A9A4 /* StudyMemberService.swift in Sources */,

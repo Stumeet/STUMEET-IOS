@@ -111,8 +111,15 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - SelectStudyRepeat
     
+    func makeSelectStudyRepeatVM() -> SelectStudyRepeatViewModel {
+        SelectStudyRepeatViewModel()
+    }
+    
     func makeSelectStudyRepeatVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyRepeatViewController {
-        SelectStudyRepeatViewController()
+        SelectStudyRepeatViewController(
+            coordinator: coordinator,
+            viewModel: makeSelectStudyRepeatVM()
+        )
     }
     
     
