@@ -129,6 +129,7 @@
 		CA107A652C60F6D700163407 /* SelectStudyTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */; };
 		CA107A672C60F8A200163407 /* SelectStudyTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */; };
 		CA107A692C6105CF00163407 /* SelectStudyTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */; };
+		CA107A6B2C672F0E00163407 /* SelectStudyRepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A6A2C672F0E00163407 /* SelectStudyRepeatViewController.swift */; };
 		CA194E902BCA60A50090E97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA6447C82B863BB90090DD84 /* Assets.xcassets */; };
 		CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA194E912BCA619C0090E97C /* RegionSection.swift */; };
 		CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */; };
@@ -422,6 +423,7 @@
 		CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewController.swift; sourceTree = "<group>"; };
 		CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewModel.swift; sourceTree = "<group>"; };
 		CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeUseCase.swift; sourceTree = "<group>"; };
+		CA107A6A2C672F0E00163407 /* SelectStudyRepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyRepeatViewController.swift; sourceTree = "<group>"; };
 		CA194E912BCA619C0090E97C /* RegionSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSection.swift; sourceTree = "<group>"; };
 		CA1C92C52BC91A0200ECF835 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		CA1C92C72BC91AF700ECF835 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -1585,7 +1587,6 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD952C52908000A11A8E /* CreateStudyGroup */,
-				355A75C62C3AC01E00C50BA0 /* StudyGroup */,
 				358D24332C46A96F001EFB51 /* StudyGroupMain */,
 				355A75C62C3AC01E00C50BA0 /* MyStudyGroupList */,
 				CA9AB21B2B8C7E9E0027072E /* StudyActivity */,
@@ -1795,6 +1796,7 @@
 				CA31EC622C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift */,
 				CA94FD852C526F8700A11A8E /* SelectStudyGroupItemViewController.swift */,
 				CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */,
+				CA107A6A2C672F0E00163407 /* SelectStudyRepeatViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2512,6 +2514,7 @@
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA94FD792C50DE1700A11A8E /* CreateStudyGroupCoordinator.swift in Sources */,
+				CA107A6B2C672F0E00163407 /* SelectStudyRepeatViewController.swift in Sources */,
 				CA94FD842C526F4700A11A8E /* CreateStudyGroupViewModel.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
 				358D242D2C46A1F2001EFB51 /* StudyMainViewModel.swift in Sources */,
@@ -2802,7 +2805,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development_v3;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2838,7 +2841,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development_v3;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

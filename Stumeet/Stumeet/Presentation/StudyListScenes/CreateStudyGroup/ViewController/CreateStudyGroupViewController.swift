@@ -457,7 +457,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapPeriodEndButton: periodEndButton.tapPublisher,
             didSelecetedPeriod: periodSubject.eraseToAnyPublisher(),
             didTapTimeButton: timeButton.tapPublisher,
-            didSelectedTime: timeSubject.eraseToAnyPublisher()
+            didSelectedTime: timeSubject.eraseToAnyPublisher(),
+            didTapRepeatButton: repeatButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -521,6 +522,12 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateTimeButton)
             .store(in: &cancellables)
+        
+        output.goToSelectStudyRepeatVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSelectStudyRepeatVC)
+            .store(in: &cancellables)
     }
 }
 
@@ -573,7 +580,9 @@ extension CreateStudyGroupViewController {
 extension CreateStudyGroupViewController: 
     SelectStudyGroupItemDelegate,
     SetStudyGroupPeriodDelegate,
-    SelectStudyTimeDelegate {
+    SelectStudyTimeDelegate,
+    SelectStudyRepeatDelegate
+{
     
     func didTapFileldCompleteButton(field: SelectStudyItem) {
         fieldSubject.send(field)
@@ -589,6 +598,10 @@ extension CreateStudyGroupViewController:
     
     func didTapCompleteButton(time: String) {
         timeSubject.send(time)
+    }
+    
+    func didTapCompleteButton(repeatType: String, repeatDates: [String]) {
+        
     }
 }
 
