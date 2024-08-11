@@ -16,15 +16,17 @@ final class SelectStudyRepeatViewModel: ViewModelType {
         let didTapDailyButton: AnyPublisher<Void, Never>
         let didTapWeeklyButton: AnyPublisher<Void, Never>
         let didTapMonthlyButton: AnyPublisher<Void, Never>
+        let didSelectedMontlhyDay: AnyPublisher<IndexPath, Never>
+        let didSelectedWeeklyDay: AnyPublisher<Int, Never>
     }
     
     // MARK: - Output
     
     struct Output {
-        let dailyViewHeight: AnyPublisher<CGFloat, Never>
-        let weeklyViewHeight: AnyPublisher<CGFloat, Never>
-        let monthlyViewHeight: AnyPublisher<CGFloat, Never>
+        let selectedRepeatType: AnyPublisher<StudyRepeatType, Never>
         let monthlyDays: AnyPublisher<[SelectStudyRepeatSectionItem], Never>
+        let selectedWeeklyDays: AnyPublisher<[Bool], Never>
+        let isEnableCompleteButton: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -43,6 +45,8 @@ final class SelectStudyRepeatViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         
         let monthlyDaysSubject = CurrentValueSubject<[CalendarDate], Never>([])
+        let weeklyDaysSubject = CurrentValueSubject<[Bool], Never>([Bool](repeating: false, count: 7))
+        let selectedRepeatTypeSubject = CurrentValueSubject<StudyRepeatType?, Never>(nil)
         
         input.didTapMonthlyButton
             .map { monthlyDaysSubject.value }
@@ -50,30 +54,49 @@ final class SelectStudyRepeatViewModel: ViewModelType {
             .sink(receiveValue: monthlyDaysSubject.send)
             .store(in: &cancellables)
         
+        input.didSelectedMontlhyDay
+            .map { ($0, monthlyDaysSubject.value) }
+            .flatMap(useCase.getSelectedMonthlyDays)
+            .sink(receiveValue: monthlyDaysSubject.send)
+            .store(in: &cancellables)
+        
+        input.didSelectedWeeklyDay
+            .map { ($0, weeklyDaysSubject.value) }
+            .flatMap(useCase.getIsSelectedsWeeklyDay)
+            .sink(receiveValue: weeklyDaysSubject.send)
+            .store(in: &cancellables)
+
+        Publishers.Merge3(
+            input.didTapDailyButton.map { StudyRepeatType.dailiy },
+            input.didTapWeeklyButton.map { StudyRepeatType.weekly },
+            input.didTapMonthlyButton.map { StudyRepeatType.monthly }
+        )
+        .sink(receiveValue: selectedRepeatTypeSubject.send)
+        .store(in: &cancellables)
+        
+        let selectedRepeatType = selectedRepeatTypeSubject
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+        
         let monthlyDays = monthlyDaysSubject
             .filter { !$0.isEmpty }
             .map { $0.map { SelectStudyRepeatSectionItem.monthlyCell($0) } }
             .eraseToAnyPublisher()
         
-        let dailyViewHeight = input.didTapDailyButton
-            .map { CGFloat(245) }
+        let isEnableCompleteButton = Publishers.CombineLatest3(
+            selectedRepeatTypeSubject,
+            weeklyDaysSubject,
+            monthlyDaysSubject
+        )
+            .flatMap(useCase.getIsEnableCompleteButton)
             .eraseToAnyPublisher()
         
-        let weeklyViewHeight = input.didTapWeeklyButton
-            .map { CGFloat(301) }
-            .eraseToAnyPublisher()
-        
-        let monthlyViewHeight = input.didTapMonthlyButton
-            .map { CGFloat(518) }
-            .eraseToAnyPublisher()
-        
-        
-        
+
         return Output(
-            dailyViewHeight: dailyViewHeight,
-            weeklyViewHeight: weeklyViewHeight,
-            monthlyViewHeight: monthlyViewHeight,
-            monthlyDays: monthlyDays
+            selectedRepeatType: selectedRepeatType,
+            monthlyDays: monthlyDays,
+            selectedWeeklyDays: weeklyDaysSubject.eraseToAnyPublisher(),
+            isEnableCompleteButton: isEnableCompleteButton
         )
     }
 }

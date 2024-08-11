@@ -34,18 +34,24 @@ final class MonthlyCell: BaseCollectionViewCell {
     override func setupConstaints() {
         dayLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.width.equalTo(40)
         }
+    }
+    
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        layoutAttributes.size = CGSize(width: dayLabel.text == "마지막 날" ? 184 : 40, height: 40)
+        return layoutAttributes
     }
     
     func updateCell(day: CalendarDate) {
         dayLabel.text = day.date
         isSelected = day.isSelected
         
-        if day.date == "마지막 날" {
-            dayLabel.snp.updateConstraints { make in
-                make.width.equalTo(184)
-            }
+        if day.isSelected {
+            backgroundColor = StumeetColor.primary700.color
+            dayLabel.textColor = .white
+        } else {
+            backgroundColor = StumeetColor.gray75.color
+            dayLabel.textColor = StumeetColor.gray400.color
         }
     }
 }

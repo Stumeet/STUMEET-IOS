@@ -131,6 +131,7 @@
 		CA0CEDE12C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDE02C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift */; };
 		CA0CEDE32C68BA8A007C3A4A /* MonthlyDaysRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDE22C68BA8A007C3A4A /* MonthlyDaysRepository.swift */; };
 		CA0CEDE52C68BEA1007C3A4A /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDE42C68BEA1007C3A4A /* MonthlyCell.swift */; };
+		CA0CEDE72C68FA8F007C3A4A /* StudyRepeatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDE62C68FA8F007C3A4A /* StudyRepeatType.swift */; };
 		CA107A652C60F6D700163407 /* SelectStudyTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */; };
 		CA107A672C60F8A200163407 /* SelectStudyTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */; };
 		CA107A692C6105CF00163407 /* SelectStudyTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */; };
@@ -431,6 +432,7 @@
 		CA0CEDE02C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMonthlyDaysRepository.swift; sourceTree = "<group>"; };
 		CA0CEDE22C68BA8A007C3A4A /* MonthlyDaysRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyDaysRepository.swift; sourceTree = "<group>"; };
 		CA0CEDE42C68BEA1007C3A4A /* MonthlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCell.swift; sourceTree = "<group>"; };
+		CA0CEDE62C68FA8F007C3A4A /* StudyRepeatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRepeatType.swift; sourceTree = "<group>"; };
 		CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewController.swift; sourceTree = "<group>"; };
 		CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewModel.swift; sourceTree = "<group>"; };
 		CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeUseCase.swift; sourceTree = "<group>"; };
@@ -1856,6 +1858,7 @@
 				CA31EC602C5A25E2004D79A8 /* CreateStudySelectItemType.swift */,
 				CA31EC5C2C59F557004D79A8 /* CreateStudyTagSection.swift */,
 				CA0CEDDC2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift */,
+				CA0CEDE62C68FA8F007C3A4A /* StudyRepeatType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2489,6 +2492,7 @@
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
 				35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */,
 				35BC0B482C3D85A000F96A22 /* MyStudyGroupListType.swift in Sources */,
+				CA0CEDE72C68FA8F007C3A4A /* StudyRepeatType.swift in Sources */,
 				CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */,
 				CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */,
 				CA64482F2B863BB90090DD84 /* SelecteFieldRepository.swift in Sources */,

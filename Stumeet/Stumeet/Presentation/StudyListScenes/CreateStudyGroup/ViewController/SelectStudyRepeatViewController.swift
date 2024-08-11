@@ -5,6 +5,7 @@
 //  Created by 정지훈 on 8/10/24.
 //
 
+import Combine
 import UIKit
 
 protocol SelectStudyRepeatDelegate: AnyObject {
@@ -226,32 +227,39 @@ final class SelectStudyRepeatViewController: BaseViewController {
     }
     
     override func bind() {
+        
+        let didTapWeeklyButtonPublisher = Publishers.MergeMany(weeklyButtons.enumerated()
+            .map { index, button in button.tapPublisher.map { index } })
+            .eraseToAnyPublisher()
+        
         let input = SelectStudyRepeatViewModel.Input(
             didTapDailyButton: dailyButton.tapPublisher,
             didTapWeeklyButton: weeklyButton.tapPublisher,
-            didTapMonthlyButton: monthlyButton.tapPublisher
+            didTapMonthlyButton: monthlyButton.tapPublisher,
+            didSelectedMontlhyDay: monthlyCollectionView.didSelectItemPublisher,
+            didSelectedWeeklyDay: didTapWeeklyButtonPublisher
         )
         
         let output = viewModel.transform(input: input)
         
-        output.dailyViewHeight
+        output.selectedRepeatType
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateDailyView)
+            .sink(receiveValue: updateRepeatButtons)
             .store(in: &cancellables)
         
-        output.weeklyViewHeight
+        output.selectedWeeklyDays // 추가: Weekly Day 선택 상태 바인딩
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateWeeklyView)
-            .store(in: &cancellables)
-                  
-        output.monthlyViewHeight
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: updateMonthlyView)
+            .sink(receiveValue: updateWeeklyButtons)
             .store(in: &cancellables)
         
         output.monthlyDays
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
+        
+        output.isEnableCompleteButton
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCompleteButton)
             .store(in: &cancellables)
     }
 }
@@ -361,27 +369,9 @@ extension SelectStudyRepeatViewController {
                 self.coordinator.dismiss()
             })
     }
-
-    private func updateDailyView(height: CGFloat) {
-        updateRepeatButtons(selectedButton: dailyButton, height: height)
-        weeklyStackView.isHidden = true
-        monthlyCollectionView.isHidden = true
-    }
-
-    private func updateWeeklyView(height: CGFloat) {
-        updateRepeatButtons(selectedButton: weeklyButton, height: height)
-        weeklyStackView.isHidden = false
-        monthlyCollectionView.isHidden = true
-    }
-
-    private func updateMonthlyView(height: CGFloat) {
-        updateRepeatButtons(selectedButton: monthlyButton, height: height)
-        weeklyStackView.isHidden = true
-        monthlyCollectionView.isHidden = false
-    }
     
-    private func updateRepeatButtons(selectedButton: UIButton, height: CGFloat) {
-        showBottomSheet(height: height)
+    private func updateRepeatButtons(type: StudyRepeatType) {
+        showBottomSheet(height: type.height)
         remakeCompleteButtonConstraints()
         
         let buttons = [dailyButton, weeklyButton, monthlyButton]
@@ -389,7 +379,37 @@ extension SelectStudyRepeatViewController {
             button.isSelected = false
             button.layer.borderColor = StumeetColor.gray75.color.cgColor
         }
-        selectedButton.isSelected = true
-        selectedButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+        
+        switch type {
+        case .dailiy:
+            dailyButton.isSelected = true
+            dailyButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+            weeklyStackView.isHidden = true
+            monthlyCollectionView.isHidden = true
+            
+        case .weekly:
+            weeklyButton.isSelected = true
+            weeklyButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+            weeklyStackView.isHidden = false
+            monthlyCollectionView.isHidden = true
+            
+        case .monthly:
+            monthlyButton.isSelected = true
+            monthlyButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+            weeklyStackView.isHidden = true
+            monthlyCollectionView.isHidden = false
+        }
+    }
+    
+    private func updateWeeklyButtons(isSelecteds: [Bool]) {
+        for idx in isSelecteds.indices {
+            weeklyButtons[idx].isSelected = isSelecteds[idx]
+            weeklyButtons[idx].backgroundColor = isSelecteds[idx] ? StumeetColor.primary700.color : StumeetColor.gray75.color
+        }
+    }
+    
+    private func updateCompleteButton(isEnable: Bool) {
+        completeButton.isEnabled = isEnable
+        completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
     }
 }
