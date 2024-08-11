@@ -24,15 +24,36 @@ final class SelectStudyRepeatViewModel: ViewModelType {
         let dailyViewHeight: AnyPublisher<CGFloat, Never>
         let weeklyViewHeight: AnyPublisher<CGFloat, Never>
         let monthlyViewHeight: AnyPublisher<CGFloat, Never>
+        let monthlyDays: AnyPublisher<[SelectStudyRepeatSectionItem], Never>
     }
     
     // MARK: - Properties
     
+    private var cancellables = Set<AnyCancellable>()
+    private let useCase: SelectStudyRepeatUseCase
+    
     // MARK: - Init
+    
+    init(useCase: SelectStudyRepeatUseCase) {
+        self.useCase = useCase
+    }
     
     // MARK: - Transform
     
     func transform(input: Input) -> Output {
+        
+        let monthlyDaysSubject = CurrentValueSubject<[CalendarDate], Never>([])
+        
+        input.didTapMonthlyButton
+            .map { monthlyDaysSubject.value }
+            .flatMap(useCase.getMonthlyDays)
+            .sink(receiveValue: monthlyDaysSubject.send)
+            .store(in: &cancellables)
+        
+        let monthlyDays = monthlyDaysSubject
+            .filter { !$0.isEmpty }
+            .map { $0.map { SelectStudyRepeatSectionItem.monthlyCell($0) } }
+            .eraseToAnyPublisher()
         
         let dailyViewHeight = input.didTapDailyButton
             .map { CGFloat(245) }
@@ -46,10 +67,13 @@ final class SelectStudyRepeatViewModel: ViewModelType {
             .map { CGFloat(518) }
             .eraseToAnyPublisher()
         
+        
+        
         return Output(
             dailyViewHeight: dailyViewHeight,
             weeklyViewHeight: weeklyViewHeight,
-            monthlyViewHeight: monthlyViewHeight
+            monthlyViewHeight: monthlyViewHeight,
+            monthlyDays: monthlyDays
         )
     }
 }

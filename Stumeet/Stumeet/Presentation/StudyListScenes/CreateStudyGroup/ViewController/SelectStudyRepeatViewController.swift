@@ -13,6 +13,9 @@ protocol SelectStudyRepeatDelegate: AnyObject {
 
 final class SelectStudyRepeatViewController: BaseViewController {
     
+    typealias Section = SelectStudyRepeatSection
+    typealias SectionItem = SelectStudyRepeatSectionItem
+    
     // MARK: - UIComponents
     
     private let backgroundButton: UIButton = {
@@ -85,7 +88,7 @@ final class SelectStudyRepeatViewController: BaseViewController {
     
     private lazy var monthlyCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        collectionView.registerCell(UICollectionViewCell.self)
+        collectionView.registerCell(MonthlyCell.self)
         collectionView.isScrollEnabled = false
         collectionView.isHidden = true
         
@@ -107,6 +110,7 @@ final class SelectStudyRepeatViewController: BaseViewController {
     
     private let coordinator: CreateStudyGroupNavigation
     private let viewModel: SelectStudyRepeatViewModel
+    private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     weak var delegate: SelectStudyRepeatDelegate?
     
     // MARK: - Init
@@ -126,7 +130,7 @@ final class SelectStudyRepeatViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureDatasource()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -205,6 +209,7 @@ final class SelectStudyRepeatViewController: BaseViewController {
         monthlyCollectionView.snp.makeConstraints { make in
             make.top.equalTo(repeatTypeStackView.snp.bottom).offset(26)
             make.centerX.equalToSuperview()
+            make.width.equalTo(328)
             make.height.equalTo(232)
         }
         
@@ -243,6 +248,11 @@ final class SelectStudyRepeatViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateMonthlyView)
             .store(in: &cancellables)
+        
+        output.monthlyDays
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
     }
 }
 
@@ -270,6 +280,8 @@ extension SelectStudyRepeatViewController {
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
+        group.interItemSpacing = .fixed(8)
+        
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         
@@ -284,6 +296,32 @@ extension SelectStudyRepeatViewController {
             make.bottom.equalToSuperview().inset(34)
             make.height.equalTo(72)
         }
+    }
+}
+
+// MARK: - Datasource
+
+extension SelectStudyRepeatViewController {
+    private func configureDatasource() {
+        datasource = UICollectionViewDiffableDataSource<Section, SectionItem>(collectionView: monthlyCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            switch itemIdentifier {
+            case .monthlyCell(let day):
+                guard let cell = collectionView.dequeue(MonthlyCell.self, for: indexPath) else { return UICollectionViewCell() }
+                
+                cell.updateCell(day: day)
+                return cell
+            }
+        })
+    }
+    
+    private func updateSnapshot(days: [SectionItem]) {
+        guard let datasource = datasource else { return }
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(days, toSection: .main)
+        
+        datasource.apply(snapshot, animatingDifferences: false)
     }
 }
                 
@@ -326,14 +364,20 @@ extension SelectStudyRepeatViewController {
 
     private func updateDailyView(height: CGFloat) {
         updateRepeatButtons(selectedButton: dailyButton, height: height)
+        weeklyStackView.isHidden = true
+        monthlyCollectionView.isHidden = true
     }
 
     private func updateWeeklyView(height: CGFloat) {
         updateRepeatButtons(selectedButton: weeklyButton, height: height)
+        weeklyStackView.isHidden = false
+        monthlyCollectionView.isHidden = true
     }
 
     private func updateMonthlyView(height: CGFloat) {
         updateRepeatButtons(selectedButton: monthlyButton, height: height)
+        weeklyStackView.isHidden = true
+        monthlyCollectionView.isHidden = false
     }
     
     private func updateRepeatButtons(selectedButton: UIButton, height: CGFloat) {

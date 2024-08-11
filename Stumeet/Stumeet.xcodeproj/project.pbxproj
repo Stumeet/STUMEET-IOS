@@ -126,6 +126,11 @@
 		CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */; };
 		CA0A0AF12B919341009D4064 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF02B919341009D4064 /* RegisterService.swift */; };
 		CA0A0AF32B9196D4009D4064 /* ResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */; };
+		CA0CEDDD2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDDC2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift */; };
+		CA0CEDDF2C68B910007C3A4A /* SelectStudyRepeatUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDDE2C68B910007C3A4A /* SelectStudyRepeatUseCase.swift */; };
+		CA0CEDE12C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDE02C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift */; };
+		CA0CEDE32C68BA8A007C3A4A /* MonthlyDaysRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDE22C68BA8A007C3A4A /* MonthlyDaysRepository.swift */; };
+		CA0CEDE52C68BEA1007C3A4A /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CEDE42C68BEA1007C3A4A /* MonthlyCell.swift */; };
 		CA107A652C60F6D700163407 /* SelectStudyTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */; };
 		CA107A672C60F8A200163407 /* SelectStudyTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */; };
 		CA107A692C6105CF00163407 /* SelectStudyTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */; };
@@ -421,6 +426,11 @@
 		CA0A0AEE2B919155009D4064 /* DefaultNicknameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNicknameRepository.swift; sourceTree = "<group>"; };
 		CA0A0AF02B919341009D4064 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDTO.swift; sourceTree = "<group>"; };
+		CA0CEDDC2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyRepeatSection.swift; sourceTree = "<group>"; };
+		CA0CEDDE2C68B910007C3A4A /* SelectStudyRepeatUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyRepeatUseCase.swift; sourceTree = "<group>"; };
+		CA0CEDE02C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMonthlyDaysRepository.swift; sourceTree = "<group>"; };
+		CA0CEDE22C68BA8A007C3A4A /* MonthlyDaysRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyDaysRepository.swift; sourceTree = "<group>"; };
+		CA0CEDE42C68BEA1007C3A4A /* MonthlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCell.swift; sourceTree = "<group>"; };
 		CA107A642C60F6D700163407 /* SelectStudyTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewController.swift; sourceTree = "<group>"; };
 		CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeViewModel.swift; sourceTree = "<group>"; };
 		CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStudyTimeUseCase.swift; sourceTree = "<group>"; };
@@ -1818,6 +1828,7 @@
 		CA94FD762C50DE0400A11A8E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CA0CEDE42C68BEA1007C3A4A /* MonthlyCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1844,6 +1855,7 @@
 				CA94FD8B2C528C1100A11A8E /* SelectStudySection.swift */,
 				CA31EC602C5A25E2004D79A8 /* CreateStudySelectItemType.swift */,
 				CA31EC5C2C59F557004D79A8 /* CreateStudyTagSection.swift */,
+				CA0CEDDC2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1853,6 +1865,7 @@
 			children = (
 				CA94FD902C528FC900A11A8E /* SelectStudyGroupItemUseCase.swift */,
 				CAA883EC2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift */,
+				CA0CEDDE2C68B910007C3A4A /* SelectStudyRepeatUseCase.swift */,
 				CA31EC5A2C59E6AA004D79A8 /* CreateStudyGroupUseCase.swift */,
 				CA107A682C6105CF00163407 /* SelectStudyTimeUseCase.swift */,
 			);
@@ -1864,6 +1877,7 @@
 			children = (
 				CA94FD932C52905A00A11A8E /* SelecteStudyGroupFieldRepository.swift */,
 				CAA883F02C5B46B100EF4CE5 /* SetStudyGroupPeriodRepository.swift */,
+				CA0CEDE22C68BA8A007C3A4A /* MonthlyDaysRepository.swift */,
 			);
 			path = CreateStudyGroup;
 			sourceTree = "<group>";
@@ -1872,6 +1886,7 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD962C52908C00A11A8E /* DefaultSelectStudyGroupItemRepository.swift */,
+				CA0CEDE02C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift */,
 				CAA883EE2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift */,
 			);
 			path = CreateStudyGroup;
@@ -2444,6 +2459,7 @@
 				CA31EC5B2C59E6AA004D79A8 /* CreateStudyGroupUseCase.swift in Sources */,
 				CAF533562B9EB5EE00A7B8B2 /* StartUseCase.swift in Sources */,
 				CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */,
+				CA0CEDE32C68BA8A007C3A4A /* MonthlyDaysRepository.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
 				357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
@@ -2491,6 +2507,7 @@
 				353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */,
 				35E4EA3E2BCC2B73003A10D4 /* MyStudyGroupListTableViewCell.swift in Sources */,
 				352885FB2BB9CB5600EFC0F6 /* TokensRequestDTO.swift in Sources */,
+				CA0CEDE52C68BEA1007C3A4A /* MonthlyCell.swift in Sources */,
 				35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
 				CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */,
@@ -2517,6 +2534,7 @@
 				CA6FADEF2B87327B008BCEF7 /* PaddingLabel.swift in Sources */,
 				CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */,
 				CA94FD792C50DE1700A11A8E /* CreateStudyGroupCoordinator.swift in Sources */,
+				CA0CEDE12C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift in Sources */,
 				CA107A6B2C672F0E00163407 /* SelectStudyRepeatViewController.swift in Sources */,
 				CA94FD842C526F4700A11A8E /* CreateStudyGroupViewModel.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
@@ -2576,6 +2594,7 @@
 				35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */,
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
 				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,
+				CA0CEDDD2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift in Sources */,
 				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
 				355A75CA2C3AC1F700C50BA0 /* StudiesResponseDTO.swift in Sources */,
 				CA94FD892C528B7600A11A8E /* SelectStudyItem.swift in Sources */,
@@ -2591,6 +2610,7 @@
 				CA31EC5D2C59F557004D79A8 /* CreateStudyTagSection.swift in Sources */,
 				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,
 				3582D0982C56863000C9D63E /* PageInfoResponseDTO.swift in Sources */,
+				CA0CEDDF2C68B910007C3A4A /* SelectStudyRepeatUseCase.swift in Sources */,
 				CA6448412B863BB90090DD84 /* NicknameViewController.swift in Sources */,
 				CA7D18D92C1D302C00710C0D /* UICollectionViewExtension.swift in Sources */,
 				CAA883F12C5B46B100EF4CE5 /* SetStudyGroupPeriodRepository.swift in Sources */,
