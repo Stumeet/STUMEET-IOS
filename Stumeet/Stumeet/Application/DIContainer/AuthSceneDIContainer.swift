@@ -26,18 +26,18 @@ final class AuthSceneDIContainer: AuthCoordinatorDependencies {
     
     // MARK: - Use Cases    
     func makeLoginUseCase() -> LoginUseCase {
-        DefaultLoginUseCase.init(
+        DefaultLoginUseCase(
             kakaoLoginService: dependencies.kakaoLoginService,
             appleLoginService: dependencies.appleLoginService,
-            repository: makeSnsLoginRepository()
+            repository: makeSnsLoginRepository(),
+            keychainManager: dependencies.keychainManager
         )
     }
     
     // MARK: - Repositories
     func makeSnsLoginRepository() -> LoginRepository {
         DefaultLoginRepository(
-            provider: dependencies.provider.makeProvider(),
-            keychainManager: dependencies.keychainManager
+            provider: dependencies.provider.makeProvider()
         )
     }
     

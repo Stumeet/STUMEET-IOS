@@ -19,7 +19,7 @@ final class SnsLoginViewModel: ViewModelType {
     
     // MARK: - Output
     struct Output {
-        let authStateNavigation: AnyPublisher<Bool, Never>
+        let authStateNavigation: AnyPublisher<LoginProcessResult, Never>
         let showError: AnyPublisher<String, Never>
     }
     
@@ -35,20 +35,12 @@ final class SnsLoginViewModel: ViewModelType {
     // MARK: - Transform
     func transform(input: Input) -> Output {
         let navigateToChangeProfileVC = input.loginType
-            .flatMap { [weak self] type -> AnyPublisher<Bool, Error> in
+            .flatMap { [weak self] type -> AnyPublisher<LoginProcessResult, Never> in
                 guard let self = self
                 else { return Empty().eraseToAnyPublisher() }
                 
                 return useCase.signIn(loginType: type)}
-            .catch { [weak self] error -> AnyPublisher<Bool, Never> in
-                guard let self = self
-                else { return Just(false).eraseToAnyPublisher() }
-                print("Login error: \(error)")
-                // TODO: 에러 케이스는 모아서 정리 필요
-                self.showErrorSubject.send(error.localizedDescription)
-                
-                return Just(false).eraseToAnyPublisher()
-            }.map { $0 }
+            .map { $0 }
             .eraseToAnyPublisher()
         
         return Output(

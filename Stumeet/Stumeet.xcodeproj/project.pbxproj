@@ -1585,7 +1585,6 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD952C52908000A11A8E /* CreateStudyGroup */,
-				355A75C62C3AC01E00C50BA0 /* StudyGroup */,
 				358D24332C46A96F001EFB51 /* StudyGroupMain */,
 				355A75C62C3AC01E00C50BA0 /* MyStudyGroupList */,
 				CA9AB21B2B8C7E9E0027072E /* StudyActivity */,
@@ -2802,7 +2801,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development_v3;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2838,7 +2837,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Stumeet.Stumeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = stumeet_development_v3;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
