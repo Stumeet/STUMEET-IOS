@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol SelectStudyRepeatDelegate: AnyObject {
-    func didTapCompleteButton(repeatType: String, repeatDates: [String])
+    func didTapCompleteButton(repeatType: StudyRepeatType)
 }
 
 final class SelectStudyRepeatViewController: BaseViewController {
@@ -237,7 +237,8 @@ final class SelectStudyRepeatViewController: BaseViewController {
             didTapWeeklyButton: weeklyButton.tapPublisher,
             didTapMonthlyButton: monthlyButton.tapPublisher,
             didSelectedMontlhyDay: monthlyCollectionView.didSelectItemPublisher,
-            didSelectedWeeklyDay: didTapWeeklyButtonPublisher
+            didSelectedWeeklyDay: didTapWeeklyButtonPublisher,
+            didTapCompleteButton: completeButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -260,6 +261,14 @@ final class SelectStudyRepeatViewController: BaseViewController {
         output.isEnableCompleteButton
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateCompleteButton)
+            .store(in: &cancellables)
+        
+        output.completeDays
+            .receive(on: RunLoop.main)
+            .sink { [weak self] type in
+                self?.hideBottomSheet()
+                self?.delegate?.didTapCompleteButton(repeatType: type)
+            }
             .store(in: &cancellables)
     }
 }

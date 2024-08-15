@@ -9,8 +9,8 @@ import Foundation
 
 enum StudyRepeatType {
     case dailiy
-    case weekly
-    case monthly
+    case weekly([String])
+    case monthly([String])
 }
 
 extension StudyRepeatType {
@@ -33,6 +33,15 @@ extension StudyRepeatType {
             return 301
         case .monthly:
             return 518
+        }
+    }
+    
+    var days: [String] {
+        switch self {
+        case .dailiy:
+            return []
+        case .weekly(let days), .monthly(let days):
+            return days
         }
     }
 }

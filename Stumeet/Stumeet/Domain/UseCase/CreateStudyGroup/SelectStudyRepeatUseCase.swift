@@ -13,6 +13,7 @@ protocol SelectStudyRepeatUseCase {
     func getSelectedMonthlyDays(indexPath: IndexPath, currentDays: [CalendarDate]) -> AnyPublisher<[CalendarDate], Never>
     func getIsSelectedsWeeklyDay(index: Int, currentWeeklys: [Bool]) -> AnyPublisher<[Bool], Never>
     func getIsEnableCompleteButton(selectedType: StudyRepeatType?, weeklys: [Bool], monthlys: [CalendarDate]) -> AnyPublisher<Bool, Never>
+    func getCompleteDays(selectedType: StudyRepeatType?, weeklys: [Bool], monthlys: [CalendarDate]) -> AnyPublisher<StudyRepeatType, Never>
 }
 
 final class DefaultSelectStudyRepeatUseCase: SelectStudyRepeatUseCase {
@@ -59,5 +60,26 @@ final class DefaultSelectStudyRepeatUseCase: SelectStudyRepeatUseCase {
         }
         
         return Just(isEnable).eraseToAnyPublisher()
+    }
+    
+    func getCompleteDays(selectedType: StudyRepeatType?, weeklys: [Bool], monthlys: [CalendarDate]) -> AnyPublisher<StudyRepeatType, Never> {
+        var type: StudyRepeatType!
+        switch selectedType {
+        case .dailiy:
+            type = .dailiy
+        case .weekly:
+            let weekdays = ["월", "화", "수", "목", "금", "토", "일"]
+            let days = weeklys.enumerated().compactMap { index, isSelected in
+                isSelected ? weekdays[index] : nil
+            }
+            type = .weekly(days)
+        case .monthly:
+            let days = monthlys.filter { $0.isSelected }.map { $0.date }
+            type = .monthly(days)
+        case .none:
+            break
+        }
+        
+        return Just(type).eraseToAnyPublisher()
     }
 }

@@ -18,6 +18,7 @@ final class SelectStudyRepeatViewModel: ViewModelType {
         let didTapMonthlyButton: AnyPublisher<Void, Never>
         let didSelectedMontlhyDay: AnyPublisher<IndexPath, Never>
         let didSelectedWeeklyDay: AnyPublisher<Int, Never>
+        let didTapCompleteButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -27,6 +28,7 @@ final class SelectStudyRepeatViewModel: ViewModelType {
         let monthlyDays: AnyPublisher<[SelectStudyRepeatSectionItem], Never>
         let selectedWeeklyDays: AnyPublisher<[Bool], Never>
         let isEnableCompleteButton: AnyPublisher<Bool, Never>
+        let completeDays: AnyPublisher<StudyRepeatType, Never>
     }
     
     // MARK: - Properties
@@ -68,8 +70,8 @@ final class SelectStudyRepeatViewModel: ViewModelType {
 
         Publishers.Merge3(
             input.didTapDailyButton.map { StudyRepeatType.dailiy },
-            input.didTapWeeklyButton.map { StudyRepeatType.weekly },
-            input.didTapMonthlyButton.map { StudyRepeatType.monthly }
+            input.didTapWeeklyButton.map { StudyRepeatType.weekly([]) },
+            input.didTapMonthlyButton.map { StudyRepeatType.monthly([]) }
         )
         .sink(receiveValue: selectedRepeatTypeSubject.send)
         .store(in: &cancellables)
@@ -91,12 +93,18 @@ final class SelectStudyRepeatViewModel: ViewModelType {
             .flatMap(useCase.getIsEnableCompleteButton)
             .eraseToAnyPublisher()
         
+        let completeDays = input.didTapCompleteButton
+            .map { (selectedRepeatTypeSubject.value, weeklyDaysSubject.value, monthlyDaysSubject.value) }
+            .flatMap(useCase.getCompleteDays)
+            .eraseToAnyPublisher()
+        
 
         return Output(
             selectedRepeatType: selectedRepeatType,
             monthlyDays: monthlyDays,
             selectedWeeklyDays: weeklyDaysSubject.eraseToAnyPublisher(),
-            isEnableCompleteButton: isEnableCompleteButton
+            isEnableCompleteButton: isEnableCompleteButton,
+            completeDays: completeDays
         )
     }
 }
