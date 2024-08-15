@@ -114,6 +114,10 @@ final class SelectStudyRepeatViewController: BaseViewController {
     private var datasource: UICollectionViewDiffableDataSource<Section, SectionItem>?
     weak var delegate: SelectStudyRepeatDelegate?
     
+    // MARK: - Subject
+    
+    private let dragEventSubject = PassthroughSubject<SelectStudyRepeatViewModel.DragInfo, Never>()
+    
     // MARK: - Init
     
     init(coordinator: CreateStudyGroupNavigation, viewModel: SelectStudyRepeatViewModel) {
@@ -168,6 +172,9 @@ final class SelectStudyRepeatViewController: BaseViewController {
             backgroundButton,
             bottomSheetView
         ]   .forEach { view.addSubview($0) }
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        dragIndicatorContainerView.addGestureRecognizer(panGesture)
     }
     
     override func setupConstaints() {
@@ -233,6 +240,8 @@ final class SelectStudyRepeatViewController: BaseViewController {
             .eraseToAnyPublisher()
         
         let input = SelectStudyRepeatViewModel.Input(
+            didTapBackgroundButton: backgroundButton.tapPublisher,
+            didDragEvent: dragEventSubject.eraseToAnyPublisher(),
             didTapDailyButton: dailyButton.tapPublisher,
             didTapWeeklyButton: weeklyButton.tapPublisher,
             didTapMonthlyButton: monthlyButton.tapPublisher,
@@ -242,6 +251,25 @@ final class SelectStudyRepeatViewController: BaseViewController {
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.dismiss
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: hideBottomSheet)
+            .store(in: &cancellables)
+        
+        output.adjustHeight
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: adjustBottomSheetHeight)
+            .store(in: &cancellables)
+    
+        output.isRestoreBottomSheetView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isRestore, height in
+                if isRestore {
+                    self?.hideBottomSheet()
+                } else { self?.showBottomSheet(height: height) }
+            }
+            .store(in: &cancellables)
         
         output.selectedRepeatType
             .receive(on: RunLoop.main)
@@ -365,6 +393,7 @@ extension SelectStudyRepeatViewController {
     }
     
     private func hideBottomSheet() {
+        
         UIView.animate(
             withDuration: 0.3,
             animations: {
@@ -395,17 +424,20 @@ extension SelectStudyRepeatViewController {
             dailyButton.layer.borderColor = StumeetColor.primary700.color.cgColor
             weeklyStackView.isHidden = true
             monthlyCollectionView.isHidden = true
+            lastDayExplainLabel.isHidden = true
             
         case .weekly:
             weeklyButton.isSelected = true
             weeklyButton.layer.borderColor = StumeetColor.primary700.color.cgColor
             weeklyStackView.isHidden = false
             monthlyCollectionView.isHidden = true
+            lastDayExplainLabel.isHidden = true
             
         case .monthly:
             monthlyButton.isSelected = true
             monthlyButton.layer.borderColor = StumeetColor.primary700.color.cgColor
             weeklyStackView.isHidden = true
+            lastDayExplainLabel.isHidden = false
             monthlyCollectionView.isHidden = false
         }
     }
@@ -420,5 +452,32 @@ extension SelectStudyRepeatViewController {
     private func updateCompleteButton(isEnable: Bool) {
         completeButton.isEnabled = isEnable
         completeButton.backgroundColor = isEnable ? StumeetColor.primary700.color : StumeetColor.gray200.color
+    }
+}
+
+// MARK: - ObjcFunc
+
+extension SelectStudyRepeatViewController {
+
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let state: SelectStudyRepeatViewModel.DragState
+        switch gesture.state {
+        case .began: state = .began
+        case .changed: state = .changed
+        case .ended: state = .ended
+        case .cancelled: state = .cancelled
+        default: return
+        }
+        
+        let translation = gesture.translation(in: self.view)
+        let velocity = gesture.velocity(in: self.view)
+        let dragInfo = SelectStudyRepeatViewModel.DragInfo(
+            state: state,
+            translationY: translation.y,
+            velocityY: velocity.y,
+            bottomSheetViewHeight: self.bottomSheetView.frame.height)
+        
+        dragEventSubject.send(dragInfo)
+        gesture.setTranslation(.zero, in: self.view)
     }
 }

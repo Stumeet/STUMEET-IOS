@@ -10,9 +10,25 @@ import Foundation
 
 final class SelectStudyRepeatViewModel: ViewModelType {
     
+    enum DragState {
+        case began
+        case changed
+        case ended
+        case cancelled
+    }
+    
+    struct DragInfo {
+        let state: DragState
+        let translationY: CGFloat
+        let velocityY: CGFloat
+        let bottomSheetViewHeight: CGFloat
+    }
+    
     // MARK: - Input
     
     struct Input {
+        let didTapBackgroundButton: AnyPublisher<Void, Never>
+        let didDragEvent: AnyPublisher<DragInfo, Never>
         let didTapDailyButton: AnyPublisher<Void, Never>
         let didTapWeeklyButton: AnyPublisher<Void, Never>
         let didTapMonthlyButton: AnyPublisher<Void, Never>
@@ -24,6 +40,9 @@ final class SelectStudyRepeatViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
+        let dismiss: AnyPublisher<Void, Never>
+        let adjustHeight: AnyPublisher<CGFloat, Never>
+        let isRestoreBottomSheetView: AnyPublisher<(Bool, CGFloat), Never>
         let selectedRepeatType: AnyPublisher<StudyRepeatType, Never>
         let monthlyDays: AnyPublisher<[SelectStudyRepeatSectionItem], Never>
         let selectedWeeklyDays: AnyPublisher<[Bool], Never>
@@ -49,6 +68,20 @@ final class SelectStudyRepeatViewModel: ViewModelType {
         let monthlyDaysSubject = CurrentValueSubject<[CalendarDate], Never>([])
         let weeklyDaysSubject = CurrentValueSubject<[Bool], Never>([Bool](repeating: false, count: 7))
         let selectedRepeatTypeSubject = CurrentValueSubject<StudyRepeatType?, Never>(nil)
+        
+        let dismiss = input.didTapBackgroundButton
+        
+        let adjustHeight = input.didDragEvent
+            .filter { $0.state == .changed }
+            .map { ($0.bottomSheetViewHeight, selectedRepeatTypeSubject.value?.height, $0.translationY)}
+            .flatMap(useCase.setAdjustHeight)
+            .eraseToAnyPublisher()
+        
+        let isRestoreBottomSheetView = input.didDragEvent
+            .filter { $0.state == .ended || $0.state == .cancelled }
+            .map { ($0.velocityY, $0.bottomSheetViewHeight, selectedRepeatTypeSubject.value?.height) }
+            .flatMap(useCase.setIsRestoreBottomSheetView)
+            .eraseToAnyPublisher()
         
         input.didTapMonthlyButton
             .map { monthlyDaysSubject.value }
@@ -100,6 +133,9 @@ final class SelectStudyRepeatViewModel: ViewModelType {
         
 
         return Output(
+            dismiss: dismiss,
+            adjustHeight: adjustHeight,
+            isRestoreBottomSheetView: isRestoreBottomSheetView,
             selectedRepeatType: selectedRepeatType,
             monthlyDays: monthlyDays,
             selectedWeeklyDays: weeklyDaysSubject.eraseToAnyPublisher(),

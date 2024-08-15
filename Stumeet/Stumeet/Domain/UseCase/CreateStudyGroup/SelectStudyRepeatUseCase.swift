@@ -9,6 +9,8 @@ import Combine
 import Foundation
 
 protocol SelectStudyRepeatUseCase {
+    func setAdjustHeight(bottomSheetHeight: CGFloat, heightByType: CGFloat?, translationY: CGFloat) -> AnyPublisher<CGFloat, Never>
+    func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat, heightByType: CGFloat?) -> AnyPublisher<(Bool, CGFloat), Never>
     func getMonthlyDays(currentDays: [CalendarDate]) -> AnyPublisher<[CalendarDate], Never>
     func getSelectedMonthlyDays(indexPath: IndexPath, currentDays: [CalendarDate]) -> AnyPublisher<[CalendarDate], Never>
     func getIsSelectedsWeeklyDay(index: Int, currentWeeklys: [Bool]) -> AnyPublisher<[Bool], Never>
@@ -22,6 +24,15 @@ final class DefaultSelectStudyRepeatUseCase: SelectStudyRepeatUseCase {
     
     init(repository: MonthlyDaysRepository) {
         self.repository = repository
+    }
+    
+    func setAdjustHeight(bottomSheetHeight: CGFloat, heightByType: CGFloat?, translationY: CGFloat) -> AnyPublisher<CGFloat, Never> {
+        return Just(max(0, min(heightByType ?? 245, bottomSheetHeight - translationY)))
+            .eraseToAnyPublisher()
+    }
+    
+    func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat, heightByType: CGFloat?) -> AnyPublisher<(Bool, CGFloat), Never> {
+        return Just((velocityY > 1500 || bottomSheetHeight < heightByType ?? 245 / 2, heightByType ?? 245)).eraseToAnyPublisher()
     }
     
     func getMonthlyDays(currentDays: [CalendarDate]) -> AnyPublisher<[CalendarDate], Never> {
