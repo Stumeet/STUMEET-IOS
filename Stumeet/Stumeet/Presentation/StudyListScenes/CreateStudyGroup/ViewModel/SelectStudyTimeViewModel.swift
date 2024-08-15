@@ -94,10 +94,6 @@ final class SelectStudyTimeViewModel: ViewModelType {
             .sink(receiveValue: isSelectedMinuteSubject.send)
             .store(in: &cancellables)
         
-        useCase.initIsAm()
-            .sink(receiveValue: isAmSubject.send)
-            .store(in: &cancellables)
-        
         input.didTapHourButton
             .map { ($0, isSelectedHoursSubject.value) }
             .flatMap(useCase.getSelectedTimeButton)
