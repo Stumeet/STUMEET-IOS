@@ -43,15 +43,6 @@ final class AppCoordinator: Coordinator {
         flow.start()
     }
     
-    func startRegisterCoordinator() {
-        let registerSceneDIContainer = appDIContainer.makeRegisterSceneDIContainer()
-        let flow = registerSceneDIContainer.makeRegisterCoordinator(navigationController: navigationController)
-        children.removeAll()
-        flow.parentCoordinator = self
-        children.append(flow)
-        flow.start()
-    }
-    
     func startTabbarCoordinator() {
         let tabbarCoordinator = TabBarCoordinator(
             navigationController: navigationController,

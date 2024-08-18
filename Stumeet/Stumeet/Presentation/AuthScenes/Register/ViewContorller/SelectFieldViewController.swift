@@ -77,13 +77,13 @@ class SelectFieldViewController: BaseViewController {
     // MARK: - Properties
     
     private let viewModel: SelecteFieldViewModel
-    private weak var coordinator: RegisterNavigation!
+    private weak var coordinator: AuthNavigation!
     private var tagDatasource: UICollectionViewDiffableDataSource<FieldSection, Field>?
     private var fieldDataSource: UITableViewDiffableDataSource<FieldSection, Field>?
     
     // MARK: - Init
     
-    init(viewModel: SelecteFieldViewModel, coordinator: RegisterNavigation) {
+    init(viewModel: SelecteFieldViewModel, coordinator: AuthNavigation) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

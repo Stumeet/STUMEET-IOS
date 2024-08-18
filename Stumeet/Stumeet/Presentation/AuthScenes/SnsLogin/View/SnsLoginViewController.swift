@@ -162,7 +162,7 @@ class SnsLoginViewController: BaseViewController {
                 case .loginSuccess:
                     coordinator.goToHomeVC()
                 case .signUp:
-                    coordinator.goToRegisterVC()
+                    coordinator.goToChangeProfileVC()
                 case .none:
                     return
                 }

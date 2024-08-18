@@ -20,7 +20,6 @@
 		352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */; };
 		353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353393162BC2947E0021FDF9 /* AppDIContainer.swift */; };
 		353393192BC2975E0021FDF9 /* AuthSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */; };
-		3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */; };
 		353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */; };
 		353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */; };
 		35435BBA2C310FED00BED2A9 /* UserDefaults++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */; };
@@ -49,7 +48,6 @@
 		3562163F2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3562163E2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift */; };
 		356216432C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356216422C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift */; };
 		357923282C4D641900E9CD68 /* StudyMainViewHeaderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357923272C4D641900E9CD68 /* StudyMainViewHeaderItem.swift */; };
-		357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B832BB06B2C0079DCE6 /* RegisterCoordinator.swift */; };
 		357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */; };
 		357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */; };
 		357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */; };
@@ -311,7 +309,6 @@
 		352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++Extension.swift"; sourceTree = "<group>"; };
 		353393162BC2947E0021FDF9 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSceneDIContainer.swift; sourceTree = "<group>"; };
-		3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSceneDIContainer.swift; sourceTree = "<group>"; };
 		353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
@@ -339,7 +336,6 @@
 		3562163E2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainActivityTableViewCell.swift; sourceTree = "<group>"; };
 		356216422C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		357923272C4D641900E9CD68 /* StudyMainViewHeaderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewHeaderItem.swift; sourceTree = "<group>"; };
-		357D1B832BB06B2C0079DCE6 /* RegisterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCoordinator.swift; sourceTree = "<group>"; };
 		357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListCoordinator.swift; sourceTree = "<group>"; };
 		357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
@@ -665,7 +661,6 @@
 				353393162BC2947E0021FDF9 /* AppDIContainer.swift */,
 				CA94FD7A2C50DFDE00A11A8E /* CreateStudyGroupDIContainer.swift */,
 				353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */,
-				3533931A2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift */,
 				CA98F6BB2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift */,
 				CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */,
 			);
@@ -790,14 +785,6 @@
 				356216422C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		357D1B802BB069990079DCE6 /* Flows */ = {
-			isa = PBXGroup;
-			children = (
-				357D1B832BB06B2C0079DCE6 /* RegisterCoordinator.swift */,
-			);
-			path = Flows;
 			sourceTree = "<group>";
 		};
 		357D1B852BB07A630079DCE6 /* Flows */ = {
@@ -927,6 +914,7 @@
 				35BDF7042B88D427000B6DCB /* Flows */,
 				35BDF6F12B88CFEA000B6DCB /* Onboarding */,
 				35BDF6F22B88D053000B6DCB /* SnsLogin */,
+				CA6447E52B863BB90090DD84 /* Register */,
 			);
 			path = AuthScenes;
 			sourceTree = "<group>";
@@ -1312,7 +1300,6 @@
 				35BDF6F02B88CEFA000B6DCB /* AuthScenes */,
 				CA6447DC2B863BB90090DD84 /* HomeScenes */,
 				CA6447E02B863BB90090DD84 /* StudyListScenes */,
-				CA6447E42B863BB90090DD84 /* RegisterScenes */,
 				CA6447FE2B863BB90090DD84 /* CalendarScenes */,
 				CA6448022B863BB90090DD84 /* Common */,
 				CA6448092B863BB90090DD84 /* MyPageScenes */,
@@ -1358,15 +1345,6 @@
 				CA6447E32B863BB90090DD84 /* MyStudyGroupListViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		CA6447E42B863BB90090DD84 /* RegisterScenes */ = {
-			isa = PBXGroup;
-			children = (
-				357D1B802BB069990079DCE6 /* Flows */,
-				CA6447E52B863BB90090DD84 /* Register */,
-			);
-			path = RegisterScenes;
 			sourceTree = "<group>";
 		};
 		CA6447E52B863BB90090DD84 /* Register */ = {
@@ -2387,7 +2365,6 @@
 				CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */,
 				35D091692C4D3B4400471014 /* StudyMainViewActivityItem.swift in Sources */,
 				CA01B2712BFF294500A01CEA /* DetailStudyActivity.swift in Sources */,
-				3533931B2BC2F9AA0021FDF9 /* RegisterSceneDIContainer.swift in Sources */,
 				3582D09B2C56945500C9D63E /* PageInfo.swift in Sources */,
 				357D1BA32BB7E68E0079DCE6 /* OauthResponseDTO.swift in Sources */,
 				355F51EF2BFE309B00782D17 /* UITabBarController++Extension.swift in Sources */,
@@ -2533,7 +2510,6 @@
 				CA342DAF2C36842B0055A9A4 /* CreateActivity.swift in Sources */,
 				CA64483A2B863BB90090DD84 /* ChangeProfileViewModel.swift in Sources */,
 				CA01B28F2C0465B500A01CEA /* DetailActivityMemberListRepository.swift in Sources */,
-				357D1B842BB06B2C0079DCE6 /* RegisterCoordinator.swift in Sources */,
 				35D091672C4D3B0900471014 /* StudyMainViewDetailInfoItem.swift in Sources */,
 				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */,

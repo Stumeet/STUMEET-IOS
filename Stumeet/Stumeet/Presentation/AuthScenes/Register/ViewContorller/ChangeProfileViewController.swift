@@ -57,10 +57,10 @@ class ChangeProfileViewController: BaseViewController {
     // MARK: - Properties
     
     private let viewModel: ChangeProfileViewModel
-    private weak var coordinator: RegisterNavigation!
+    private weak var coordinator: AuthNavigation!
     
     // MARK: - Init
-    init(viewModel: ChangeProfileViewModel, coordinator: RegisterNavigation) {
+    init(viewModel: ChangeProfileViewModel, coordinator: AuthNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)

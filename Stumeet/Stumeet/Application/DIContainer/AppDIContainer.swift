@@ -49,13 +49,6 @@ final class AppDIContainer {
         return AuthSceneDIContainer(dependencies: dependencies)
     }
     
-    func makeRegisterSceneDIContainer() -> RegisterSceneDIContainer {
-        let dependencies = RegisterSceneDIContainer.Dependencies(
-            provider: networkServiceProvider
-        )
-        return RegisterSceneDIContainer(dependencies: dependencies)
-    }
-    
     func makeMyStudyGroupListDIContainer() -> MyStudyGroupListDIContainer {
         let dependencies = MyStudyGroupListDIContainer.Dependencies(
             provider: networkServiceProvider
