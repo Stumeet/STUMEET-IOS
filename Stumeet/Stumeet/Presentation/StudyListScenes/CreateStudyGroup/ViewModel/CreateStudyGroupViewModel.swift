@@ -25,6 +25,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didSelecetedPeriod: AnyPublisher<(startDate: Date, endDate: Date), Never>
         let didTapTimeButton: AnyPublisher<Void, Never>
         let didSelectedTime: AnyPublisher<String, Never>
+        let didTapRepeatButton: AnyPublisher<Void, Never>
+        let didSelectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
     
     // MARK: - Output
@@ -41,6 +43,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let periodAttributedStrings: AnyPublisher<(start: AttributedString, end: AttributedString?), Never>
         let goToSelectStudyTimeVC: AnyPublisher<Void, Never>
         let timeAttributedString: AnyPublisher<AttributedString, Never>
+        let goToSelectStudyRepeatVC: AnyPublisher<Void, Never>
+        let selectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
     
     // MARK: - Properties
@@ -129,7 +133,9 @@ final class CreateStudyGroupViewModel: ViewModelType {
             goToSetStudyGroupPeriodVC: goToSetStudyGroupPeriodVC,
             periodAttributedStrings: periodAttributedStrings,
             goToSelectStudyTimeVC: input.didTapTimeButton,
-            timeAttributedString: timeAttributedString
+            timeAttributedString: timeAttributedString,
+            goToSelectStudyRepeatVC: input.didTapRepeatButton,
+            selectedRepeatDays: input.didSelectedRepeatDays.eraseToAnyPublisher()
         )
     }
     
