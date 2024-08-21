@@ -28,6 +28,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didSelectedTime: AnyPublisher<String, Never>
         let didTapAddImageButton: AnyPublisher<Void, Never>
         let didSelectPhoto: AnyPublisher<URL, Never>
+        let didTapRepeatButton: AnyPublisher<Void, Never>
+        let didSelectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
     
     // MARK: - Output
@@ -46,6 +48,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let timeAttributedString: AnyPublisher<AttributedString, Never>
         let showPHPickerVC: AnyPublisher<Void, Never>
         let selectedImage: AnyPublisher<UIImage?, Never>
+        let goToSelectStudyRepeatVC: AnyPublisher<Void, Never>
+        let selectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
     
     // MARK: - Properties
@@ -141,6 +145,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             timeAttributedString: timeAttributedString,
             showPHPickerVC: input.didTapAddImageButton,
             selectedImage: selectedImage
+            goToSelectStudyRepeatVC: input.didTapRepeatButton,
+            selectedRepeatDays: input.didSelectedRepeatDays.eraseToAnyPublisher()
         )
     }
     

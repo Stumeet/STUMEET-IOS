@@ -13,6 +13,7 @@ protocol CreateStudyGroupCoordinatorDependencies {
     func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController
     func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, dates: (isStart: Bool, startDate: Date, endDate: Date?)) -> SetStudyGroupPeriodViewController
     func makeSelectStudyTimeVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyTimeViewController
+    func makeSelectStudyRepeatVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyRepeatViewController
 }
 
 protocol CreateStudyGroupNavigation: AnyObject {
@@ -22,6 +23,7 @@ protocol CreateStudyGroupNavigation: AnyObject {
     func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?))
     func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate)
     func presentPHPickerView(pickerVC: PHPickerViewController)
+    func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate)
     func dismiss()
 }
 
@@ -83,6 +85,13 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         let imagePicker = pickerVC
         imagePicker.modalPresentationStyle = .fullScreen
         navigationController.present(imagePicker, animated: true)
+      
+    func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let selectRepeatVC = dependencies.makeSelectStudyRepeatVC(coordinator: self)
+        selectRepeatVC.modalPresentationStyle = .overFullScreen
+        selectRepeatVC.delegate = delegate
+        navigationController.present(selectRepeatVC, animated: false)
     }
     
     func dismiss() {

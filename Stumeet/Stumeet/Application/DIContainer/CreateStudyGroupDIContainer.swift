@@ -31,6 +31,10 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         DefaultSetStudyGroupPeriodRepository()
     }
     
+    func makeMonthlyDaysRepository() -> MonthlyDaysRepository {
+        DefaultMonthlyDaysRepository()
+    }
+    
     // MARK: - UseCase
     
     func makeSelectStudyGroupItemUseCase() -> SelectStudyGroupItemUseCase {
@@ -47,6 +51,10 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     func makeSelectStudyTimeUseCase() -> SelectStudyTimeUseCase {
         DefaultSelectStudyTimeUseCase()
+    }
+    
+    func makeSelectStudyRepeatUseCase() -> SelectStudyRepeatUseCase {
+        DefaultSelectStudyRepeatUseCase(repository: makeMonthlyDaysRepository())
     }
     
     // MARK: - CreateStudyGroupVC
@@ -109,5 +117,16 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         )
     }
     
+    // MARK: - SelectStudyRepeat
     
+    func makeSelectStudyRepeatVM() -> SelectStudyRepeatViewModel {
+        SelectStudyRepeatViewModel(useCase: makeSelectStudyRepeatUseCase())
+    }
+    
+    func makeSelectStudyRepeatVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyRepeatViewController {
+        SelectStudyRepeatViewController(
+            coordinator: coordinator,
+            viewModel: makeSelectStudyRepeatVM()
+        )
+    }
 }
