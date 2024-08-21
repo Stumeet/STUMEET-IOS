@@ -1585,7 +1585,6 @@
 			isa = PBXGroup;
 			children = (
 				CA94FD952C52908000A11A8E /* CreateStudyGroup */,
-				355A75C62C3AC01E00C50BA0 /* StudyGroup */,
 				358D24332C46A96F001EFB51 /* StudyGroupMain */,
 				355A75C62C3AC01E00C50BA0 /* MyStudyGroupList */,
 				CA9AB21B2B8C7E9E0027072E /* StudyActivity */,
@@ -1781,7 +1780,6 @@
 			children = (
 				CA94FD772C50DE0D00A11A8E /* Flow */,
 				CA94FD8A2C528BF500A11A8E /* Model */,
-				CA94FD762C50DE0400A11A8E /* View */,
 				CA94FD752C50DDFB00A11A8E /* ViewModel */,
 				CA94FD742C50DDF600A11A8E /* ViewController */,
 			);
@@ -1808,13 +1806,6 @@
 				CA107A662C60F8A100163407 /* SelectStudyTimeViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		CA94FD762C50DE0400A11A8E /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		CA94FD772C50DE0D00A11A8E /* Flow */ = {
