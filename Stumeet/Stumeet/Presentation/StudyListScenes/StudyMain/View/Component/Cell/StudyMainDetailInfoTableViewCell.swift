@@ -211,6 +211,7 @@ class StudyMainDetailInfoTableViewCell: BaseTableViewCell {
         periodLabel.text = data.period
         recurringScheduleLabel.text = data.recurringMeetingTime
         ruleLabel.text = data.rule
+        ruleLabel.setLineSpacing(lineSpacing: 8)
         
         var datas: [StudyMainTag] = []
         datas.append(StudyMainTag(id: 0, title: data.region))
