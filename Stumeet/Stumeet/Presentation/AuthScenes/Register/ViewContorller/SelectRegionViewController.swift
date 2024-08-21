@@ -45,13 +45,13 @@ class SelectRegionViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private weak var coordinator: RegisterNavigation!
+    private weak var coordinator: AuthNavigation!
     private let viewModel: SelectRegionViewModel
     private var datasource: UICollectionViewDiffableDataSource<RegionSection, Region>?
     
     // MARK: - Init
     
-    init(viewModel: SelectRegionViewModel, coordinator: RegisterNavigation) {
+    init(viewModel: SelectRegionViewModel, coordinator: AuthNavigation) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

@@ -70,12 +70,12 @@ class NicknameViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private weak var coordinator: RegisterNavigation!
+    private weak var coordinator: AuthNavigation!
     private let viewModel: NicknameViewModel
     
     // MARK: - Init
     
-    init(viewModel: NicknameViewModel, coordinator: RegisterNavigation) {
+    init(viewModel: NicknameViewModel, coordinator: AuthNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)

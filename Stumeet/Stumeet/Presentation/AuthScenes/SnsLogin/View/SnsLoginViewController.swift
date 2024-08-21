@@ -156,13 +156,15 @@ class SnsLoginViewController: BaseViewController {
         
         output.authStateNavigation
             .receive(on: RunLoop.main)
-            .sink { [weak self] isLoggedIn in
+            .sink { [weak self] result in
                 guard let self = self else { return }
-
-                if isLoggedIn {
+                switch result {
+                case .loginSuccess:
                     coordinator.goToHomeVC()
-                } else {
-                    coordinator.goToRegisterVC()
+                case .signUp:
+                    coordinator.goToChangeProfileVC()
+                case .none:
+                    return
                 }
             }
             .store(in: &cancellables)

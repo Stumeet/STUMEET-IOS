@@ -49,11 +49,11 @@ class StartViewController: BaseViewController {
     // MARK: - Properties
     
     private let viewModel: StartViewModel
-    private weak var coordinator: RegisterNavigation!
+    private weak var coordinator: AuthNavigation!
     
     // MARK: - Init
     
-    init(viewModel: StartViewModel, coordinator: RegisterNavigation) {
+    init(viewModel: StartViewModel, coordinator: AuthNavigation) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         
