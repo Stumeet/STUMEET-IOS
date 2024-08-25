@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 class StudyMemberViewController: BaseViewController {
     
@@ -91,13 +92,17 @@ class StudyMemberViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: MyStudyGroupListNavigation!
-    private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, Int>?
+    private let viewModel: StudyMemberViewModel
+    private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, StudyMember>?
+    private let loadStudyMemberDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
-        coordinator: MyStudyGroupListNavigation
+        coordinator: MyStudyGroupListNavigation,
+        viewModel: StudyMemberViewModel
     ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -147,17 +152,27 @@ class StudyMemberViewController: BaseViewController {
     
     override func bind() {
         // MARK: - Input
-                
+        let input = StudyMemberViewModel.Input(
+            loadStudyMemberData: loadStudyMemberDataSubject.eraseToAnyPublisher()
+        )
         // MARK: - Output
+        let output = viewModel.transform(input: input)
         
+        output.studyMemberDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateSnapshot)
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDatasource()
-        // TODO: - API 연동 시 수정
-        updateSnapshot()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadStudyMemberDataSubject.send()
     }
     
     // MARK: - Function
@@ -179,16 +194,16 @@ extension StudyMemberViewController {
             cellProvider: { tableView, indexPath, item in
                 guard let cell = tableView.dequeue(StudyMemberListTableViewCell.self, for: indexPath)
                 else { return UITableViewCell() }
-                cell.configureCell()
+                cell.configureCell(item)
                 return cell
             }
         )
     }
     // TODO: - API 연동 시 수정
-    private func updateSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<StudyMemberListSection, Int>()
+    private func updateSnapshot(items: [StudyMember]) {
+        var snapshot = NSDiffableDataSourceSnapshot<StudyMemberListSection, StudyMember>()
         snapshot.appendSections([.main])
-        snapshot.appendItems([1, 2, 3, 4])
+        snapshot.appendItems(items)
         
         guard let datasource = self.studyMemberDataSource else { return }
         datasource.apply(snapshot, animatingDifferences: false)

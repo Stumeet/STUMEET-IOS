@@ -16,15 +16,16 @@ protocol MyStudyGroupListCoordinatorDependencies {
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: MyStudyGroupListNavigation) -> DetailActivityPhotoListViewController
     func makeDetailActivityMemberListVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
     func makeCreateStudyGroupCoordinator(navigationController: UINavigationController) -> CreateStudyGroupCoordinator
+    func makeStudyMemberVC(coordinator: MyStudyGroupListNavigation, studyId: Int) -> StudyMemberViewController
 }
 
 protocol MyStudyGroupListNavigation: AnyObject {
     func goToMyStudyGroupList()
     func goToStudyMain(with id: Int)
-    func presentToSideMenu(from viewController: UIViewController)
+    func presentToSideMenu(from viewController: UIViewController, studyId: Int)
     func presentToExitPopup(from viewController: UIViewController)
     func presentToInvitationPopup(from viewController: UIViewController)
-    func presentToMember(from viewController: UIViewController)
+    func presentToMember(from viewController: UIViewController, studyId: Int)
     func goToStudyActivityList()
     func goToDetailStudyActivityVC(studyID: Int, activityID: Int)
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
@@ -67,8 +68,9 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         navigationController.pushViewController(studyMainVC, animated: true)
     }
     
-    func presentToSideMenu(from viewController: UIViewController) {
-        let sideMenuVC = StudyMainSideMenuViewController(coordinator: self)
+    // TODO: StudyMainSideMenuViewController의 viewModel 추가 필요
+    func presentToSideMenu(from viewController: UIViewController, studyId: Int) {
+        let sideMenuVC = StudyMainSideMenuViewController(coordinator: self, studyId: studyId)
         sideMenuVC.modalPresentationStyle = .overFullScreen
         sideMenuVC.modalTransitionStyle = .crossDissolve
         viewController.present(sideMenuVC, animated: false, completion: nil)
@@ -88,8 +90,8 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         viewController.present(invitationPopupVC, animated: false, completion: nil)
     }
     
-    func presentToMember(from viewController: UIViewController) {
-        let memberVC = StudyMemberViewController(coordinator: self)
+    func presentToMember(from viewController: UIViewController, studyId: Int) {
+        let memberVC = dependencies.makeStudyMemberVC(coordinator: self, studyId: studyId)
         viewController.present(memberVC, animated: true, completion: nil)
     }
       

@@ -100,10 +100,16 @@ class StudyMainSideMenuViewController: BaseViewController {
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var deviceWidthRatio = screenWidth * 0.7 // 디바이스 너비의 70%를 계산
     private var menuDataSource: UITableViewDiffableDataSource<StudyMainMenuSection, StudyMainMenu>?
+    private let studyId: Int
     
     // MARK: - Init
-    init(coordinator: MyStudyGroupListNavigation) {
+    // TODO: viewModel 추가 시 studyId 이동
+    init(
+        coordinator: MyStudyGroupListNavigation,
+        studyId: Int
+    ) {
         self.coordinator = coordinator
+        self.studyId = studyId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -219,7 +225,7 @@ class StudyMainSideMenuViewController: BaseViewController {
                 case 1: print("일정")
                 case 2: coordinator.goToStudyActivityList()
                 case 3: 
-                    coordinator.presentToMember(from: self)
+                    coordinator.presentToMember(from: self, studyId: studyId)
                     isDismissSideMenu = false
                 default:
                     isDismissSideMenu = false

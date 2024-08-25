@@ -27,5 +27,4 @@ final class DefaultMyStudyGroupListUseCase: MyStudyGroupListUseCase {
             }
             .eraseToAnyPublisher()
     }
-    
 }

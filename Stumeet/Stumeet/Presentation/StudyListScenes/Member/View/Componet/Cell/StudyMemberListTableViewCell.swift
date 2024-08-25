@@ -108,10 +108,12 @@ class StudyMemberListTableViewCell: BaseTableViewCell {
     
     // MARK: - Function
     // TODO: - API 연동 시 수정
-    func configureCell() {
-        profileImageView.image = UIImage(resource: .StudyGroupMain.testHeaderImg)
-        nameLabel.text = "홍길동"
-        regionAndFieldLabel.text = "서울 · IT"
-        adminIconImageView.isHidden = false
+    func configureCell(_ item: StudyMember) {
+        nameLabel.text = item.name
+        regionAndFieldLabel.text = "\(item.region) · \(item.profession)"
+        adminIconImageView.isHidden = !item.isAdmin
+        
+        let url = URL(string: item.image)
+        profileImageView.kf.setImage(with: url)
     }
 }

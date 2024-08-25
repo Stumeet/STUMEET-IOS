@@ -47,6 +47,10 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         DefaultDetailActivityMemberListRepository(provider: dependencies.provider.makeProvider())
     }
     
+    func makeStudyMemberRepository() -> StudyMemberRepository {
+        DefaultStudyMemberRepository(provider: dependencies.provider.makeProvider())
+    }
+    
     // MARK: - UseCase
     
     func makeMyStudyGroupListUseCase() -> MyStudyGroupListUseCase {
@@ -74,6 +78,10 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     
     func makeDetailActivityMemberListUseCase() -> DetailActivityMemberListUseCase {
         DefualtDetailActivityMemberListUseCase(repository: makeDetailActivityMemberRepository())
+    }
+    
+    func makeStudyMemberUseCase() -> StudyMemberUseCase {
+        DefaultStudyMemberUseCase(repository: makeStudyMemberRepository())
     }
     
     // MARK: - MyStudyGroupList
@@ -168,6 +176,22 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         DetailActivityPhotoListViewController(
             coordinator: coordinator,
             viewModel: makeDetailActivityPhotoListViewModel(with: imageURLs, selectedRow: row)
+        )
+    }
+    
+    // MARK: - StudyMember
+    
+    func makeStudyMemberViewModel(studyId: Int) -> StudyMemberViewModel {
+        StudyMemberViewModel(
+            useCase: makeStudyMemberUseCase(),
+            studyId: studyId
+        )
+    }
+    
+    func makeStudyMemberVC(coordinator: Navigation, studyId: Int) -> StudyMemberViewController {
+        StudyMemberViewController(
+            coordinator: coordinator,
+            viewModel: makeStudyMemberViewModel(studyId: studyId)
         )
     }
     
