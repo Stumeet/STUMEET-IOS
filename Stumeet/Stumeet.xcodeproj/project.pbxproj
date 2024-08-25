@@ -20,6 +20,8 @@
 		352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */; };
 		353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353393162BC2947E0021FDF9 /* AppDIContainer.swift */; };
 		353393192BC2975E0021FDF9 /* AuthSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */; };
+		353A08B62C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353A08B52C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift */; };
+		353A08B92C7B71C100678E96 /* StudyMemberListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353A08B82C7B71C100678E96 /* StudyMemberListSection.swift */; };
 		353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */; };
 		353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */; };
 		35435BBA2C310FED00BED2A9 /* UserDefaults++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */; };
@@ -310,6 +312,8 @@
 		352DBE532C1F4BA4008859D2 /* UIApplication++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++Extension.swift"; sourceTree = "<group>"; };
 		353393162BC2947E0021FDF9 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		353393182BC2975E0021FDF9 /* AuthSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSceneDIContainer.swift; sourceTree = "<group>"; };
+		353A08B52C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberListTableViewCell.swift; sourceTree = "<group>"; };
+		353A08B82C7B71C100678E96 /* StudyMemberListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberListSection.swift; sourceTree = "<group>"; };
 		353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
@@ -669,6 +673,30 @@
 			path = DIContainer;
 			sourceTree = "<group>";
 		};
+		353A08B32C7B69E800678E96 /* Componet */ = {
+			isa = PBXGroup;
+			children = (
+				353A08B42C7B69F400678E96 /* Cell */,
+			);
+			path = Componet;
+			sourceTree = "<group>";
+		};
+		353A08B42C7B69F400678E96 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				353A08B52C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		353A08B72C7B719F00678E96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				353A08B82C7B71C100678E96 /* StudyMemberListSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		353EAEAE2B8E19AD008F7E8C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -913,6 +941,7 @@
 		358F34432C7787DF00683713 /* Member */ = {
 			isa = PBXGroup;
 			children = (
+				353A08B72C7B719F00678E96 /* Model */,
 				358F34442C7787F800683713 /* View */,
 			);
 			path = Member;
@@ -921,6 +950,7 @@
 		358F34442C7787F800683713 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				353A08B32C7B69E800678E96 /* Componet */,
 				358F34452C7788C200683713 /* StudyMemberViewController.swift */,
 			);
 			path = View;
@@ -2380,6 +2410,7 @@
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
 				CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
+				353A08B62C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift in Sources */,
 				352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */,
 				CA9AB2202B8C7EF10027072E /* DefaultStudyActivityRepository.swift in Sources */,
 				35D091692C4D3B4400471014 /* StudyMainViewActivityItem.swift in Sources */,
@@ -2544,6 +2575,7 @@
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				CA64508E2C14643900E00665 /* StudyActivityViewModel.swift in Sources */,
 				357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */,
+				353A08B92C7B71C100678E96 /* StudyMemberListSection.swift in Sources */,
 				CA6450922C14659100E00665 /* TaskStudyActivityViewController.swift in Sources */,
 				357D1B9A2BB2FDBF0079DCE6 /* BaseTargetType.swift in Sources */,
 				35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */,

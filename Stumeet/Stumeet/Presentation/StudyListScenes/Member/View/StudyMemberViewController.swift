@@ -76,6 +76,14 @@ class StudyMemberViewController: BaseViewController {
         return label
     }()
     
+    private lazy var memberTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
+        tableView.registerCell(StudyMemberListTableViewCell.self)
+        return tableView
+    }()
+    
     private var titleSpaceView: UIView = {
         let view = UIView()
         return view
@@ -83,6 +91,7 @@ class StudyMemberViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: MyStudyGroupListNavigation!
+    private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, Int>?
 
     // MARK: - Init
     init(
@@ -102,6 +111,7 @@ class StudyMemberViewController: BaseViewController {
     
     override func setupAddView() {
         view.addSubview(navigationBar)
+        view.addSubview(memberTableView)
         
         navigationBarItems.leftBarButtonItem = xButton
         navigationBarItems.titleView = titleStackView
@@ -121,11 +131,17 @@ class StudyMemberViewController: BaseViewController {
     override func setupConstaints() {
         navigationBar.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
         }
         
         titleSpaceView.snp.makeConstraints {
             $0.width.greaterThanOrEqualTo(CGFloat.greatestFiniteMagnitude).priority(.low)
+        }
+        
+        memberTableView.snp.makeConstraints {
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview()
         }
     }
     
@@ -137,7 +153,13 @@ class StudyMemberViewController: BaseViewController {
     }
     
     // MARK: - LifeCycle
-        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureDatasource()
+        // TODO: - API 연동 시 수정
+        updateSnapshot()
+    }
+    
     // MARK: - Function
     @objc func closeButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
@@ -145,5 +167,30 @@ class StudyMemberViewController: BaseViewController {
     
     @objc func memberSettingsButtonTapped(_ sender: UIBarButtonItem) {
         print(#function)
+    }
+}
+
+extension StudyMemberViewController {
+    // MARK: - DataSource
+    // TODO: - API 연동 시 수정
+    private func configureDatasource() {
+        studyMemberDataSource = UITableViewDiffableDataSource(
+            tableView: memberTableView,
+            cellProvider: { tableView, indexPath, item in
+                guard let cell = tableView.dequeue(StudyMemberListTableViewCell.self, for: indexPath)
+                else { return UITableViewCell() }
+                cell.configureCell()
+                return cell
+            }
+        )
+    }
+    // TODO: - API 연동 시 수정
+    private func updateSnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<StudyMemberListSection, Int>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems([1, 2, 3, 4])
+        
+        guard let datasource = self.studyMemberDataSource else { return }
+        datasource.apply(snapshot, animatingDifferences: false)
     }
 }
