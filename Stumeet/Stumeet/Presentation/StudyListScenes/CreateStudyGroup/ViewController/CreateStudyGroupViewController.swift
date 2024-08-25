@@ -177,6 +177,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let periodSubject = PassthroughSubject<(startDate: Date, endDate: Date), Never>()
     private let timeSubject = PassthroughSubject<String, Never>()
     private let selectedPhotoSubject = PassthroughSubject<URL, Never>()
+    private let repeatDaysSubject = PassthroughSubject<StudyRepeatType, Never>()
     
     // MARK: - Init
     
@@ -203,6 +204,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func setupStyles() {
         view.backgroundColor = .white
         configureXButtonTitleNavigationBarItems(button: UIBarButtonItem(customView: xButton), title: "스터디 그룹 생성")
+        repeatButton.configuration?.contentInsets = .init(top: 0, leading: 19.33, bottom: 0, trailing: 16)
     }
     
     override func setupAddView() {
@@ -432,7 +434,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         repeatButton.snp.makeConstraints { make in
             make.leading.equalTo(repeatLabel.snp.trailing).offset(8)
             make.centerY.equalTo(repeatLabel)
-            make.size.equalTo(CGSize(width: 119, height: 36))
+            make.height.equalTo(39)
             make.bottom.equalToSuperview()
         }
 
@@ -483,6 +485,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didBeginExplainEditting: explainTextView.didBeginEditingPublisher,
             didChangeStudyRuleTextView: studyRuleTextView.textPublisher,
             didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher
+            didTapRepeatButton: repeatButton.tapPublisher,
+            didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher()
         )
         
         let output = viewModel.transform(input: input)
@@ -555,6 +559,16 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.selectedImage
             .receive(on: RunLoop.main)
             .assign(to: \.image, on: studyGroupImageView)
+      
+        output.goToSelectStudyRepeatVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSelectStudyRepeatVC)
+            .store(in: &cancellables)
+        
+        output.selectedRepeatDays
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateRepeatButton)
             .store(in: &cancellables)
         
         output.isBiggerThanTwenty
@@ -656,7 +670,9 @@ extension CreateStudyGroupViewController {
 extension CreateStudyGroupViewController: 
     SelectStudyGroupItemDelegate,
     SetStudyGroupPeriodDelegate,
-    SelectStudyTimeDelegate {
+    SelectStudyTimeDelegate,
+    SelectStudyRepeatDelegate
+{
     
     func didTapFileldCompleteButton(field: SelectStudyItem) {
         fieldSubject.send(field)
@@ -672,6 +688,10 @@ extension CreateStudyGroupViewController:
     
     func didTapCompleteButton(time: String) {
         timeSubject.send(time)
+    }
+    
+    func didTapCompleteButton(repeatType: StudyRepeatType) {
+        repeatDaysSubject.send(repeatType)
     }
 }
 
@@ -703,9 +723,6 @@ extension CreateStudyGroupViewController {
         titleAttributes.font = StumeetFont.bodyMedium14.font
         titleAttributes.foregroundColor = StumeetColor.primary700.color
         config.attributedTitle = titleAttributes
-        
-        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -44, bottom: 0, trailing: 0)
-        
         regionButton.configuration = config
         regionButton.layer.borderColor = StumeetColor.primary700.color.cgColor
     }
@@ -730,6 +747,44 @@ extension CreateStudyGroupViewController {
         timeButton.configuration?.attributedTitle = time
         timeButton.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
         timeButton.configuration?.baseForegroundColor = StumeetColor.primary700.color
+    }
+    
+    private func updateRepeatButton(type: StudyRepeatType) {
+        
+        var config = repeatButton.configuration!
+        switch type {
+        case .dailiy:
+            config.attributedTitle = AttributedString(type.title)
+        case .weekly(let days):
+            if days.count == 7 {
+                config.attributedTitle = AttributedString("매일")
+            } else {
+                let joinedDays = days.joined(separator: ", ")
+                config.attributedTitle = AttributedString(type.title + " " + joinedDays + "요일")
+            }
+
+        case .monthly(let days):
+            if days.last == "마지막 날" {
+                var dayNumbers = days
+                dayNumbers.removeLast()  // "마지막 날"을 제거
+                
+                let joinedDays = dayNumbers.joined(separator: ",")
+                
+                if !dayNumbers.isEmpty {
+                    config.attributedTitle = AttributedString("\(type.title) \(joinedDays) 일, 마지막 날")
+                } else {
+                    config.attributedTitle = AttributedString("\(type.title) 마지막 날")
+                }
+            } else {
+                let joinedDays = days.joined(separator: ",")
+                config.attributedTitle = AttributedString("\(type.title) \(joinedDays) 일")
+            }
+        }
+        config.attributedTitle?.font = StumeetFont.bodyMedium14.font
+        config.baseForegroundColor = StumeetColor.primary700.color
+        config.image = UIImage(resource: .CreateStudyGroup.repeatButton).withTintColor(StumeetColor.primary700.color)
+        repeatButton.configuration = config
+        repeatButton.layer.borderColor = StumeetColor.primary700.color.cgColor
     }
 }
 

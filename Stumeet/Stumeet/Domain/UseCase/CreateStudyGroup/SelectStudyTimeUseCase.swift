@@ -12,7 +12,6 @@ protocol SelectStudyTimeUseCase {
     func setAdjustHeight(bottomSheetHeight: CGFloat, translationY: CGFloat) -> AnyPublisher<CGFloat, Never>
     func setIsRestoreBottomSheetView(velocityY: CGFloat, bottomSheetHeight: CGFloat) -> AnyPublisher<Bool, Never>
     func getSelectedTimeButton(selectedIndex: Int, timeSelecteds: [Bool]) -> AnyPublisher<[Bool], Never>
-    func initIsAm() -> AnyPublisher<Bool, Never>
     func initHourSelecteds() -> AnyPublisher<[Bool], Never>
     func initMinuteSelecteds() -> AnyPublisher<[Bool], Never>
     func getIsEnableCompleteButton(hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never>
@@ -52,15 +51,6 @@ final class DefaultSelectStudyTimeUseCase: SelectStudyTimeUseCase {
     func initMinuteSelecteds() -> AnyPublisher<[Bool], Never> {
         let timeSelecteds = Array(repeating: false, count: 12)
         return Just(timeSelecteds).eraseToAnyPublisher()
-    }
-    
-    func initIsAm() -> AnyPublisher<Bool, Never> {
-        let now = Date()
-        let calendar = Calendar.current
-        
-        let isAm = calendar.component(.hour, from: now) < 12
-        
-        return Just(isAm).eraseToAnyPublisher()
     }
     
     func getIsEnableCompleteButton(hours: [Bool], minutes: [Bool]) -> AnyPublisher<Bool, Never> {

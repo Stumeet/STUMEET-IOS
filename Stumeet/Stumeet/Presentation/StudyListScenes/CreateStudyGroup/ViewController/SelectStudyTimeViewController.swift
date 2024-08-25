@@ -200,6 +200,7 @@ final class SelectStudyTimeViewController: BaseViewController {
         output.isSelectedAmButton
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] isSelected in
+                print(isSelected)
                 self?.updateAmTimeView(isSelected: isSelected)
                 self?.updatePmTimeView(isSelected: isSelected)
             })
