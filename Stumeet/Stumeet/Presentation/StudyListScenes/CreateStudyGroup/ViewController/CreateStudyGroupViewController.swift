@@ -289,7 +289,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func setupConstaints() {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
 
@@ -480,7 +480,9 @@ final class CreateStudyGroupViewController: BaseViewController {
             didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher(),
             didChangeStudyNameTextField: studyNameTextField.textPublisher,
             didChangeStudyExplainTextView: explainTextView.textPublisher,
-            didBeginExplainEditting: explainTextView.didBeginEditingPublisher
+            didBeginExplainEditting: explainTextView.didBeginEditingPublisher,
+            didChangeStudyRuleTextView: studyRuleTextView.textPublisher,
+            didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -568,7 +570,7 @@ final class CreateStudyGroupViewController: BaseViewController {
             .assign(to: \.text, on: studyNameLengthLabel)
             .store(in: &cancellables)
         
-        output.isBiggerThanHundred
+        output.isBiggerThanHundredExplain
             .receive(on: RunLoop.main)
             .filter { $0 }
             .map { _ in String(self.explainTextView.text?.dropLast() ?? "") }
@@ -584,6 +586,24 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.explainBeginText
             .receive(on: RunLoop.main)
             .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanHundredRule
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyRuleTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.ruleCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleLengthLabel)
+            .store(in: &cancellables)
+        
+        output.ruleBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleTextView)
             .store(in: &cancellables)
     }
 }

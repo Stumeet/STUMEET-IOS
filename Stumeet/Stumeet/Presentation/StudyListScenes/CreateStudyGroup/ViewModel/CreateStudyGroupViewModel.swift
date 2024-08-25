@@ -31,6 +31,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didChangeStudyNameTextField: AnyPublisher<String?, Never>
         let didChangeStudyExplainTextView: AnyPublisher<String?, Never>
         let didBeginExplainEditting: AnyPublisher<Void, Never>
+        let didChangeStudyRuleTextView: AnyPublisher<String?, Never>
+        let didBeginStudyRuleEditting: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -50,10 +52,13 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let showPHPickerVC: AnyPublisher<Void, Never>
         let selectedImage: AnyPublisher<UIImage?, Never>
         let isBiggerThanTwenty: AnyPublisher<Bool, Never>
-        let isBiggerThanHundred: AnyPublisher<Bool, Never>
+        let isBiggerThanHundredExplain: AnyPublisher<Bool, Never>
         let titleCount: AnyPublisher<Int, Never>
         let explainCount: AnyPublisher<Int, Never>
         let explainBeginText: AnyPublisher<String, Never>
+        let isBiggerThanHundredRule: AnyPublisher<Bool, Never>
+        let ruleCount: AnyPublisher<Int, Never>
+        let ruleBeginText: AnyPublisher<String, Never>
     }
     
     // MARK: - Properties
@@ -147,7 +152,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .flatMap(useCase.setTextFieldCount)
             .eraseToAnyPublisher()
         
-        let isBiggerThanHundred = input.didChangeStudyExplainTextView
+        let isBiggerThanHundredExplain = input.didChangeStudyExplainTextView
             .compactMap { $0 }
             .map { ($0, 100) }
             .flatMap(useCase.checkTextFieldLonggestThanMax)
@@ -160,6 +165,24 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let explainBeginText = input.didBeginExplainEditting
+            .map { "스터디를 소개해주세요." }
+            .flatMap(useCase.setTextViewText)
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+        
+        let isBiggerThanHundredRule = input.didChangeStudyRuleTextView
+            .compactMap { $0 }
+            .map { ($0, 100) }
+            .flatMap(useCase.checkTextFieldLonggestThanMax)
+            .eraseToAnyPublisher()
+        
+        let ruleCount = input.didChangeStudyRuleTextView
+            .compactMap { $0 }
+            .map { ($0, 100) }
+            .flatMap(useCase.setTextFieldCount)
+            .eraseToAnyPublisher()
+        
+        let ruleBeginText = input.didBeginStudyRuleEditting
             .map { "스터디를 소개해주세요." }
             .flatMap(useCase.setTextViewText)
             .compactMap { $0 }
@@ -180,10 +203,13 @@ final class CreateStudyGroupViewModel: ViewModelType {
             showPHPickerVC: input.didTapAddImageButton,
             selectedImage: selectedImage,
             isBiggerThanTwenty: isBiggerThanTwenty,
-            isBiggerThanHundred: isBiggerThanHundred,
+            isBiggerThanHundredExplain: isBiggerThanHundredExplain,
             titleCount: titleCount,
             explainCount: explainCount,
-            explainBeginText: explainBeginText
+            explainBeginText: explainBeginText,
+            isBiggerThanHundredRule: isBiggerThanHundredRule,
+            ruleCount: ruleCount,
+            ruleBeginText: ruleBeginText
         )
     }
     
