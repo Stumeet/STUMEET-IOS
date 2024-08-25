@@ -24,6 +24,7 @@ protocol MyStudyGroupListNavigation: AnyObject {
     func presentToSideMenu(from viewController: UIViewController)
     func presentToExitPopup(from viewController: UIViewController)
     func presentToInvitationPopup(from viewController: UIViewController)
+    func presentToMember(from viewController: UIViewController)
     func goToStudyActivityList()
     func goToDetailStudyActivityVC(studyID: Int, activityID: Int)
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
@@ -85,6 +86,11 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         invitationPopupVC.modalPresentationStyle = .overFullScreen
         invitationPopupVC.modalTransitionStyle = .crossDissolve
         viewController.present(invitationPopupVC, animated: false, completion: nil)
+    }
+    
+    func presentToMember(from viewController: UIViewController) {
+        let memberVC = StudyMemberViewController(coordinator: self)
+        viewController.present(memberVC, animated: true, completion: nil)
     }
       
     func goToStudyActivityList() {

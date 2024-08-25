@@ -209,9 +209,26 @@ class StudyMainSideMenuViewController: BaseViewController {
     
     override func bind() {
         menuTableView.didSelectRowPublisher
-            .filter { $0.item == 2 }
-            .map { _ in }
-            .sink(receiveValue: coordinator.goToStudyActivityList)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] selectRow in
+                guard let self = self else { return }
+                var isDismissSideMenu = true
+                
+                switch selectRow.item {
+                case 0: print("공지")
+                case 1: print("일정")
+                case 2: coordinator.goToStudyActivityList()
+                case 3: 
+                    coordinator.presentToMember(from: self)
+                    isDismissSideMenu = false
+                default:
+                    isDismissSideMenu = false
+                }
+                
+                if isDismissSideMenu {
+                    dismissSideMenu()
+                }
+            }
             .store(in: &cancellables)
     }
     

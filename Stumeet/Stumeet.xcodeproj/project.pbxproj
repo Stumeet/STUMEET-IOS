@@ -70,6 +70,7 @@
 		358D24352C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24342C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift */; };
 		358D24372C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24362C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift */; };
 		358D243A2C46B062001EFB51 /* StudyGroupMainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24392C46B062001EFB51 /* StudyGroupMainUseCase.swift */; };
+		358F34462C7788C200683713 /* StudyMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358F34452C7788C200683713 /* StudyMemberViewController.swift */; };
 		35BB24232C5E5B6D00B498C2 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 35BB24222C5E5B6D00B498C2 /* Algorithms */; };
 		35BC0B482C3D85A000F96A22 /* MyStudyGroupListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BC0B472C3D85A000F96A22 /* MyStudyGroupListType.swift */; };
 		35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */; };
@@ -358,6 +359,7 @@
 		358D24342C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStudyGroupMainRepository.swift; sourceTree = "<group>"; };
 		358D24362C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesDetailResponseDTO.swift; sourceTree = "<group>"; };
 		358D24392C46B062001EFB51 /* StudyGroupMainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupMainUseCase.swift; sourceTree = "<group>"; };
+		358F34452C7788C200683713 /* StudyMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberViewController.swift; sourceTree = "<group>"; };
 		35BC0B472C3D85A000F96A22 /* MyStudyGroupListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListType.swift; sourceTree = "<group>"; };
 		35BDF6F52B88D0A4000B6DCB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		35BDF6F82B88D0BE000B6DCB /* SnsLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewController.swift; sourceTree = "<group>"; };
@@ -908,6 +910,22 @@
 			path = StudyGroupMain;
 			sourceTree = "<group>";
 		};
+		358F34432C7787DF00683713 /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				358F34442C7787F800683713 /* View */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
+		358F34442C7787F800683713 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				358F34452C7788C200683713 /* StudyMemberViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		35BDF6F02B88CEFA000B6DCB /* AuthScenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1328,8 +1346,9 @@
 		CA6447E02B863BB90090DD84 /* StudyListScenes */ = {
 			isa = PBXGroup;
 			children = (
-				CA94FD732C50DDE500A11A8E /* CreateStudyGroup */,
 				357D1B852BB07A630079DCE6 /* Flows */,
+				358F34432C7787DF00683713 /* Member */,
+				CA94FD732C50DDE500A11A8E /* CreateStudyGroup */,
 				35E4EA332BCA8D88003A10D4 /* StudyMain */,
 				CA6FADDE2B8717A0008BCEF7 /* StudyActivity */,
 				CA6FADDD2B871787008BCEF7 /* MyStudyGroupList */,
@@ -2519,6 +2538,7 @@
 				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
 				CA4E7EDD2B930829009C07FD /* NicknameRequestDTO.swift in Sources */,
+				358F34462C7788C200683713 /* StudyMemberViewController.swift in Sources */,
 				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
 				CA98F6BC2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
