@@ -45,6 +45,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemOrange
         imageView.layer.cornerRadius = 16
+        imageView.clipsToBounds = true
         
         return imageView
     }()
