@@ -45,6 +45,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemOrange
         imageView.layer.cornerRadius = 16
+        
         return imageView
     }()
     private let randomColorButton: UIButton = {
@@ -66,13 +67,19 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let studyNameContainerView = UIView()
     private let studyNameLabel = createEssentialLabel(text: "스터디 이름 *")
+    private let studyNameTextFieldBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.primary50.color
+        view.layer.cornerRadius = 16
+        
+        return view
+    }()
     private let studyNameTextField: UITextField = {
         let textField = UITextField()
         textField.addLeftPadding(24)
         textField.placeholder = "스터디 이름을 입력해주세요."
         textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
-        textField.layer.cornerRadius = 16
-        textField.backgroundColor = StumeetColor.primary50.color
+        
         return textField
     }()
     private let studyNameLengthLabel = UILabel().setLabelProperty(text: "0/20", font: StumeetFont.bodyMedium14.font, color: .gray400)
@@ -206,6 +213,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         
         [
             studyNameLabel,
+            studyNameTextFieldBackgroundView,
             studyNameTextField,
             studyNameLengthLabel
         ]   .forEach(studyNameContainerView.addSubview)
@@ -308,10 +316,17 @@ final class CreateStudyGroupViewController: BaseViewController {
         
         studyNameLabel.snp.makeConstraints { $0.top.leading.equalToSuperview() }
 
-        studyNameTextField.snp.makeConstraints { make in
+        studyNameTextFieldBackgroundView.snp.makeConstraints { make in
+            make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(49)
+        }
+        
+        studyNameTextField.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
             make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.height.equalTo(49)
+            make.trailing.equalToSuperview().inset(76)
             make.bottom.equalToSuperview()
         }
 
@@ -461,7 +476,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapTimeButton: timeButton.tapPublisher,
             didSelectedTime: timeSubject.eraseToAnyPublisher(),
             didTapAddImageButton: addImageButton.tapPublisher,
-            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher()
+            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher(),
+            didChangeStudyNameTextField: studyNameTextField.textPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -534,6 +550,19 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.selectedImage
             .receive(on: RunLoop.main)
             .assign(to: \.image, on: studyGroupImageView)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanTwenty
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyNameTextField.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: studyNameTextField)
+            .store(in: &cancellables)
+        
+        output.titleCount
+            .map { "\($0)/20" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyNameLengthLabel)
             .store(in: &cancellables)
     }
 }

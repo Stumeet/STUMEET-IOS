@@ -28,6 +28,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didSelectedTime: AnyPublisher<String, Never>
         let didTapAddImageButton: AnyPublisher<Void, Never>
         let didSelectPhoto: AnyPublisher<URL, Never>
+        let didChangeStudyNameTextField: AnyPublisher<String?, Never>
     }
     
     // MARK: - Output
@@ -46,6 +47,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let timeAttributedString: AnyPublisher<AttributedString, Never>
         let showPHPickerVC: AnyPublisher<Void, Never>
         let selectedImage: AnyPublisher<UIImage?, Never>
+        let isBiggerThanTwenty: AnyPublisher<Bool, Never>
+        let titleCount: AnyPublisher<Int, Never>
     }
     
     // MARK: - Properties
@@ -127,6 +130,16 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .flatMap(useCase.downSampleImageData)
             .eraseToAnyPublisher()
         
+        let isBiggerThanTwenty = input.didChangeStudyNameTextField
+            .compactMap { $0 }
+            .flatMap(useCase.checkNicknameLonggestThanTwenty)
+            .eraseToAnyPublisher()
+        
+        let titleCount = input.didChangeStudyNameTextField
+            .compactMap { $0 }
+            .flatMap(useCase.setNicknameCount)
+            .eraseToAnyPublisher()
+        
         return Output(
             goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
@@ -140,7 +153,9 @@ final class CreateStudyGroupViewModel: ViewModelType {
             goToSelectStudyTimeVC: input.didTapTimeButton,
             timeAttributedString: timeAttributedString,
             showPHPickerVC: input.didTapAddImageButton,
-            selectedImage: selectedImage
+            selectedImage: selectedImage,
+            isBiggerThanTwenty: isBiggerThanTwenty,
+            titleCount: titleCount
         )
     }
     

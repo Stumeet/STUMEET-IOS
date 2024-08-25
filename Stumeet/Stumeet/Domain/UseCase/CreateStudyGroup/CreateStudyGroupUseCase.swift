@@ -15,6 +15,8 @@ protocol CreateStudyGroupUseCase {
     func removeTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
     func getCurrentDate() -> Date
     func downSampleImageData(url: URL) -> AnyPublisher<UIImage?, Never>
+    func setNicknameCount(nickname: String) -> AnyPublisher<Int, Never>
+    func checkNicknameLonggestThanTwenty(nickname: String) -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
@@ -53,4 +55,11 @@ final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
         return Just(downsampledImageData).eraseToAnyPublisher()
     }
 
+    func checkNicknameLonggestThanTwenty(nickname: String) -> AnyPublisher<Bool, Never> {
+        return Just(nickname.count > 20).eraseToAnyPublisher()
+    }
+    
+    func setNicknameCount(nickname: String) -> AnyPublisher<Int, Never> {
+        return Just(nickname.count > 20 ? 20 : nickname.count ).eraseToAnyPublisher()
+    }
 }
