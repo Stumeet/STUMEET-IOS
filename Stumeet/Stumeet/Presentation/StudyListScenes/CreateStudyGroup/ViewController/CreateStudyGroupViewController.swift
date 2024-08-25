@@ -478,7 +478,9 @@ final class CreateStudyGroupViewController: BaseViewController {
             didSelectedTime: timeSubject.eraseToAnyPublisher(),
             didTapAddImageButton: addImageButton.tapPublisher,
             didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher(),
-            didChangeStudyNameTextField: studyNameTextField.textPublisher
+            didChangeStudyNameTextField: studyNameTextField.textPublisher,
+            didChangeStudyExplainTextView: explainTextView.textPublisher,
+            didBeginExplainEditting: explainTextView.didBeginEditingPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -565,6 +567,24 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .assign(to: \.text, on: studyNameLengthLabel)
             .store(in: &cancellables)
+        
+        output.isBiggerThanHundred
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.explainTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.explainCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainLengthLabel)
+            .store(in: &cancellables)
+        
+        output.explainBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
     }
 }
 
@@ -603,9 +623,8 @@ extension CreateStudyGroupViewController {
         textView.text = placeholder
         textView.textColor = StumeetColor.gray300.color
         textView.font = StumeetFont.bodyMedium14.font
-        textView.isScrollEnabled = false
         textView.backgroundColor = StumeetColor.primary50.color
-        textView.textContainerInset = UIEdgeInsets(top: 16, left: 24, bottom: 16, right: 24)
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 24)
         textView.layer.cornerRadius = 16
             
         return textView
@@ -684,8 +703,6 @@ extension CreateStudyGroupViewController {
             button.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
         }
     }
-    
-    
     
     private func updateTimeButton(time: AttributedString) {
         timeButton.layer.borderColor = StumeetColor.primary700.color.cgColor
