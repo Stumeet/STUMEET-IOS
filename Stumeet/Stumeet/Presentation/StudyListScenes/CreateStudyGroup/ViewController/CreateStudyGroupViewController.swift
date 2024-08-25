@@ -484,7 +484,7 @@ final class CreateStudyGroupViewController: BaseViewController {
             didChangeStudyExplainTextView: explainTextView.textPublisher,
             didBeginExplainEditting: explainTextView.didBeginEditingPublisher,
             didChangeStudyRuleTextView: studyRuleTextView.textPublisher,
-            didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher
+            didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher,
             didTapRepeatButton: repeatButton.tapPublisher,
             didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher()
         )
@@ -559,6 +559,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.selectedImage
             .receive(on: RunLoop.main)
             .assign(to: \.image, on: studyGroupImageView)
+            .store(in: &cancellables)
       
         output.goToSelectStudyRepeatVC
             .map { self }

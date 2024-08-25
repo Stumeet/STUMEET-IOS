@@ -213,7 +213,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
             explainBeginText: explainBeginText,
             isBiggerThanHundredRule: isBiggerThanHundredRule,
             ruleCount: ruleCount,
-            ruleBeginText: ruleBeginText
+            ruleBeginText: ruleBeginText,
             goToSelectStudyRepeatVC: input.didTapRepeatButton,
             selectedRepeatDays: input.didSelectedRepeatDays.eraseToAnyPublisher()
         )
@@ -221,7 +221,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
     
     // MARK: - Function
     
-    private func dateToAttributedString(start: Date, end: Date?) -> (start: AttributedString, end: AttributedString?){
+    private func dateToAttributedString(start: Date, end: Date?) -> (start: AttributedString, end: AttributedString?) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy,M.d"
         

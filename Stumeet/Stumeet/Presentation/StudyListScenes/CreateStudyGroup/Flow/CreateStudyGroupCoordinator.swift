@@ -85,6 +85,7 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         let imagePicker = pickerVC
         imagePicker.modalPresentationStyle = .fullScreen
         navigationController.present(imagePicker, animated: true)
+    }
       
     func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate) {
         guard let lastVC = navigationController.viewControllers.last else { return }
@@ -93,11 +94,10 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         selectRepeatVC.delegate = delegate
         navigationController.present(selectRepeatVC, animated: false)
     }
+        
     
     func dismiss() {
         guard let lastVC = navigationController.viewControllers.last else { return }
         lastVC.dismiss(animated: false)
     }
-    
-    
 }
