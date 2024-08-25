@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import PhotosUI
 
 final class CreateStudyGroupViewController: BaseViewController {
 
@@ -167,6 +168,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let regionSubject = PassthroughSubject<SelectStudyItem, Never>()
     private let periodSubject = PassthroughSubject<(startDate: Date, endDate: Date), Never>()
     private let timeSubject = PassthroughSubject<String, Never>()
+    private let selectedPhotoSubject = PassthroughSubject<URL, Never>()
     private let repeatDaysSubject = PassthroughSubject<StudyRepeatType, Never>()
     
     // MARK: - Init
@@ -460,6 +462,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didSelecetedPeriod: periodSubject.eraseToAnyPublisher(),
             didTapTimeButton: timeButton.tapPublisher,
             didSelectedTime: timeSubject.eraseToAnyPublisher(),
+            didTapAddImageButton: addImageButton.tapPublisher,
+            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher()
             didTapRepeatButton: repeatButton.tapPublisher,
             didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher()
         )
@@ -526,6 +530,15 @@ final class CreateStudyGroupViewController: BaseViewController {
             .sink(receiveValue: updateTimeButton)
             .store(in: &cancellables)
         
+        output.showPHPickerVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: showPHPickerVC)
+            .store(in: &cancellables)
+        
+        output.selectedImage
+            .receive(on: RunLoop.main)
+            .assign(to: \.image, on: studyGroupImageView)
+      
         output.goToSelectStudyRepeatVC
             .map { self }
             .receive(on: RunLoop.main)
@@ -750,4 +763,34 @@ extension CreateStudyGroupViewController {
         snapshot.appendItems(tags)
         datasource.apply(snapshot, animatingDifferences: false)
     }
+    
+    private func showPHPickerVC() {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 1
+        let pickerVC = PHPickerViewController(configuration: config)
+        pickerVC.delegate = self
+        
+        coordinator.presentPHPickerView(pickerVC: pickerVC)
+    }
 }
+
+extension CreateStudyGroupViewController: PHPickerViewControllerDelegate {
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, _ in
+                if let url {
+                    self.selectedPhotoSubject.send(url)
+                }
+            }
+        }
+        picker.dismiss(animated: true)
+    }
+}
+

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
@@ -21,6 +22,7 @@ protocol CreateStudyGroupNavigation: AnyObject {
     func popToCreateStudyGroupVC()
     func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?))
     func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate)
+    func presentPHPickerView(pickerVC: PHPickerViewController)
     func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate)
     func dismiss()
 }
@@ -79,6 +81,11 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         navigationController.present(selectTimeVC, animated: false)
     }
     
+    func presentPHPickerView(pickerVC: PHPickerViewController) {
+        let imagePicker = pickerVC
+        imagePicker.modalPresentationStyle = .fullScreen
+        navigationController.present(imagePicker, animated: true)
+      
     func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate) {
         guard let lastVC = navigationController.viewControllers.last else { return }
         let selectRepeatVC = dependencies.makeSelectStudyRepeatVC(coordinator: self)

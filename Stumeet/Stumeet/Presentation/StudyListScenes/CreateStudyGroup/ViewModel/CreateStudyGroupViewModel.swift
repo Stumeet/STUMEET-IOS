@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import UIKit
 
 final class CreateStudyGroupViewModel: ViewModelType {
     
@@ -25,6 +26,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didSelecetedPeriod: AnyPublisher<(startDate: Date, endDate: Date), Never>
         let didTapTimeButton: AnyPublisher<Void, Never>
         let didSelectedTime: AnyPublisher<String, Never>
+        let didTapAddImageButton: AnyPublisher<Void, Never>
+        let didSelectPhoto: AnyPublisher<URL, Never>
         let didTapRepeatButton: AnyPublisher<Void, Never>
         let didSelectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
@@ -43,6 +46,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let periodAttributedStrings: AnyPublisher<(start: AttributedString, end: AttributedString?), Never>
         let goToSelectStudyTimeVC: AnyPublisher<Void, Never>
         let timeAttributedString: AnyPublisher<AttributedString, Never>
+        let showPHPickerVC: AnyPublisher<Void, Never>
+        let selectedImage: AnyPublisher<UIImage?, Never>
         let goToSelectStudyRepeatVC: AnyPublisher<Void, Never>
         let selectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
@@ -122,6 +127,10 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .map { AttributedString($0) }
             .eraseToAnyPublisher()
         
+        let selectedImage = input.didSelectPhoto
+            .flatMap(useCase.downSampleImageData)
+            .eraseToAnyPublisher()
+        
         return Output(
             goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
@@ -134,6 +143,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             periodAttributedStrings: periodAttributedStrings,
             goToSelectStudyTimeVC: input.didTapTimeButton,
             timeAttributedString: timeAttributedString,
+            showPHPickerVC: input.didTapAddImageButton,
+            selectedImage: selectedImage
             goToSelectStudyRepeatVC: input.didTapRepeatButton,
             selectedRepeatDays: input.didSelectedRepeatDays.eraseToAnyPublisher()
         )

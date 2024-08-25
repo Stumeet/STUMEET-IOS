@@ -7,12 +7,14 @@
 
 import Combine
 import Foundation
+import UIKit
 
 protocol CreateStudyGroupUseCase {
     func getIsEnableTagAddButton(text: String) -> AnyPublisher<Bool, Never>
     func addTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
     func removeTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
     func getCurrentDate() -> Date
+    func downSampleImageData(url: URL) -> AnyPublisher<UIImage?, Never>
 }
 
 final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
@@ -41,6 +43,14 @@ final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
         let date = Date()
         let formattedDate = dateFormatter.string(from: date)
         return dateFormatter.date(from: formattedDate)!
+    }
+    
+    func downSampleImageData(url: URL) -> AnyPublisher<UIImage?, Never> {
+        let targetSize = CGSize(width: 180, height: 180)
+        let cgManager = CoreGraphicManager()
+        let downsampledImageData = cgManager.downsample(imageAt: url, to: targetSize, scale: UIScreen.main.scale)
+        
+        return Just(downsampledImageData).eraseToAnyPublisher()
     }
 
 }
