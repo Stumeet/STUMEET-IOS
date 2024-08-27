@@ -17,6 +17,7 @@ final class StudyMemberViewModel: ViewModelType {
     // MARK: - Output
     struct Output {
         let studyMemberDataSource: AnyPublisher<[StudyMember], Never>
+        let studyMemberCount: AnyPublisher<Int, Never>
     }
     
     // MARK: - Properties
@@ -36,6 +37,9 @@ final class StudyMemberViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         let studyMemberDataSource = studyMemberItemsSubject.eraseToAnyPublisher()
+        let studyMemberCount = studyMemberItemsSubject
+            .map { $0.count }
+            .eraseToAnyPublisher()
         
         input.loadStudyMemberData
             .flatMap(getMembers)
@@ -43,7 +47,8 @@ final class StudyMemberViewModel: ViewModelType {
             .store(in: &cancellables)
     
         return Output(
-            studyMemberDataSource: studyMemberDataSource
+            studyMemberDataSource: studyMemberDataSource,
+            studyMemberCount: studyMemberCount
         )
     }
     

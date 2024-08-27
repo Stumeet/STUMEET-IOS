@@ -72,8 +72,6 @@ class StudyMemberViewController: BaseViewController {
         label.font = StumeetFont.titleMedium.font
         label.textColor = StumeetColor.primary700.color
         label.numberOfLines = 1
-        // TODO: - API 연동 시 수정요
-        label.text = "9"
         return label
     }()
     
@@ -162,6 +160,11 @@ class StudyMemberViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
             .store(in: &cancellables)
+        
+        output.studyMemberCount
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateTitleCount)
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -176,6 +179,10 @@ class StudyMemberViewController: BaseViewController {
     }
     
     // MARK: - Function
+    private func updateTitleCount(memberTotal: Int) {
+        titleCountLabel.text = String(memberTotal)
+    }
+    
     @objc func closeButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
