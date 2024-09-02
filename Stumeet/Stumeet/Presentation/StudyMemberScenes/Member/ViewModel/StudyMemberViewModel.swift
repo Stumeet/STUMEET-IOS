@@ -45,6 +45,7 @@ final class StudyMemberViewModel: ViewModelType {
             .flatMap(getMembers)
             .sink(receiveValue: studyMemberItemsSubject.send)
             .store(in: &cancellables)
+        
     
         return Output(
             studyMemberDataSource: studyMemberDataSource,
@@ -58,4 +59,3 @@ final class StudyMemberViewModel: ViewModelType {
     }
 
 }
-

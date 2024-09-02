@@ -225,7 +225,7 @@ class StudyMainSideMenuViewController: BaseViewController {
                 case 1: print("일정")
                 case 2: coordinator.goToStudyActivityList()
                 case 3: 
-                    coordinator.presentToMember(from: self, studyId: studyId)
+                    coordinator.startStudyMemberCoordinator(studyId: studyId)
                     isDismissSideMenu = false
                 default:
                     isDismissSideMenu = false

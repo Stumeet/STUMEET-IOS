@@ -12,20 +12,6 @@ import Combine
 class StudyMemberViewController: BaseViewController {
     
     // MARK: - UIComponents
-    private var navigationBar: UINavigationBar = {
-        let navBar = UINavigationBar()
-        let naviBarAppearance = UINavigationBarAppearance()
-        naviBarAppearance.configureWithTransparentBackground()
-        naviBarAppearance.backgroundColor = .white
-        navBar.standardAppearance = naviBarAppearance
-        return navBar
-    }()
-    
-    private var navigationBarItems: UINavigationItem = {
-        let navItem = UINavigationItem()
-        return navItem
-    }()
-    
     private lazy var xButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(
             image: UIImage(resource: .xMark),
@@ -89,14 +75,14 @@ class StudyMemberViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private weak var coordinator: MyStudyGroupListNavigation!
+    private weak var coordinator: StudyMemberNavigation!
     private let viewModel: StudyMemberViewModel
     private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, StudyMember>?
     private let loadStudyMemberDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
-        coordinator: MyStudyGroupListNavigation,
+        coordinator: StudyMemberNavigation,
         viewModel: StudyMemberViewModel
     ) {
         self.coordinator = coordinator
@@ -110,17 +96,11 @@ class StudyMemberViewController: BaseViewController {
     
     override func setupStyles() {
         self.view.backgroundColor = .white
+        self.navigationController?.setupBarAppearance()
     }
     
     override func setupAddView() {
-        view.addSubview(navigationBar)
         view.addSubview(memberTableView)
-        
-        navigationBarItems.leftBarButtonItem = xButton
-        navigationBarItems.titleView = titleStackView
-        navigationBarItems.rightBarButtonItem = memberSettingsButton
-        
-        navigationBar.setItems([navigationBarItems], animated: true)
         
         [
             titleLabel,
@@ -129,20 +109,19 @@ class StudyMemberViewController: BaseViewController {
         ].forEach {
             titleStackView.addArrangedSubview($0)
         }
+        
+        navigationItem.leftBarButtonItem = xButton
+        navigationItem.titleView = titleStackView
+        navigationItem.rightBarButtonItem = memberSettingsButton
     }
     
     override func setupConstaints() {
-        navigationBar.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-        }
-        
         titleSpaceView.snp.makeConstraints {
             $0.width.greaterThanOrEqualTo(CGFloat.greatestFiniteMagnitude).priority(.low)
         }
         
         memberTableView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.top.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
         }
@@ -153,6 +132,7 @@ class StudyMemberViewController: BaseViewController {
         let input = StudyMemberViewModel.Input(
             loadStudyMemberData: loadStudyMemberDataSubject.eraseToAnyPublisher()
         )
+        
         // MARK: - Output
         let output = viewModel.transform(input: input)
         
@@ -176,6 +156,11 @@ class StudyMemberViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadStudyMemberDataSubject.send()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        coordinator.dimiss()
     }
     
     // MARK: - Function

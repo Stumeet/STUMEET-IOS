@@ -16,7 +16,7 @@ protocol MyStudyGroupListCoordinatorDependencies {
     func makeDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int, coordinator: MyStudyGroupListNavigation) -> DetailActivityPhotoListViewController
     func makeDetailActivityMemberListVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
     func makeCreateStudyGroupCoordinator(navigationController: UINavigationController) -> CreateStudyGroupCoordinator
-    func makeStudyMemberVC(coordinator: MyStudyGroupListNavigation, studyId: Int) -> StudyMemberViewController
+    func makeStudyMemberSceneDIContainer() -> StudyMemberSceneDIContainer
 }
 
 protocol MyStudyGroupListNavigation: AnyObject {
@@ -25,13 +25,13 @@ protocol MyStudyGroupListNavigation: AnyObject {
     func presentToSideMenu(from viewController: UIViewController, studyId: Int)
     func presentToExitPopup(from viewController: UIViewController)
     func presentToInvitationPopup(from viewController: UIViewController)
-    func presentToMember(from viewController: UIViewController, studyId: Int)
     func goToStudyActivityList()
     func goToDetailStudyActivityVC(studyID: Int, activityID: Int)
     func presentToDetailActivityPhotoListVC(with imageURLs: [String], selectedRow row: Int)
     func presentToDetailActivityMemberListVC(studyID: Int, activityID: Int)
     func startCreateActivityCoordinator(activity: ActivityCategory)
     func startCreateStudyGroupCoordinator()
+    func startStudyMemberCoordinator(studyId: Int)
     func popViewController()
     func dismiss()
 }
@@ -89,11 +89,6 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         invitationPopupVC.modalTransitionStyle = .crossDissolve
         viewController.present(invitationPopupVC, animated: false, completion: nil)
     }
-    
-    func presentToMember(from viewController: UIViewController, studyId: Int) {
-        let memberVC = dependencies.makeStudyMemberVC(coordinator: self, studyId: studyId)
-        viewController.present(memberVC, animated: true, completion: nil)
-    }
       
     func goToStudyActivityList() {
         let studyActivityListVC = dependencies.makeStudyActivityVC(coordinator: self)
@@ -122,6 +117,19 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         let createStudyGroupNVC = UINavigationController()
         let flow = dependencies.makeCreateStudyGroupCoordinator(
             navigationController: createStudyGroupNVC
+        )
+        children.removeAll()
+        flow.parentCoordinator = self
+        children.append(flow)
+        flow.start()
+    }
+    
+    func startStudyMemberCoordinator(studyId: Int) {
+        let studyMemberNVC = UINavigationController()
+        let studyMemberSceneDIContainer = dependencies.makeStudyMemberSceneDIContainer()
+        let flow = studyMemberSceneDIContainer.makeStudyMemberCoordinator(
+            navigationController: studyMemberNVC,
+            studyId: studyId
         )
         children.removeAll()
         flow.parentCoordinator = self
