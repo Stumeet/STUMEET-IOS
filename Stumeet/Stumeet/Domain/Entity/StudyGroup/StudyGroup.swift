@@ -12,7 +12,7 @@ struct StudyGroup: Hashable {
     let name: String
     let field: String
     let tags: [String]
-    let image: String
+    let image: String?
     let headcount: Int
     let startDate: String
     let endDate: String

@@ -130,8 +130,9 @@ class MyStudyGroupListTableViewCell: BaseTableViewCell {
         mainDetailsPeriodLabel.text = "\(item.startDate) ~ \(item.endDate)"
         // TODO: API 변경 필요
         newBadgeView.isHidden = false
-
-        let url = URL(string: item.image)
+        
+        guard let image = item.image else { return }
+        let url = URL(string: image)
         thumbnailImageView.kf.setImage(with: url)
     }
 }

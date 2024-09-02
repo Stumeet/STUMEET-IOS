@@ -132,9 +132,19 @@ class StudyMemberViewController: BaseViewController {
         let input = StudyMemberViewModel.Input(
             loadStudyMemberData: loadStudyMemberDataSubject.eraseToAnyPublisher()
         )
-        
+
         // MARK: - Output
         let output = viewModel.transform(input: input)
+        
+        // TODO: - 임시 viewModel 생성 시 수정
+        memberTableView.didSelectRowPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] selectRow in
+                guard let self = self else { return }
+                
+                coordinator.presentToMemberDetailVC()
+            }
+            .store(in: &cancellables)
         
         output.studyMemberDataSource
             .receive(on: RunLoop.main)

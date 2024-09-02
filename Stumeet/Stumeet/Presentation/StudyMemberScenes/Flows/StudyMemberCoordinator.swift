@@ -11,10 +11,12 @@ import Moya
 
 protocol StudyMemberCoordinatorDependencies {
     func makeStudyMemberVC(coordinator: StudyMemberNavigation, studyId: Int) -> StudyMemberViewController
+    func makeStudyMemberDetailVC(coordinator: StudyMemberNavigation) -> StudyMemberDetailViewController
 }
 
 protocol StudyMemberNavigation: AnyObject {
     func presentToMemberVC()
+    func presentToMemberDetailVC()
     func dimiss()
 }
 
@@ -53,11 +55,15 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         
         navigationController.setViewControllers([memberVC], animated: true)
         
-        if let currentModalViewController = navigationController.presentedViewController {
-            currentModalViewController.present(navigationController, animated: true, completion: nil)
-        } else {
-            parentCoordinator?.navigationController.presentedViewController?.present(navigationController, animated: true, completion: nil)
-        }
+        parentCoordinator?.navigationController.presentedViewController?.present(navigationController, animated: true, completion: nil)
+    }
+    
+    func presentToMemberDetailVC() {
+        let memberDetailVC = dependencies.makeStudyMemberDetailVC(
+            coordinator: self
+        )
+
+        navigationController.present(memberDetailVC, animated: true, completion: nil)
     }
     
     func dimiss() {
