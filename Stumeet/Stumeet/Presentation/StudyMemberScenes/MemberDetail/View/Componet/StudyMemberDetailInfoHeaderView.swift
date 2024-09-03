@@ -1,5 +1,5 @@
 //
-//  StudyMemberDetailHeaderView.swift
+//  StudyMemberDetailInfoHeaderView.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/09/02.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class StudyMemberDetailHeaderView: UIView {
+class StudyMemberDetailInfoHeaderView: UIView {
     
     // MARK: - UIComponents
     private let contentHStackView: UIStackView = {

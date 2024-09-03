@@ -90,7 +90,8 @@
 		35BDF7152B8B2083000B6DCB /* BasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF7142B8B2083000B6DCB /* BasePageControl.swift */; };
 		35C7F8182C85DE1D00F9009E /* StudyMemberDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C7F8172C85DE1D00F9009E /* StudyMemberDetailViewController.swift */; };
 		35C7F81A2C85DE4D00F9009E /* StudyMemberDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C7F8192C85DE4D00F9009E /* StudyMemberDetailViewModel.swift */; };
-		35C7F81D2C85DF2500F9009E /* StudyMemberDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C7F81C2C85DF2500F9009E /* StudyMemberDetailHeaderView.swift */; };
+		35C7F81D2C85DF2500F9009E /* StudyMemberDetailInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C7F81C2C85DF2500F9009E /* StudyMemberDetailInfoHeaderView.swift */; };
+		35C7F81F2C8748C600F9009E /* StudyMemberDetailHeaderTapBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C7F81E2C8748C600F9009E /* StudyMemberDetailHeaderTapBarView.swift */; };
 		35C992972BA341FB003B0AE7 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C992962BA341FB003B0AE7 /* LoginService.swift */; };
 		35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C992992BA728DF003B0AE7 /* DefaultLoginRepository.swift */; };
 		35C9929D2BA73D04003B0AE7 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */; };
@@ -390,7 +391,8 @@
 		35BDF7142B8B2083000B6DCB /* BasePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePageControl.swift; sourceTree = "<group>"; };
 		35C7F8172C85DE1D00F9009E /* StudyMemberDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberDetailViewController.swift; sourceTree = "<group>"; };
 		35C7F8192C85DE4D00F9009E /* StudyMemberDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberDetailViewModel.swift; sourceTree = "<group>"; };
-		35C7F81C2C85DF2500F9009E /* StudyMemberDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberDetailHeaderView.swift; sourceTree = "<group>"; };
+		35C7F81C2C85DF2500F9009E /* StudyMemberDetailInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberDetailInfoHeaderView.swift; sourceTree = "<group>"; };
+		35C7F81E2C8748C600F9009E /* StudyMemberDetailHeaderTapBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberDetailHeaderTapBarView.swift; sourceTree = "<group>"; };
 		35C992962BA341FB003B0AE7 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		35C992992BA728DF003B0AE7 /* DefaultLoginRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginRepository.swift; sourceTree = "<group>"; };
 		35C9929C2BA73D04003B0AE7 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -1137,7 +1139,8 @@
 		35C7F81B2C85DEE500F9009E /* Componet */ = {
 			isa = PBXGroup;
 			children = (
-				35C7F81C2C85DF2500F9009E /* StudyMemberDetailHeaderView.swift */,
+				35C7F81C2C85DF2500F9009E /* StudyMemberDetailInfoHeaderView.swift */,
+				35C7F81E2C8748C600F9009E /* StudyMemberDetailHeaderTapBarView.swift */,
 			);
 			path = Componet;
 			sourceTree = "<group>";
@@ -2599,13 +2602,14 @@
 				CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */,
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
 				CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */,
+				35C7F81F2C8748C600F9009E /* StudyMemberDetailHeaderTapBarView.swift in Sources */,
 				CA342DBD2C382F5A0055A9A4 /* StudyActivitySettingRepository.swift in Sources */,
 				352886062BB9D30700EFC0F6 /* TokenUseCase.swift in Sources */,
 				355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */,
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
 				355F51DD2BF89F9800782D17 /* StudyMainSideMenuViewController.swift in Sources */,
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
-				35C7F81D2C85DF2500F9009E /* StudyMemberDetailHeaderView.swift in Sources */,
+				35C7F81D2C85DF2500F9009E /* StudyMemberDetailInfoHeaderView.swift in Sources */,
 				35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */,
 				353A08BC2C7B789000678E96 /* StudyMemberViewModel.swift in Sources */,
 				35BC0B482C3D85A000F96A22 /* MyStudyGroupListType.swift in Sources */,

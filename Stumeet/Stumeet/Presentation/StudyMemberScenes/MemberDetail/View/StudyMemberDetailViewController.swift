@@ -72,7 +72,11 @@ class StudyMemberDetailViewController: BaseViewController {
         return barButton
     }()
     
-    private let headerView: StudyMemberDetailHeaderView = StudyMemberDetailHeaderView()
+    private let headerView = StudyMemberDetailInfoHeaderView()
+    private var headerTapBarView = StudyMemberDetailHeaderTapBarView(
+        options: StudyMemberDetailHeaderTapBarViewType.allCases.map { $0.title },
+        initSelectedIndex: StudyMemberDetailHeaderTapBarViewType.meeting.id
+    )
     
     
     // MARK: - Properties
@@ -97,6 +101,7 @@ class StudyMemberDetailViewController: BaseViewController {
     override func setupAddView() {
         view.addSubview(navigationBar)
         view.addSubview(headerView)
+        view.addSubview(headerTapBarView)
         
         navigationBarItems.leftBarButtonItem = xButton
         navigationBarItems.titleView = titleStackView
@@ -124,6 +129,11 @@ class StudyMemberDetailViewController: BaseViewController {
         
         headerView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+        }
+        
+        headerTapBarView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
         }
         
