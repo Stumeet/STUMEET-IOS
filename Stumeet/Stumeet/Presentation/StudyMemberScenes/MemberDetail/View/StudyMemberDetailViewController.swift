@@ -90,13 +90,16 @@ class StudyMemberDetailViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: StudyMemberNavigation!
+    private var viewModel: StudyMemberDetailViewModel
     private var activityDataSource: UITableViewDiffableDataSource<StudyMemberDetailActivityListSection, StudyMemberDetailActivityListItem>?
 
     // MARK: - Init
     init(
-        coordinator: StudyMemberNavigation
+        coordinator: StudyMemberNavigation,
+        viewModel: StudyMemberDetailViewModel
     ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     

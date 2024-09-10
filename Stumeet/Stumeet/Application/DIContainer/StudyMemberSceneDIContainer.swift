@@ -47,9 +47,14 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     }
     
     // MARK: - StudyMemberDetail
+    func makeStudyMemberDetailModel() -> StudyMemberDetailViewModel {
+        StudyMemberDetailViewModel()
+    }
+    
     func makeStudyMemberDetailVC(coordinator: Navigation) -> StudyMemberDetailViewController {
         StudyMemberDetailViewController(
-            coordinator: coordinator
+            coordinator: coordinator,
+            viewModel: makeStudyMemberDetailModel()
         )
     }
     
