@@ -17,6 +17,7 @@ protocol StudyMemberCoordinatorDependencies {
 protocol StudyMemberNavigation: AnyObject {
     func presentToMemberVC()
     func presentToMemberDetailVC()
+    func presentToComplimentPopup(from viewController: UIViewController)
     func dimiss()
 }
 
@@ -64,6 +65,13 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         )
 
         navigationController.present(memberDetailVC, animated: true, completion: nil)
+    }
+    
+    func presentToComplimentPopup(from viewController: UIViewController) {
+        let complimentPopupVC = StudyMemberComplimentPopupViewController()
+        complimentPopupVC.modalPresentationStyle = .overFullScreen
+        complimentPopupVC.modalTransitionStyle = .crossDissolve
+        viewController.present(complimentPopupVC, animated: false, completion: nil)
     }
     
     func dimiss() {

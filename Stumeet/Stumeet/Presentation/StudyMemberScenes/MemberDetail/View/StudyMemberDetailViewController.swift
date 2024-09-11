@@ -160,12 +160,16 @@ class StudyMemberDetailViewController: BaseViewController {
     }
     
     override func bind() {
-
+        // MARK: - Input
+        
+        // MARK: - Output
     }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDelegate()
+        
         // TODO: - API 연동 시 수정
         configureDatasource()
         updateSnapshot(
@@ -237,6 +241,10 @@ class StudyMemberDetailViewController: BaseViewController {
         )
     }
     
+    private func setupDelegate() {
+        headerView.delegate = self
+    }
+    
     @objc func closeButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
@@ -247,7 +255,9 @@ class StudyMemberDetailViewController: BaseViewController {
   
 }
 
-extension StudyMemberDetailViewController {
+extension StudyMemberDetailViewController: 
+    StudyMemberDetailInfoHeaderViewDelegate {
+    
     // MARK: - DataSource
     private func configureDatasource() {
         activityDataSource = UITableViewDiffableDataSource(
@@ -268,5 +278,10 @@ extension StudyMemberDetailViewController {
         
         guard let datasource = self.activityDataSource else { return }
         datasource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    // MARK: - StudyMemberDetailInfoHeaderViewDelegate
+    func didTapComplimentButton() {
+        coordinator.presentToComplimentPopup(from: self)
     }
 }

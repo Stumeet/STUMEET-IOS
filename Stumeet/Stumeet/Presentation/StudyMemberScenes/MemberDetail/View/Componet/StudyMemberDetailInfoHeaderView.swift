@@ -7,6 +7,11 @@
 
 import UIKit
 import SnapKit
+import Combine
+
+protocol StudyMemberDetailInfoHeaderViewDelegate: AnyObject {
+    func didTapComplimentButton()
+}
 
 class StudyMemberDetailInfoHeaderView: UIView {
     
@@ -67,7 +72,7 @@ class StudyMemberDetailInfoHeaderView: UIView {
         return label
     }()
     
-    private let complimentButton: UIButton = {
+    private lazy var complimentButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         var container = AttributeContainer()
         
@@ -81,6 +86,14 @@ class StudyMemberDetailInfoHeaderView: UIView {
         configuration.contentInsets = .init(top: 8, leading: 15, bottom: 8, trailing: 15)
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
+        
+        button.tapPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.delegate?.didTapComplimentButton()
+            }
+            .store(in: &cancellables)
+        
         return button
     }()
     
@@ -138,6 +151,8 @@ class StudyMemberDetailInfoHeaderView: UIView {
     // MARK: - Properties
     private let profileImageSize: CGFloat = 88
     private let progressViewheightSize: CGFloat = 11
+    private var cancellables = Set<AnyCancellable>()
+    weak var delegate: StudyMemberDetailInfoHeaderViewDelegate?
     
     // MARK: - Init
     override init(frame: CGRect) {
