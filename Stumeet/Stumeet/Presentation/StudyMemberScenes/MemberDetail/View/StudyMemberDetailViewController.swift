@@ -87,11 +87,13 @@ class StudyMemberDetailViewController: BaseViewController {
         return tableView
     }()
     
+    private var contextMenu = StudyMemberDetailContextMenuView()
     
     // MARK: - Properties
     private weak var coordinator: StudyMemberNavigation!
     private var viewModel: StudyMemberDetailViewModel
     private var activityDataSource: UITableViewDiffableDataSource<StudyMemberDetailActivityListSection, StudyMemberDetailActivityListItem>?
+    private lazy var contextMenuSize = contextMenu.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
 
     // MARK: - Init
     init(
@@ -109,6 +111,10 @@ class StudyMemberDetailViewController: BaseViewController {
     
     override func setupStyles() {
         view.backgroundColor = .white
+        contextMenu.layer.anchorPoint = CGPoint(x: 1, y: 0)
+        contextMenu.addItem(title: "추방하기", textColor: StumeetColor.danger500.color)
+        contextMenu.addItem(title: "위임하기")
+        contextMenu.isVisiblyHidden = true
     }
     
     override func setupAddView() {
@@ -116,6 +122,8 @@ class StudyMemberDetailViewController: BaseViewController {
         view.addSubview(headerView)
         view.addSubview(headerTapBarView)
         view.addSubview(activityTableView)
+        view.addSubview(activityTableView)
+        view.addSubview(contextMenu)
         
         navigationBarItems.leftBarButtonItem = xButton
         navigationBarItems.titleView = titleStackView
@@ -157,6 +165,10 @@ class StudyMemberDetailViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
         
+        contextMenu.snp.makeConstraints {
+            $0.top.equalTo(navigationBar.snp.bottom).offset(-(contextMenuSize.height / 2))
+            $0.trailing.equalToSuperview().offset((contextMenuSize.width / 2) - 16)
+        }
     }
     
     override func bind() {
@@ -169,7 +181,7 @@ class StudyMemberDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegate()
-        
+        setupGesture()
         // TODO: - API 연동 시 수정
         configureDatasource()
         updateSnapshot(
@@ -240,22 +252,35 @@ class StudyMemberDetailViewController: BaseViewController {
                 )]
         )
     }
+
+    // MARK: - Function
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        view.addGestureRecognizer(tapGesture)
+    }
     
     private func setupDelegate() {
         headerView.delegate = self
     }
     
-    @objc func closeButtonTapped(_ sender: UIBarButtonItem) {
+    private func toggleContextMenu() {
+        contextMenu.isVisiblyHidden.toggle()
+    }
+    
+    @objc private func closeButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
     
-    @objc func moreButtonTapped(_ sender: UIBarButtonItem) {
-        print(#function)
+    @objc private func moreButtonTapped(_ sender: UIBarButtonItem) {
+        toggleContextMenu()
     }
-  
+       
+    @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
+        contextMenu.isVisiblyHidden = true
+    }
 }
 
-extension StudyMemberDetailViewController: 
+extension StudyMemberDetailViewController:
     StudyMemberDetailInfoHeaderViewDelegate {
     
     // MARK: - DataSource
