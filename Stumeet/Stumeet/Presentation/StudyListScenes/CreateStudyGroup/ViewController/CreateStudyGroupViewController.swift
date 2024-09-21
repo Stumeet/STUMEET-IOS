@@ -475,7 +475,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapRepeatButton: repeatButton.tapPublisher,
             didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher(),
             didTapCompleteButton: completeButton.tapPublisher,
-            didTapRandomColorButton: randomColorButton.tapPublisher
+            didTapRandomColorButton: randomColorButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -611,9 +612,8 @@ final class CreateStudyGroupViewController: BaseViewController {
             .store(in: &cancellables)
         
         output.snackBarText
-            .filter { !$0.isEmpty }
             .receive(on: RunLoop.main)
-            .sink(receiveValue: showSnackBar)
+            .sink(receiveValue: checkShowSnackbarOrComplete)
             .store(in: &cancellables)
         
         output.imageViewBackgroundColor
@@ -624,6 +624,12 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.randomButtonColor
             .receive(on: RunLoop.main)
             .assign(to: \.backgroundColor, on: randomColorButton)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .map { true }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
     }
 }
@@ -797,29 +803,34 @@ extension CreateStudyGroupViewController {
         randomColorButton.backgroundColor = color
     }
     
-    private func showSnackBar(text: String) {
-        let snackBar = SnackBar(frame: .zero, text: text)
-        
-        view.addSubview(snackBar)
-        
-        snackBar.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalTo(completeButton.snp.top).offset(-24)
-            make.height.equalTo(74)
-        }
-        
-        snackBar.isHidden = false
-        snackBar.alpha = 0
-        
-        UIView.animate(withDuration: 0.3) {
-            snackBar.alpha = 1
-        } completion: { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                UIView.animate(withDuration: 0.3) {
-                    snackBar.alpha = 0
-                } completion: { _ in
-                    snackBar.isHidden = true
-                    snackBar.removeFromSuperview()
+    private func checkShowSnackbarOrComplete(text: String) {
+        print("asdf \(text)")
+        if text.isEmpty {
+            coordinator.dismiss(animated: true)
+        } else {
+            let snackBar = SnackBar(frame: .zero, text: text)
+            
+            view.addSubview(snackBar)
+            
+            snackBar.snp.makeConstraints { make in
+                make.leading.trailing.equalToSuperview().inset(16)
+                make.bottom.equalTo(completeButton.snp.top).offset(-24)
+                make.height.equalTo(74)
+            }
+            
+            snackBar.isHidden = false
+            snackBar.alpha = 0
+            
+            UIView.animate(withDuration: 0.3) {
+                snackBar.alpha = 1
+            } completion: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    UIView.animate(withDuration: 0.3) {
+                        snackBar.alpha = 0
+                    } completion: { _ in
+                        snackBar.isHidden = true
+                        snackBar.removeFromSuperview()
+                    }
                 }
             }
         }

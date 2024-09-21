@@ -287,7 +287,7 @@ class SetStudyGroupPeriodViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] period in
                 self?.delegate?.didTapCompleteButton(startDate: period.startDate, endDate: period.endDate)
-                self?.coordinator.dismiss()
+                self?.coordinator.dismiss(animated: false)
             })
             .store(in: &cancellables)
     }
@@ -375,7 +375,7 @@ extension SetStudyGroupPeriodViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.coordinator.dismiss()
+                self.coordinator.dismiss(animated: false)
             })
     }
     

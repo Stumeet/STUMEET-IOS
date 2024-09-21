@@ -21,7 +21,6 @@ final class DefaultCreateStudyGroupRepository: CreateStudyGroupRepository {
     
     
     func postCreateStudyGroup(data: CreateStudyGroup) -> AnyPublisher<Bool, Never> {
-        
         let requestDTO = CreateStudyGroupRequestDTO(
             image: data.image,
             studyField: data.field,
@@ -36,14 +35,20 @@ final class DefaultCreateStudyGroupRepository: CreateStudyGroupRepository {
             meetingRepetitionDates: data.repetDays!,
             studyTags: data.tags
         )
-        
+
         return provider.requestPublisher(.createStudyGroup(requestDTO))
-            .map(ResponseDTO.self)
-            .map { _ in true }
+            .map { response in
+                if let httpResponse = response.response, httpResponse.statusCode == 201 {
+                    return false
+                } else {
+                    return true
+                }
+            }
             .catch { error -> AnyPublisher<Bool, Never> in
                 print("Error occurred: \(error)")
-                return Just(false).eraseToAnyPublisher()
+                return Just(true).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
+
 }

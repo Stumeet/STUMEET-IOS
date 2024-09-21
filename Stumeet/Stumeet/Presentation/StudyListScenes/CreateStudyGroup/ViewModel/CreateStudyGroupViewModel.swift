@@ -37,6 +37,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didSelectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
         let didTapCompleteButton: AnyPublisher<Void, Never>
         let didTapRandomColorButton: AnyPublisher<Void, Never>
+        let didTapXButton: AnyPublisher<Void, Never>
     }
     
     // MARK: - Output
@@ -68,6 +69,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let snackBarText: AnyPublisher<String, Never>
         let imageViewBackgroundColor: AnyPublisher<UIColor?, Never>
         let randomButtonColor: AnyPublisher<UIColor?, Never>
+        let dismiss: AnyPublisher<Void, Never>
     }
     
     // MARK: - Properties
@@ -293,7 +295,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             selectedRepeatDays: input.didSelectedRepeatDays.eraseToAnyPublisher(),
             snackBarText: snackBarText,
             imageViewBackgroundColor: randomBackgroundColorSubject.eraseToAnyPublisher(),
-            randomButtonColor: randomButtonColorSubject.eraseToAnyPublisher()
+            randomButtonColor: randomButtonColorSubject.eraseToAnyPublisher(),
+            dismiss: input.didTapXButton
         )
     }
 }

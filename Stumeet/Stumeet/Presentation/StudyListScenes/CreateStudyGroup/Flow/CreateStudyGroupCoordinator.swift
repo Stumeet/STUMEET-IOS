@@ -24,7 +24,7 @@ protocol CreateStudyGroupNavigation: AnyObject {
     func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate)
     func presentPHPickerView(pickerVC: PHPickerViewController)
     func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate)
-    func dismiss()
+    func dismiss(animated: Bool)
 }
 
 final class CreateStudyGroupCoordinator: Coordinator {
@@ -96,8 +96,8 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
     }
         
     
-    func dismiss() {
+    func dismiss(animated: Bool) {
         guard let lastVC = navigationController.viewControllers.last else { return }
-        lastVC.dismiss(animated: false)
+        lastVC.dismiss(animated: animated)
     }
 }
