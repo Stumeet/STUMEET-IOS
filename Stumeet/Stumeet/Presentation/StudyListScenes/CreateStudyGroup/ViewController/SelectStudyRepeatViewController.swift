@@ -404,7 +404,7 @@ extension SelectStudyRepeatViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.coordinator.dismiss()
+                self.coordinator.dismiss(animated: false)
             })
     }
     

@@ -43,15 +43,16 @@ final class CreateStudyGroupViewController: BaseViewController {
     let imageContainerView = UIView()
     private let studyGroupImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemOrange
         imageView.layer.cornerRadius = 16
+        imageView.backgroundColor = StumeetColor.random.color
+        imageView.clipsToBounds = true
+        
         return imageView
     }()
     private let randomColorButton: UIButton = {
         let button = UIButton()
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.white.cgColor
-        button.backgroundColor = .systemBlue
         button.setRoundCorner()
         
         return button
@@ -66,13 +67,19 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let studyNameContainerView = UIView()
     private let studyNameLabel = createEssentialLabel(text: "스터디 이름 *")
+    private let studyNameTextFieldBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.primary50.color
+        view.layer.cornerRadius = 16
+        
+        return view
+    }()
     private let studyNameTextField: UITextField = {
         let textField = UITextField()
         textField.addLeftPadding(24)
         textField.placeholder = "스터디 이름을 입력해주세요."
         textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
-        textField.layer.cornerRadius = 16
-        textField.backgroundColor = StumeetColor.primary50.color
+        
         return textField
     }()
     private let studyNameLengthLabel = UILabel().setLabelProperty(text: "0/20", font: StumeetFont.bodyMedium14.font, color: .gray400)
@@ -200,65 +207,56 @@ final class CreateStudyGroupViewController: BaseViewController {
     }
     
     override func setupAddView() {
-        [
-            studyGroupImageView,
+        [   studyGroupImageView,
             addImageButton,
             randomColorButton
         ]   .forEach(imageContainerView.addSubview)
         
-        [
-            studyNameLabel,
+        [   studyNameLabel,
+            studyNameTextFieldBackgroundView,
             studyNameTextField,
-            studyNameLengthLabel
-        ]   .forEach(studyNameContainerView.addSubview)
+            studyNameLengthLabel]
+            .forEach(studyNameContainerView.addSubview)
         
-        [
-            fieldLabel,
+        [   fieldLabel,
             fieldButton
         ]   .forEach(fieldContainerView.addSubview)
         
-        [
-            tagLabel,
+        [   tagLabel,
             tagTextField,
             tagAddButton,
             tagCollectionView
         ]   .forEach(tagContainerView.addSubview)
         
-        [
-            explainLabel,
+        [   explainLabel,
             explainTextView,
             explainLengthLabel
         ]   .forEach(explainContainerView.addSubview)
         
-        [
-            regionLabel,
+        [   regionLabel,
             regionButton
         ]   .forEach(regionContainerView.addSubview)
         
-        [
-            periodLabel,
+        [   periodLabel,
             periodStartButton,
             periodIngLabel,
             periodEndButton
         ]   .forEach(periodContainerView.addSubview)
         
-        [
-            studyMeetingLabel,
+        [   studyMeetingLabel,
             timeLabel,
             timeButton,
             repeatLabel,
             repeatButton
         ]   .forEach(studyMeetingContainerView.addSubview)
         
-        [
-            studyRuleLabel,
+        [   studyRuleLabel,
             studyRuleTextView,
             studyRuleLengthLabel
         ]   .forEach(studyRuleContainerView.addSubview)
         
         
-        [
-            imageContainerView,
+        [   imageContainerView,
             studyNameContainerView,
             fieldContainerView,
             tagContainerView,
@@ -269,12 +267,10 @@ final class CreateStudyGroupViewController: BaseViewController {
             studyRuleContainerView
         ]   .forEach(scrollViewVStackView.addArrangedSubview)
         
-        [
-            scrollViewVStackView
+        [   scrollViewVStackView
         ]   .forEach(scrollView.addSubview)
         
-        [
-            scrollView,
+        [   scrollView,
             completeButton
         ]   .forEach(view.addSubview)
     }
@@ -282,7 +278,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func setupConstaints() {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
 
@@ -310,10 +306,17 @@ final class CreateStudyGroupViewController: BaseViewController {
         
         studyNameLabel.snp.makeConstraints { $0.top.leading.equalToSuperview() }
 
-        studyNameTextField.snp.makeConstraints { make in
+        studyNameTextFieldBackgroundView.snp.makeConstraints { make in
+            make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(49)
+        }
+        
+        studyNameTextField.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
             make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.height.equalTo(49)
+            make.trailing.equalToSuperview().inset(76)
             make.bottom.equalToSuperview()
         }
 
@@ -463,9 +466,17 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapTimeButton: timeButton.tapPublisher,
             didSelectedTime: timeSubject.eraseToAnyPublisher(),
             didTapAddImageButton: addImageButton.tapPublisher,
-            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher()
+            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher(),
+            didChangeStudyNameTextField: studyNameTextField.textPublisher,
+            didChangeStudyExplainTextView: explainTextView.textPublisher,
+            didBeginExplainEditting: explainTextView.didBeginEditingPublisher,
+            didChangeStudyRuleTextView: studyRuleTextView.textPublisher,
+            didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher,
             didTapRepeatButton: repeatButton.tapPublisher,
-            didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher()
+            didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher(),
+            didTapCompleteButton: completeButton.tapPublisher,
+            didTapRandomColorButton: randomColorButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -538,7 +549,8 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.selectedImage
             .receive(on: RunLoop.main)
             .assign(to: \.image, on: studyGroupImageView)
-      
+            .store(in: &cancellables)
+        
         output.goToSelectStudyRepeatVC
             .map { self }
             .receive(on: RunLoop.main)
@@ -548,6 +560,76 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.selectedRepeatDays
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateRepeatButton)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanTwenty
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyNameTextField.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: studyNameTextField)
+            .store(in: &cancellables)
+        
+        output.titleCount
+            .map { "\($0)/20" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyNameLengthLabel)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanHundredExplain
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.explainTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.explainCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainLengthLabel)
+            .store(in: &cancellables)
+        
+        output.explainBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanHundredRule
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyRuleTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.ruleCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleLengthLabel)
+            .store(in: &cancellables)
+        
+        output.ruleBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleTextView)
+            .store(in: &cancellables)
+        
+        output.snackBarText
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: checkShowSnackbarOrComplete)
+            .store(in: &cancellables)
+        
+        output.imageViewBackgroundColor
+            .receive(on: RunLoop.main)
+            .assign(to: \.backgroundColor, on: studyGroupImageView)
+            .store(in: &cancellables)
+        
+        output.randomButtonColor
+            .receive(on: RunLoop.main)
+            .assign(to: \.backgroundColor, on: randomColorButton)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .map { true }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
             .store(in: &cancellables)
     }
 }
@@ -587,9 +669,8 @@ extension CreateStudyGroupViewController {
         textView.text = placeholder
         textView.textColor = StumeetColor.gray300.color
         textView.font = StumeetFont.bodyMedium14.font
-        textView.isScrollEnabled = false
         textView.backgroundColor = StumeetColor.primary50.color
-        textView.textContainerInset = UIEdgeInsets(top: 16, left: 24, bottom: 16, right: 24)
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 24)
         textView.layer.cornerRadius = 16
             
         return textView
@@ -672,8 +753,6 @@ extension CreateStudyGroupViewController {
         }
     }
     
-    
-    
     private func updateTimeButton(time: AttributedString) {
         timeButton.layer.borderColor = StumeetColor.primary700.color.cgColor
         timeButton.configuration?.image = UIImage(resource: .CreateStudyGroup.clock).withTintColor(StumeetColor.primary700.color)
@@ -718,6 +797,43 @@ extension CreateStudyGroupViewController {
         config.image = UIImage(resource: .CreateStudyGroup.repeatButton).withTintColor(StumeetColor.primary700.color)
         repeatButton.configuration = config
         repeatButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+    }
+    
+    private func updateRandomColorButton(color: UIColor?) {
+        randomColorButton.backgroundColor = color
+    }
+    
+    private func checkShowSnackbarOrComplete(text: String) {
+        print("asdf \(text)")
+        if text.isEmpty {
+            coordinator.dismiss(animated: true)
+        } else {
+            let snackBar = SnackBar(frame: .zero, text: text)
+            
+            view.addSubview(snackBar)
+            
+            snackBar.snp.makeConstraints { make in
+                make.leading.trailing.equalToSuperview().inset(16)
+                make.bottom.equalTo(completeButton.snp.top).offset(-24)
+                make.height.equalTo(74)
+            }
+            
+            snackBar.isHidden = false
+            snackBar.alpha = 0
+            
+            UIView.animate(withDuration: 0.3) {
+                snackBar.alpha = 1
+            } completion: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    UIView.animate(withDuration: 0.3) {
+                        snackBar.alpha = 0
+                    } completion: { _ in
+                        snackBar.isHidden = true
+                        snackBar.removeFromSuperview()
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -793,4 +909,3 @@ extension CreateStudyGroupViewController: PHPickerViewControllerDelegate {
         picker.dismiss(animated: true)
     }
 }
-

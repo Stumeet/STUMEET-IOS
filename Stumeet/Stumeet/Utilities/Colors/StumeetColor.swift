@@ -41,12 +41,15 @@ enum StumeetColor {
     case warning500
     case success
     case primaryInfo
+    
+    // MARK: - StudyGroup
+    case random
 }
 
 extension StumeetColor {
     var color: UIColor {
         switch self {
-        // Gray
+            // Gray
         case .gray50: return #colorLiteral(red: 1, green: 0.9999999404, blue: 1, alpha: 1)
         case .gray75: return #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9529411765, alpha: 1)
         case .gray100: return #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.9058823529, alpha: 1)
@@ -58,8 +61,8 @@ extension StumeetColor {
         case .gray700: return #colorLiteral(red: 0.2862745098, green: 0.2862745098, blue: 0.3137254902, alpha: 1)
         case .gray800: return #colorLiteral(red: 0.1921568627, green: 0.1921568627, blue: 0.2078431373, alpha: 1)
         case .gray900: return #colorLiteral(red: 0.09411764706, green: 0.09411764706, blue: 0.1058823529, alpha: 1)
-        
-        // Primary
+            
+            // Primary
         case .primary50: return #colorLiteral(red: 0.9589989781, green: 0.9747768044, blue: 0.975105226, alpha: 1)
         case .primary100: return #colorLiteral(red: 0.8117647059, green: 0.9098039216, blue: 0.8980392157, alpha: 1)
         case .primary200: return #colorLiteral(red: 0.6509803922, green: 0.8666666667, blue: 0.8470588235, alpha: 1)
@@ -70,14 +73,28 @@ extension StumeetColor {
         case .primary700: return #colorLiteral(red: 0.01176470588, green: 0.5058823529, blue: 0.4588235294, alpha: 1)
         case .primary800: return #colorLiteral(red: 0, green: 0.3215686275, blue: 0.2901960784, alpha: 1)
         case .primary900: return #colorLiteral(red: 0, green: 0.1607843137, blue: 0.1450980392, alpha: 1)
-        
-        // Others
+            
+            // Others
         case .danger50: return #colorLiteral(red: 0.9921568627, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
         case .danger500: return #colorLiteral(red: 0.9215686275, green: 0.2705882353, blue: 0.2705882353, alpha: 1)
         case .warning50: return #colorLiteral(red: 0.9843137255, green: 0.968627451, blue: 0.9254901961, alpha: 1)
         case .warning500: return #colorLiteral(red: 0.9568627451, green: 0.6941176471, blue: 0.168627451, alpha: 1)
         case .success: return #colorLiteral(red: 0.03921568627, green: 0.7607843137, blue: 0.5843137255, alpha: 1)
         case .primaryInfo: return #colorLiteral(red: 0.01176470588, green: 0.5058823529, blue: 0.4588235294, alpha: 1)
+        case .random:
+            let colors: [UIColor] = [
+                UIColor(red: 253/255, green: 83/255, blue: 83/255, alpha: 1.0),
+                UIColor(red: 255/255, green: 120/255, blue: 44/255, alpha: 1.0),
+                UIColor(red: 255/255, green: 197/255, blue: 48/255, alpha: 1.0),
+                UIColor(red: 117/255, green: 221/255, blue: 91/255, alpha: 1.0),
+                UIColor(red: 44/255, green: 210/255, blue: 170/255, alpha: 1.0),
+                UIColor(red: 53/255, green: 210/255, blue: 244/255, alpha: 1.0),
+                UIColor(red: 61/255, green: 125/255, blue: 247/255, alpha: 1.0),
+                UIColor(red: 135/255, green: 84/255, blue: 244/255, alpha: 1.0),
+                UIColor(red: 255/255, green: 73/255, blue: 160/255, alpha: 1.0),
+                UIColor(red: 65/255, green: 66/255, blue: 75/255, alpha: 1.0)
+            ]
+            return colors.randomElement()!
         }
     }
 }
