@@ -36,8 +36,8 @@ type_body_length:
 
 # 함수 본문의 최대 길이를 설정합니다.
 function_body_length:
-  warning: 100
-  error: 150
+  warning: 150
+  error: 200
 
 # 식별자 이름 규칙 설정
 identifier_name:

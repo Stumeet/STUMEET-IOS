@@ -43,8 +43,8 @@ final class CreateStudyGroupViewController: BaseViewController {
     let imageContainerView = UIView()
     private let studyGroupImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemOrange
         imageView.layer.cornerRadius = 16
+        imageView.backgroundColor = StumeetColor.random.color
         imageView.clipsToBounds = true
         
         return imageView
@@ -53,7 +53,6 @@ final class CreateStudyGroupViewController: BaseViewController {
         let button = UIButton()
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.white.cgColor
-        button.backgroundColor = .systemBlue
         button.setRoundCorner()
         
         return button
@@ -208,66 +207,56 @@ final class CreateStudyGroupViewController: BaseViewController {
     }
     
     override func setupAddView() {
-        [
-            studyGroupImageView,
+        [   studyGroupImageView,
             addImageButton,
             randomColorButton
         ]   .forEach(imageContainerView.addSubview)
         
-        [
-            studyNameLabel,
+        [   studyNameLabel,
             studyNameTextFieldBackgroundView,
             studyNameTextField,
-            studyNameLengthLabel
-        ]   .forEach(studyNameContainerView.addSubview)
+            studyNameLengthLabel]
+            .forEach(studyNameContainerView.addSubview)
         
-        [
-            fieldLabel,
+        [   fieldLabel,
             fieldButton
         ]   .forEach(fieldContainerView.addSubview)
         
-        [
-            tagLabel,
+        [   tagLabel,
             tagTextField,
             tagAddButton,
             tagCollectionView
         ]   .forEach(tagContainerView.addSubview)
         
-        [
-            explainLabel,
+        [   explainLabel,
             explainTextView,
             explainLengthLabel
         ]   .forEach(explainContainerView.addSubview)
         
-        [
-            regionLabel,
+        [   regionLabel,
             regionButton
         ]   .forEach(regionContainerView.addSubview)
         
-        [
-            periodLabel,
+        [   periodLabel,
             periodStartButton,
             periodIngLabel,
             periodEndButton
         ]   .forEach(periodContainerView.addSubview)
         
-        [
-            studyMeetingLabel,
+        [   studyMeetingLabel,
             timeLabel,
             timeButton,
             repeatLabel,
             repeatButton
         ]   .forEach(studyMeetingContainerView.addSubview)
         
-        [
-            studyRuleLabel,
+        [   studyRuleLabel,
             studyRuleTextView,
             studyRuleLengthLabel
         ]   .forEach(studyRuleContainerView.addSubview)
         
         
-        [
-            imageContainerView,
+        [   imageContainerView,
             studyNameContainerView,
             fieldContainerView,
             tagContainerView,
@@ -278,12 +267,10 @@ final class CreateStudyGroupViewController: BaseViewController {
             studyRuleContainerView
         ]   .forEach(scrollViewVStackView.addArrangedSubview)
         
-        [
-            scrollViewVStackView
+        [   scrollViewVStackView
         ]   .forEach(scrollView.addSubview)
         
-        [
-            scrollView,
+        [   scrollView,
             completeButton
         ]   .forEach(view.addSubview)
     }
@@ -486,7 +473,9 @@ final class CreateStudyGroupViewController: BaseViewController {
             didChangeStudyRuleTextView: studyRuleTextView.textPublisher,
             didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher,
             didTapRepeatButton: repeatButton.tapPublisher,
-            didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher()
+            didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher(),
+            didTapCompleteButton: completeButton.tapPublisher,
+            didTapRandomColorButton: randomColorButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
@@ -560,7 +549,7 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .assign(to: \.image, on: studyGroupImageView)
             .store(in: &cancellables)
-      
+        
         output.goToSelectStudyRepeatVC
             .map { self }
             .receive(on: RunLoop.main)
@@ -619,6 +608,23 @@ final class CreateStudyGroupViewController: BaseViewController {
         output.ruleBeginText
             .receive(on: RunLoop.main)
             .assign(to: \.text, on: studyRuleTextView)
+            .store(in: &cancellables)
+        
+        output.isShowSnackBar
+            .receive(on: RunLoop.main)
+            .sink {
+                print($0)
+            }
+            .store(in: &cancellables)
+        
+        output.imageViewBackgroundColor
+            .receive(on: RunLoop.main)
+            .assign(to: \.backgroundColor, on: studyGroupImageView)
+            .store(in: &cancellables)
+        
+        output.randomButtonColor
+            .receive(on: RunLoop.main)
+            .assign(to: \.backgroundColor, on: randomColorButton)
             .store(in: &cancellables)
     }
 }
@@ -787,6 +793,10 @@ extension CreateStudyGroupViewController {
         repeatButton.configuration = config
         repeatButton.layer.borderColor = StumeetColor.primary700.color.cgColor
     }
+    
+    private func updateRandomColorButton(color: UIColor?) {
+        randomColorButton.backgroundColor = color
+    }
 }
 
 // MARK: - Datasource
@@ -861,4 +871,3 @@ extension CreateStudyGroupViewController: PHPickerViewControllerDelegate {
         picker.dismiss(animated: true)
     }
 }
-
