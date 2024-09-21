@@ -196,6 +196,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpTapGesture()
     }
     
     // MARK: - SetUp
@@ -446,6 +447,15 @@ final class CreateStudyGroupViewController: BaseViewController {
         }
     }
 
+    private func setUpTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
     
     // MARK: - Bind
     
