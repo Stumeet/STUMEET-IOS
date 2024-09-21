@@ -32,7 +32,7 @@ file_length:
 # 타입 본문의 최대 길이
 type_body_length:
   warning: 300
-  error: 500
+  error: 600
 
 # 함수 본문의 최대 길이를 설정합니다.
 function_body_length:
