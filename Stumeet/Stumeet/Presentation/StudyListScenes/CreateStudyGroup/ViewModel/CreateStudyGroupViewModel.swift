@@ -65,7 +65,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let ruleBeginText: AnyPublisher<String, Never>
         let goToSelectStudyRepeatVC: AnyPublisher<Void, Never>
         let selectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
-        let isShowSnackBar: AnyPublisher<Bool, Never>
+        let snackBarText: AnyPublisher<String, Never>
         let imageViewBackgroundColor: AnyPublisher<UIColor?, Never>
         let randomButtonColor: AnyPublisher<UIColor?, Never>
     }
@@ -249,7 +249,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .store(in: &cancellables)
         
         
-        let isShowSnackBar = input.didTapCompleteButton
+        let snackBarText = input.didTapCompleteButton
             .map {CreateStudyGroup(
                 image: photoSubject.value?.jpegData(compressionQuality: 0.1),
                 name: studyNameSubject.value,
@@ -264,6 +264,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
                 repetDays: repeatTypeSubject.value?.days,
                 rule: ruleSubject.value)}
             .flatMap(useCase.getIsShowSnackBar)
+            .map { $0 ? "! 필수 내용 작성이 완료되지 않았어요." : "" }
             .eraseToAnyPublisher()
         
         return Output(
@@ -290,7 +291,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
             ruleBeginText: ruleBeginText,
             goToSelectStudyRepeatVC: input.didTapRepeatButton,
             selectedRepeatDays: input.didSelectedRepeatDays.eraseToAnyPublisher(),
-            isShowSnackBar: isShowSnackBar,
+            snackBarText: snackBarText,
             imageViewBackgroundColor: randomBackgroundColorSubject.eraseToAnyPublisher(),
             randomButtonColor: randomButtonColorSubject.eraseToAnyPublisher()
         )

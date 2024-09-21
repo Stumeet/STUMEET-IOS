@@ -610,11 +610,10 @@ final class CreateStudyGroupViewController: BaseViewController {
             .assign(to: \.text, on: studyRuleTextView)
             .store(in: &cancellables)
         
-        output.isShowSnackBar
+        output.snackBarText
+            .filter { !$0.isEmpty }
             .receive(on: RunLoop.main)
-            .sink {
-                print($0)
-            }
+            .sink(receiveValue: showSnackBar)
             .store(in: &cancellables)
         
         output.imageViewBackgroundColor
@@ -796,6 +795,34 @@ extension CreateStudyGroupViewController {
     
     private func updateRandomColorButton(color: UIColor?) {
         randomColorButton.backgroundColor = color
+    }
+    
+    private func showSnackBar(text: String) {
+        let snackBar = SnackBar(frame: .zero, text: text)
+        
+        view.addSubview(snackBar)
+        
+        snackBar.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(completeButton.snp.top).offset(-24)
+            make.height.equalTo(74)
+        }
+        
+        snackBar.isHidden = false
+        snackBar.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            snackBar.alpha = 1
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIView.animate(withDuration: 0.3) {
+                    snackBar.alpha = 0
+                } completion: { _ in
+                    snackBar.isHidden = true
+                    snackBar.removeFromSuperview()
+                }
+            }
+        }
     }
 }
 
