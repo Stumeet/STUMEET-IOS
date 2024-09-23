@@ -210,7 +210,9 @@ class StudyMainSideMenuViewController: BaseViewController {
     override func bind() {
         menuTableView.didSelectRowPublisher
             .filter { $0.item == 2 }
-            .map { _ in }
+            .map { [weak self] _ in
+                self?.dismissSideMenu()
+            }
             .sink(receiveValue: coordinator.goToStudyActivityList)
             .store(in: &cancellables)
     }
