@@ -539,6 +539,11 @@ final class CreateStudyGroupViewController: BaseViewController {
             .sink(receiveValue: updateTagAddButton)
             .store(in: &cancellables)
         
+        output.tagText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: tagTextField)
+            .store(in: &cancellables)
+        
         output.addedTags
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)

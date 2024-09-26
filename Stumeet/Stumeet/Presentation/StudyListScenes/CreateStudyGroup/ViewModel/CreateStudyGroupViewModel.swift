@@ -69,6 +69,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let snackBarText: AnyPublisher<String, Never>
         let imageViewBackgroundColor: AnyPublisher<UIColor?, Never>
         let randomButtonColor: AnyPublisher<UIColor?, Never>
+        let tagText: AnyPublisher<String?, Never>
         let dismiss: AnyPublisher<Void, Never>
     }
     
@@ -93,7 +94,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let regionSubject = CurrentValueSubject<String, Never>("")
         let timeSubject = CurrentValueSubject<String?, Never>(nil)
         let ruleSubject = CurrentValueSubject<String, Never>("")
-        let tagTextSubject = CurrentValueSubject<String, Never>("")
+        let tagTextSubject = CurrentValueSubject<String?, Never>("")
         let addedTagsSubject = CurrentValueSubject<[String], Never>([])
         let periodDateSubject = CurrentValueSubject<(startDate: Date, endDate: Date?), Never>((useCase.getCurrentDate(), nil))
         let repeatTypeSubject = CurrentValueSubject<StudyRepeatType?, Never>(nil)
@@ -115,7 +116,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .store(in: &cancellables)
         
         input.didTapAddTagButton
-            .map { (addedTagsSubject.value, tagTextSubject.value) }
+            .map { (addedTagsSubject.value, tagTextSubject.value!) }
+            .handleEvents(receiveOutput: { _ in tagTextSubject.send("") })
             .flatMap(useCase.addTag)
             .sink(receiveValue: addedTagsSubject.send)
             .store(in: &cancellables)
@@ -296,6 +298,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
             snackBarText: snackBarText,
             imageViewBackgroundColor: randomBackgroundColorSubject.eraseToAnyPublisher(),
             randomButtonColor: randomButtonColorSubject.eraseToAnyPublisher(),
+            tagText: tagTextSubject.eraseToAnyPublisher(),
             dismiss: input.didTapXButton
         )
     }
