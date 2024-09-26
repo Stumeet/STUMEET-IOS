@@ -110,7 +110,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let tagTextField: UITextField = {
         let textField = UITextField()
         textField.addLeftPadding(24)
-        textField.placeholder = "태그를 직접 입략해주세요.(최대 5개)"
+        textField.placeholder = "태그를 직접 입력해주세요.(최대 5개)"
         textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
         textField.layer.cornerRadius = 16
         textField.backgroundColor = StumeetColor.primary50.color
