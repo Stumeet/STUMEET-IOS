@@ -43,12 +43,12 @@ final class CreateStudyGroupViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
-        let goToSelectStudyGroupFieldVC: AnyPublisher<CreateStudySelectItemType, Never>
+        let goToSelectStudyGroupFieldVC: AnyPublisher<(CreateStudySelectItemType, String), Never>
         let selectedField: AnyPublisher<SelectStudyItem, Never>
         let isEnableTagAddButton: AnyPublisher<Bool, Never>
         let addedTags: AnyPublisher<[CreateStudyTagSectionItem], Never>
         let isEmptyTags: AnyPublisher<Bool, Never>
-        let goToSelectStudyGroupRegionVC: AnyPublisher<CreateStudySelectItemType, Never>
+        let goToSelectStudyGroupRegionVC: AnyPublisher<(CreateStudySelectItemType, String), Never>
         let selectedRegion: AnyPublisher<SelectStudyItem, Never>
         let goToSetStudyGroupPeriodVC: AnyPublisher<(isStart: Bool, startDate: Date, endDate: Date?), Never>
         let periodAttributedStrings: AnyPublisher<(start: AttributedString, end: AttributedString?), Never>
@@ -135,11 +135,11 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let goToSelectStudyGroupFieldVC = input.didTapFieldButton
-            .map { CreateStudySelectItemType.field }
+            .map { (CreateStudySelectItemType.field, fieldSubject.value) }
             .eraseToAnyPublisher()
         
         let goToSelectStudyGroupRegionVC = input.didTapRegionButton
-            .map { CreateStudySelectItemType.region }
+            .map { (CreateStudySelectItemType.region, regionSubject.value) }
             .eraseToAnyPublisher()
         
         input.didSelectedRegion

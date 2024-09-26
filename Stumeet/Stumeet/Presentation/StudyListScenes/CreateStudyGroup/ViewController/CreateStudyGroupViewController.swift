@@ -523,7 +523,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.goToSelectStudyGroupFieldVC
-            .map { (self, $0) }
+            .map { (self, $0.0, $0.1) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
             .store(in: &cancellables)
@@ -550,7 +550,7 @@ final class CreateStudyGroupViewController: BaseViewController {
             .store(in: &cancellables)
         
         output.goToSelectStudyGroupRegionVC
-            .map { (self, $0) }
+            .map { (self, $0.0, $0.1) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
             .store(in: &cancellables)
