@@ -197,6 +197,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         super.viewDidLoad()
         
         setUpTapGesture()
+        setupKeyboardNotifications()
     }
     
     // MARK: - SetUp
@@ -279,7 +280,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func setupConstaints() {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
+            make.bottom.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(16)
         }
 
@@ -455,6 +456,36 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
+            if let activeTextView = studyRuleContainerView.findFirstResponder() as? UITextView {
+                let textViewFrameInScrollView = scrollView.convert(activeTextView.frame, from: activeTextView.superview)
+                scrollView.scrollRectToVisible(textViewFrameInScrollView, animated: true)
+            }
+            
+            if let activeTextView = explainContainerView.findFirstResponder() as? UITextView {
+                let textViewFrameInScrollView = scrollView.convert(activeTextView.frame, from: activeTextView.superview)
+                scrollView.scrollRectToVisible(textViewFrameInScrollView, animated: true)
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // 키보드가 사라지면 스크롤뷰의 inset을 다시 원래대로 되돌립니다.
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
     
     // MARK: - Bind
