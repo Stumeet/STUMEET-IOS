@@ -1,5 +1,5 @@
 //
-//  StudyMemberDetailHeaderTapBarView.swift
+//  StudyMemberHeaderTapBarView.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/09/03.
@@ -8,26 +8,7 @@
 import UIKit
 import SnapKit
 
-enum StudyMemberDetailHeaderTapBarViewType: CaseIterable {
-    case meeting
-    case task
-    
-    var title: String {
-        switch self {
-        case .meeting: "모임"
-        case .task: "과제"
-        }
-    }
-    
-    var id: Int {
-        switch self {
-        case .meeting: 0
-        case .task: 1
-        }
-    }
-}
-
-class StudyMemberDetailHeaderTapBarView: UIView {
+class StudyMemberHeaderTapBarView: UIView {
     // MARK: - UIComponents
     private var buttonHStackView: UIStackView = {
         let stackView = UIStackView()
@@ -90,7 +71,7 @@ class StudyMemberDetailHeaderTapBarView: UIView {
     }
 }
 
-extension StudyMemberDetailHeaderTapBarView {
+extension StudyMemberHeaderTapBarView {
     // MARK: - Nested Class
     class RadioButton: UIButton {
         init(title: String) {

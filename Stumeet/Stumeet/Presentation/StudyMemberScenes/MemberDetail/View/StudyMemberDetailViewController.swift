@@ -73,7 +73,7 @@ class StudyMemberDetailViewController: BaseViewController {
     }()
     
     private let headerView = StudyMemberDetailInfoHeaderView()
-    private var headerTapBarView = StudyMemberDetailHeaderTapBarView(
+    private var headerTapBarView = StudyMemberHeaderTapBarView(
         options: StudyMemberDetailHeaderTapBarViewType.allCases.map { $0.title },
         initSelectedIndex: StudyMemberDetailHeaderTapBarViewType.meeting.id
     )
@@ -92,7 +92,7 @@ class StudyMemberDetailViewController: BaseViewController {
     // MARK: - Properties
     private weak var coordinator: StudyMemberNavigation!
     private var viewModel: StudyMemberDetailViewModel
-    private var activityDataSource: UITableViewDiffableDataSource<StudyMemberDetailActivityListSection, StudyMemberDetailActivityListItem>?
+    private var activityDataSource: UITableViewDiffableDataSource<StudyMemberActivityListSection, StudyMemberActivityListItem>?
     private lazy var contextMenuSize = contextMenu.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
 
     // MARK: - Init
@@ -143,7 +143,6 @@ class StudyMemberDetailViewController: BaseViewController {
         view.addSubview(navigationBar)
         view.addSubview(headerView)
         view.addSubview(headerTapBarView)
-        view.addSubview(activityTableView)
         view.addSubview(activityTableView)
         view.addSubview(contextMenu)
         
@@ -208,7 +207,7 @@ class StudyMemberDetailViewController: BaseViewController {
         configureDatasource()
         updateSnapshot(
             items: [
-                StudyMemberDetailActivityListItem(
+                StudyMemberActivityListItem(
                     activity: Activity(
                         id: 0,
                         tag: .meeting,
@@ -222,9 +221,10 @@ class StudyMemberDetailViewController: BaseViewController {
                         day: "2024-08-19T11:20:21.961423",
                         status: .absent
                     ),
-                    cellType: .firstCell
+                    cellType: .firstCell,
+                    screenType: .detail
                 ),
-                StudyMemberDetailActivityListItem(
+                StudyMemberActivityListItem(
                     activity: Activity(
                         id: 2,
                         tag: .meeting,
@@ -238,9 +238,10 @@ class StudyMemberDetailViewController: BaseViewController {
                         day: "2024-08-19T11:20:21.961423",
                         status: .beforeStart
                     ),
-                    cellType: .normal
+                    cellType: .normal,
+                    screenType: .detail
                 ),
-                StudyMemberDetailActivityListItem(
+                StudyMemberActivityListItem(
                     activity: Activity(
                         id: 3,
                         tag: .homework,
@@ -254,9 +255,10 @@ class StudyMemberDetailViewController: BaseViewController {
                         day: "2024-08-19T11:20:21.961423",
                         status: nil
                     ),
-                    cellType: .normal
+                    cellType: .normal,
+                    screenType: .detail
                 ),
-                StudyMemberDetailActivityListItem(
+                StudyMemberActivityListItem(
                     activity: Activity(
                         id: 4,
                         tag: .homework,
@@ -270,7 +272,8 @@ class StudyMemberDetailViewController: BaseViewController {
                         day: "2024-08-19T11:20:21.961423",
                         status: .noParticipation
                     ),
-                    cellType: .normal
+                    cellType: .normal,
+                    screenType: .detail
                 )]
         )
     }
@@ -377,8 +380,8 @@ extension StudyMemberDetailViewController:
         )
     }
     
-    private func updateSnapshot(items: [StudyMemberDetailActivityListItem]) {
-        var snapshot = NSDiffableDataSourceSnapshot<StudyMemberDetailActivityListSection, StudyMemberDetailActivityListItem>()
+    private func updateSnapshot(items: [StudyMemberActivityListItem]) {
+        var snapshot = NSDiffableDataSourceSnapshot<StudyMemberActivityListSection, StudyMemberActivityListItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
         

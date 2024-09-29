@@ -1,5 +1,5 @@
 //
-//  StudyMemberDetailActivityListItem.swift
+//  StudyMemberActivityListItem.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/09/04.
@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct StudyMemberDetailActivityListItem: Hashable {
+struct StudyMemberActivityListItem: Hashable {
     
     let activity: Activity
     var id: Int { activity.id }
-    var cellType: StudyMemberDetailActivityListCellStyle
+    var cellType: StudyMemberActivityListCellStyle
+    var screenType: StudyMemberActivityListScreenType
 
     var type: ActivityCategory? {
         activity.tag
@@ -37,16 +38,23 @@ struct StudyMemberDetailActivityListItem: Hashable {
         activity.status
     }
     
-    enum StudyMemberDetailActivityListCellStyle {
+    enum StudyMemberActivityListCellStyle {
         case firstCell
         case normal
     }
     
+    enum StudyMemberActivityListScreenType {
+        case detail
+        case achievement
+    }
+    
     internal init(
         activity: Activity,
-        cellType: StudyMemberDetailActivityListItem.StudyMemberDetailActivityListCellStyle
+        cellType: StudyMemberActivityListItem.StudyMemberActivityListCellStyle,
+        screenType: StudyMemberActivityListItem.StudyMemberActivityListScreenType
     ) {
         self.activity = activity
         self.cellType = cellType
+        self.screenType = screenType
     }
 }

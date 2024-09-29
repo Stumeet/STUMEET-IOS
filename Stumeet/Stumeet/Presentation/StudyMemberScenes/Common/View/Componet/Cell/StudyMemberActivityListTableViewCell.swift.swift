@@ -201,9 +201,9 @@ class StudyMemberActivityListTableViewCell: BaseTableViewCell {
     }
     
     // MARK: - Function
-    func configureCell(_ item: StudyMemberDetailActivityListItem) {
+    func configureCell(_ item: StudyMemberActivityListItem) {
         titleLabel.text = item.displayTitle
-        
+            
         switch item.cellType {
         case .firstCell:
             topSeparatorView.isHidden = false
@@ -229,15 +229,20 @@ class StudyMemberActivityListTableViewCell: BaseTableViewCell {
             dateContentHStackView.isHidden = true
         }
         
-        if let state = item.displayState {
-            stateLabel.text = state.rawValue
-            stateLabel.textColor = state.primaryColor
-            stateContainerView.backgroundColor = state.secondaryColor
-            stateContainerView.isHidden = false
-            rootVStackView.spacing = 4
-        } else {
+        switch item.screenType {
+        case .detail:
+            if let state = item.displayState {
+                stateLabel.text = state.rawValue
+                stateLabel.textColor = state.primaryColor
+                stateContainerView.backgroundColor = state.secondaryColor
+                stateContainerView.isHidden = false
+                rootVStackView.spacing = 4
+            } else {
+                stateContainerView.isHidden = true
+                rootVStackView.spacing = 8
+            }
+        case .achievement:
             stateContainerView.isHidden = true
-            rootVStackView.spacing = 8
         }
     }
 }

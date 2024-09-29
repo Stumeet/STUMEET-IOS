@@ -12,6 +12,7 @@ import Moya
 protocol StudyMemberCoordinatorDependencies {
     func makeStudyMemberVC(coordinator: StudyMemberNavigation, studyId: Int) -> StudyMemberViewController
     func makeStudyMemberDetailVC(coordinator: StudyMemberNavigation) -> StudyMemberDetailViewController
+    func makeStudyMemberAchievementVC(coordinator: StudyMemberNavigation) -> StudyMemberAchievementViewController
 }
 
 protocol StudyMemberNavigation: AnyObject {
@@ -23,6 +24,7 @@ protocol StudyMemberNavigation: AnyObject {
         delegate: StumeetConfirmationPopupViewControllerDelegate,
         popupContextView: UIView
     )
+    func goToMemberAchievementVC()
     func dimiss()
 }
 
@@ -53,6 +55,7 @@ final class StudyMemberCoordinator: Coordinator {
 }
 
 extension StudyMemberCoordinator: StudyMemberNavigation {
+
     func presentToMemberVC() {
         let memberVC = dependencies.makeStudyMemberVC(
             coordinator: self,
@@ -60,7 +63,8 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         )
         
         navigationController.setViewControllers([memberVC], animated: true)
-        
+        navigationController.presentationController?.delegate = memberVC
+
         parentCoordinator?.navigationController.presentedViewController?.present(navigationController, animated: true, completion: nil)
     }
     
@@ -89,6 +93,14 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         exitPopupVC.modalPresentationStyle = .overFullScreen
         exitPopupVC.modalTransitionStyle = .crossDissolve
         viewController.present(exitPopupVC, animated: false, completion: nil)
+    }
+    
+    func goToMemberAchievementVC() {
+        let memberAchievementVC = dependencies.makeStudyMemberAchievementVC(
+            coordinator: self
+        )
+
+        navigationController.pushViewController(memberAchievementVC, animated: true)
     }
     
     func dimiss() {

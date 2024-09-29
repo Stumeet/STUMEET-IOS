@@ -10,7 +10,6 @@ import SnapKit
 import Combine
 
 class StudyMemberViewController: BaseViewController {
-    
     // MARK: - UIComponents
     private lazy var xButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(
@@ -172,26 +171,27 @@ class StudyMemberViewController: BaseViewController {
         loadStudyMemberDataSubject.send()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        coordinator.dimiss()
-    }
-    
     // MARK: - Function
     private func updateTitleCount(memberTotal: Int) {
         titleCountLabel.text = String(memberTotal)
     }
     
     @objc func closeButtonTapped(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true)
+        coordinator.dimiss()
     }
     
     @objc func memberSettingsButtonTapped(_ sender: UIBarButtonItem) {
-        print(#function)
+        coordinator.goToMemberAchievementVC()
     }
 }
 
-extension StudyMemberViewController {
+extension StudyMemberViewController:
+    UIAdaptivePresentationControllerDelegate {
+    
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        coordinator.dimiss()
+    }
+    
     // MARK: - DataSource
     // TODO: - API 연동 시 수정
     private func configureDatasource() {
