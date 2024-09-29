@@ -68,24 +68,3 @@ class OnboardingCollectionViewCell: BaseCollectionViewCell {
         imageView.image = UIImage(resource: imageName)
     }
 }
-
-// TODO: - 공통으로 이전
-extension UILabel {
-     func setTextWithLineHeight(text: String?, lineHeight: CGFloat) {
-        if let text = text {
-            let style = NSMutableParagraphStyle()
-            style.maximumLineHeight = lineHeight
-            style.minimumLineHeight = lineHeight
-            style.alignment = textAlignment
-
-            let attributes: [NSAttributedString.Key: Any] = [
-                .paragraphStyle: style,
-                .baselineOffset: (lineHeight - font.lineHeight) / 4
-            ]
-            
-            let attrString = NSAttributedString(string: text,
-                                                attributes: attributes)
-            self.attributedText = attrString
-        }
-    }
-}

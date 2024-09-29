@@ -80,21 +80,17 @@ class StudyMemberDetailContextMenuView: UIView {
         })
     }
     
-    func addItem(title: String, textColor: UIColor = StumeetColor.gray400.color) {
-        let rootCotainerView = UIView()
-        let titleLabel = UILabel()
+    func addItem(title: String, textColor: UIColor = StumeetColor.gray400.color, action: UIAction) {
+        var configuration = UIButton.Configuration.plain()
+        var container = AttributeContainer()
+        container.font = StumeetFont.bodyMedium14.font
+        container.foregroundColor = textColor
+        configuration.attributedTitle = AttributedString(title, attributes: container)
+        configuration.contentInsets = .init(top: 10, leading: 16, bottom: 10, trailing: 16)
         
-        titleLabel.text = title
-        titleLabel.textColor = textColor
-        titleLabel.font = StumeetFont.bodyMedium14.font
-        titleLabel.textAlignment = .center
+        let button = UIButton(configuration: configuration)
+        button.addAction(action, for: .touchUpInside)
 
-        rootVStackView.addArrangedSubview(rootCotainerView)
-        rootCotainerView.addSubview(titleLabel)
-
-        titleLabel.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(16)
-            $0.verticalEdges.equalToSuperview().inset(10)
-        }
+        rootVStackView.addArrangedSubview(button)
     }
 }

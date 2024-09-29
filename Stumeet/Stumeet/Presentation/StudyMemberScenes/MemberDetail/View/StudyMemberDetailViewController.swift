@@ -112,8 +112,30 @@ class StudyMemberDetailViewController: BaseViewController {
     override func setupStyles() {
         view.backgroundColor = .white
         contextMenu.layer.anchorPoint = CGPoint(x: 1, y: 0)
-        contextMenu.addItem(title: "추방하기", textColor: StumeetColor.danger500.color)
-        contextMenu.addItem(title: "위임하기")
+        
+        contextMenu.addItem(
+            title: "추방하기",
+            textColor: StumeetColor.danger500.color,
+            action: UIAction { [weak self] _ in
+                guard let self else { return }
+                coordinator.presentToExpulsionPopup(
+                    from: self,
+                    delegate: self,
+                    popupContextView: setExpulsionView()
+                )
+            }
+        )
+        contextMenu.addItem(
+            title: "위임하기",
+            action: UIAction { [weak self] _ in
+                guard let self else { return }
+                coordinator.presentToExpulsionPopup(
+                    from: self,
+                    delegate: self,
+                    popupContextView: setDelegateHostView()
+                )
+            }
+        )
         contextMenu.isVisiblyHidden = true
     }
     
@@ -267,6 +289,64 @@ class StudyMemberDetailViewController: BaseViewController {
         contextMenu.isVisiblyHidden.toggle()
     }
     
+    private func setExpulsionView() -> UIView {
+        let view = UIView()
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.font = StumeetFont.titleMedium.font
+            label.textColor = StumeetColor.gray800.color
+            label.numberOfLines = 0
+            label.textAlignment = .center
+            return label
+        }()
+        
+        titleLabel.text = "홍길동님을 추방하시겠어요?"
+        titleLabel.setColorAndFont(
+            to: "홍길동",
+            withColor: StumeetColor.gray900.color,
+            withFont: StumeetFont.titleBold.font
+        )
+        view.addSubview(titleLabel)
+        
+        titleLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().inset(48)
+            $0.horizontalEdges.equalToSuperview().inset(24)
+        }
+        
+        return view
+    }
+    
+    private func setDelegateHostView() -> UIView {
+        let view = UIView()
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.font = StumeetFont.titleMedium.font
+            label.textColor = StumeetColor.gray600.color
+            label.numberOfLines = 0
+            label.textAlignment = .center
+            return label
+        }()
+        
+        titleLabel.text = "스터디장 위임은 취소할 수 없어요.\n스터디장을 위임하시겠습니까?"
+        titleLabel.setColorAndFont(
+            to: "스터디장 위임은 취소할 수 없어요.",
+            withColor: StumeetColor.gray900.color,
+            withFont: StumeetFont.titleBold.font
+        )
+        titleLabel.setLineSpacing(lineSpacing: 13)
+        
+        view.addSubview(titleLabel)
+        
+        titleLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().inset(48)
+            $0.horizontalEdges.equalToSuperview().inset(24)
+        }
+        
+        return view
+    }
+    
     @objc private func closeButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
@@ -281,7 +361,8 @@ class StudyMemberDetailViewController: BaseViewController {
 }
 
 extension StudyMemberDetailViewController:
-    StudyMemberDetailInfoHeaderViewDelegate {
+    StudyMemberDetailInfoHeaderViewDelegate,
+    StumeetConfirmationPopupViewControllerDelegate {
     
     // MARK: - DataSource
     private func configureDatasource() {
@@ -308,5 +389,15 @@ extension StudyMemberDetailViewController:
     // MARK: - StudyMemberDetailInfoHeaderViewDelegate
     func didTapComplimentButton() {
         coordinator.presentToComplimentPopup(from: self)
+    }
+    
+    // TODO: API 연동 시 수정
+    // MARK: - StumeetConfirmationPopupViewControllerDelegate
+    func confirmAction() {
+        print(#function)
+    }
+    
+    func cancelAction() {
+        print(#function)
     }
 }

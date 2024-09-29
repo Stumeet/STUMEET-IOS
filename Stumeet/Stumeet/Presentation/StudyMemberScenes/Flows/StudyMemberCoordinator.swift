@@ -18,6 +18,11 @@ protocol StudyMemberNavigation: AnyObject {
     func presentToMemberVC()
     func presentToMemberDetailVC()
     func presentToComplimentPopup(from viewController: UIViewController)
+    func presentToExpulsionPopup(
+        from viewController: UIViewController,
+        delegate: StumeetConfirmationPopupViewControllerDelegate,
+        popupContextView: UIView
+    )
     func dimiss()
 }
 
@@ -72,6 +77,18 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         complimentPopupVC.modalPresentationStyle = .overFullScreen
         complimentPopupVC.modalTransitionStyle = .crossDissolve
         viewController.present(complimentPopupVC, animated: false, completion: nil)
+    }
+    
+    func presentToExpulsionPopup(
+        from viewController: UIViewController,
+        delegate: StumeetConfirmationPopupViewControllerDelegate,
+        popupContextView: UIView
+    ) {
+        let exitPopupVC = StumeetConfirmationPopupViewController(contextView: popupContextView)
+        exitPopupVC.delegate = delegate
+        exitPopupVC.modalPresentationStyle = .overFullScreen
+        exitPopupVC.modalTransitionStyle = .crossDissolve
+        viewController.present(exitPopupVC, animated: false, completion: nil)
     }
     
     func dimiss() {
