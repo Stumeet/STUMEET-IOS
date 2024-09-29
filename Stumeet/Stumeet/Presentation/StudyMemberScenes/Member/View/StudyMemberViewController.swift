@@ -148,12 +148,16 @@ class StudyMemberViewController: BaseViewController {
         
         output.studyMemberDataSource
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateSnapshot)
+            .sink { [weak self] items in
+                self?.updateSnapshot(items: items)
+            }
             .store(in: &cancellables)
         
         output.studyMemberCount
             .receive(on: RunLoop.main)
-            .sink(receiveValue: updateTitleCount)
+            .sink { [weak self] total in
+                self?.updateTitleCount(memberTotal: total)
+            }
             .store(in: &cancellables)
     }
     

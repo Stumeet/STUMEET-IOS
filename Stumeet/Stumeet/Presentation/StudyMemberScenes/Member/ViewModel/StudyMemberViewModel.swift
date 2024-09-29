@@ -42,8 +42,15 @@ final class StudyMemberViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         input.loadStudyMemberData
-            .flatMap(getMembers)
-            .sink(receiveValue: studyMemberItemsSubject.send)
+            .flatMap { [weak self] in
+                guard let self else { return Just<[StudyMember]>([])
+                    .eraseToAnyPublisher()}
+                return getMembers()
+            }
+            .sink { [weak self] stduyMember in
+                guard let self else { return }
+                studyMemberItemsSubject.send(stduyMember)
+            }
             .store(in: &cancellables)
         
     
