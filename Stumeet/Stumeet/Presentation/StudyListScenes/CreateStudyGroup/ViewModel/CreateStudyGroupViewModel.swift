@@ -310,7 +310,7 @@ extension CreateStudyGroupViewModel {
     
     private func dateToAttributedString(start: Date, end: Date?) -> (start: AttributedString, end: AttributedString?) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy,M.d"
+        dateFormatter.dateFormat = "yyyy.M.d"
         
         let startAttributedString = AttributedString(dateFormatter.string(from: start))
         guard let end = end else { return (startAttributedString, nil) }
