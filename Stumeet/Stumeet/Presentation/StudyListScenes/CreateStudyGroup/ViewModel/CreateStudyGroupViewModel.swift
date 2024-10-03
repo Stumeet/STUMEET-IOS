@@ -259,14 +259,14 @@ final class CreateStudyGroupViewModel: ViewModelType {
                 name: studyNameSubject.value,
                 field: fieldSubject.value,
                 tags: addedTagsSubject.value,
-                explain: explainSubject.value,
+                explain: explainSubject.value == "스터디를 소개해주세요." ? "" : explainSubject.value,
                 region: regionSubject.value,
                 startDate: self.dateToYYYYMMDD(date: periodDateSubject.value.startDate),
                 endDate: self.dateToYYYYMMDD(date: periodDateSubject.value.endDate),
                 time: self.convertTo24HourFormat(timeString: timeSubject.value),
                 repetType: repeatTypeSubject.value,
                 repetDays: repeatTypeSubject.value?.days,
-                rule: ruleSubject.value)}
+                rule: ruleSubject.value == "스터디를 소개해주세요." ? "" : ruleSubject.value)}
             .flatMap(useCase.getIsShowSnackBar)
             .map { $0 ? "! 필수 내용 작성이 완료되지 않았어요." : "" }
             .eraseToAnyPublisher()
