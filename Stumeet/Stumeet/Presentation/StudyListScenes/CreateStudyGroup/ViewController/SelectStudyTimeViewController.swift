@@ -266,7 +266,7 @@ extension SelectStudyTimeViewController {
             timeView.amButton.backgroundColor = .white
         } else {
             timeView.amButton.setTitleColor(StumeetColor.gray400.color, for: .normal)
-            timeView.amButton.backgroundColor = StumeetColor.gray75.color
+            timeView.amButton.backgroundColor = .clear
             timeView.amButton.layer.borderWidth = 0
         }
     }

@@ -484,6 +484,7 @@ extension BottomSheetCalendarViewController {
             timeView.amButton.setTitleColor(StumeetColor.gray400.color, for: .normal)
             timeView.amButton.backgroundColor = StumeetColor.gray75.color
             timeView.amButton.layer.borderWidth = 0
+            timeView.amButton.backgroundColor = .clear
         }
     }
     
