@@ -39,7 +39,7 @@ final class SelectStudyTimeViewController: BaseViewController {
     private let dragIndicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
-        view.layer.cornerRadius = 7
+        view.layer.cornerRadius = 4
         return view
         
     }()
@@ -123,14 +123,14 @@ final class SelectStudyTimeViewController: BaseViewController {
         
         dragIndicatorContainerView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(24)
+            make.top.equalToSuperview()
             make.height.equalTo(30)
             make.width.equalTo(72)
         }
         
         dragIndicatorView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().inset(24)
             make.height.equalTo(8)
         }
         
