@@ -145,9 +145,9 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let periodContainerView = UIView()
     private let periodLabel: UILabel = createEssentialLabel(text: "진행 기간 *")
-    private let periodStartButton = createConfigButton(title: "2024.01.08", image: UIImage(resource: .calendar), radius: 16)
+    private let periodStartButton = createConfigButton(title: "2024.01.08", image: UIImage(resource: .CreateStudyGroup.studyGroupCalendar), radius: 16)
     private let periodIngLabel = UILabel().setLabelProperty(text: "~", font: StumeetFont.bodyMedium15.font, color: .gray800)
-    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color), radius: 16)
+    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .CreateStudyGroup.studyGroupCalendar).withTintColor(StumeetColor.gray400.color), radius: 16)
     
     private let studyMeetingContainerView = UIView()
     private let studyMeetingLabel = createEssentialLabel(text: "스터디 정기 모임 *")
