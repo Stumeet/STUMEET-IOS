@@ -694,7 +694,7 @@ extension CreateStudyGroupViewController {
         var config = UIButton.Configuration.plain()
         
         config.image = image
-        config.imagePadding = 6
+        config.imagePadding = 8
         
         var titleAttributes = AttributedString(title)
         titleAttributes.font = StumeetFont.bodyMedium14.font
