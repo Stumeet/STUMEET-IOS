@@ -28,14 +28,22 @@ final class DefaultSelectFieldUseCase: SelectFieldUseCase {
     }
     
     func selectField(at indexPath: IndexPath) -> AnyPublisher<[Field], Never> {
-
+        
         return repository.getFields()
             .first()
             .map { fields in
+                
                 var updatedFields = fields
+                let selectedField = fields[indexPath.row]
+                
                 for index in updatedFields.indices {
-                    updatedFields[index].isSelected = updatedFields[index] == updatedFields[indexPath.row]
+                    if selectedField.isSelected {
+                        updatedFields[index].isSelected = false
+                    } else {
+                        updatedFields[index].isSelected = (index == indexPath.row)
+                    }
                 }
+                
                 self.repository.updateField(fields: updatedFields)
                 return updatedFields
             }
