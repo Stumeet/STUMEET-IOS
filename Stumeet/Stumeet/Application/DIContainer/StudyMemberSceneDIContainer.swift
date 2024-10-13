@@ -65,6 +65,13 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         )
     }
     
+    // MARK: - StudyMemberMeetingDetail
+    func makeStudyMemberMeetingDetailVC(coordinator: Navigation) -> StudyMemberMeetingDetailViewController {
+        StudyMemberMeetingDetailViewController(
+            coordinator: coordinator
+        )
+    }
+    
     // MARK: - Flow Coordinators
     func makeStudyMemberCoordinator(navigationController: UINavigationController, studyId: Int) -> StudyMemberCoordinator {
         StudyMemberCoordinator(

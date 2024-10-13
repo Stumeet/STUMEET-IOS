@@ -101,6 +101,14 @@ class StudyMemberAchievementViewController: BaseViewController {
     }
     
     override func bind() {
+        // TODO: - 임시 viewModel 생성 시 수정
+        activityTableView.didSelectRowPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] selectRow in
+                guard let self = self else { return }
+                coordinator.goToMemberMeetingDetailVC()
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
