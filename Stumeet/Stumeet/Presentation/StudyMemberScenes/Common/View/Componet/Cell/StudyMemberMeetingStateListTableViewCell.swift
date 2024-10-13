@@ -158,6 +158,7 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         configuration.attributedTitle = AttributedString(state.title, attributes: container)
         configuration.baseBackgroundColor = StumeetColor.gray75.color
         configuration.contentInsets = .init(top: 4, leading: 12, bottom: 4, trailing: 12)
+        configuration.titleLineBreakMode = .byTruncatingTail
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.configuration?.background.cornerRadius = button
