@@ -100,10 +100,16 @@ class StudyMainSideMenuViewController: BaseViewController {
     private let screenWidth = UIScreen.main.bounds.size.width
     private lazy var deviceWidthRatio = screenWidth * 0.7 // 디바이스 너비의 70%를 계산
     private var menuDataSource: UITableViewDiffableDataSource<StudyMainMenuSection, StudyMainMenu>?
+    private let studyId: Int
     
     // MARK: - Init
-    init(coordinator: MyStudyGroupListNavigation) {
+    // TODO: viewModel 추가 시 studyId 이동
+    init(
+        coordinator: MyStudyGroupListNavigation,
+        studyId: Int
+    ) {
         self.coordinator = coordinator
+        self.studyId = studyId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -209,11 +215,26 @@ class StudyMainSideMenuViewController: BaseViewController {
     
     override func bind() {
         menuTableView.didSelectRowPublisher
-            .filter { $0.item == 2 }
-            .map { [weak self] _ in
-                self?.dismissSideMenu()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] selectRow in
+                guard let self = self else { return }
+                var isDismissSideMenu = true
+                
+                switch selectRow.item {
+                case 0: print("공지")
+                case 1: print("일정")
+                case 2: coordinator.goToStudyActivityList()
+                case 3: 
+                    coordinator.startStudyMemberCoordinator(studyId: studyId)
+                    isDismissSideMenu = false
+                default:
+                    isDismissSideMenu = false
+                }
+                
+                if isDismissSideMenu {
+                    dismissSideMenu()
+                }
             }
-            .sink(receiveValue: coordinator.goToStudyActivityList)
             .store(in: &cancellables)
     }
     

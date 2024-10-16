@@ -47,6 +47,7 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         DefaultDetailActivityMemberListRepository(provider: dependencies.provider.makeProvider())
     }
     
+    
     // MARK: - UseCase
     
     func makeMyStudyGroupListUseCase() -> MyStudyGroupListUseCase {
@@ -76,6 +77,7 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         DefualtDetailActivityMemberListUseCase(repository: makeDetailActivityMemberRepository())
     }
     
+ 
     // MARK: - MyStudyGroupList
     
     func makeMyStudyGroupListViewModel() -> MyStudyGroupListViewModel {
@@ -171,6 +173,8 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         )
     }
     
+    
+    
     // MARK: - DetailActivityMemberList
     
     func makeDetailActivityMemberListViewModel(studyID: Int, activityID: Int) -> DetailActivityMemberListViewModel {
@@ -219,5 +223,13 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
             navigationController: navigationController,
             dependencies: makeCreateActivityDIContainer()
         )
+    }
+    
+    // MARK: - DIContainers of scenes
+    func makeStudyMemberSceneDIContainer() -> StudyMemberSceneDIContainer {
+        let dependencies = StudyMemberSceneDIContainer.Dependencies(
+            provider: dependencies.provider
+        )
+        return StudyMemberSceneDIContainer(dependencies: dependencies)
     }
 }

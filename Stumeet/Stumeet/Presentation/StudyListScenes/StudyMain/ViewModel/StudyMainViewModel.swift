@@ -24,7 +24,7 @@ final class StudyMainViewModel: ViewModelType {
         let studyGroupDetailInfoDataSource: AnyPublisher<StudyMainViewDetailInfoItem?, Never>
         let studyActivityDataSource: AnyPublisher<[StudyMainViewActivityItem], Never>
         let switchedViewToActivity: AnyPublisher<Bool, Never>
-        let presentToSideMenuVC: AnyPublisher<Void, Never>
+        let presentToSideMenuVC: AnyPublisher<Int, Never>
     }
     
     // MARK: - Properties
@@ -68,7 +68,9 @@ final class StudyMainViewModel: ViewModelType {
             .map(toggleActivityState)
             .eraseToAnyPublisher()
         
-        let presentToSideMenuVC = input.didTapMenuOpenButton.eraseToAnyPublisher()
+        let presentToSideMenuVC = input.didTapMenuOpenButton
+            .compactMap { [weak self] in self?.studyID }
+            .eraseToAnyPublisher()
         
         input.loadStudyGroupDetailData
             .compactMap { [weak self] in self?.studyID }

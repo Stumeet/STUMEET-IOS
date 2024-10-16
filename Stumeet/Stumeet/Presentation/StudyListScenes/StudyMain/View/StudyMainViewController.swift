@@ -206,9 +206,9 @@ class StudyMainViewController: BaseViewController {
             .store(in: &cancellables)
         
         output.presentToSideMenuVC
-            .map { self }
+            .map { (self, $0) }
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.presentToSideMenu(from:))
+            .sink(receiveValue: coordinator.presentToSideMenu(from:studyId:))
             .store(in: &cancellables)
     }
     
