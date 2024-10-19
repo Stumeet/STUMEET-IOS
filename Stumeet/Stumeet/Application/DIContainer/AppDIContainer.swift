@@ -37,6 +37,11 @@ final class AppDIContainer {
                                networkLoggerPlugin: NetworkLoggerPlugin()
         )
     }()
+    
+    // MARK: - FCMToken
+    lazy var fcmTokenManager: FCMTokenManager = {
+        FCMTokenManager(repository: DefaultFCMTokenRepository(provider: networkServiceProvider.makeProvider()))
+    }()
 
     // MARK: - DIContainers of scenes
     func makeAuthSceneDIContainer() -> AuthSceneDIContainer {

@@ -13,11 +13,16 @@ final class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
     private let appDIContainer: AppDIContainer
     
+    private var fcmTokenManager: FCMTokenManager {
+        return appDIContainer.fcmTokenManager
+    }
+    
     func start() {
         // !IMP: - 로그아웃 구현 시 삭제 (임시 로그아웃 처리 필요에 따라 주석 해제 후 사용)
 //        appDIContainer.keychainManager.removeAllTokens()
         removeKeychainAtFirstLaunch()
         setupLogoutNotification()
+        setupFCMTokenUpdateNotification()
         
         let isLoggedIn = appDIContainer.keychainManager.getToken() != nil
         
@@ -95,7 +100,18 @@ extension AppCoordinator {
         NotificationCenter.default.addObserver(self, selector: #selector(handleLogout), name: .userDidLogout, object: nil)
     }
     
+    private func setupFCMTokenUpdateNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFCMTokenUpdated), name: .fcmToken, object: nil)
+    }
+    
     @objc private func handleLogout() {
         presentLogoutAlert()
+    }
+    
+    @objc private func handleFCMTokenUpdated() {
+        guard let fcmToken = UserDefaults.standard.getFCMToken(),
+              let deviceID = UIDevice.current.identifierForVendor?.uuidString.components(separatedBy: ["-"]).joined()
+        else { return }
+        fcmTokenManager.updateFCMToken(fcmToken: fcmToken, deviceID: deviceID)
     }
 }
