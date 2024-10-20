@@ -48,7 +48,7 @@ final class DefaultNicknameUseCase: NicknameUseCase {
     }
     
     func checkIsValidNickname(nickname: String) -> AnyPublisher<Bool, Never> {
-        let pattern = "^[a-zA-Z가-힣]+$"
+        let pattern = "^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]+$"
         let result = NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: nickname)
         return Just(result).eraseToAnyPublisher()
     }

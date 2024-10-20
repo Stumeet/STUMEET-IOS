@@ -97,6 +97,9 @@ extension DefaultSelectFieldUseCase {
                 
                 newField.isSelected = true
                 updatedFields.insert(newField, at: 0)
+                if updatedFields.count > 14 {
+                    updatedFields.remove(at: 2)
+                }
                 self.repository.updateField(fields: updatedFields)
                 return updatedFields
             }
