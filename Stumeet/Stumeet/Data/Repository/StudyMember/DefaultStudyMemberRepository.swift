@@ -18,9 +18,20 @@ final class DefaultStudyMemberRepository: StudyMemberRepository {
     
     func fetchStudyMembers(studyID: Int) -> AnyPublisher<[StudyMember], MoyaError> {
         let requestDTO = StudyMemberRequestDTO(studyId: studyID)
+        
         return provider.requestPublisher(.fetchStudyMembers(requestDTO))
             .map(ResponseWithDataDTO<StudyMemberResponseDTO>.self)
             .compactMap { $0.data?.studyMembers.map { $0.toDomainForStudyMember() } }
+            .mapError { $0 as MoyaError }
+            .eraseToAnyPublisher()
+    }
+    
+    func checkIfAdmin(studyID: Int) -> AnyPublisher<Bool, MoyaError> {
+        let requestDTO = StudyMemberRequestDTO(studyId: studyID)
+        
+        return provider.requestPublisher(.adminCheck(requestDTO))
+            .map(ResponseWithDataDTO<StudyMemberAdminResponseDTO>.self)
+            .compactMap { $0.data?.isAdmin }
             .mapError { $0 as MoyaError }
             .eraseToAnyPublisher()
     }

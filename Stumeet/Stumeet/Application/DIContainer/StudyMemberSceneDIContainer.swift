@@ -31,10 +31,15 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         DefaultStudyMemberUseCase(repository: makeStudyMemberRepository())
     }
     
+    func makeCheckAdminUseCase() -> CheckAdminUseCase {
+        DefaultCheckAdminUseCase(repository: makeStudyMemberRepository())
+    }
+    
     // MARK: - StudyMember
     func makeStudyMemberViewModel(studyId: Int) -> StudyMemberViewModel {
         StudyMemberViewModel(
-            useCase: makeStudyMemberUseCase(),
+            studyMemberUseCase: makeStudyMemberUseCase(),
+            checkAdminUseCase: makeCheckAdminUseCase(),
             studyId: studyId
         )
     }

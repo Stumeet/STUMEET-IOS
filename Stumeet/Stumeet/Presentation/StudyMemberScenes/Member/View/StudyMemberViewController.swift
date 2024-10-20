@@ -111,7 +111,6 @@ class StudyMemberViewController: BaseViewController {
         
         navigationItem.leftBarButtonItem = xButton
         navigationItem.titleView = titleStackView
-        navigationItem.rightBarButtonItem = memberSettingsButton
     }
     
     override func setupConstaints() {
@@ -129,7 +128,7 @@ class StudyMemberViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMemberViewModel.Input(
-            loadStudyMemberData: loadStudyMemberDataSubject.eraseToAnyPublisher()
+            viewWillAppearTrigger: loadStudyMemberDataSubject.eraseToAnyPublisher()
         )
 
         // MARK: - Output
@@ -156,6 +155,14 @@ class StudyMemberViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] total in
                 self?.updateTitleCount(memberTotal: total)
+            }
+            .store(in: &cancellables)
+        
+        output.isAdminChecked
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isAdmin in
+                guard let self else { return }
+                navigationItem.rightBarButtonItem = isAdmin ? memberSettingsButton : nil
             }
             .store(in: &cancellables)
     }
