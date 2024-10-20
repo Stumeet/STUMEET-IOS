@@ -399,9 +399,15 @@ final class CreateActivityViewController: BaseViewController {
         
         // 다음 버튼 enable 설정
         output.isEnableNextButton
-            .zip(output.createActivityData)
+            .filter { !$0 }
+            .map { _ in "! 활동 작성이 완료되지 않았어요."}
             .receive(on: RunLoop.main)
-            .sink(receiveValue: checkNavigateToSettingVC)
+            .sink(receiveValue: showSnackBar)
+            .store(in: &cancellables)
+        
+        output.createActivityData
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: navigateToSettingVC)
             .store(in: &cancellables)
         
         // 카테고리 스택뷰 업데이트
@@ -545,16 +551,12 @@ extension CreateActivityViewController {
         categoryStackViewContainer.isHidden = isHidden
     }
     
-    private func checkNavigateToSettingVC(isEnable: Bool, activity: CreateActivity) {
-        if isEnable {
-            switch activity.category {
-            case .freedom:
-                coordinator.dismiss()
-            case .homework, .meeting:
-                coordinator.goToStudyActivitySettingVC(activity: activity)
-            }
-        } else {
-            showSnackBar(text: "! 활동 작성이 완료되지 않았어요.")
+    private func navigateToSettingVC(activity: CreateActivity) {
+        switch activity.category {
+        case .freedom:
+            coordinator.dismiss()
+        case .homework, .meeting:
+            coordinator.goToStudyActivitySettingVC(activity: activity)
         }
     }
     
