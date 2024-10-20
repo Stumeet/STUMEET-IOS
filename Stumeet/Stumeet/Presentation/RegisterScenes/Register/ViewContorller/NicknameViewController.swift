@@ -204,11 +204,30 @@ class NicknameViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        output.isValidNickname
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateCaptionLabel)
+            .store(in: &cancellables)
+        
         // 지역 선택VC로 push
         output.navigateToSelectRegionVC
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.goToSelectRegionVC)
 //            .sink(receiveValue: { [weak self] data in self?.coordinator.goToSelectRegionVC(register: data)})
             .store(in: &cancellables)
+    }
+}
+
+extension NicknameViewController {
+    private func updateCaptionLabel(isValid: Bool) {
+        if !isValid {
+            captionLabel.text = "영어 대/소문자, 한글 10글자 이내만 작성이 가능합니다."
+            captionLabel.textColor = StumeetColor.warning500.color
+            nextButton.isEnabled = false
+        } else {
+            captionLabel.text = ""
+            nextButton.isEnabled = true
+        }
     }
 }

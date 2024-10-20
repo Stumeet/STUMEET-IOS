@@ -24,6 +24,7 @@ final class NicknameViewModel: ViewModelType {
         let count: AnyPublisher<Int, Never>
         let isBiggerThanTen: AnyPublisher<Bool, Never>
         let isNextButtonEnable: AnyPublisher<Bool, Never>
+        let isValidNickname: AnyPublisher<Bool, Never>
         let navigateToSelectRegionVC: AnyPublisher<Register, Never>
     }
     
@@ -54,6 +55,10 @@ final class NicknameViewModel: ViewModelType {
             .flatMap(useCase.checkNicknameDuplicate)
             .eraseToAnyPublisher()
         
+        let isValidNickname = nicknameSubject
+            .flatMap(useCase.checkIsValidNickname)
+            .eraseToAnyPublisher()
+        
         let count = input.changeText
             .flatMap(useCase.setNicknameCount)
             .eraseToAnyPublisher()
@@ -81,6 +86,7 @@ final class NicknameViewModel: ViewModelType {
             count: count,
             isBiggerThanTen: isBiggerThanTen,
             isNextButtonEnable: isNextButtonEnable,
+            isValidNickname: isValidNickname,
             navigateToSelectRegionVC: navigateToSelectRegionVC
         )
     }
