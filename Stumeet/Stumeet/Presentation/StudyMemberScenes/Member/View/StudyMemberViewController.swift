@@ -128,21 +128,24 @@ class StudyMemberViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMemberViewModel.Input(
-            viewWillAppearTrigger: loadStudyMemberDataSubject.eraseToAnyPublisher()
+            viewWillAppearTrigger: loadStudyMemberDataSubject.eraseToAnyPublisher(),
+            didSelectMemberRow: memberTableView.didSelectRowPublisher
         )
 
         // MARK: - Output
         let output = viewModel.transform(input: input)
         
-        // TODO: - 임시 viewModel 생성 시 수정
-        memberTableView.didSelectRowPublisher
+        output.presentToMemberDetailVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] selectRow in
+            .sink { [weak self] selectRow, studyId in
                 guard let self = self else { return }
-                
-                coordinator.presentToMemberDetailVC()
+                coordinator.presentToMemberDetailVC(
+                    studyId: studyId,
+                    studyMemberId: selectRow.id
+                )
             }
             .store(in: &cancellables)
+        
         
         output.studyMemberDataSource
             .receive(on: RunLoop.main)
@@ -200,7 +203,6 @@ extension StudyMemberViewController:
     }
     
     // MARK: - DataSource
-    // TODO: - API 연동 시 수정
     private func configureDatasource() {
         studyMemberDataSource = UITableViewDiffableDataSource(
             tableView: memberTableView,
@@ -212,7 +214,7 @@ extension StudyMemberViewController:
             }
         )
     }
-    // TODO: - API 연동 시 수정
+    
     private func updateSnapshot(items: [StudyMember]) {
         var snapshot = NSDiffableDataSourceSnapshot<StudyMemberListSection, StudyMember>()
         snapshot.appendSections([.main])

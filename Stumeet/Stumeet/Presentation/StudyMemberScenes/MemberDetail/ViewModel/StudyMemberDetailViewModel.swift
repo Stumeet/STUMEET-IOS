@@ -18,11 +18,17 @@ final class StudyMemberDetailViewModel: ViewModelType {
     }
     
     // MARK: - Properties
+    private var studyId: Int
+    private var studyMemberId: Int
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     init(
+        studyId: Int,
+        studyMemberId: Int
     ) {
+        self.studyId = studyId
+        self.studyMemberId = studyMemberId
     }
     
     func transform(input: Input) -> Output {

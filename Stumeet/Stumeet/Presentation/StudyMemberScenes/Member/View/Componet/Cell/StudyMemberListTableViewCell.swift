@@ -107,7 +107,6 @@ class StudyMemberListTableViewCell: BaseTableViewCell {
     }
     
     // MARK: - Function
-    // TODO: - API 연동 시 수정
     func configureCell(_ item: StudyMember) {
         nameLabel.text = item.name
         regionAndFieldLabel.text = "\(item.region) · \(item.profession)"

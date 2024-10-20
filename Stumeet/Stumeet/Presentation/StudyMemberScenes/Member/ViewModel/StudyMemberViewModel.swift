@@ -12,6 +12,7 @@ final class StudyMemberViewModel: ViewModelType {
     // MARK: - Input
     struct Input {
         let viewWillAppearTrigger: AnyPublisher<Void, Never>
+        let didSelectMemberRow: AnyPublisher<IndexPath, Never>
     }
 
     // MARK: - Output
@@ -19,6 +20,7 @@ final class StudyMemberViewModel: ViewModelType {
         let studyMemberDataSource: AnyPublisher<[StudyMember], Never>
         let studyMemberCount: AnyPublisher<Int, Never>
         let isAdminChecked: AnyPublisher<Bool, Never>
+        let presentToMemberDetailVC: AnyPublisher<(StudyMember, Int), Never>
     }
     
     // MARK: - Properties
@@ -42,11 +44,21 @@ final class StudyMemberViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         let studyMemberDataSource = studyMemberItemsSubject.eraseToAnyPublisher()
+        
         let studyMemberCount = studyMemberItemsSubject
             .map { $0.count }
             .eraseToAnyPublisher()
         
         let isAdminChecked = isAdminSubject.eraseToAnyPublisher()
+        
+        let presentToMemberDetailVC = input.didSelectMemberRow
+            .compactMap { [weak self] index -> (StudyMember, Int)? in
+                guard let self = self,
+                      let rowItem = studyMemberItemsSubject.value[safe: index.row]
+                else { return nil }
+                return (rowItem, studyId)
+            }
+            .eraseToAnyPublisher()
         
         input.viewWillAppearTrigger
             .flatMap { [weak self] in
@@ -70,11 +82,12 @@ final class StudyMemberViewModel: ViewModelType {
                 isAdminSubject.send(isAdmin)
             }
             .store(in: &cancellables)
-        
+
         return Output(
             studyMemberDataSource: studyMemberDataSource,
             studyMemberCount: studyMemberCount,
-            isAdminChecked: isAdminChecked
+            isAdminChecked: isAdminChecked,
+            presentToMemberDetailVC: presentToMemberDetailVC
         )
     }
     
@@ -82,5 +95,4 @@ final class StudyMemberViewModel: ViewModelType {
     private func getMembers() -> AnyPublisher<[StudyMember], Never> {
         studyMemberUseCase.getMembers(studyID: studyId)
     }
-
 }
