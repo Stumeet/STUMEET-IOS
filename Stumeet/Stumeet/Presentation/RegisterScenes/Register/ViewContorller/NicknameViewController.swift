@@ -224,10 +224,10 @@ extension NicknameViewController {
         if !isValid {
             captionLabel.text = "영어 대/소문자, 한글 10글자 이내만 작성이 가능합니다."
             captionLabel.textColor = StumeetColor.warning500.color
-            nextButton.isEnabled = false
         } else {
             captionLabel.text = ""
-            nextButton.isEnabled = true
         }
+        nextButton.isEnabled = isValid
+        nextButton.backgroundColor = isValid ? StumeetColor.primaryInfo.color : StumeetColor.gray200.color
     }
 }

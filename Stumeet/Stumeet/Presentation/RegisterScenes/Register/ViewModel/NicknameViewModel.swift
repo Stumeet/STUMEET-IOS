@@ -51,7 +51,8 @@ final class NicknameViewModel: ViewModelType {
             .sink(receiveValue: nicknameSubject.send)
             .store(in: &cancellables)
         
-        let isDuplicate = input.changeText
+        let isDuplicate = input.didTapNextButton
+            .map { self.nicknameSubject.value }
             .flatMap(useCase.checkNicknameDuplicate)
             .eraseToAnyPublisher()
         
@@ -67,7 +68,9 @@ final class NicknameViewModel: ViewModelType {
             .flatMap(useCase.checkNicknameLonggestThanTen)
             .eraseToAnyPublisher()
         
-        let navigateToSelectRegionVC = input.didTapNextButton
+        
+        let navigateToSelectRegionVC = isDuplicate
+            .filter { !$0 }
             .flatMap { [weak self] _ in
                 let nickname = self?.nicknameSubject.value
                 self?.register.nickname = nickname
