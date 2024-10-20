@@ -70,7 +70,7 @@ final class CreateActivityViewModel: ViewModelType {
         let titleSubject = CurrentValueSubject<String, Never>("")
         let isNoticeSubject = CurrentValueSubject<Bool, Never>(false)
         let selectedCategorySubject = CurrentValueSubject<ActivityCategory, Never>(initialCategory)
-        let linkSubject = CurrentValueSubject<String?, Never>(nil)
+        let linkSubject = CurrentValueSubject<String, Never>("")
         let photoSubject = CurrentValueSubject<[UIImage], Never>([])
         let exitPopUpSubject = PassthroughSubject<PopUp?, Never>()
         
@@ -120,6 +120,7 @@ final class CreateActivityViewModel: ViewModelType {
             .store(in: &cancellables)
         
         input.didChangedLink
+            .compactMap { $0 }
             .sink(receiveValue: linkSubject.send)
             .store(in: &cancellables)
         
