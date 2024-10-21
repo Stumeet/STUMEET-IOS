@@ -35,6 +35,12 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         DefaultMonthlyDaysRepository()
     }
     
+    func makeCreateStudyGroupRepository() -> CreateStudyGroupRepository {
+        DefaultCreateStudyGroupRepository(
+            provider: dependencies.provider.makeProvider()
+        )
+    }
+    
     // MARK: - UseCase
     
     func makeSelectStudyGroupItemUseCase() -> SelectStudyGroupItemUseCase {
@@ -42,7 +48,7 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     }
     
     func makeCreateStudyGroupUseCase() -> CreateStudyGroupUseCase {
-        DefaultCreateStudyGroupUseCase()
+        DefaultCreateStudyGroupUseCase(repository: makeCreateStudyGroupRepository())
     }
     
     func makeSetStudyGroupPeriodUseCase() -> SetStudyGroupPeriodUseCase {

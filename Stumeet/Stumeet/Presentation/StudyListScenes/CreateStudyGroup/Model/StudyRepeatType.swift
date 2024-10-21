@@ -44,4 +44,15 @@ extension StudyRepeatType {
             return days
         }
     }
+    
+    var request: String {
+        switch self {
+        case .dailiy:
+            return "DAILY"
+        case .weekly:
+            return "WEEKLY"
+        case .monthly:
+            return "MONTHLY"
+        }
+    }
 }

@@ -18,9 +18,16 @@ protocol CreateStudyGroupUseCase {
     func setTextFieldCount(text: String, maxCount: Int) -> AnyPublisher<Int, Never>
     func checkTextFieldLonggestThanMax(nickname: String, maxCount: Int) -> AnyPublisher<Bool, Never>
     func setTextViewText(placeholder: String) -> AnyPublisher<String?, Never>
+    func getIsShowSnackBar(data: CreateStudyGroup) -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
+    
+    private let repository: CreateStudyGroupRepository
+    
+    init(repository: CreateStudyGroupRepository) {
+        self.repository = repository
+    }
     
     func getIsEnableTagAddButton(text: String) -> AnyPublisher<Bool, Never> {
         return Just(!text.isEmpty).eraseToAnyPublisher()
@@ -74,5 +81,13 @@ final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
         }
         
         return Just(result).eraseToAnyPublisher()
+    }
+    
+    func getIsShowSnackBar(data: CreateStudyGroup) -> AnyPublisher<Bool, Never> {
+        if data.name.isEmpty || data.field.isEmpty || data.tags.isEmpty || data.region.isEmpty || data.startDate.isEmpty || data.endDate.isEmpty || data.repetType == nil || data.time == nil {
+            return Just(true).eraseToAnyPublisher()
+        } else {
+            return repository.postCreateStudyGroup(data: data)
+        }
     }
 }
