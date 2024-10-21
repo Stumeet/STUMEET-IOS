@@ -77,7 +77,7 @@ class StudyMemberViewController: BaseViewController {
     private weak var coordinator: StudyMemberNavigation!
     private let viewModel: StudyMemberViewModel
     private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, StudyMember>?
-    private let loadStudyMemberDataSubject = PassthroughSubject<Void, Never>()
+    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -128,7 +128,7 @@ class StudyMemberViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMemberViewModel.Input(
-            viewWillAppearTrigger: loadStudyMemberDataSubject.eraseToAnyPublisher(),
+            viewWillAppearTrigger: viewWillAppearSubject.eraseToAnyPublisher(),
             didSelectMemberRow: memberTableView.didSelectRowPublisher
         )
 
@@ -178,7 +178,7 @@ class StudyMemberViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadStudyMemberDataSubject.send()
+        viewWillAppearSubject.send()
     }
     
     // MARK: - Function

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Combine
+import Kingfisher
 
 protocol StudyMemberDetailInfoHeaderViewDelegate: AnyObject {
     func didTapComplimentButton()
@@ -26,7 +27,6 @@ class StudyMemberDetailInfoHeaderView: UIView {
     
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .StudyGroupMain.testHeaderImg)
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = profileImageSize / 2
         imageView.clipsToBounds = true
@@ -59,7 +59,6 @@ class StudyMemberDetailInfoHeaderView: UIView {
         label.font = StumeetFont.subTitleSemiBold.font
         label.textColor = StumeetColor.gray800.color
         label.numberOfLines = 1
-        label.text = "홍길동"
         return label
     }()
     
@@ -68,7 +67,6 @@ class StudyMemberDetailInfoHeaderView: UIView {
         label.font = StumeetFont.bodyMedium15.font
         label.textColor = StumeetColor.gray400.color
         label.numberOfLines = 1
-        label.text = "서울 · IT"
         return label
     }()
     
@@ -77,12 +75,12 @@ class StudyMemberDetailInfoHeaderView: UIView {
         var container = AttributeContainer()
         
         container.font = StumeetFont.bodysemibold.font
-        container.foregroundColor = StumeetColor.primary700.color
-        configuration.image = UIImage(resource: .StudyMember.iconCompliment)
+        container.foregroundColor = StumeetColor.gray400.color
+        configuration.image = UIImage(resource: .StudyMember.iconComplimentEnabled)
         configuration.imagePadding = 8
         configuration.background.cornerRadius = 24
-        configuration.attributedTitle = AttributedString("스터디원 칭찬하기", attributes: container)
-        configuration.baseBackgroundColor = StumeetColor.primary50.color
+        configuration.attributedTitle = AttributedString("이번주는 이미 칭찬을 했어요.", attributes: container)
+        configuration.baseBackgroundColor = StumeetColor.gray75.color
         configuration.contentInsets = .init(top: 8, leading: 15, bottom: 8, trailing: 15)
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
@@ -135,7 +133,7 @@ class StudyMemberDetailInfoHeaderView: UIView {
         progressView.clipsToBounds = true
         progressView.layer.sublayers![1].cornerRadius = progressViewheightSize / 2
         progressView.subviews[1].clipsToBounds = true
-        progressView.progress = 0.4
+        progressView.progress = 0
         return progressView
     }()
     
@@ -144,7 +142,7 @@ class StudyMemberDetailInfoHeaderView: UIView {
         label.font = StumeetFont.bodysemibold.font
         label.textColor = StumeetColor.primary700.color
         label.numberOfLines = 1
-        label.text = "50%"
+        label.text = "0%"
         return label
     }()
     
@@ -238,5 +236,28 @@ class StudyMemberDetailInfoHeaderView: UIView {
             $0.trailing.equalToSuperview()
             $0.verticalEdges.equalToSuperview()
         }
+    }
+    
+    func configure(with memberItem: StudyMemberDetailInfoHeaderItem) {
+        nameLabel.text = memberItem.displayName
+        regionAndFieldLabel.text = memberItem.displayRegionAndField
+        
+        let url = URL(string: memberItem.imagePath)
+        profileImageView.kf.setImage(with: url)
+        
+        var container = AttributeContainer()
+        container.foregroundColor = memberItem.isPraiseAvailable ? StumeetColor.primary700.color : StumeetColor.gray400.color
+        complimentButton.configuration?.image = UIImage(
+            resource: memberItem.isPraiseAvailable ? .StudyMember.iconComplimentActive : .StudyMember.iconComplimentEnabled
+        )
+        
+        complimentButton.configuration?.attributedTitle = AttributedString(
+            memberItem.isPraiseAvailable ? "스터디원 칭찬하기" : "이번주는 이미 칭찬을 했어요.", attributes: container
+        )
+        
+        complimentButton.configuration?.baseBackgroundColor = memberItem.isPraiseAvailable ? StumeetColor.primary50.color : StumeetColor.gray75.color
+        
+        achievementProgressLabel.text = "\(memberItem.achievementProgress)%"
+        achievementProgressView.progress = Float(memberItem.achievementProgress) / 100
     }
 }

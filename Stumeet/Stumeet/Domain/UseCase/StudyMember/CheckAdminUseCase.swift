@@ -11,7 +11,7 @@ protocol CheckAdminUseCase {
     func execute(studyID: Int) -> AnyPublisher<Bool, Never>
 }
 
-class DefaultCheckAdminUseCase: CheckAdminUseCase {
+final class DefaultCheckAdminUseCase: CheckAdminUseCase {
     private let repository: StudyMemberRepository
 
     init(repository: StudyMemberRepository) {

@@ -14,4 +14,17 @@ struct StudyMember: Hashable {
     let region: String
     let profession: String
     let isAdmin: Bool
+    let achievement: Int?
+    let canSendGrape: Bool?
+    
+    internal init(id: Int, name: String, image: String, region: String, profession: String, isAdmin: Bool, achievement: Int? = nil, canSendGrape: Bool? = nil) {
+        self.id = id
+        self.name = name
+        self.image = image
+        self.region = region
+        self.profession = profession
+        self.isAdmin = isAdmin
+        self.achievement = achievement
+        self.canSendGrape = canSendGrape
+    }
 }

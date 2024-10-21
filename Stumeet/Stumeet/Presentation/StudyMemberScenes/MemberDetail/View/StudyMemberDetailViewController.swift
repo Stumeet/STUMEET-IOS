@@ -94,6 +94,7 @@ class StudyMemberDetailViewController: BaseViewController {
     private var viewModel: StudyMemberDetailViewModel
     private var activityDataSource: UITableViewDiffableDataSource<StudyMemberActivityListSection, StudyMemberActivityListItem>?
     private lazy var contextMenuSize = contextMenu.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -148,7 +149,6 @@ class StudyMemberDetailViewController: BaseViewController {
         
         navigationBarItems.leftBarButtonItem = xButton
         navigationBarItems.titleView = titleStackView
-        navigationBarItems.rightBarButtonItem = moreButton
         
         navigationBar.setItems([navigationBarItems], animated: true)
         
@@ -194,8 +194,32 @@ class StudyMemberDetailViewController: BaseViewController {
     
     override func bind() {
         // MARK: - Input
-        
+        let input = StudyMemberDetailViewModel.Input(
+            viewWillAppearTrigger: viewWillAppearSubject.eraseToAnyPublisher()
+        )
+
         // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.studyMemberHeaderItem
+            .receive(on: RunLoop.main)
+            .sink { [weak self] headerItem in
+                guard let self else { return }
+                headerView.configure(with: headerItem)
+            }
+            .store(in: &cancellables)
+        
+        output.showMoreButtonState
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isShowMorebutton in
+                guard let self else { return }
+                if isShowMorebutton {
+                    navigationBarItems.rightBarButtonItem =  moreButton
+                } else {
+                    navigationBarItems.rightBarButtonItem =  nil
+                }
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -276,6 +300,11 @@ class StudyMemberDetailViewController: BaseViewController {
                     screenType: .detail
                 )]
         )
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewWillAppearSubject.send()
     }
 
     // MARK: - Function

@@ -35,4 +35,14 @@ final class DefaultStudyMemberRepository: StudyMemberRepository {
             .mapError { $0 as MoyaError }
             .eraseToAnyPublisher()
     }
+    
+    func fetchStudyMemberDetailInfo(studyID: Int, memberID: Int) -> AnyPublisher<StudyMember, MoyaError> {
+        let requestDTO = StudyMemberDetailRequestDTO(studyId: studyID, memberId: memberID)
+        
+        return provider.requestPublisher(.fetchStudyMemberDetailInfo(requestDTO))
+            .map(ResponseWithDataDTO<StudyMemberDetailResponseDTO>.self)
+            .compactMap { $0.data?.toDomain() }
+            .mapError { $0 as MoyaError }
+            .eraseToAnyPublisher()
+    }
 }
