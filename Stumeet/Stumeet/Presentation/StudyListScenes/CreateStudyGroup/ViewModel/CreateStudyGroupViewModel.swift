@@ -28,6 +28,11 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let didSelectedTime: AnyPublisher<String, Never>
         let didTapAddImageButton: AnyPublisher<Void, Never>
         let didSelectPhoto: AnyPublisher<URL, Never>
+        let didChangeStudyNameTextField: AnyPublisher<String?, Never>
+        let didChangeStudyExplainTextView: AnyPublisher<String?, Never>
+        let didBeginExplainEditting: AnyPublisher<Void, Never>
+        let didChangeStudyRuleTextView: AnyPublisher<String?, Never>
+        let didBeginStudyRuleEditting: AnyPublisher<Void, Never>
         let didTapRepeatButton: AnyPublisher<Void, Never>
         let didSelectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
@@ -48,6 +53,14 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let timeAttributedString: AnyPublisher<AttributedString, Never>
         let showPHPickerVC: AnyPublisher<Void, Never>
         let selectedImage: AnyPublisher<UIImage?, Never>
+        let isBiggerThanTwenty: AnyPublisher<Bool, Never>
+        let isBiggerThanHundredExplain: AnyPublisher<Bool, Never>
+        let titleCount: AnyPublisher<Int, Never>
+        let explainCount: AnyPublisher<Int, Never>
+        let explainBeginText: AnyPublisher<String, Never>
+        let isBiggerThanHundredRule: AnyPublisher<Bool, Never>
+        let ruleCount: AnyPublisher<Int, Never>
+        let ruleBeginText: AnyPublisher<String, Never>
         let goToSelectStudyRepeatVC: AnyPublisher<Void, Never>
         let selectedRepeatDays: AnyPublisher<StudyRepeatType, Never>
     }
@@ -114,7 +127,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         )
             .map { (isStart: $0, startDate: periodDateSubject.value.startDate, endDate: periodDateSubject.value.endDate) }
             .eraseToAnyPublisher()
-
+        
         input.didSelecetedPeriod
             .sink(receiveValue: periodDateSubject.send)
             .store(in: &cancellables)
@@ -131,6 +144,54 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .flatMap(useCase.downSampleImageData)
             .eraseToAnyPublisher()
         
+        let isBiggerThanTwenty = input.didChangeStudyNameTextField
+            .compactMap { $0 }
+            .map { ($0, 20) }
+            .flatMap(useCase.checkTextFieldLonggestThanMax)
+            .eraseToAnyPublisher()
+        
+        let titleCount = input.didChangeStudyNameTextField
+            .compactMap { $0 }
+            .map { ($0, 20) }
+            .flatMap(useCase.setTextFieldCount)
+            .eraseToAnyPublisher()
+        
+        let isBiggerThanHundredExplain = input.didChangeStudyExplainTextView
+            .compactMap { $0 }
+            .map { ($0, 100) }
+            .flatMap(useCase.checkTextFieldLonggestThanMax)
+            .eraseToAnyPublisher()
+        
+        let explainCount = input.didChangeStudyExplainTextView
+            .compactMap { $0 }
+            .map { ($0, 100) }
+            .flatMap(useCase.setTextFieldCount)
+            .eraseToAnyPublisher()
+        
+        let explainBeginText = input.didBeginExplainEditting
+            .map { "스터디를 소개해주세요." }
+            .flatMap(useCase.setTextViewText)
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+        
+        let isBiggerThanHundredRule = input.didChangeStudyRuleTextView
+            .compactMap { $0 }
+            .map { ($0, 100) }
+            .flatMap(useCase.checkTextFieldLonggestThanMax)
+            .eraseToAnyPublisher()
+        
+        let ruleCount = input.didChangeStudyRuleTextView
+            .compactMap { $0 }
+            .map { ($0, 100) }
+            .flatMap(useCase.setTextFieldCount)
+            .eraseToAnyPublisher()
+        
+        let ruleBeginText = input.didBeginStudyRuleEditting
+            .map { "스터디를 소개해주세요." }
+            .flatMap(useCase.setTextViewText)
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+        
         return Output(
             goToSelectStudyGroupFieldVC: goToSelectStudyGroupFieldVC,
             selectedField: input.didSelectedField,
@@ -144,7 +205,15 @@ final class CreateStudyGroupViewModel: ViewModelType {
             goToSelectStudyTimeVC: input.didTapTimeButton,
             timeAttributedString: timeAttributedString,
             showPHPickerVC: input.didTapAddImageButton,
-            selectedImage: selectedImage
+            selectedImage: selectedImage,
+            isBiggerThanTwenty: isBiggerThanTwenty,
+            isBiggerThanHundredExplain: isBiggerThanHundredExplain,
+            titleCount: titleCount,
+            explainCount: explainCount,
+            explainBeginText: explainBeginText,
+            isBiggerThanHundredRule: isBiggerThanHundredRule,
+            ruleCount: ruleCount,
+            ruleBeginText: ruleBeginText
             goToSelectStudyRepeatVC: input.didTapRepeatButton,
             selectedRepeatDays: input.didSelectedRepeatDays.eraseToAnyPublisher()
         )

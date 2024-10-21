@@ -45,6 +45,8 @@ final class CreateStudyGroupViewController: BaseViewController {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemOrange
         imageView.layer.cornerRadius = 16
+        imageView.clipsToBounds = true
+        
         return imageView
     }()
     private let randomColorButton: UIButton = {
@@ -66,13 +68,19 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let studyNameContainerView = UIView()
     private let studyNameLabel = createEssentialLabel(text: "스터디 이름 *")
+    private let studyNameTextFieldBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.primary50.color
+        view.layer.cornerRadius = 16
+        
+        return view
+    }()
     private let studyNameTextField: UITextField = {
         let textField = UITextField()
         textField.addLeftPadding(24)
         textField.placeholder = "스터디 이름을 입력해주세요."
         textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
-        textField.layer.cornerRadius = 16
-        textField.backgroundColor = StumeetColor.primary50.color
+        
         return textField
     }()
     private let studyNameLengthLabel = UILabel().setLabelProperty(text: "0/20", font: StumeetFont.bodyMedium14.font, color: .gray400)
@@ -208,6 +216,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         
         [
             studyNameLabel,
+            studyNameTextFieldBackgroundView,
             studyNameTextField,
             studyNameLengthLabel
         ]   .forEach(studyNameContainerView.addSubview)
@@ -282,7 +291,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func setupConstaints() {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
 
@@ -310,10 +319,17 @@ final class CreateStudyGroupViewController: BaseViewController {
         
         studyNameLabel.snp.makeConstraints { $0.top.leading.equalToSuperview() }
 
-        studyNameTextField.snp.makeConstraints { make in
+        studyNameTextFieldBackgroundView.snp.makeConstraints { make in
+            make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(49)
+        }
+        
+        studyNameTextField.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
             make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.height.equalTo(49)
+            make.trailing.equalToSuperview().inset(76)
             make.bottom.equalToSuperview()
         }
 
@@ -463,7 +479,12 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapTimeButton: timeButton.tapPublisher,
             didSelectedTime: timeSubject.eraseToAnyPublisher(),
             didTapAddImageButton: addImageButton.tapPublisher,
-            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher()
+            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher(),
+            didChangeStudyNameTextField: studyNameTextField.textPublisher,
+            didChangeStudyExplainTextView: explainTextView.textPublisher,
+            didBeginExplainEditting: explainTextView.didBeginEditingPublisher,
+            didChangeStudyRuleTextView: studyRuleTextView.textPublisher,
+            didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher
             didTapRepeatButton: repeatButton.tapPublisher,
             didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher()
         )
@@ -549,6 +570,55 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateRepeatButton)
             .store(in: &cancellables)
+        
+        output.isBiggerThanTwenty
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyNameTextField.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: studyNameTextField)
+            .store(in: &cancellables)
+        
+        output.titleCount
+            .map { "\($0)/20" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyNameLengthLabel)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanHundredExplain
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.explainTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.explainCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainLengthLabel)
+            .store(in: &cancellables)
+        
+        output.explainBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanHundredRule
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyRuleTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.ruleCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleLengthLabel)
+            .store(in: &cancellables)
+        
+        output.ruleBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleTextView)
+            .store(in: &cancellables)
     }
 }
 
@@ -587,9 +657,8 @@ extension CreateStudyGroupViewController {
         textView.text = placeholder
         textView.textColor = StumeetColor.gray300.color
         textView.font = StumeetFont.bodyMedium14.font
-        textView.isScrollEnabled = false
         textView.backgroundColor = StumeetColor.primary50.color
-        textView.textContainerInset = UIEdgeInsets(top: 16, left: 24, bottom: 16, right: 24)
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 24)
         textView.layer.cornerRadius = 16
             
         return textView
@@ -671,8 +740,6 @@ extension CreateStudyGroupViewController {
             button.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
         }
     }
-    
-    
     
     private func updateTimeButton(time: AttributedString) {
         timeButton.layer.borderColor = StumeetColor.primary700.color.cgColor

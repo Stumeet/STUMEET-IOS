@@ -15,6 +15,9 @@ protocol CreateStudyGroupUseCase {
     func removeTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
     func getCurrentDate() -> Date
     func downSampleImageData(url: URL) -> AnyPublisher<UIImage?, Never>
+    func setTextFieldCount(text: String, maxCount: Int) -> AnyPublisher<Int, Never>
+    func checkTextFieldLonggestThanMax(nickname: String, maxCount: Int) -> AnyPublisher<Bool, Never>
+    func setTextViewText(placeholder: String) -> AnyPublisher<String?, Never>
 }
 
 final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
@@ -53,4 +56,23 @@ final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
         return Just(downsampledImageData).eraseToAnyPublisher()
     }
 
+    func checkTextFieldLonggestThanMax(nickname: String, maxCount: Int) -> AnyPublisher<Bool, Never> {
+        return Just(nickname.count > maxCount).eraseToAnyPublisher()
+    }
+    
+    func setTextFieldCount(text: String, maxCount: Int) -> AnyPublisher<Int, Never> {
+        if text == "스터디를 소개해주세요." {
+            return Just(0).eraseToAnyPublisher()
+        }
+        return Just(text.count > maxCount ? maxCount : text.count ).eraseToAnyPublisher()
+    }
+    
+    func setTextViewText(placeholder: String) -> AnyPublisher<String?, Never> {
+        var result: String? = ""
+        if placeholder != "스터디를 소개해주세요." {
+            result = nil
+        }
+        
+        return Just(result).eraseToAnyPublisher()
+    }
 }
