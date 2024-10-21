@@ -31,6 +31,8 @@ class StartViewController: BaseViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "changeProfileCharacter")
+        imageView.layer.cornerRadius = 150
+        imageView.layer.masksToBounds = true
         
         return imageView
     }()
@@ -116,6 +118,12 @@ class StartViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .map { _ in}
             .sink(receiveValue: coordinator.goToHomeVC)
+            .store(in: &cancellables)
+        
+        output.profileImageData
+            .map { UIImage(data: $0) }
+            .receive(on: RunLoop.main)
+            .assign(to: \.image, on: imageView)
             .store(in: &cancellables)
     }
     

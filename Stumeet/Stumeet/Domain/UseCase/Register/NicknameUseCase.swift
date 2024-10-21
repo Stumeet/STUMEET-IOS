@@ -13,6 +13,7 @@ protocol NicknameUseCase {
     func checkNicknameLonggestThanTen(nickname: String) -> AnyPublisher<Bool, Never>
     func setNicknameCount(nickname: String) -> AnyPublisher<Int, Never>
     func setNextButtonEnable(isDuplicate: Bool, count: Int) -> AnyPublisher<Bool, Never>
+    func checkIsValidNickname(nickname: String) -> AnyPublisher<Bool, Never>
 }
 
 final class DefaultNicknameUseCase: NicknameUseCase {
@@ -46,4 +47,9 @@ final class DefaultNicknameUseCase: NicknameUseCase {
         return Just(nickname.count).eraseToAnyPublisher()
     }
     
+    func checkIsValidNickname(nickname: String) -> AnyPublisher<Bool, Never> {
+        let pattern = "^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]+$"
+        let result = NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: nickname)
+        return Just(result).eraseToAnyPublisher()
+    }
 }

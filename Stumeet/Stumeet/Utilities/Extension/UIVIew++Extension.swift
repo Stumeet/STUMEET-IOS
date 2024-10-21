@@ -44,5 +44,22 @@ extension UIView {
     func setRoundCorner() {
         self.layer.cornerRadius = self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height / 2
     }
+    
+    
+    /// 현재 뷰 계층에서 첫 번째 응답자(First Responder)를 찾는 함수입니다.
+    /// 현재 뷰가 첫 번째 응답자이면 반환하고, 없으면 하위 뷰들을 재귀적으로 탐색합니다.
+    ///
+    /// - Returns: 첫 번째 응답자를 찾으면 해당 객체를 반환하고, 없으면 nil을 반환합니다.
+    func findFirstResponder() -> UIResponder? {
+        if self.isFirstResponder {
+            return self
+        }
+        for subview in subviews {
+            if let responder = subview.findFirstResponder() {
+                return responder
+            }
+        }
+        return nil
+    }
 
 }

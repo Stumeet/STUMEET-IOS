@@ -10,7 +10,7 @@ import PhotosUI
 
 protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
-    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController
+    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType, selectedItem: String) -> SelectStudyGroupItemViewController
     func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, dates: (isStart: Bool, startDate: Date, endDate: Date?)) -> SetStudyGroupPeriodViewController
     func makeSelectStudyTimeVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyTimeViewController
     func makeSelectStudyRepeatVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyRepeatViewController
@@ -18,7 +18,7 @@ protocol CreateStudyGroupCoordinatorDependencies {
 
 protocol CreateStudyGroupNavigation: AnyObject {
     func presentToCreateStudyGroupVC()
-    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType)
+    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType, selectedItem: String)
     func popToCreateStudyGroupVC()
     func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?))
     func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate)
@@ -55,8 +55,8 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         parentCoordinator?.navigationController.present(navigationController, animated: true)
     }
     
-    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType) {
-        let fieldVC = dependencies.makeSelectStudyGroupItemVC(coordinator: self, type: type)
+    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType, selectedItem: String) {
+        let fieldVC = dependencies.makeSelectStudyGroupItemVC(coordinator: self, type: type, selectedItem: selectedItem)
         fieldVC.delegate = delegate
         navigationController.pushViewController(fieldVC, animated: true)
     }

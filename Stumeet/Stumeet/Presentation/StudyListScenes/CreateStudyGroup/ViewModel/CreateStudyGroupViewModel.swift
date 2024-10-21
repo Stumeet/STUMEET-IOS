@@ -43,12 +43,12 @@ final class CreateStudyGroupViewModel: ViewModelType {
     // MARK: - Output
     
     struct Output {
-        let goToSelectStudyGroupFieldVC: AnyPublisher<CreateStudySelectItemType, Never>
+        let goToSelectStudyGroupFieldVC: AnyPublisher<(CreateStudySelectItemType, String), Never>
         let selectedField: AnyPublisher<SelectStudyItem, Never>
         let isEnableTagAddButton: AnyPublisher<Bool, Never>
         let addedTags: AnyPublisher<[CreateStudyTagSectionItem], Never>
         let isEmptyTags: AnyPublisher<Bool, Never>
-        let goToSelectStudyGroupRegionVC: AnyPublisher<CreateStudySelectItemType, Never>
+        let goToSelectStudyGroupRegionVC: AnyPublisher<(CreateStudySelectItemType, String), Never>
         let selectedRegion: AnyPublisher<SelectStudyItem, Never>
         let goToSetStudyGroupPeriodVC: AnyPublisher<(isStart: Bool, startDate: Date, endDate: Date?), Never>
         let periodAttributedStrings: AnyPublisher<(start: AttributedString, end: AttributedString?), Never>
@@ -69,6 +69,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let snackBarText: AnyPublisher<String, Never>
         let imageViewBackgroundColor: AnyPublisher<UIColor?, Never>
         let randomButtonColor: AnyPublisher<UIColor?, Never>
+        let tagText: AnyPublisher<String?, Never>
         let dismiss: AnyPublisher<Void, Never>
     }
     
@@ -93,7 +94,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
         let regionSubject = CurrentValueSubject<String, Never>("")
         let timeSubject = CurrentValueSubject<String?, Never>(nil)
         let ruleSubject = CurrentValueSubject<String, Never>("")
-        let tagTextSubject = CurrentValueSubject<String, Never>("")
+        let tagTextSubject = CurrentValueSubject<String?, Never>("")
         let addedTagsSubject = CurrentValueSubject<[String], Never>([])
         let periodDateSubject = CurrentValueSubject<(startDate: Date, endDate: Date?), Never>((useCase.getCurrentDate(), nil))
         let repeatTypeSubject = CurrentValueSubject<StudyRepeatType?, Never>(nil)
@@ -115,7 +116,8 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .store(in: &cancellables)
         
         input.didTapAddTagButton
-            .map { (addedTagsSubject.value, tagTextSubject.value) }
+            .map { (addedTagsSubject.value, tagTextSubject.value!) }
+            .handleEvents(receiveOutput: { _ in tagTextSubject.send("") })
             .flatMap(useCase.addTag)
             .sink(receiveValue: addedTagsSubject.send)
             .store(in: &cancellables)
@@ -135,11 +137,11 @@ final class CreateStudyGroupViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         let goToSelectStudyGroupFieldVC = input.didTapFieldButton
-            .map { CreateStudySelectItemType.field }
+            .map { (CreateStudySelectItemType.field, fieldSubject.value) }
             .eraseToAnyPublisher()
         
         let goToSelectStudyGroupRegionVC = input.didTapRegionButton
-            .map { CreateStudySelectItemType.region }
+            .map { (CreateStudySelectItemType.region, regionSubject.value) }
             .eraseToAnyPublisher()
         
         input.didSelectedRegion
@@ -257,14 +259,14 @@ final class CreateStudyGroupViewModel: ViewModelType {
                 name: studyNameSubject.value,
                 field: fieldSubject.value,
                 tags: addedTagsSubject.value,
-                explain: explainSubject.value,
+                explain: explainSubject.value == "스터디를 소개해주세요." ? "" : explainSubject.value,
                 region: regionSubject.value,
                 startDate: self.dateToYYYYMMDD(date: periodDateSubject.value.startDate),
                 endDate: self.dateToYYYYMMDD(date: periodDateSubject.value.endDate),
                 time: self.convertTo24HourFormat(timeString: timeSubject.value),
                 repetType: repeatTypeSubject.value,
                 repetDays: repeatTypeSubject.value?.days,
-                rule: ruleSubject.value)}
+                rule: ruleSubject.value == "스터디를 소개해주세요." ? "" : ruleSubject.value)}
             .flatMap(useCase.getIsShowSnackBar)
             .map { $0 ? "! 필수 내용 작성이 완료되지 않았어요." : "" }
             .eraseToAnyPublisher()
@@ -296,6 +298,7 @@ final class CreateStudyGroupViewModel: ViewModelType {
             snackBarText: snackBarText,
             imageViewBackgroundColor: randomBackgroundColorSubject.eraseToAnyPublisher(),
             randomButtonColor: randomButtonColorSubject.eraseToAnyPublisher(),
+            tagText: tagTextSubject.eraseToAnyPublisher(),
             dismiss: input.didTapXButton
         )
     }
@@ -307,7 +310,7 @@ extension CreateStudyGroupViewModel {
     
     private func dateToAttributedString(start: Date, end: Date?) -> (start: AttributedString, end: AttributedString?) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy,M.d"
+        dateFormatter.dateFormat = "yyyy.M.d"
         
         let startAttributedString = AttributedString(dateFormatter.string(from: start))
         guard let end = end else { return (startAttributedString, nil) }
