@@ -109,7 +109,8 @@ extension AppCoordinator {
     }
     
     @objc private func handleFCMTokenUpdated() {
-        guard let fcmToken = UserDefaults.standard.getFCMToken(),
+        guard appDIContainer.keychainManager.getToken() != nil, // TODO: 임시로 accessTokend이 없얼때 로직 안되도록 수정 추후 보수작업 필요
+              let fcmToken = UserDefaults.standard.getFCMToken(),
               let deviceID = UIDevice.current.identifierForVendor?.uuidString.components(separatedBy: ["-"]).joined()
         else { return }
         fcmTokenManager.updateFCMToken(fcmToken: fcmToken, deviceID: deviceID)

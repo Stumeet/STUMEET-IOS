@@ -40,7 +40,12 @@ final class SnsLoginViewModel: ViewModelType {
                 else { return Empty().eraseToAnyPublisher() }
                 
                 return useCase.signIn(loginType: type)}
-            .map { $0 }
+            .map { loginResult in
+                // TODO: 임시 코드 추후 fcmtoken 갱신 관련 코드 수정 필요
+                if loginResult != .none { NotificationCenter.default.post(name: .fcmToken, object: nil) }
+                
+                return loginResult
+            }
             .eraseToAnyPublisher()
         
         return Output(
