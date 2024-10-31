@@ -74,7 +74,7 @@ class StudyMemberDetailViewController: BaseViewController {
     
     private let headerView = StudyMemberDetailInfoHeaderView()
     private var headerTapBarView = StudyMemberHeaderTapBarView(
-        options: StudyMemberDetailHeaderTapBarViewType.allCases.map { $0.title },
+        options: StudyMemberDetailHeaderTapBarViewType.allCases.map { ($0.title, $0.id) },
         initSelectedIndex: StudyMemberDetailHeaderTapBarViewType.meeting.id
     )
     
@@ -82,6 +82,7 @@ class StudyMemberDetailViewController: BaseViewController {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.delegate = self
         tableView.rowHeight = 91
         tableView.registerCell(StudyMemberActivityListTableViewCell.self)
         return tableView
@@ -94,7 +95,9 @@ class StudyMemberDetailViewController: BaseViewController {
     private var viewModel: StudyMemberDetailViewModel
     private var activityDataSource: UITableViewDiffableDataSource<StudyMemberActivityListSection, StudyMemberActivityListItem>?
     private lazy var contextMenuSize = contextMenu.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
+    private let didTapHeadderTapBarButtonSubject = PassthroughSubject<StudyMemberDetailHeaderTapBarViewType, Never>()
+    private let didReachTableBottomSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -195,7 +198,9 @@ class StudyMemberDetailViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMemberDetailViewModel.Input(
-            viewWillAppearTrigger: viewWillAppearSubject.eraseToAnyPublisher()
+            viewDidLoadTrigger: viewDidLoadSubject.eraseToAnyPublisher(),
+            didTapHeadderTapBarButton: didTapHeadderTapBarButtonSubject.eraseToAnyPublisher(),
+            didReachTableBottom: didReachTableBottomSubject.eraseToAnyPublisher()
         )
 
         // MARK: - Output
@@ -220,6 +225,14 @@ class StudyMemberDetailViewController: BaseViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        output.activityDataSource
+            .receive(on: RunLoop.main)
+            .sink { [weak self] items in
+                guard let self else { return }
+                updateSnapshot(items: items)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -227,84 +240,8 @@ class StudyMemberDetailViewController: BaseViewController {
         super.viewDidLoad()
         setupDelegate()
         setupGesture()
-        // TODO: - API 연동 시 수정
         configureDatasource()
-        updateSnapshot(
-            items: [
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 0,
-                        tag: .meeting,
-                        title: "test1120399210390-2193-02910-39102-930-21930-9213387238732899823820394893028490328904",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .absent
-                    ),
-                    cellType: .firstCell,
-                    screenType: .detail
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 2,
-                        tag: .meeting,
-                        title: "test2",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .beforeStart
-                    ),
-                    cellType: .normal,
-                    screenType: .detail
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 3,
-                        tag: .homework,
-                        title: "test323094329048324321948fdsaklndfkjmnaikfniwejfeiuajhiufhawiluhfliuawhefliuhawiluefhilauwehfiluawhilufehliaufwehuliwfh",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: nil
-                    ),
-                    cellType: .normal,
-                    screenType: .detail
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 4,
-                        tag: .homework,
-                        title: "test4",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .noParticipation
-                    ),
-                    cellType: .normal,
-                    screenType: .detail
-                )]
-        )
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewWillAppearSubject.send()
+        viewDidLoadSubject.send()
     }
 
     // MARK: - Function
@@ -315,6 +252,7 @@ class StudyMemberDetailViewController: BaseViewController {
     
     private func setupDelegate() {
         headerView.delegate = self
+        headerTapBarView.delegate = self
     }
     
     private func toggleContextMenu() {
@@ -393,8 +331,18 @@ class StudyMemberDetailViewController: BaseViewController {
 }
 
 extension StudyMemberDetailViewController:
+    UITableViewDelegate,
     StudyMemberDetailInfoHeaderViewDelegate,
-    StumeetConfirmationPopupViewControllerDelegate {
+    StumeetConfirmationPopupViewControllerDelegate,
+    StudyMemberHeaderTapBarViewDelegate {
+    
+    // MARK: - UITableViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yDelta = scrollView.contentOffset.y
+        let threshold = max(0, (scrollView.contentSize.height) * 0.3)
+
+        if yDelta > threshold { didReachTableBottomSubject.send() }
+    }
     
     // MARK: - DataSource
     private func configureDatasource() {
@@ -431,5 +379,11 @@ extension StudyMemberDetailViewController:
     
     func cancelAction() {
         print(#function)
+    }
+    
+    // MARK: - StudyMemberHeaderTapBarViewDelegate
+    func didTapAction(_ button: StudyMemberHeaderTapBarView.RadioButton) {
+        guard let tapType = StudyMemberDetailHeaderTapBarViewType(rawValue: button.id) else { return }
+        didTapHeadderTapBarButtonSubject.send(tapType)
     }
 }

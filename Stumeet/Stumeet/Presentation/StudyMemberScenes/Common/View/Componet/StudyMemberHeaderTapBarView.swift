@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol StudyMemberHeaderTapBarViewDelegate: AnyObject {
+    func didTapAction(_ button: StudyMemberHeaderTapBarView.RadioButton)
+}
+
 class StudyMemberHeaderTapBarView: UIView {
     // MARK: - UIComponents
     private var buttonHStackView: UIStackView = {
@@ -25,9 +29,10 @@ class StudyMemberHeaderTapBarView: UIView {
             buttons.forEach { $0.isSelected = ($0 == selectedButton) }
         }
     }
+    weak var delegate: StudyMemberHeaderTapBarViewDelegate?
 
     // MARK: - Init
-    init(options: [String], initSelectedIndex: Int? = nil) {
+    init(options: [(String,Int)], initSelectedIndex: Int? = nil) {
         super.init(frame: .zero)
         setupAddView()
         setupViews(options: options, selectedIndex: initSelectedIndex)
@@ -42,9 +47,9 @@ class StudyMemberHeaderTapBarView: UIView {
         addSubview(buttonHStackView)
     }
     
-    private func setupViews(options: [String], selectedIndex: Int? = nil) {
-        for option in options {
-            let button = RadioButton(title: option)
+    private func setupViews(options: [(String,Int)], selectedIndex: Int? = nil) {
+        for (title, id) in options {
+            let button = RadioButton(title: title, id: id)
             button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
             buttons.append(button)
             buttonHStackView.addArrangedSubview(button)
@@ -67,6 +72,7 @@ class StudyMemberHeaderTapBarView: UIView {
     @objc private func buttonTapped(_ sender: RadioButton) {
         if sender != selectedButton {
             selectedButton = sender
+            delegate?.didTapAction(sender)
         }
     }
 }
@@ -74,8 +80,12 @@ class StudyMemberHeaderTapBarView: UIView {
 extension StudyMemberHeaderTapBarView {
     // MARK: - Nested Class
     class RadioButton: UIButton {
-        init(title: String) {
+        private(set) var id: Int
+        
+        init(title: String, id: Int) {
+            self.id = id
             super.init(frame: .zero)
+                        
             var configuration = UIButton.Configuration.plain()
             var container = AttributeContainer()
             container.font = StumeetFont.titleMedium.font

@@ -26,6 +26,10 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         DefaultStudyMemberRepository(provider: dependencies.provider.makeProvider())
     }
     
+    func makeStudyActivityRepository() -> StudyActivityRepository {
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
+    }
+    
     // MARK: - Use Cases
     func makeStudyMemberUseCase() -> StudyMemberUseCase {
         DefaultStudyMemberUseCase(repository: makeStudyMemberRepository())
@@ -37,6 +41,10 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     
     func makeFetchStudyMemberDetailUseCase() -> FetchStudyMemberDetailUseCase {
         DefaultFetchStudyMemberDetailUseCase(repository: makeStudyMemberRepository())
+    }
+    
+    func makeFetchStudyMemberActivityUseCase() -> FetchStudyMemberActivityUseCase {
+        DefaultFetchStudyMemberActivityUseCase(repository: makeStudyActivityRepository())
     }
     
     // MARK: - StudyMember
@@ -59,6 +67,7 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     func makeStudyMemberDetailModel(studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewModel {
         StudyMemberDetailViewModel(
             fetchStudyMemberDetailUseCase: makeFetchStudyMemberDetailUseCase(),
+            fetchStudyMemberActivityUseCase: makeFetchStudyMemberActivityUseCase(),
             checkAdminUseCase: makeCheckAdminUseCase(),
             studyId: studyId,
             studyMemberId: studyMemberId
