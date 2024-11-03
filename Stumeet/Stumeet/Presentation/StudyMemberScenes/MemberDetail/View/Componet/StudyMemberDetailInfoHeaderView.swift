@@ -256,6 +256,7 @@ class StudyMemberDetailInfoHeaderView: UIView {
         )
         
         complimentButton.configuration?.baseBackgroundColor = memberItem.isPraiseAvailable ? StumeetColor.primary50.color : StumeetColor.gray75.color
+        complimentButton.isEnabled = memberItem.isPraiseAvailable
         
         achievementProgressLabel.text = "\(memberItem.achievementProgress)%"
         achievementProgressView.progress = Float(memberItem.achievementProgress) / 100

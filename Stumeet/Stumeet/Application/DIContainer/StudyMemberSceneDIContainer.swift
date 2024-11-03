@@ -47,6 +47,14 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         DefaultFetchStudyMemberActivityUseCase(repository: makeStudyActivityRepository())
     }
     
+    func makeKickOutStudyMemberUseCase() -> KickOutStudyMemberUseCase {
+        DefaultKickOutStudyMemberUseCase(repository: makeStudyMemberRepository())
+    }
+    
+    func makeDelegateStudyAdminUseCase() -> DelegateStudyAdminUseCase {
+        DefaultDelegateStudyAdminUseCase(repository: makeStudyMemberRepository())
+    }
+    
     // MARK: - StudyMember
     func makeStudyMemberViewModel(studyId: Int) -> StudyMemberViewModel {
         StudyMemberViewModel(
@@ -69,6 +77,8 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
             fetchStudyMemberDetailUseCase: makeFetchStudyMemberDetailUseCase(),
             fetchStudyMemberActivityUseCase: makeFetchStudyMemberActivityUseCase(),
             checkAdminUseCase: makeCheckAdminUseCase(),
+            kickOutStudyMemberUseCase: makeKickOutStudyMemberUseCase(),
+            delegateStudyAdminUseCase: makeDelegateStudyAdminUseCase(),
             studyId: studyId,
             studyMemberId: studyMemberId
         )

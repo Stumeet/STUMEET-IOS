@@ -77,7 +77,7 @@ class StudyMemberViewController: BaseViewController {
     private weak var coordinator: StudyMemberNavigation!
     private let viewModel: StudyMemberViewModel
     private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, StudyMember>?
-    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -87,10 +87,16 @@ class StudyMemberViewController: BaseViewController {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        setupNotification()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func setupStyles() {
@@ -128,7 +134,7 @@ class StudyMemberViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMemberViewModel.Input(
-            viewWillAppearTrigger: viewWillAppearSubject.eraseToAnyPublisher(),
+            loadData: loadDataSubject.eraseToAnyPublisher(),
             didSelectMemberRow: memberTableView.didSelectRowPublisher
         )
 
@@ -174,14 +180,14 @@ class StudyMemberViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDatasource()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewWillAppearSubject.send()
+        loadDataSubject.send()
     }
     
     // MARK: - Function
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMemberList), name: .studyMemberDataRefreshed, object: nil)
+    }
+    
     private func updateTitleCount(memberTotal: Int) {
         titleCountLabel.text = String(memberTotal)
     }
@@ -192,6 +198,10 @@ class StudyMemberViewController: BaseViewController {
     
     @objc func memberSettingsButtonTapped(_ sender: UIBarButtonItem) {
         coordinator.goToMemberAchievementVC()
+    }
+    
+    @objc private func updateMemberList() {
+        loadDataSubject.send()
     }
 }
 

@@ -13,6 +13,8 @@ enum StudyMemberService {
     case fetchStudyMembers(StudyMemberRequestDTO)
     case adminCheck(StudyMemberRequestDTO)
     case fetchStudyMemberDetailInfo(StudyMemberDetailRequestDTO)
+    case removeStudyMember(StudyMemberRemoveRequestDTO)
+    case delegateAdminRights(StudyAdminDelegateRequestDTO)
 }
 
 extension StudyMemberService: BaseTargetType {
@@ -24,6 +26,10 @@ extension StudyMemberService: BaseTargetType {
             return "api/v1/studies/\(requestDTO.studyId)/me/admin/check"
         case .fetchStudyMemberDetailInfo(let requestDTO):
             return "api/external/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)"
+        case .removeStudyMember(let requestDTO):
+            return "api/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)"
+        case .delegateAdminRights(let requestDTO):
+            return "api/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)/admin/delegate"
         }
     }
     
@@ -31,12 +37,16 @@ extension StudyMemberService: BaseTargetType {
         switch self {
         case .fetchStudyMembers, .adminCheck, .fetchStudyMemberDetailInfo:
             return .get
+        case .removeStudyMember:
+            return .delete
+        case .delegateAdminRights:
+            return .patch
         }
     }
     
     var task: Task {
         switch self {
-        case .fetchStudyMembers, .adminCheck, .fetchStudyMemberDetailInfo:
+        case .fetchStudyMembers, .adminCheck, .fetchStudyMemberDetailInfo, .removeStudyMember, .delegateAdminRights:
             return .requestPlain
         }
     }

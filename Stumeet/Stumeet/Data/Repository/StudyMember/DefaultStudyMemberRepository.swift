@@ -45,4 +45,24 @@ final class DefaultStudyMemberRepository: StudyMemberRepository {
             .mapError { $0 as MoyaError }
             .eraseToAnyPublisher()
     }
+    
+    func removeStudyMember(studyID: Int, memberID: Int) -> AnyPublisher<Bool, MoyaError> {
+        let requestDTO = StudyMemberRemoveRequestDTO(studyId: studyID, memberId: memberID)
+        
+        return provider.requestPublisher(.removeStudyMember(requestDTO))
+            .map(ResponseWithDataDTO<Bool>.self)
+            .compactMap { $0.code == 200 }
+            .mapError { $0 as MoyaError }
+            .eraseToAnyPublisher()
+    }
+    
+    func delegateAdminRights(studyID: Int, memberID: Int) -> AnyPublisher<Bool, MoyaError> {
+        let requestDTO = StudyAdminDelegateRequestDTO(studyId: studyID, memberId: memberID)
+        
+        return provider.requestPublisher(.delegateAdminRights(requestDTO))
+            .map(ResponseWithDataDTO<Bool>.self)
+            .compactMap { $0.code == 200 }
+            .mapError { $0 as MoyaError }
+            .eraseToAnyPublisher()
+    }
 }

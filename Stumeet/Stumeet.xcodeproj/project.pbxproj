@@ -37,6 +37,8 @@
 		35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B152B9F4BDA00252283 /* AppleLoginService.swift */; };
 		35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */; };
 		35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B192B9F506200252283 /* KakaoLoginService.swift */; };
+		3554AAAA2CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */; };
+		3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */; };
 		355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BB2C3AB71500C50BA0 /* StudyService.swift */; };
 		355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */; };
 		355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */; };
@@ -100,6 +102,8 @@
 		358D24372C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24362C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift */; };
 		358D243A2C46B062001EFB51 /* StudyGroupMainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358D24392C46B062001EFB51 /* StudyGroupMainUseCase.swift */; };
 		358DF6082CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358DF6072CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift */; };
+		358DF60A2CD3BDB900DCD2EF /* StudyMemberRemoveRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358DF6092CD3BDB900DCD2EF /* StudyMemberRemoveRequestDTO.swift */; };
+		358DF60C2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358DF60B2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift */; };
 		358F34462C7788C200683713 /* StudyMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358F34452C7788C200683713 /* StudyMemberViewController.swift */; };
 		359923152C9C643C009822B7 /* StudyMemberDetailContextMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359923142C9C643C009822B7 /* StudyMemberDetailContextMenuView.swift */; };
 		359923172C9F03AC009822B7 /* StumeetConfirmationPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359923162C9F03AC009822B7 /* StumeetConfirmationPopupViewController.swift */; };
@@ -366,6 +370,8 @@
 		35446B152B9F4BDA00252283 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewModel.swift; sourceTree = "<group>"; };
 		35446B192B9F506200252283 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
+		3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateStudyAdminUseCase.swift; sourceTree = "<group>"; };
+		3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAdminDelegateRequestDTO.swift; sourceTree = "<group>"; };
 		355A75BB2C3AB71500C50BA0 /* StudyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyService.swift; sourceTree = "<group>"; };
 		355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesRequestDTO.swift; sourceTree = "<group>"; };
 		355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListRepository.swift; sourceTree = "<group>"; };
@@ -427,6 +433,8 @@
 		358D24362C46AA2D001EFB51 /* StudiesDetailResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesDetailResponseDTO.swift; sourceTree = "<group>"; };
 		358D24392C46B062001EFB51 /* StudyGroupMainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupMainUseCase.swift; sourceTree = "<group>"; };
 		358DF6072CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStudyMemberMeetingsUseCase.swift; sourceTree = "<group>"; };
+		358DF6092CD3BDB900DCD2EF /* StudyMemberRemoveRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberRemoveRequestDTO.swift; sourceTree = "<group>"; };
+		358DF60B2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KickOutStudyMemberUseCase.swift; sourceTree = "<group>"; };
 		358F34452C7788C200683713 /* StudyMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberViewController.swift; sourceTree = "<group>"; };
 		359923142C9C643C009822B7 /* StudyMemberDetailContextMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberDetailContextMenuView.swift; sourceTree = "<group>"; };
 		359923162C9F03AC009822B7 /* StumeetConfirmationPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StumeetConfirmationPopupViewController.swift; sourceTree = "<group>"; };
@@ -787,6 +795,8 @@
 				358A93EA2CC4EFA8007945D4 /* CheckAdminUseCase.swift */,
 				358A93F32CC51664007945D4 /* FetchStudyMemberDetailUseCase.swift */,
 				358DF6072CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift */,
+				358DF60B2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift */,
+				3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */,
 			);
 			path = StudyMember;
 			sourceTree = "<group>";
@@ -1482,6 +1492,8 @@
 				358A93E82CC4EAB9007945D4 /* StudyMemberAdminResponseDTO.swift */,
 				358A93ED2CC509A8007945D4 /* StudyMemberDetailRequestDTO.swift */,
 				358A93EF2CC509E9007945D4 /* StudyMemberDetailResponseDTO.swift */,
+				358DF6092CD3BDB900DCD2EF /* StudyMemberRemoveRequestDTO.swift */,
+				3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */,
 			);
 			path = StudyMember;
 			sourceTree = "<group>";
@@ -2682,6 +2694,7 @@
 				CA6448332B863BB90090DD84 /* SelectFieldUseCase.swift in Sources */,
 				352885EF2BB9BA8300EFC0F6 /* AuthInterceptor.swift in Sources */,
 				CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */,
+				3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */,
 				CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
@@ -2718,6 +2731,7 @@
 				CA6448572B863BB90090DD84 /* BaseViewController.swift in Sources */,
 				CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */,
 				CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */,
+				358DF60C2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift in Sources */,
 				CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */,
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
@@ -2876,6 +2890,7 @@
 				35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
 				CA31EC632C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift in Sources */,
+				358DF60A2CD3BDB900DCD2EF /* StudyMemberRemoveRequestDTO.swift in Sources */,
 				358DF6082CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift in Sources */,
 				358D24352C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift in Sources */,
 				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
@@ -2923,6 +2938,7 @@
 				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				CA6450942C1465AF00E00665 /* GroupStudyActivityViewController.swift in Sources */,
 				35D49E252C90980E00F8C5C8 /* StudyMemberComplimentButton.swift in Sources */,
+				3554AAAA2CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift in Sources */,
 				357D1BA92BB8119E0079DCE6 /* UserAuthInfo.swift in Sources */,
 				CA31EC5D2C59F557004D79A8 /* CreateStudyTagSection.swift in Sources */,
 				CA98F6AD2BEDEB8400C36772 /* CreateActivityDIContainer.swift in Sources */,

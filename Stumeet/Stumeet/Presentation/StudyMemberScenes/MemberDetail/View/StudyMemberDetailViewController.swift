@@ -98,6 +98,8 @@ class StudyMemberDetailViewController: BaseViewController {
     private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
     private let didTapHeadderTapBarButtonSubject = PassthroughSubject<StudyMemberDetailHeaderTapBarViewType, Never>()
     private let didReachTableBottomSubject = PassthroughSubject<Void, Never>()
+    private let didSelectMenuOptionSubject = PassthroughSubject<StudyMemberDetailModalViewType, Never>()
+    private let didTapModalConfirmSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -122,22 +124,15 @@ class StudyMemberDetailViewController: BaseViewController {
             textColor: StumeetColor.danger500.color,
             action: UIAction { [weak self] _ in
                 guard let self else { return }
-                coordinator.presentToExpulsionPopup(
-                    from: self,
-                    delegate: self,
-                    popupContextView: setExpulsionView()
-                )
+                didSelectMenuOptionSubject.send(.kickOut)
             }
         )
         contextMenu.addItem(
             title: "위임하기",
             action: UIAction { [weak self] _ in
                 guard let self else { return }
-                coordinator.presentToExpulsionPopup(
-                    from: self,
-                    delegate: self,
-                    popupContextView: setDelegateHostView()
-                )
+                didSelectMenuOptionSubject.send(.assignLeader)
+                
             }
         )
         contextMenu.isVisiblyHidden = true
@@ -200,7 +195,9 @@ class StudyMemberDetailViewController: BaseViewController {
         let input = StudyMemberDetailViewModel.Input(
             viewDidLoadTrigger: viewDidLoadSubject.eraseToAnyPublisher(),
             didTapHeadderTapBarButton: didTapHeadderTapBarButtonSubject.eraseToAnyPublisher(),
-            didReachTableBottom: didReachTableBottomSubject.eraseToAnyPublisher()
+            didReachTableBottom: didReachTableBottomSubject.eraseToAnyPublisher(),
+            didSelectMenuOption: didSelectMenuOptionSubject.eraseToAnyPublisher(),
+            didTapModalConfirm: didTapModalConfirmSubject.eraseToAnyPublisher()
         )
 
         // MARK: - Output
@@ -233,6 +230,39 @@ class StudyMemberDetailViewController: BaseViewController {
                 updateSnapshot(items: items)
             }
             .store(in: &cancellables)
+        
+        output.showModalView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] text, modalType in
+                guard let self else { return }
+                var popupContextView: UIView?
+                
+                switch modalType {
+                case .kickOut:
+                    guard let text else { return }
+                    popupContextView = setKickOutView(name: text)
+                case .assignLeader:
+                    popupContextView = setDelegateHostView()
+                }
+                
+                guard let popupContextView else { return }
+                
+                coordinator.presentToExpulsionPopup(
+                    from: self,
+                    delegate: self,
+                    popupContextView: popupContextView
+                )
+            }
+            .store(in: &cancellables)
+        
+        output.modalConfirmActionCompleted
+            .receive(on: RunLoop.main)
+            .sink { [weak self] modalType in
+                guard let self else { return }
+                NotificationCenter.default.post(name: .studyMemberDataRefreshed, object: nil)
+                dismiss(animated: true)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -259,7 +289,7 @@ class StudyMemberDetailViewController: BaseViewController {
         contextMenu.isVisiblyHidden.toggle()
     }
     
-    private func setExpulsionView() -> UIView {
+    private func setKickOutView(name: String) -> UIView {
         let view = UIView()
         let titleLabel: UILabel = {
             let label = UILabel()
@@ -270,9 +300,9 @@ class StudyMemberDetailViewController: BaseViewController {
             return label
         }()
         
-        titleLabel.text = "홍길동님을 추방하시겠어요?"
+        titleLabel.text = "\(name)님을 추방하시겠어요?"
         titleLabel.setColorAndFont(
-            to: "홍길동",
+            to: name,
             withColor: StumeetColor.gray900.color,
             withFont: StumeetFont.titleBold.font
         )
@@ -371,14 +401,9 @@ extension StudyMemberDetailViewController:
         coordinator.presentToComplimentPopup(from: self)
     }
     
-    // TODO: API 연동 시 수정
     // MARK: - StumeetConfirmationPopupViewControllerDelegate
     func confirmAction() {
-        print(#function)
-    }
-    
-    func cancelAction() {
-        print(#function)
+        didTapModalConfirmSubject.send()
     }
     
     // MARK: - StudyMemberHeaderTapBarViewDelegate

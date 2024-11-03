@@ -8,12 +8,19 @@
 import Combine
 import Foundation
 
+enum StudyMemberDetailModalViewType {
+    case kickOut
+    case assignLeader
+}
+
 final class StudyMemberDetailViewModel: ViewModelType {
     // MARK: - Input
     struct Input {
         let viewDidLoadTrigger: AnyPublisher<Void, Never>
         let didTapHeadderTapBarButton: AnyPublisher<StudyMemberDetailHeaderTapBarViewType, Never>
         let didReachTableBottom: AnyPublisher<Void, Never>
+        let didSelectMenuOption: AnyPublisher<StudyMemberDetailModalViewType, Never>
+        let didTapModalConfirm: AnyPublisher<Void, Never>
     }
 
     // MARK: - Output
@@ -21,7 +28,16 @@ final class StudyMemberDetailViewModel: ViewModelType {
         let studyMemberHeaderItem: AnyPublisher<StudyMemberDetailInfoHeaderItem, Never>
         let showMoreButtonState: AnyPublisher<Bool, Never>
         let activityDataSource: AnyPublisher<[StudyMemberActivityListItem], Never>
+        let showModalView: AnyPublisher<(String?, StudyMemberDetailModalViewType), Never>
+        let modalConfirmActionCompleted: AnyPublisher<StudyMemberDetailModalViewType, Never>
     }
+    
+    // MARK: - UseCase
+    private var fetchStudyMemberDetailUseCase: FetchStudyMemberDetailUseCase
+    private var fetchStudyMemberActivityUseCase: FetchStudyMemberActivityUseCase
+    private var checkAdminUseCase: CheckAdminUseCase
+    private var kickOutStudyMemberUseCase: KickOutStudyMemberUseCase
+    private var delegateStudyAdminUseCase: DelegateStudyAdminUseCase
     
     // MARK: - Properties
     private var studyId: Int
@@ -33,13 +49,12 @@ final class StudyMemberDetailViewModel: ViewModelType {
     private var canLoadMorePages: Bool { hasMorePages && !isNextPageLoading }
     private var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
     
-    private var fetchStudyMemberDetailUseCase: FetchStudyMemberDetailUseCase
-    private var fetchStudyMemberActivityUseCase: FetchStudyMemberActivityUseCase
-    private var checkAdminUseCase: CheckAdminUseCase
     private var studyMemberHeaderItemSubject = CurrentValueSubject<StudyMemberDetailInfoHeaderItem?, Never>(nil)
     private var activityItemsSubject = CurrentValueSubject<[StudyMemberActivityListItem], Never>([])
     private var isStudyMemberAdminSubject = CurrentValueSubject<Bool, Never>(false)
     private var isCurrentUserAdminSubject = CurrentValueSubject<Bool, Never>(false)
+    private var currentModalViewTypeSubject = CurrentValueSubject<StudyMemberDetailModalViewType?, Never>(nil)
+    private var modalConfirmActionSubject = PassthroughSubject<StudyMemberDetailModalViewType, Never>()
     private var currentTap = CurrentValueSubject<ActivityCategory, Never>(.meeting)
     private var cancellables = Set<AnyCancellable>()
     
@@ -48,12 +63,16 @@ final class StudyMemberDetailViewModel: ViewModelType {
         fetchStudyMemberDetailUseCase: FetchStudyMemberDetailUseCase,
         fetchStudyMemberActivityUseCase: FetchStudyMemberActivityUseCase,
         checkAdminUseCase: CheckAdminUseCase,
+        kickOutStudyMemberUseCase: KickOutStudyMemberUseCase,
+        delegateStudyAdminUseCase: DelegateStudyAdminUseCase,
         studyId: Int,
         studyMemberId: Int
     ) {
         self.fetchStudyMemberDetailUseCase = fetchStudyMemberDetailUseCase
         self.fetchStudyMemberActivityUseCase = fetchStudyMemberActivityUseCase
         self.checkAdminUseCase = checkAdminUseCase
+        self.kickOutStudyMemberUseCase = kickOutStudyMemberUseCase
+        self.delegateStudyAdminUseCase = delegateStudyAdminUseCase
         self.studyId = studyId
         self.studyMemberId = studyMemberId
     }
@@ -71,6 +90,20 @@ final class StudyMemberDetailViewModel: ViewModelType {
                 return isCurrentUserAdmin && !isStudyMemberAdmin
             }
             .eraseToAnyPublisher()
+        
+        let showModalView = currentModalViewTypeSubject
+            .compactMap { $0 }
+            .map { [weak self] modalType in
+                switch modalType {
+                case .kickOut:
+                    return (self?.studyMemberHeaderItemSubject.value?.displayName, modalType)
+                case .assignLeader:
+                    return (nil, modalType)
+                }
+            }
+            .eraseToAnyPublisher()
+        
+        let modalConfirmActionCompleted = modalConfirmActionSubject.eraseToAnyPublisher()
 
         input.viewDidLoadTrigger
             .flatMap { [weak self] in
@@ -164,11 +197,47 @@ final class StudyMemberDetailViewModel: ViewModelType {
             .sink(receiveValue: activityItemsSubject.send)
             .store(in: &cancellables)
         
+        input.didSelectMenuOption
+            .sink { [weak self] modalType in
+                guard let self else { return }
+                currentModalViewTypeSubject.send(modalType)
+            }
+            .store(in: &cancellables)
+        
+        input.didTapModalConfirm
+            .flatMap { [weak self] in
+                guard let self,
+                      let currentModalType = currentModalViewTypeSubject.value
+                else { return Empty<Bool, Never>().eraseToAnyPublisher()}
+
+                switch currentModalType {
+                case .kickOut:
+                    return kickOutStudyMemberUseCase.execute(
+                        studyID: studyId,
+                        memberID: studyMemberId
+                    )
+                case .assignLeader:
+                    return delegateStudyAdminUseCase.execute(
+                        studyID: studyId,
+                        memberID: studyMemberId
+                    )
+                }
+            }
+            .sink { [weak self] isSuccess in
+                guard let self,
+                      isSuccess,
+                      let currentModalType = currentModalViewTypeSubject.value
+                else { return }
+                modalConfirmActionSubject.send(currentModalType)
+            }
+            .store(in: &cancellables)
         
         return Output(
             studyMemberHeaderItem: studyMemberHeaderItem,
             showMoreButtonState: showMoreButtonState,
-            activityDataSource: activityDataSource
+            activityDataSource: activityDataSource,
+            showModalView: showModalView,
+            modalConfirmActionCompleted: modalConfirmActionCompleted
         )
     }
     

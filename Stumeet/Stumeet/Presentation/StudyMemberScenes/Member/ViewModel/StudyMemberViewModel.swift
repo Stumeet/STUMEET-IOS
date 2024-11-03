@@ -11,7 +11,7 @@ import Foundation
 final class StudyMemberViewModel: ViewModelType {
     // MARK: - Input
     struct Input {
-        let viewWillAppearTrigger: AnyPublisher<Void, Never>
+        let loadData: AnyPublisher<Void, Never>
         let didSelectMemberRow: AnyPublisher<IndexPath, Never>
     }
 
@@ -60,7 +60,7 @@ final class StudyMemberViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
         
-        input.viewWillAppearTrigger
+        input.loadData
             .flatMap { [weak self] in
                 guard let self else { return Just<[StudyMember]>([])
                     .eraseToAnyPublisher()}
@@ -72,7 +72,7 @@ final class StudyMemberViewModel: ViewModelType {
             }
             .store(in: &cancellables)
         
-        input.viewWillAppearTrigger
+        input.loadData
             .flatMap { [weak self] in
                 guard let self else { return Just<Bool>(false).eraseToAnyPublisher()}
                 return checkAdminUseCase.execute(studyID: studyId)
