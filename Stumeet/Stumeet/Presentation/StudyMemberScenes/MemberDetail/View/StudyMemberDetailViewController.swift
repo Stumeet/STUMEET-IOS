@@ -78,6 +78,8 @@ class StudyMemberDetailViewController: BaseViewController {
         initSelectedIndex: StudyMemberDetailHeaderTapBarViewType.meeting.id
     )
     
+    private let snackBarView = SnackBar()
+    
     private lazy var activityTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -95,7 +97,7 @@ class StudyMemberDetailViewController: BaseViewController {
     private var viewModel: StudyMemberDetailViewModel
     private var activityDataSource: UITableViewDiffableDataSource<StudyMemberActivityListSection, StudyMemberActivityListItem>?
     private lazy var contextMenuSize = contextMenu.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-    private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
     private let didTapHeadderTapBarButtonSubject = PassthroughSubject<StudyMemberDetailHeaderTapBarViewType, Never>()
     private let didReachTableBottomSubject = PassthroughSubject<Void, Never>()
     private let didSelectMenuOptionSubject = PassthroughSubject<StudyMemberDetailModalViewType, Never>()
@@ -144,6 +146,7 @@ class StudyMemberDetailViewController: BaseViewController {
         view.addSubview(headerTapBarView)
         view.addSubview(activityTableView)
         view.addSubview(contextMenu)
+        view.addSubview(snackBarView)
         
         navigationBarItems.leftBarButtonItem = xButton
         navigationBarItems.titleView = titleStackView
@@ -188,12 +191,18 @@ class StudyMemberDetailViewController: BaseViewController {
             $0.top.equalTo(navigationBar.snp.bottom).offset(-(contextMenuSize.height / 2))
             $0.trailing.equalToSuperview().offset((contextMenuSize.width / 2) - 16)
         }
+                
+        snackBarView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.height.equalTo(74)
+        }
     }
     
     override func bind() {
         // MARK: - Input
         let input = StudyMemberDetailViewModel.Input(
-            viewDidLoadTrigger: viewDidLoadSubject.eraseToAnyPublisher(),
+            loadDataTrigger: loadDataSubject.eraseToAnyPublisher(),
             didTapHeadderTapBarButton: didTapHeadderTapBarButtonSubject.eraseToAnyPublisher(),
             didReachTableBottom: didReachTableBottomSubject.eraseToAnyPublisher(),
             didSelectMenuOption: didSelectMenuOptionSubject.eraseToAnyPublisher(),
@@ -260,7 +269,15 @@ class StudyMemberDetailViewController: BaseViewController {
             .sink { [weak self] modalType in
                 guard let self else { return }
                 NotificationCenter.default.post(name: .studyMemberDataRefreshed, object: nil)
-                dismiss(animated: true)
+                
+                switch modalType {
+                case .kickOut:
+                    dismiss(animated: true)
+                case .assignLeader:
+                    loadDataSubject.send()
+                    guard let text = modalType.snackBartitle else { return }
+                    showSnackBar(text: text)
+                }
             }
             .store(in: &cancellables)
     }
@@ -271,7 +288,7 @@ class StudyMemberDetailViewController: BaseViewController {
         setupDelegate()
         setupGesture()
         configureDatasource()
-        viewDidLoadSubject.send()
+        loadDataSubject.send()
     }
 
     // MARK: - Function
@@ -345,6 +362,24 @@ class StudyMemberDetailViewController: BaseViewController {
         }
         
         return view
+    }
+    
+    private func showSnackBar(text: String) {
+        snackBarView.setupLabel(text: text, highlight: false)
+        snackBarView.isHidden = false
+        snackBarView.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            self.snackBarView.alpha = 1
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIView.animate(withDuration: 0.3) {
+                    self.snackBarView.alpha = 0
+                } completion: { _ in
+                    self.snackBarView.isHidden = true
+                }
+            }
+        }
     }
     
     @objc private func closeButtonTapped(_ sender: UIBarButtonItem) {

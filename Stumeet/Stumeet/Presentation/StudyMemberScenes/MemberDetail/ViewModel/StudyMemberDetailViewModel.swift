@@ -11,12 +11,19 @@ import Foundation
 enum StudyMemberDetailModalViewType {
     case kickOut
     case assignLeader
+
+    var snackBartitle: String? {
+        switch self {
+        case .assignLeader: "스터디장 위임이 완료되었습니다. "
+        default: nil
+        }
+    }
 }
 
 final class StudyMemberDetailViewModel: ViewModelType {
     // MARK: - Input
     struct Input {
-        let viewDidLoadTrigger: AnyPublisher<Void, Never>
+        let loadDataTrigger: AnyPublisher<Void, Never>
         let didTapHeadderTapBarButton: AnyPublisher<StudyMemberDetailHeaderTapBarViewType, Never>
         let didReachTableBottom: AnyPublisher<Void, Never>
         let didSelectMenuOption: AnyPublisher<StudyMemberDetailModalViewType, Never>
@@ -105,7 +112,7 @@ final class StudyMemberDetailViewModel: ViewModelType {
         
         let modalConfirmActionCompleted = modalConfirmActionSubject.eraseToAnyPublisher()
 
-        input.viewDidLoadTrigger
+        input.loadDataTrigger
             .flatMap { [weak self] in
                 guard let self else { return Empty<StudyMember, Never>().eraseToAnyPublisher() }
                 return fetchStudyMemberDetailUseCase.execute(
@@ -120,7 +127,7 @@ final class StudyMemberDetailViewModel: ViewModelType {
             }
             .store(in: &cancellables)
         
-        input.viewDidLoadTrigger
+        input.loadDataTrigger
             .flatMap { [weak self] in
                 guard let self else { return Empty<Bool, Never>().eraseToAnyPublisher()}
                 return checkAdminUseCase.execute(studyID: studyId)
@@ -131,7 +138,7 @@ final class StudyMemberDetailViewModel: ViewModelType {
             }
             .store(in: &cancellables)
         
-        input.viewDidLoadTrigger
+        input.loadDataTrigger
             .handleEvents(receiveOutput: resetPages )
             .flatMap { [weak self] in
                 guard let self else { return Empty<ActivityPage, Never>().eraseToAnyPublisher()}
