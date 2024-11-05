@@ -21,7 +21,7 @@ class EmptyPlaceholderView: UIView {
     
     private let mainImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(resource: .StudyGroupList.tablerBook)
+        image.image = UIImage(resource: .Common.tablerBook)
         return image
     }()
     

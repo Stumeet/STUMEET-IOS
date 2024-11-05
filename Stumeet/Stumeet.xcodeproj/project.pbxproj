@@ -44,6 +44,7 @@
 		35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */; };
 		35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B192B9F506200252283 /* KakaoLoginService.swift */; };
 		3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */; };
+		3554AAB02CDA59BA00705EDC /* TextBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */; };
 		355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BB2C3AB71500C50BA0 /* StudyService.swift */; };
 		355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */; };
 		355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */; };
@@ -371,6 +372,7 @@
 		35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewModel.swift; sourceTree = "<group>"; };
 		35446B192B9F506200252283 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
 		3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPlaceholderView.swift; sourceTree = "<group>"; };
+		3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBubbleView.swift; sourceTree = "<group>"; };
 		355A75BB2C3AB71500C50BA0 /* StudyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyService.swift; sourceTree = "<group>"; };
 		355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesRequestDTO.swift; sourceTree = "<group>"; };
 		355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListRepository.swift; sourceTree = "<group>"; };
@@ -2063,6 +2065,7 @@
 				35EF30022C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift */,
 				359923162C9F03AC009822B7 /* StumeetConfirmationPopupViewController.swift */,
 				3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */,
+				3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2862,6 +2865,7 @@
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityCell.swift in Sources */,
 				35EF30032C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				3554AAB02CDA59BA00705EDC /* TextBubbleView.swift in Sources */,
 				353A08C52C7B7C0F00678E96 /* StudyMemberRepository.swift in Sources */,
 				357923282C4D641900E9CD68 /* StudyMainViewHeaderItem.swift in Sources */,
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,

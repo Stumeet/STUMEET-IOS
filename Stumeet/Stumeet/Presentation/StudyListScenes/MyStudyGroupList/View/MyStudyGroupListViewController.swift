@@ -36,6 +36,12 @@ class MyStudyGroupListViewController: BaseViewController {
         return emptyView
     }()
     
+    private let addButtonTooltipView: TextBubbleView = {
+        let textBubbleView = TextBubbleView(text: "스터밋과 함께 스터디를 시작해볼까요?")
+        textBubbleView.isHidden = true
+        return textBubbleView
+    }()
+    
     // MARK: - Properties
     private weak var coordinator: MyStudyGroupListNavigation!
     private let viewModel: MyStudyGroupListViewModel
@@ -72,9 +78,10 @@ class MyStudyGroupListViewController: BaseViewController {
     override func setupAddView() {
         view.addSubview(studyGroupTableView)
         view.addSubview(emptyView)
+        view.addSubview(addButtonTooltipView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationTitleLabel)
-        navigationItem.rightBarButtonItem = makeBarButtonItem("tabler_plus")
+        navigationItem.rightBarButtonItem = makeBarButtonItem(.StudyGroupList.tablerPlus)
     }
     
     override func setupConstaints() {
@@ -86,6 +93,11 @@ class MyStudyGroupListViewController: BaseViewController {
         emptyView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        addButtonTooltipView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.trailing.equalToSuperview().inset(16)
         }
     }
 
@@ -133,12 +145,26 @@ class MyStudyGroupListViewController: BaseViewController {
                 emptyView.isHidden = !isShow
             }
             .store(in: &cancellables)
+        
+        output.showAddTooltipView
+            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isShow in
+                guard let self else { return }
+                
+                if isShow {
+                    addButtonTooltipView.show()
+                } else {
+                    addButtonTooltipView.hide()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Function
-    private func makeBarButtonItem(_ imageName: String) -> UIBarButtonItem {
+    private func makeBarButtonItem(_ imageResource: ImageResource) -> UIBarButtonItem {
         let button = UIButton()
-        let image = UIImage(named: imageName)
+        let image = UIImage(resource: imageResource)
         button.setImage(image, for: .normal)
         
         button.tapPublisher
