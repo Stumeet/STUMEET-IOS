@@ -20,6 +20,7 @@ class MyStudyGroupListViewController: BaseViewController {
         label.numberOfLines = 0
         return label
     }()
+    
     private lazy var studyGroupTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -27,6 +28,12 @@ class MyStudyGroupListViewController: BaseViewController {
         tableView.scrollsToTop = false
         tableView.registerCell(MyStudyGroupListTableViewCell.self)
         return tableView
+    }()
+    
+    private let emptyView: EmptyPlaceholderView = {
+        let emptyView = EmptyPlaceholderView(text: "가입한 스터디가 없어요.\n직접 스터디를 만들어 보세요!")
+        emptyView.isHidden = true
+        return emptyView
     }()
     
     // MARK: - Properties
@@ -64,6 +71,7 @@ class MyStudyGroupListViewController: BaseViewController {
     
     override func setupAddView() {
         view.addSubview(studyGroupTableView)
+        view.addSubview(emptyView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationTitleLabel)
         navigationItem.rightBarButtonItem = makeBarButtonItem("tabler_plus")
@@ -71,6 +79,11 @@ class MyStudyGroupListViewController: BaseViewController {
     
     override func setupConstaints() {
         studyGroupTableView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        emptyView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -113,6 +126,13 @@ class MyStudyGroupListViewController: BaseViewController {
             .sink(receiveValue: coordinator.startCreateStudyGroupCoordinator)
             .store(in: &cancellables)
         
+        output.showEmptyView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isShow in
+                guard let self else { return }
+                emptyView.isHidden = !isShow
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Function
