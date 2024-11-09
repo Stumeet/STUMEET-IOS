@@ -49,6 +49,10 @@
 		3554AABC2CDF4A2600705EDC /* ActivityNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABB2CDF4A2600705EDC /* ActivityNoticeViewController.swift */; };
 		3554AABE2CDF4B0000705EDC /* ActivityNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */; };
 		3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */; };
+		3554AAC72CDF672900705EDC /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC62CDF672900705EDC /* ScheduleViewController.swift */; };
+		3554AAC92CDF686C00705EDC /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */; };
+		3554AACB2CDF68B700705EDC /* ScheduleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */; };
+		3554AACD2CDF693900705EDC /* ScheduleSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */; };
 		355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BB2C3AB71500C50BA0 /* StudyService.swift */; };
 		355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */; };
 		355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */; };
@@ -391,6 +395,10 @@
 		3554AABB2CDF4A2600705EDC /* ActivityNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeViewController.swift; sourceTree = "<group>"; };
 		3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeViewModel.swift; sourceTree = "<group>"; };
 		3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeSceneDIContainer.swift; sourceTree = "<group>"; };
+		3554AAC62CDF672900705EDC /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCoordinator.swift; sourceTree = "<group>"; };
+		3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSceneDIContainer.swift; sourceTree = "<group>"; };
 		355A75BB2C3AB71500C50BA0 /* StudyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyService.swift; sourceTree = "<group>"; };
 		355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesRequestDTO.swift; sourceTree = "<group>"; };
 		355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListRepository.swift; sourceTree = "<group>"; };
@@ -771,6 +779,7 @@
 				CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */,
 				357193DF2C7E15F90057A94C /* StudyMemberSceneDIContainer.swift */,
 				3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */,
+				3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -970,6 +979,48 @@
 			isa = PBXGroup;
 			children = (
 				3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3554AAC12CDF66DD00705EDC /* ScheduleScenes */ = {
+			isa = PBXGroup;
+			children = (
+				3554AAC22CDF66F600705EDC /* Flows */,
+				3554AAC32CDF66FD00705EDC /* Schedule */,
+			);
+			path = ScheduleScenes;
+			sourceTree = "<group>";
+		};
+		3554AAC22CDF66F600705EDC /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		3554AAC32CDF66FD00705EDC /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				3554AAC52CDF670D00705EDC /* ViewModel */,
+				3554AAC42CDF670700705EDC /* View */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		3554AAC42CDF670700705EDC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3554AAC62CDF672900705EDC /* ScheduleViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3554AAC52CDF670D00705EDC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1736,6 +1787,7 @@
 		CA6447DB2B863BB90090DD84 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				3554AAC12CDF66DD00705EDC /* ScheduleScenes */,
 				3554AAB22CDF489900705EDC /* ActivityNoticeScenes */,
 				35BDF6F02B88CEFA000B6DCB /* AuthScenes */,
 				CA6447DC2B863BB90090DD84 /* HomeScenes */,
@@ -2816,6 +2868,7 @@
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
 				CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
+				3554AAC92CDF686C00705EDC /* ScheduleViewModel.swift in Sources */,
 				353A08B62C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift in Sources */,
 				35D49E292C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift in Sources */,
 				352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */,
@@ -2832,6 +2885,7 @@
 				357193E42C7E16410057A94C /* StudyMemberCoordinator.swift in Sources */,
 				352885F82BB9C9E800EFC0F6 /* UserTokenRepository.swift in Sources */,
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
+				3554AACB2CDF68B700705EDC /* ScheduleCoordinator.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
@@ -2903,6 +2957,7 @@
 				CA6448502B863BB90090DD84 /* UILabel++Extension.swift in Sources */,
 				355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */,
 				CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */,
+				3554AACD2CDF693900705EDC /* ScheduleSceneDIContainer.swift in Sources */,
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
 				358A93E92CC4EAB9007945D4 /* StudyMemberAdminResponseDTO.swift in Sources */,
 				CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */,
@@ -2941,6 +2996,7 @@
 				359923152C9C643C009822B7 /* StudyMemberDetailContextMenuView.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
 				CA5C85D92BB9852400A5F3D0 /* BottomSheetCalendarUseCase.swift in Sources */,
+				3554AAC72CDF672900705EDC /* ScheduleViewController.swift in Sources */,
 				CA023A5A2BF75B5500E98103 /* ActivityMemberSettingRepository.swift in Sources */,
 				3543578C2CC15FF500D99695 /* FCMTokenRequestDTO.swift in Sources */,
 				CA6448352B863BB90090DD84 /* HomeViewController.swift in Sources */,

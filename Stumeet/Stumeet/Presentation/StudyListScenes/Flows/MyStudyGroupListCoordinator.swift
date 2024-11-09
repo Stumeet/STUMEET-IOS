@@ -18,6 +18,7 @@ protocol MyStudyGroupListCoordinatorDependencies {
     func makeCreateStudyGroupCoordinator(navigationController: UINavigationController) -> CreateStudyGroupCoordinator
     func makeStudyMemberSceneDIContainer() -> StudyMemberSceneDIContainer
     func makeActivityNoticeSceneDIContainer() -> ActivityNoticeSceneDIContainer
+    func makeScheduleSceneDIContainer() -> ScheduleSceneDIContainer
 }
 
 protocol MyStudyGroupListNavigation: AnyObject {
@@ -34,6 +35,7 @@ protocol MyStudyGroupListNavigation: AnyObject {
     func startCreateStudyGroupCoordinator()
     func startStudyMemberCoordinator(studyId: Int)
     func startActivityNoticeCoordinator(studyId: Int)
+    func startScheduleCoordinator(studyId: Int)
     func popViewController()
     func dismiss()
 }
@@ -144,6 +146,19 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         let activityNoticeSceneDIContainer = dependencies.makeActivityNoticeSceneDIContainer()
         let flow = activityNoticeSceneDIContainer.makeActivityNoticeCoordinator(
             navigationController: noticeVC,
+            studyId: studyId
+        )
+        children.removeAll()
+        flow.parentCoordinator = self
+        children.append(flow)
+        flow.start()
+    }
+    
+    func startScheduleCoordinator(studyId: Int) {
+        let scheduleVC = UINavigationController()
+        let scheduleSceneDIContainer = dependencies.makeScheduleSceneDIContainer()
+        let flow = scheduleSceneDIContainer.makeScheduleCoordinator(
+            navigationController: scheduleVC,
             studyId: studyId
         )
         children.removeAll()
