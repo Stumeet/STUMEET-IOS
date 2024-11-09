@@ -74,14 +74,17 @@ class StudyMemberDetailViewController: BaseViewController {
     
     private let headerView = StudyMemberDetailInfoHeaderView()
     private var headerTapBarView = StudyMemberHeaderTapBarView(
-        options: StudyMemberDetailHeaderTapBarViewType.allCases.map { $0.title },
+        options: StudyMemberDetailHeaderTapBarViewType.allCases.map { ($0.title, $0.id) },
         initSelectedIndex: StudyMemberDetailHeaderTapBarViewType.meeting.id
     )
+    
+    private let snackBarView = SnackBar()
     
     private lazy var activityTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.delegate = self
         tableView.rowHeight = 91
         tableView.registerCell(StudyMemberActivityListTableViewCell.self)
         return tableView
@@ -94,6 +97,11 @@ class StudyMemberDetailViewController: BaseViewController {
     private var viewModel: StudyMemberDetailViewModel
     private var activityDataSource: UITableViewDiffableDataSource<StudyMemberActivityListSection, StudyMemberActivityListItem>?
     private lazy var contextMenuSize = contextMenu.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
+    private let didTapHeadderTapBarButtonSubject = PassthroughSubject<StudyMemberDetailHeaderTapBarViewType, Never>()
+    private let didReachTableBottomSubject = PassthroughSubject<Void, Never>()
+    private let didSelectMenuOptionSubject = PassthroughSubject<StudyMemberDetailModalViewType, Never>()
+    private let didTapModalConfirmSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -118,22 +126,15 @@ class StudyMemberDetailViewController: BaseViewController {
             textColor: StumeetColor.danger500.color,
             action: UIAction { [weak self] _ in
                 guard let self else { return }
-                coordinator.presentToExpulsionPopup(
-                    from: self,
-                    delegate: self,
-                    popupContextView: setExpulsionView()
-                )
+                didSelectMenuOptionSubject.send(.kickOut)
             }
         )
         contextMenu.addItem(
             title: "위임하기",
             action: UIAction { [weak self] _ in
                 guard let self else { return }
-                coordinator.presentToExpulsionPopup(
-                    from: self,
-                    delegate: self,
-                    popupContextView: setDelegateHostView()
-                )
+                didSelectMenuOptionSubject.send(.assignLeader)
+                
             }
         )
         contextMenu.isVisiblyHidden = true
@@ -145,10 +146,10 @@ class StudyMemberDetailViewController: BaseViewController {
         view.addSubview(headerTapBarView)
         view.addSubview(activityTableView)
         view.addSubview(contextMenu)
+        view.addSubview(snackBarView)
         
         navigationBarItems.leftBarButtonItem = xButton
         navigationBarItems.titleView = titleStackView
-        navigationBarItems.rightBarButtonItem = moreButton
         
         navigationBar.setItems([navigationBarItems], animated: true)
         
@@ -190,12 +191,95 @@ class StudyMemberDetailViewController: BaseViewController {
             $0.top.equalTo(navigationBar.snp.bottom).offset(-(contextMenuSize.height / 2))
             $0.trailing.equalToSuperview().offset((contextMenuSize.width / 2) - 16)
         }
+                
+        snackBarView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.height.equalTo(74)
+        }
     }
     
     override func bind() {
         // MARK: - Input
-        
+        let input = StudyMemberDetailViewModel.Input(
+            loadDataTrigger: loadDataSubject.eraseToAnyPublisher(),
+            didTapHeadderTapBarButton: didTapHeadderTapBarButtonSubject.eraseToAnyPublisher(),
+            didReachTableBottom: didReachTableBottomSubject.eraseToAnyPublisher(),
+            didSelectMenuOption: didSelectMenuOptionSubject.eraseToAnyPublisher(),
+            didTapModalConfirm: didTapModalConfirmSubject.eraseToAnyPublisher()
+        )
+
         // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.studyMemberHeaderItem
+            .receive(on: RunLoop.main)
+            .sink { [weak self] headerItem in
+                guard let self else { return }
+                headerView.configure(with: headerItem)
+            }
+            .store(in: &cancellables)
+        
+        output.showMoreButtonState
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isShowMorebutton in
+                guard let self else { return }
+                if isShowMorebutton {
+                    navigationBarItems.rightBarButtonItem =  moreButton
+                } else {
+                    navigationBarItems.rightBarButtonItem =  nil
+                }
+            }
+            .store(in: &cancellables)
+        
+        output.activityDataSource
+            .receive(on: RunLoop.main)
+            .sink { [weak self] items in
+                guard let self else { return }
+                updateSnapshot(items: items)
+            }
+            .store(in: &cancellables)
+        
+        output.showModalView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] text, modalType in
+                guard let self else { return }
+                var popupContextView: UIView?
+                
+                switch modalType {
+                case .kickOut:
+                    guard let text else { return }
+                    popupContextView = setKickOutView(name: text)
+                case .assignLeader:
+                    popupContextView = setDelegateHostView()
+                }
+                
+                guard let popupContextView else { return }
+                
+                coordinator.presentToExpulsionPopup(
+                    from: self,
+                    delegate: self,
+                    popupContextView: popupContextView
+                )
+            }
+            .store(in: &cancellables)
+        
+        output.modalConfirmActionCompleted
+            .receive(on: RunLoop.main)
+            .sink { [weak self] modalType in
+                guard let self else { return }
+                NotificationCenter.default.post(name: .studyMemberDataRefreshed, object: nil)
+                
+                switch modalType {
+                case .kickOut:
+                    dismiss(animated: true)
+                case .assignLeader:
+                    loadDataSubject.send()
+                    guard let text = modalType.snackBartitle else { return }
+                    showSnackBar(text: text)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -203,79 +287,8 @@ class StudyMemberDetailViewController: BaseViewController {
         super.viewDidLoad()
         setupDelegate()
         setupGesture()
-        // TODO: - API 연동 시 수정
         configureDatasource()
-        updateSnapshot(
-            items: [
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 0,
-                        tag: .meeting,
-                        title: "test1120399210390-2193-02910-39102-930-21930-9213387238732899823820394893028490328904",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .absent
-                    ),
-                    cellType: .firstCell,
-                    screenType: .detail
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 2,
-                        tag: .meeting,
-                        title: "test2",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .beforeStart
-                    ),
-                    cellType: .normal,
-                    screenType: .detail
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 3,
-                        tag: .homework,
-                        title: "test323094329048324321948fdsaklndfkjmnaikfniwejfeiuajhiufhawiluhfliuawhefliuhawiluefhilauwehfiluawhilufehliaufwehuliwfh",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: nil
-                    ),
-                    cellType: .normal,
-                    screenType: .detail
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 4,
-                        tag: .homework,
-                        title: "test4",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .noParticipation
-                    ),
-                    cellType: .normal,
-                    screenType: .detail
-                )]
-        )
+        loadDataSubject.send()
     }
 
     // MARK: - Function
@@ -286,13 +299,14 @@ class StudyMemberDetailViewController: BaseViewController {
     
     private func setupDelegate() {
         headerView.delegate = self
+        headerTapBarView.delegate = self
     }
     
     private func toggleContextMenu() {
         contextMenu.isVisiblyHidden.toggle()
     }
     
-    private func setExpulsionView() -> UIView {
+    private func setKickOutView(name: String) -> UIView {
         let view = UIView()
         let titleLabel: UILabel = {
             let label = UILabel()
@@ -303,9 +317,9 @@ class StudyMemberDetailViewController: BaseViewController {
             return label
         }()
         
-        titleLabel.text = "홍길동님을 추방하시겠어요?"
+        titleLabel.text = "\(name)님을 추방하시겠어요?"
         titleLabel.setColorAndFont(
-            to: "홍길동",
+            to: name,
             withColor: StumeetColor.gray900.color,
             withFont: StumeetFont.titleBold.font
         )
@@ -350,6 +364,24 @@ class StudyMemberDetailViewController: BaseViewController {
         return view
     }
     
+    private func showSnackBar(text: String) {
+        snackBarView.setupLabel(text: text, highlight: false)
+        snackBarView.isHidden = false
+        snackBarView.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) {
+            self.snackBarView.alpha = 1
+        } completion: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIView.animate(withDuration: 0.3) {
+                    self.snackBarView.alpha = 0
+                } completion: { _ in
+                    self.snackBarView.isHidden = true
+                }
+            }
+        }
+    }
+    
     @objc private func closeButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
@@ -364,8 +396,18 @@ class StudyMemberDetailViewController: BaseViewController {
 }
 
 extension StudyMemberDetailViewController:
+    UITableViewDelegate,
     StudyMemberDetailInfoHeaderViewDelegate,
-    StumeetConfirmationPopupViewControllerDelegate {
+    StumeetConfirmationPopupViewControllerDelegate,
+    StudyMemberHeaderTapBarViewDelegate {
+    
+    // MARK: - UITableViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yDelta = scrollView.contentOffset.y
+        let threshold = max(0, (scrollView.contentSize.height) * 0.3)
+
+        if yDelta > threshold { didReachTableBottomSubject.send() }
+    }
     
     // MARK: - DataSource
     private func configureDatasource() {
@@ -394,13 +436,14 @@ extension StudyMemberDetailViewController:
         coordinator.presentToComplimentPopup(from: self)
     }
     
-    // TODO: API 연동 시 수정
     // MARK: - StumeetConfirmationPopupViewControllerDelegate
     func confirmAction() {
-        print(#function)
+        didTapModalConfirmSubject.send()
     }
     
-    func cancelAction() {
-        print(#function)
+    // MARK: - StudyMemberHeaderTapBarViewDelegate
+    func didTapAction(_ button: StudyMemberHeaderTapBarView.RadioButton) {
+        guard let tapType = StudyMemberDetailHeaderTapBarViewType(rawValue: button.id) else { return }
+        didTapHeadderTapBarButtonSubject.send(tapType)
     }
 }

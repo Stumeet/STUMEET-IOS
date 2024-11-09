@@ -77,7 +77,7 @@ class StudyMemberViewController: BaseViewController {
     private weak var coordinator: StudyMemberNavigation!
     private let viewModel: StudyMemberViewModel
     private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, StudyMember>?
-    private let loadStudyMemberDataSubject = PassthroughSubject<Void, Never>()
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -87,10 +87,16 @@ class StudyMemberViewController: BaseViewController {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        setupNotification()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func setupStyles() {
@@ -111,7 +117,6 @@ class StudyMemberViewController: BaseViewController {
         
         navigationItem.leftBarButtonItem = xButton
         navigationItem.titleView = titleStackView
-        navigationItem.rightBarButtonItem = memberSettingsButton
     }
     
     override func setupConstaints() {
@@ -129,21 +134,24 @@ class StudyMemberViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMemberViewModel.Input(
-            loadStudyMemberData: loadStudyMemberDataSubject.eraseToAnyPublisher()
+            loadData: loadDataSubject.eraseToAnyPublisher(),
+            didSelectMemberRow: memberTableView.didSelectRowPublisher
         )
 
         // MARK: - Output
         let output = viewModel.transform(input: input)
         
-        // TODO: - 임시 viewModel 생성 시 수정
-        memberTableView.didSelectRowPublisher
+        output.presentToMemberDetailVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] selectRow in
+            .sink { [weak self] selectRow, studyId in
                 guard let self = self else { return }
-                
-                coordinator.presentToMemberDetailVC()
+                coordinator.presentToMemberDetailVC(
+                    studyId: studyId,
+                    studyMemberId: selectRow.id
+                )
             }
             .store(in: &cancellables)
+        
         
         output.studyMemberDataSource
             .receive(on: RunLoop.main)
@@ -158,20 +166,28 @@ class StudyMemberViewController: BaseViewController {
                 self?.updateTitleCount(memberTotal: total)
             }
             .store(in: &cancellables)
+        
+        output.isAdminChecked
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isAdmin in
+                guard let self else { return }
+                navigationItem.rightBarButtonItem = isAdmin ? memberSettingsButton : nil
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDatasource()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        loadStudyMemberDataSubject.send()
+        loadDataSubject.send()
     }
     
     // MARK: - Function
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMemberList), name: .studyMemberDataRefreshed, object: nil)
+    }
+    
     private func updateTitleCount(memberTotal: Int) {
         titleCountLabel.text = String(memberTotal)
     }
@@ -183,6 +199,10 @@ class StudyMemberViewController: BaseViewController {
     @objc func memberSettingsButtonTapped(_ sender: UIBarButtonItem) {
         coordinator.goToMemberAchievementVC()
     }
+    
+    @objc private func updateMemberList() {
+        loadDataSubject.send()
+    }
 }
 
 extension StudyMemberViewController:
@@ -193,7 +213,6 @@ extension StudyMemberViewController:
     }
     
     // MARK: - DataSource
-    // TODO: - API 연동 시 수정
     private func configureDatasource() {
         studyMemberDataSource = UITableViewDiffableDataSource(
             tableView: memberTableView,
@@ -205,7 +224,7 @@ extension StudyMemberViewController:
             }
         )
     }
-    // TODO: - API 연동 시 수정
+    
     private func updateSnapshot(items: [StudyMember]) {
         var snapshot = NSDiffableDataSourceSnapshot<StudyMemberListSection, StudyMember>()
         snapshot.appendSections([.main])

@@ -9,6 +9,7 @@ import Foundation
 
 struct BreifStudyActivityResponseDTO: Decodable {
     let items: [BreifActivityItemResponseDTO]
+    let pageInfo: PageInfoResponseDTO
 }
 
 extension BreifStudyActivityResponseDTO {
@@ -17,6 +18,11 @@ extension BreifStudyActivityResponseDTO {
         let category, title, startDate, endDate: String
         let location: String?
         let status, createdAt: String
+    }
+    
+    func toDomain() -> ActivityPage {
+        return .init(pageInfo: pageInfo.toDomain(),
+                     activitys: items.map { $0.toDomain() })
     }
 }
 

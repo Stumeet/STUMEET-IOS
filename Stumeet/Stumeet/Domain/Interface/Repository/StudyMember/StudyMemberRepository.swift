@@ -10,4 +10,8 @@ import Moya
 
 protocol StudyMemberRepository {
     func fetchStudyMembers(studyID: Int) -> AnyPublisher<[StudyMember], MoyaError>
+    func checkIfAdmin(studyID: Int) -> AnyPublisher<Bool, MoyaError>
+    func fetchStudyMemberDetailInfo(studyID: Int, memberID: Int) -> AnyPublisher<StudyMember, MoyaError>
+    func removeStudyMember(studyID: Int, memberID: Int) -> AnyPublisher<Bool, MoyaError>
+    func delegateAdminRights(studyID: Int, memberID: Int) -> AnyPublisher<Bool, MoyaError>
 }

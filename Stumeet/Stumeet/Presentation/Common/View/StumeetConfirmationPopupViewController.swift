@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-protocol StumeetConfirmationPopupViewControllerDelegate: AnyObject {
+@objc protocol StumeetConfirmationPopupViewControllerDelegate: AnyObject {
     func confirmAction()
-    func cancelAction()
+    @objc optional func cancelAction()
 }
 
 class StumeetConfirmationPopupViewController: BaseViewController {
@@ -148,7 +148,7 @@ class StumeetConfirmationPopupViewController: BaseViewController {
     
     @objc private func cancelButtonTapped(_ sender: UIButton) {
         animateToCollapsedState { [weak self] in
-            self?.delegate?.cancelAction()
+            self?.delegate?.cancelAction?()
         }
     }
 }

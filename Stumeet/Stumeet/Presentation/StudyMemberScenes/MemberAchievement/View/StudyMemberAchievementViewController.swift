@@ -35,7 +35,7 @@ class StudyMemberAchievementViewController: BaseViewController {
     }()
     
     private var headerTapBarView = StudyMemberHeaderTapBarView(
-        options: StudyMemberAchievementHeaderTapBarViewType.allCases.map { $0.title },
+        options: StudyMemberAchievementHeaderTapBarViewType.allCases.map { ($0.title, $0.id) },
         initSelectedIndex: StudyMemberAchievementHeaderTapBarViewType.meeting.id
     )
     

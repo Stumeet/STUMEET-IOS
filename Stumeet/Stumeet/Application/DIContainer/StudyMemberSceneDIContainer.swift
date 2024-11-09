@@ -26,15 +26,40 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         DefaultStudyMemberRepository(provider: dependencies.provider.makeProvider())
     }
     
+    func makeStudyActivityRepository() -> StudyActivityRepository {
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
+    }
+    
     // MARK: - Use Cases
     func makeStudyMemberUseCase() -> StudyMemberUseCase {
         DefaultStudyMemberUseCase(repository: makeStudyMemberRepository())
     }
     
+    func makeCheckAdminUseCase() -> CheckAdminUseCase {
+        DefaultCheckAdminUseCase(repository: makeStudyMemberRepository())
+    }
+    
+    func makeFetchStudyMemberDetailUseCase() -> FetchStudyMemberDetailUseCase {
+        DefaultFetchStudyMemberDetailUseCase(repository: makeStudyMemberRepository())
+    }
+    
+    func makeFetchStudyMemberActivityUseCase() -> FetchStudyMemberActivityUseCase {
+        DefaultFetchStudyMemberActivityUseCase(repository: makeStudyActivityRepository())
+    }
+    
+    func makeKickOutStudyMemberUseCase() -> KickOutStudyMemberUseCase {
+        DefaultKickOutStudyMemberUseCase(repository: makeStudyMemberRepository())
+    }
+    
+    func makeDelegateStudyAdminUseCase() -> DelegateStudyAdminUseCase {
+        DefaultDelegateStudyAdminUseCase(repository: makeStudyMemberRepository())
+    }
+    
     // MARK: - StudyMember
     func makeStudyMemberViewModel(studyId: Int) -> StudyMemberViewModel {
         StudyMemberViewModel(
-            useCase: makeStudyMemberUseCase(),
+            studyMemberUseCase: makeStudyMemberUseCase(),
+            checkAdminUseCase: makeCheckAdminUseCase(),
             studyId: studyId
         )
     }
@@ -47,14 +72,25 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     }
     
     // MARK: - StudyMemberDetail
-    func makeStudyMemberDetailModel() -> StudyMemberDetailViewModel {
-        StudyMemberDetailViewModel()
+    func makeStudyMemberDetailModel(studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewModel {
+        StudyMemberDetailViewModel(
+            fetchStudyMemberDetailUseCase: makeFetchStudyMemberDetailUseCase(),
+            fetchStudyMemberActivityUseCase: makeFetchStudyMemberActivityUseCase(),
+            checkAdminUseCase: makeCheckAdminUseCase(),
+            kickOutStudyMemberUseCase: makeKickOutStudyMemberUseCase(),
+            delegateStudyAdminUseCase: makeDelegateStudyAdminUseCase(),
+            studyId: studyId,
+            studyMemberId: studyMemberId
+        )
     }
     
-    func makeStudyMemberDetailVC(coordinator: Navigation) -> StudyMemberDetailViewController {
+    func makeStudyMemberDetailVC(coordinator: Navigation, studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewController {
         StudyMemberDetailViewController(
             coordinator: coordinator,
-            viewModel: makeStudyMemberDetailModel()
+            viewModel: makeStudyMemberDetailModel(
+                studyId: studyId,
+                studyMemberId: studyMemberId
+            )
         )
     }
     

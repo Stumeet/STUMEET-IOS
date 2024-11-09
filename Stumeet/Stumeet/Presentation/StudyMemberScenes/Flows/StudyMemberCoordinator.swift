@@ -11,14 +11,14 @@ import Moya
 
 protocol StudyMemberCoordinatorDependencies {
     func makeStudyMemberVC(coordinator: StudyMemberNavigation, studyId: Int) -> StudyMemberViewController
-    func makeStudyMemberDetailVC(coordinator: StudyMemberNavigation) -> StudyMemberDetailViewController
+    func makeStudyMemberDetailVC(coordinator: StudyMemberNavigation, studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewController
     func makeStudyMemberAchievementVC(coordinator: StudyMemberNavigation) -> StudyMemberAchievementViewController
     func makeStudyMemberMeetingDetailVC(coordinator: StudyMemberNavigation) -> StudyMemberMeetingDetailViewController
 }
 
 protocol StudyMemberNavigation: AnyObject {
     func presentToMemberVC()
-    func presentToMemberDetailVC()
+    func presentToMemberDetailVC(studyId: Int, studyMemberId: Int)
     func presentToComplimentPopup(from viewController: UIViewController)
     func presentToExpulsionPopup(
         from viewController: UIViewController,
@@ -70,9 +70,11 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         parentCoordinator?.navigationController.presentedViewController?.present(navigationController, animated: true, completion: nil)
     }
     
-    func presentToMemberDetailVC() {
+    func presentToMemberDetailVC(studyId: Int, studyMemberId: Int) {
         let memberDetailVC = dependencies.makeStudyMemberDetailVC(
-            coordinator: self
+            coordinator: self,
+            studyId: studyId,
+            studyMemberId: studyMemberId
         )
 
         navigationController.present(memberDetailVC, animated: true, completion: nil)
