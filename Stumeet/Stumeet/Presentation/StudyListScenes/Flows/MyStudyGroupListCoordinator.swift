@@ -17,6 +17,7 @@ protocol MyStudyGroupListCoordinatorDependencies {
     func makeDetailActivityMemberListVC(coordinator: MyStudyGroupListNavigation, studyID: Int, activityID: Int) -> DetailActivityMemberListViewController
     func makeCreateStudyGroupCoordinator(navigationController: UINavigationController) -> CreateStudyGroupCoordinator
     func makeStudyMemberSceneDIContainer() -> StudyMemberSceneDIContainer
+    func makeActivityNoticeSceneDIContainer() -> ActivityNoticeSceneDIContainer
 }
 
 protocol MyStudyGroupListNavigation: AnyObject {
@@ -32,6 +33,7 @@ protocol MyStudyGroupListNavigation: AnyObject {
     func startCreateActivityCoordinator(activity: ActivityCategory)
     func startCreateStudyGroupCoordinator()
     func startStudyMemberCoordinator(studyId: Int)
+    func startActivityNoticeCoordinator(studyId: Int)
     func popViewController()
     func dismiss()
 }
@@ -129,6 +131,19 @@ extension MyStudyGroupListCoordinator: MyStudyGroupListNavigation {
         let studyMemberSceneDIContainer = dependencies.makeStudyMemberSceneDIContainer()
         let flow = studyMemberSceneDIContainer.makeStudyMemberCoordinator(
             navigationController: studyMemberNVC,
+            studyId: studyId
+        )
+        children.removeAll()
+        flow.parentCoordinator = self
+        children.append(flow)
+        flow.start()
+    }
+    
+    func startActivityNoticeCoordinator(studyId: Int) {
+        let noticeVC = UINavigationController()
+        let activityNoticeSceneDIContainer = dependencies.makeActivityNoticeSceneDIContainer()
+        let flow = activityNoticeSceneDIContainer.makeActivityNoticeCoordinator(
+            navigationController: noticeVC,
             studyId: studyId
         )
         children.removeAll()

@@ -45,6 +45,10 @@
 		35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B192B9F506200252283 /* KakaoLoginService.swift */; };
 		3554AAAA2CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */; };
 		3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */; };
+		3554AAB82CDF49B900705EDC /* ActivityNoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAB72CDF49B900705EDC /* ActivityNoticeCoordinator.swift */; };
+		3554AABC2CDF4A2600705EDC /* ActivityNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABB2CDF4A2600705EDC /* ActivityNoticeViewController.swift */; };
+		3554AABE2CDF4B0000705EDC /* ActivityNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */; };
+		3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */; };
 		355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BB2C3AB71500C50BA0 /* StudyService.swift */; };
 		355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */; };
 		355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */; };
@@ -383,6 +387,10 @@
 		35446B192B9F506200252283 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
 		3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateStudyAdminUseCase.swift; sourceTree = "<group>"; };
 		3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAdminDelegateRequestDTO.swift; sourceTree = "<group>"; };
+		3554AAB72CDF49B900705EDC /* ActivityNoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeCoordinator.swift; sourceTree = "<group>"; };
+		3554AABB2CDF4A2600705EDC /* ActivityNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeViewController.swift; sourceTree = "<group>"; };
+		3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeViewModel.swift; sourceTree = "<group>"; };
+		3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeSceneDIContainer.swift; sourceTree = "<group>"; };
 		355A75BB2C3AB71500C50BA0 /* StudyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyService.swift; sourceTree = "<group>"; };
 		355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesRequestDTO.swift; sourceTree = "<group>"; };
 		355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListRepository.swift; sourceTree = "<group>"; };
@@ -762,6 +770,7 @@
 				CA98F6BB2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift */,
 				CA98F6AC2BEDEB8300C36772 /* CreateActivityDIContainer.swift */,
 				357193DF2C7E15F90057A94C /* StudyMemberSceneDIContainer.swift */,
+				3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -921,6 +930,48 @@
 				35C992932BA3412C003B0AE7 /* Auth */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		3554AAB22CDF489900705EDC /* ActivityNoticeScenes */ = {
+			isa = PBXGroup;
+			children = (
+				3554AAB62CDF499100705EDC /* Flows */,
+				3554AAB32CDF491D00705EDC /* Notice */,
+			);
+			path = ActivityNoticeScenes;
+			sourceTree = "<group>";
+		};
+		3554AAB32CDF491D00705EDC /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				3554AABA2CDF49FC00705EDC /* ViewModel */,
+				3554AAB92CDF49F500705EDC /* View */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
+		3554AAB62CDF499100705EDC /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				3554AAB72CDF49B900705EDC /* ActivityNoticeCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		3554AAB92CDF49F500705EDC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3554AABB2CDF4A2600705EDC /* ActivityNoticeViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3554AABA2CDF49FC00705EDC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		355A75BA2C3AB6FA00C50BA0 /* Study */ = {
@@ -1685,6 +1736,7 @@
 		CA6447DB2B863BB90090DD84 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				3554AAB22CDF489900705EDC /* ActivityNoticeScenes */,
 				35BDF6F02B88CEFA000B6DCB /* AuthScenes */,
 				CA6447DC2B863BB90090DD84 /* HomeScenes */,
 				CA6447E02B863BB90090DD84 /* StudyListScenes */,
@@ -2753,6 +2805,7 @@
 				3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */,
 				CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
+				3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
 				CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */,
 				CA01B2872C0452DB00A01CEA /* DetailActivityMemberListViewController.swift in Sources */,
@@ -2819,6 +2872,7 @@
 				CA6450962C1480A900E00665 /* GroupStudyActivityViewModel.swift in Sources */,
 				CA01B2832C01D63F00A01CEA /* DetailActivityPhotoSection.swift in Sources */,
 				CAD45A0B2BB40CE0006BCB4A /* BottomSheetCalendarViewController.swift in Sources */,
+				3554AABE2CDF4B0000705EDC /* ActivityNoticeViewModel.swift in Sources */,
 				35435BBA2C310FED00BED2A9 /* UserDefaults++Extension.swift in Sources */,
 				352885F22BB9C79600EFC0F6 /* UserTokenService.swift in Sources */,
 				CA94FD7B2C50DFDE00A11A8E /* CreateStudyGroupDIContainer.swift in Sources */,
@@ -2988,6 +3042,7 @@
 				355A75CA2C3AC1F700C50BA0 /* StudiesResponseDTO.swift in Sources */,
 				CA94FD892C528B7600A11A8E /* SelectStudyItem.swift in Sources */,
 				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
+				3554AABC2CDF4A2600705EDC /* ActivityNoticeViewController.swift in Sources */,
 				CA617BF92C44058E000A3698 /* DetailActivityResponseDTO.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
 				CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */,
@@ -3023,6 +3078,7 @@
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
 				CA107A692C6105CF00163407 /* SelectStudyTimeUseCase.swift in Sources */,
 				CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */,
+				3554AAB82CDF49B900705EDC /* ActivityNoticeCoordinator.swift in Sources */,
 				CA6450882C14220200E00665 /* PopUp.swift in Sources */,
 				CA01B28D2C04654000A01CEA /* DetailActivityMemberListUseCase.swift in Sources */,
 			);
