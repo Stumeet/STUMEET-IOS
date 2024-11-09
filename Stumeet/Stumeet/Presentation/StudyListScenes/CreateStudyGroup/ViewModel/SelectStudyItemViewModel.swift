@@ -30,13 +30,15 @@ final class SelectStudyItemViewModel: ViewModelType {
     
     private let useCase: SelectStudyGroupItemUseCase
     let itemType: CreateStudySelectItemType
+    private let selectedItem: String
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     
-    init(useCase: SelectStudyGroupItemUseCase, type: CreateStudySelectItemType) {
+    init(useCase: SelectStudyGroupItemUseCase, type: CreateStudySelectItemType, selectedItem: String) {
         self.useCase = useCase
         self.itemType = type
+        self.selectedItem = selectedItem
     }
     
     // MARK: - Transform
@@ -45,7 +47,7 @@ final class SelectStudyItemViewModel: ViewModelType {
         
         let itemSubject = CurrentValueSubject<[SelectStudyItem], Never>([])
         
-        useCase.getItems(type: itemType)
+        useCase.getItems(type: itemType, selectedItem: selectedItem)
             .sink(receiveValue: itemSubject.send)
             .store(in: &cancellables)
         

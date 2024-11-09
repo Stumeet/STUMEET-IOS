@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol CreateStudyGroupUseCase {
-    func getIsEnableTagAddButton(text: String) -> AnyPublisher<Bool, Never>
+    func getIsEnableTagAddButton(text: String?) -> AnyPublisher<Bool, Never>
     func addTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
     func removeTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never>
     func getCurrentDate() -> Date
@@ -29,8 +29,9 @@ final class DefaultCreateStudyGroupUseCase: CreateStudyGroupUseCase {
         self.repository = repository
     }
     
-    func getIsEnableTagAddButton(text: String) -> AnyPublisher<Bool, Never> {
-        return Just(!text.isEmpty).eraseToAnyPublisher()
+    func getIsEnableTagAddButton(text: String?) -> AnyPublisher<Bool, Never> {
+        let result = text ?? ""
+        return Just(!result.isEmpty).eraseToAnyPublisher()
     }
     
     func addTag(tags: [String], newTag: String) -> AnyPublisher<[String], Never> {

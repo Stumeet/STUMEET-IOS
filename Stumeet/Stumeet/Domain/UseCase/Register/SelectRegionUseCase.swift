@@ -28,10 +28,18 @@ final class DefaultSelectRegionUseCase: SelectRegionUseCase {
         return repository.fetchRegions()
             .first()
             .map { regions in
+                
                 var updatedRegions = regions
+                let selectedRegion = regions[indexPath.row]
+                
                 for index in updatedRegions.indices {
-                    updatedRegions[index].isSelected = updatedRegions[index] == updatedRegions[indexPath.row]
+                    if selectedRegion.isSelected {
+                        updatedRegions[index].isSelected = false
+                    } else {
+                        updatedRegions[index].isSelected = (index == indexPath.row)
+                    }
                 }
+                
                 self.repository.updateRegions(regions: updatedRegions)
                 return updatedRegions
             }

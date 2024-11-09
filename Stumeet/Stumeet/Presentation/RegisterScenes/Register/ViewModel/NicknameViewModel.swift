@@ -24,6 +24,7 @@ final class NicknameViewModel: ViewModelType {
         let count: AnyPublisher<Int, Never>
         let isBiggerThanTen: AnyPublisher<Bool, Never>
         let isNextButtonEnable: AnyPublisher<Bool, Never>
+        let isValidNickname: AnyPublisher<Bool, Never>
         let navigateToSelectRegionVC: AnyPublisher<Register, Never>
     }
     
@@ -50,8 +51,13 @@ final class NicknameViewModel: ViewModelType {
             .sink(receiveValue: nicknameSubject.send)
             .store(in: &cancellables)
         
-        let isDuplicate = input.changeText
+        let isDuplicate = input.didTapNextButton
+            .map { self.nicknameSubject.value }
             .flatMap(useCase.checkNicknameDuplicate)
+            .eraseToAnyPublisher()
+        
+        let isValidNickname = nicknameSubject
+            .flatMap(useCase.checkIsValidNickname)
             .eraseToAnyPublisher()
         
         let count = input.changeText
@@ -62,7 +68,9 @@ final class NicknameViewModel: ViewModelType {
             .flatMap(useCase.checkNicknameLonggestThanTen)
             .eraseToAnyPublisher()
         
-        let navigateToSelectRegionVC = input.didTapNextButton
+        
+        let navigateToSelectRegionVC = isDuplicate
+            .filter { !$0 }
             .flatMap { [weak self] _ in
                 let nickname = self?.nicknameSubject.value
                 self?.register.nickname = nickname
@@ -81,6 +89,7 @@ final class NicknameViewModel: ViewModelType {
             count: count,
             isBiggerThanTen: isBiggerThanTen,
             isNextButtonEnable: isNextButtonEnable,
+            isValidNickname: isValidNickname,
             navigateToSelectRegionVC: navigateToSelectRegionVC
         )
     }

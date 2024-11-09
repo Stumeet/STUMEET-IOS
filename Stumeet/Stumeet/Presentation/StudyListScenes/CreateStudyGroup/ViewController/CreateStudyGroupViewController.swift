@@ -110,7 +110,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let tagTextField: UITextField = {
         let textField = UITextField()
         textField.addLeftPadding(24)
-        textField.placeholder = "태그를 직접 입략해주세요.(최대 5개)"
+        textField.placeholder = "태그를 직접 입력해주세요.(최대 5개)"
         textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
         textField.layer.cornerRadius = 16
         textField.backgroundColor = StumeetColor.primary50.color
@@ -145,9 +145,9 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let periodContainerView = UIView()
     private let periodLabel: UILabel = createEssentialLabel(text: "진행 기간 *")
-    private let periodStartButton = createConfigButton(title: "2024.01.08", image: UIImage(resource: .calendar), radius: 16)
+    private let periodStartButton = createConfigButton(title: "2024.01.08", image: UIImage(resource: .CreateStudyGroup.studyGroupCalendar), radius: 16)
     private let periodIngLabel = UILabel().setLabelProperty(text: "~", font: StumeetFont.bodyMedium15.font, color: .gray800)
-    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color), radius: 16)
+    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .CreateStudyGroup.studyGroupCalendar).withTintColor(StumeetColor.gray400.color), radius: 16)
     
     private let studyMeetingContainerView = UIView()
     private let studyMeetingLabel = createEssentialLabel(text: "스터디 정기 모임 *")
@@ -196,6 +196,8 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpTapGesture()
+        setupKeyboardNotifications()
     }
     
     // MARK: - SetUp
@@ -278,7 +280,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func setupConstaints() {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
+            make.bottom.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(16)
         }
 
@@ -446,6 +448,45 @@ final class CreateStudyGroupViewController: BaseViewController {
         }
     }
 
+    private func setUpTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
+            if let activeTextView = studyRuleContainerView.findFirstResponder() as? UITextView {
+                let textViewFrameInScrollView = scrollView.convert(activeTextView.frame, from: activeTextView.superview)
+                scrollView.scrollRectToVisible(textViewFrameInScrollView, animated: true)
+            }
+            
+            if let activeTextView = explainContainerView.findFirstResponder() as? UITextView {
+                let textViewFrameInScrollView = scrollView.convert(activeTextView.frame, from: activeTextView.superview)
+                scrollView.scrollRectToVisible(textViewFrameInScrollView, animated: true)
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // 키보드가 사라지면 스크롤뷰의 inset을 다시 원래대로 되돌립니다.
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
     
     // MARK: - Bind
     
@@ -482,7 +523,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.goToSelectStudyGroupFieldVC
-            .map { (self, $0) }
+            .map { (self, $0.0, $0.1) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
             .store(in: &cancellables)
@@ -498,6 +539,11 @@ final class CreateStudyGroupViewController: BaseViewController {
             .sink(receiveValue: updateTagAddButton)
             .store(in: &cancellables)
         
+        output.tagText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: tagTextField)
+            .store(in: &cancellables)
+        
         output.addedTags
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
@@ -509,7 +555,7 @@ final class CreateStudyGroupViewController: BaseViewController {
             .store(in: &cancellables)
         
         output.goToSelectStudyGroupRegionVC
-            .map { (self, $0) }
+            .map { (self, $0.0, $0.1) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
             .store(in: &cancellables)
@@ -648,7 +694,7 @@ extension CreateStudyGroupViewController {
         var config = UIButton.Configuration.plain()
         
         config.image = image
-        config.imagePadding = 6
+        config.imagePadding = 8
         
         var titleAttributes = AttributedString(title)
         titleAttributes.font = StumeetFont.bodyMedium14.font

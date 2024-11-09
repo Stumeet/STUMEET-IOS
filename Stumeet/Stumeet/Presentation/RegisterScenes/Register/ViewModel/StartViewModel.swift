@@ -20,6 +20,7 @@ final class StartViewModel: ViewModelType {
     
     struct Output {
         let isNaviteToTabBar: AnyPublisher<Bool, Never>
+        let profileImageData: AnyPublisher<Data, Never>
     }
     
     // MARK: - Properties
@@ -44,6 +45,9 @@ final class StartViewModel: ViewModelType {
             .eraseToAnyPublisher()
         
         
-        return Output(isNaviteToTabBar: isNavigateToTabBar)
+        return Output(
+            isNaviteToTabBar: isNavigateToTabBar,
+            profileImageData: Just(register.profileImage).eraseToAnyPublisher()
+        )
     }
 }

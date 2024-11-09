@@ -78,17 +78,18 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - SelectStudyGroupItem
     
-    func makeSelectStudyGroupItemVM(type: CreateStudySelectItemType) -> SelectStudyItemViewModel {
+    func makeSelectStudyGroupItemVM(type: CreateStudySelectItemType, selectedItem: String) -> SelectStudyItemViewModel {
         SelectStudyItemViewModel(
             useCase: makeSelectStudyGroupItemUseCase(),
-            type: type
+            type: type,
+            selectedItem: selectedItem
         )
     }
     
-    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController {
+    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType, selectedItem: String) -> SelectStudyGroupItemViewController {
         SelectStudyGroupItemViewController(
             coordinator: coordinator,
-            viewModel: makeSelectStudyGroupItemVM(type: type)
+            viewModel: makeSelectStudyGroupItemVM(type: type, selectedItem: selectedItem)
         )
     }
     
