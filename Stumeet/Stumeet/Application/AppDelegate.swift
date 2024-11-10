@@ -8,6 +8,8 @@
 import UIKit
 import KakaoSDKAuth
 import KakaoSDKCommon
+import FirebaseCore
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         KakaoSDK.initSDK(appKey: AppConfiguration.getKakaoNativeAppKey)
+        FirebaseApp.configure()
+        setNotification(application)
         return true
     }
 
@@ -35,5 +39,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         guard AuthApi.isKakaoTalkLoginUrl(url) else { return false }
         return AuthController.handleOpenUrl(url: url)
+    }
+}
+
+extension AppDelegate:
+    UNUserNotificationCenterDelegate,
+    MessagingDelegate {
+    
+    private func setNotification(_ application: UIApplication) {
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+          options: authOptions,
+          completionHandler: { _, _ in }
+        )
+
+        application.registerForRemoteNotifications()
+    }
+    
+    // MARK: - MessagingDelegate
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        guard let token = fcmToken else { return }
+        
+        UserDefaults.standard.setFCMToken(token)
+        NotificationCenter.default.post(name: .fcmToken, object: nil)
     }
 }

@@ -37,6 +37,11 @@ final class AppDIContainer {
                                networkLoggerPlugin: NetworkLoggerPlugin()
         )
     }()
+    
+    // MARK: - FCMToken
+    lazy var fcmTokenManager: FCMTokenManager = {
+        FCMTokenManager(repository: DefaultFCMTokenRepository(provider: networkServiceProvider.makeProvider()))
+    }()
 
     // MARK: - DIContainers of scenes
     func makeAuthSceneDIContainer() -> AuthSceneDIContainer {
@@ -47,13 +52,6 @@ final class AppDIContainer {
             appleLoginService: appleLoginService
         )
         return AuthSceneDIContainer(dependencies: dependencies)
-    }
-    
-    func makeRegisterSceneDIContainer() -> RegisterSceneDIContainer {
-        let dependencies = RegisterSceneDIContainer.Dependencies(
-            provider: networkServiceProvider
-        )
-        return RegisterSceneDIContainer(dependencies: dependencies)
     }
     
     func makeMyStudyGroupListDIContainer() -> MyStudyGroupListDIContainer {
