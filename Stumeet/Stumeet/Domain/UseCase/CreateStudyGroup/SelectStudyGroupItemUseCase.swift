@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol SelectStudyGroupItemUseCase {
-    func getItems(type: CreateStudySelectItemType) -> AnyPublisher<[SelectStudyItem], Never>
+    func getItems(type: CreateStudySelectItemType, selectedItem: String) -> AnyPublisher<[SelectStudyItem], Never>
     func getSelectedItems(indexPath: IndexPath, items: [SelectStudyItem]) -> AnyPublisher<[SelectStudyItem], Never>
     func getIsEnableCompleteButton(items: [SelectStudyItem]) -> AnyPublisher<Bool, Never>
     func getSelectedItem(items: [SelectStudyItem]) -> AnyPublisher<SelectStudyItem, Never>
@@ -23,12 +23,19 @@ final class DefaultSelectStudyItemUseCase: SelectStudyGroupItemUseCase {
         self.repository = repository
     }
     
-    func getItems(type: CreateStudySelectItemType) -> AnyPublisher<[SelectStudyItem], Never> {
+    func getItems(type: CreateStudySelectItemType, selectedItem: String) -> AnyPublisher<[SelectStudyItem], Never> {
         switch type {
         case .field:
             return repository.getFieldItems()
+                .map { ($0, selectedItem) }
+                .map(setInitialSelectedItem)
+                .eraseToAnyPublisher()
         case .region:
             return repository.getRegionItems()
+                .map { ($0, selectedItem) }
+                .map(setInitialSelectedItem)
+                .eraseToAnyPublisher()
+            
         }
     }
     
@@ -52,5 +59,18 @@ final class DefaultSelectStudyItemUseCase: SelectStudyGroupItemUseCase {
     
     func getSelectedItem(items: [SelectStudyItem]) -> AnyPublisher<SelectStudyItem, Never> {
         return Just(items.filter { $0.isSelected }.first!).eraseToAnyPublisher()
+    }
+}
+
+
+// MARK: - Functions
+
+extension DefaultSelectStudyItemUseCase {
+    private func setInitialSelectedItem(fields: [SelectStudyItem], selectedItem: String) -> [SelectStudyItem] {
+        return fields.map { field in
+            var updatedField = field
+            updatedField.isSelected = field.name == selectedItem
+            return updatedField
+        }
     }
 }

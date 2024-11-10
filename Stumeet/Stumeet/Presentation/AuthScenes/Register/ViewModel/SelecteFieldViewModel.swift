@@ -89,7 +89,7 @@ final class SelecteFieldViewModel: ViewModelType {
 extension SelecteFieldViewModel {
     private func updateRegister(fields: [Field]) {
         let fieldId = fields.filter { $0.isSelected }
-            .map { $0.id }.first!
+            .map { $0.id }.first
         
         register.field = fieldId
         fieldItemSubject.send(fields)

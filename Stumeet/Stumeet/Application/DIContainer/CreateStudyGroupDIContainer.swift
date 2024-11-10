@@ -31,6 +31,16 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         DefaultSetStudyGroupPeriodRepository()
     }
     
+    func makeMonthlyDaysRepository() -> MonthlyDaysRepository {
+        DefaultMonthlyDaysRepository()
+    }
+    
+    func makeCreateStudyGroupRepository() -> CreateStudyGroupRepository {
+        DefaultCreateStudyGroupRepository(
+            provider: dependencies.provider.makeProvider()
+        )
+    }
+    
     // MARK: - UseCase
     
     func makeSelectStudyGroupItemUseCase() -> SelectStudyGroupItemUseCase {
@@ -38,7 +48,7 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     }
     
     func makeCreateStudyGroupUseCase() -> CreateStudyGroupUseCase {
-        DefaultCreateStudyGroupUseCase()
+        DefaultCreateStudyGroupUseCase(repository: makeCreateStudyGroupRepository())
     }
     
     func makeSetStudyGroupPeriodUseCase() -> SetStudyGroupPeriodUseCase {
@@ -47,6 +57,10 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     func makeSelectStudyTimeUseCase() -> SelectStudyTimeUseCase {
         DefaultSelectStudyTimeUseCase()
+    }
+    
+    func makeSelectStudyRepeatUseCase() -> SelectStudyRepeatUseCase {
+        DefaultSelectStudyRepeatUseCase(repository: makeMonthlyDaysRepository())
     }
     
     // MARK: - CreateStudyGroupVC
@@ -64,17 +78,18 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
     
     // MARK: - SelectStudyGroupItem
     
-    func makeSelectStudyGroupItemVM(type: CreateStudySelectItemType) -> SelectStudyItemViewModel {
+    func makeSelectStudyGroupItemVM(type: CreateStudySelectItemType, selectedItem: String) -> SelectStudyItemViewModel {
         SelectStudyItemViewModel(
             useCase: makeSelectStudyGroupItemUseCase(),
-            type: type
+            type: type,
+            selectedItem: selectedItem
         )
     }
     
-    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController {
+    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType, selectedItem: String) -> SelectStudyGroupItemViewController {
         SelectStudyGroupItemViewController(
             coordinator: coordinator,
-            viewModel: makeSelectStudyGroupItemVM(type: type)
+            viewModel: makeSelectStudyGroupItemVM(type: type, selectedItem: selectedItem)
         )
     }
     
@@ -109,5 +124,16 @@ final class CreateStudyGroupDIContainer: CreateStudyGroupCoordinatorDependencies
         )
     }
     
+    // MARK: - SelectStudyRepeat
     
+    func makeSelectStudyRepeatVM() -> SelectStudyRepeatViewModel {
+        SelectStudyRepeatViewModel(useCase: makeSelectStudyRepeatUseCase())
+    }
+    
+    func makeSelectStudyRepeatVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyRepeatViewController {
+        SelectStudyRepeatViewController(
+            coordinator: coordinator,
+            viewModel: makeSelectStudyRepeatVM()
+        )
+    }
 }

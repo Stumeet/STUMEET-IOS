@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import PhotosUI
 
 final class CreateStudyGroupViewController: BaseViewController {
 
@@ -42,15 +43,16 @@ final class CreateStudyGroupViewController: BaseViewController {
     let imageContainerView = UIView()
     private let studyGroupImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemOrange
         imageView.layer.cornerRadius = 16
+        imageView.backgroundColor = StumeetColor.random.color
+        imageView.clipsToBounds = true
+        
         return imageView
     }()
     private let randomColorButton: UIButton = {
         let button = UIButton()
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.white.cgColor
-        button.backgroundColor = .systemBlue
         button.setRoundCorner()
         
         return button
@@ -65,13 +67,19 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let studyNameContainerView = UIView()
     private let studyNameLabel = createEssentialLabel(text: "스터디 이름 *")
+    private let studyNameTextFieldBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.primary50.color
+        view.layer.cornerRadius = 16
+        
+        return view
+    }()
     private let studyNameTextField: UITextField = {
         let textField = UITextField()
         textField.addLeftPadding(24)
         textField.placeholder = "스터디 이름을 입력해주세요."
         textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
-        textField.layer.cornerRadius = 16
-        textField.backgroundColor = StumeetColor.primary50.color
+        
         return textField
     }()
     private let studyNameLengthLabel = UILabel().setLabelProperty(text: "0/20", font: StumeetFont.bodyMedium14.font, color: .gray400)
@@ -102,7 +110,7 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let tagTextField: UITextField = {
         let textField = UITextField()
         textField.addLeftPadding(24)
-        textField.placeholder = "태그를 직접 입략해주세요.(최대 5개)"
+        textField.placeholder = "태그를 직접 입력해주세요.(최대 5개)"
         textField.setPlaceholder(font: .bodyMedium14, color: .gray400)
         textField.layer.cornerRadius = 16
         textField.backgroundColor = StumeetColor.primary50.color
@@ -137,9 +145,9 @@ final class CreateStudyGroupViewController: BaseViewController {
     
     private let periodContainerView = UIView()
     private let periodLabel: UILabel = createEssentialLabel(text: "진행 기간 *")
-    private let periodStartButton = createConfigButton(title: "2024.01.08", image: UIImage(resource: .calendar), radius: 16)
+    private let periodStartButton = createConfigButton(title: "2024.01.08", image: UIImage(resource: .CreateStudyGroup.studyGroupCalendar), radius: 16)
     private let periodIngLabel = UILabel().setLabelProperty(text: "~", font: StumeetFont.bodyMedium15.font, color: .gray800)
-    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .calendar).withTintColor(StumeetColor.gray400.color), radius: 16)
+    private let periodEndButton = createConfigButton(title: "날짜 선택", image: UIImage(resource: .CreateStudyGroup.studyGroupCalendar).withTintColor(StumeetColor.gray400.color), radius: 16)
     
     private let studyMeetingContainerView = UIView()
     private let studyMeetingLabel = createEssentialLabel(text: "스터디 정기 모임 *")
@@ -167,6 +175,8 @@ final class CreateStudyGroupViewController: BaseViewController {
     private let regionSubject = PassthroughSubject<SelectStudyItem, Never>()
     private let periodSubject = PassthroughSubject<(startDate: Date, endDate: Date), Never>()
     private let timeSubject = PassthroughSubject<String, Never>()
+    private let selectedPhotoSubject = PassthroughSubject<URL, Never>()
+    private let repeatDaysSubject = PassthroughSubject<StudyRepeatType, Never>()
     
     // MARK: - Init
     
@@ -186,6 +196,8 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpTapGesture()
+        setupKeyboardNotifications()
     }
     
     // MARK: - SetUp
@@ -193,68 +205,60 @@ final class CreateStudyGroupViewController: BaseViewController {
     override func setupStyles() {
         view.backgroundColor = .white
         configureXButtonTitleNavigationBarItems(button: UIBarButtonItem(customView: xButton), title: "스터디 그룹 생성")
+        repeatButton.configuration?.contentInsets = .init(top: 0, leading: 19.33, bottom: 0, trailing: 16)
     }
     
     override func setupAddView() {
-        [
-            studyGroupImageView,
+        [   studyGroupImageView,
             addImageButton,
             randomColorButton
         ]   .forEach(imageContainerView.addSubview)
         
-        [
-            studyNameLabel,
+        [   studyNameLabel,
+            studyNameTextFieldBackgroundView,
             studyNameTextField,
-            studyNameLengthLabel
-        ]   .forEach(studyNameContainerView.addSubview)
+            studyNameLengthLabel]
+            .forEach(studyNameContainerView.addSubview)
         
-        [
-            fieldLabel,
+        [   fieldLabel,
             fieldButton
         ]   .forEach(fieldContainerView.addSubview)
         
-        [
-            tagLabel,
+        [   tagLabel,
             tagTextField,
             tagAddButton,
             tagCollectionView
         ]   .forEach(tagContainerView.addSubview)
         
-        [
-            explainLabel,
+        [   explainLabel,
             explainTextView,
             explainLengthLabel
         ]   .forEach(explainContainerView.addSubview)
         
-        [
-            regionLabel,
+        [   regionLabel,
             regionButton
         ]   .forEach(regionContainerView.addSubview)
         
-        [
-            periodLabel,
+        [   periodLabel,
             periodStartButton,
             periodIngLabel,
             periodEndButton
         ]   .forEach(periodContainerView.addSubview)
         
-        [
-            studyMeetingLabel,
+        [   studyMeetingLabel,
             timeLabel,
             timeButton,
             repeatLabel,
             repeatButton
         ]   .forEach(studyMeetingContainerView.addSubview)
         
-        [
-            studyRuleLabel,
+        [   studyRuleLabel,
             studyRuleTextView,
             studyRuleLengthLabel
         ]   .forEach(studyRuleContainerView.addSubview)
         
         
-        [
-            imageContainerView,
+        [   imageContainerView,
             studyNameContainerView,
             fieldContainerView,
             tagContainerView,
@@ -265,12 +269,10 @@ final class CreateStudyGroupViewController: BaseViewController {
             studyRuleContainerView
         ]   .forEach(scrollViewVStackView.addArrangedSubview)
         
-        [
-            scrollViewVStackView
+        [   scrollViewVStackView
         ]   .forEach(scrollView.addSubview)
         
-        [
-            scrollView,
+        [   scrollView,
             completeButton
         ]   .forEach(view.addSubview)
     }
@@ -306,10 +308,17 @@ final class CreateStudyGroupViewController: BaseViewController {
         
         studyNameLabel.snp.makeConstraints { $0.top.leading.equalToSuperview() }
 
-        studyNameTextField.snp.makeConstraints { make in
+        studyNameTextFieldBackgroundView.snp.makeConstraints { make in
+            make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(49)
+        }
+        
+        studyNameTextField.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
             make.top.equalTo(studyNameLabel.snp.bottom).offset(8)
             make.height.equalTo(49)
+            make.trailing.equalToSuperview().inset(76)
             make.bottom.equalToSuperview()
         }
 
@@ -414,7 +423,7 @@ final class CreateStudyGroupViewController: BaseViewController {
         repeatButton.snp.makeConstraints { make in
             make.leading.equalTo(repeatLabel.snp.trailing).offset(8)
             make.centerY.equalTo(repeatLabel)
-            make.size.equalTo(CGSize(width: 119, height: 36))
+            make.height.equalTo(39)
             make.bottom.equalToSuperview()
         }
 
@@ -439,6 +448,45 @@ final class CreateStudyGroupViewController: BaseViewController {
         }
     }
 
+    private func setUpTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
+            if let activeTextView = studyRuleContainerView.findFirstResponder() as? UITextView {
+                let textViewFrameInScrollView = scrollView.convert(activeTextView.frame, from: activeTextView.superview)
+                scrollView.scrollRectToVisible(textViewFrameInScrollView, animated: true)
+            }
+            
+            if let activeTextView = explainContainerView.findFirstResponder() as? UITextView {
+                let textViewFrameInScrollView = scrollView.convert(activeTextView.frame, from: activeTextView.superview)
+                scrollView.scrollRectToVisible(textViewFrameInScrollView, animated: true)
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // 키보드가 사라지면 스크롤뷰의 inset을 다시 원래대로 되돌립니다.
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
     
     // MARK: - Bind
     
@@ -457,13 +505,25 @@ final class CreateStudyGroupViewController: BaseViewController {
             didTapPeriodEndButton: periodEndButton.tapPublisher,
             didSelecetedPeriod: periodSubject.eraseToAnyPublisher(),
             didTapTimeButton: timeButton.tapPublisher,
-            didSelectedTime: timeSubject.eraseToAnyPublisher()
+            didSelectedTime: timeSubject.eraseToAnyPublisher(),
+            didTapAddImageButton: addImageButton.tapPublisher,
+            didSelectPhoto: selectedPhotoSubject.eraseToAnyPublisher(),
+            didChangeStudyNameTextField: studyNameTextField.textPublisher,
+            didChangeStudyExplainTextView: explainTextView.textPublisher,
+            didBeginExplainEditting: explainTextView.didBeginEditingPublisher,
+            didChangeStudyRuleTextView: studyRuleTextView.textPublisher,
+            didBeginStudyRuleEditting: studyRuleTextView.didBeginEditingPublisher,
+            didTapRepeatButton: repeatButton.tapPublisher,
+            didSelectedRepeatDays: repeatDaysSubject.eraseToAnyPublisher(),
+            didTapCompleteButton: completeButton.tapPublisher,
+            didTapRandomColorButton: randomColorButton.tapPublisher,
+            didTapXButton: xButton.tapPublisher
         )
         
         let output = viewModel.transform(input: input)
         
         output.goToSelectStudyGroupFieldVC
-            .map { (self, $0) }
+            .map { (self, $0.0, $0.1) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
             .store(in: &cancellables)
@@ -479,6 +539,11 @@ final class CreateStudyGroupViewController: BaseViewController {
             .sink(receiveValue: updateTagAddButton)
             .store(in: &cancellables)
         
+        output.tagText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: tagTextField)
+            .store(in: &cancellables)
+        
         output.addedTags
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateSnapshot)
@@ -490,7 +555,7 @@ final class CreateStudyGroupViewController: BaseViewController {
             .store(in: &cancellables)
         
         output.goToSelectStudyGroupRegionVC
-            .map { (self, $0) }
+            .map { (self, $0.0, $0.1) }
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.navigateToSelectStudyGroupItemVC)
             .store(in: &cancellables)
@@ -521,6 +586,97 @@ final class CreateStudyGroupViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: updateTimeButton)
             .store(in: &cancellables)
+        
+        output.showPHPickerVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: showPHPickerVC)
+            .store(in: &cancellables)
+        
+        output.selectedImage
+            .receive(on: RunLoop.main)
+            .assign(to: \.image, on: studyGroupImageView)
+            .store(in: &cancellables)
+        
+        output.goToSelectStudyRepeatVC
+            .map { self }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.presentToSelectStudyRepeatVC)
+            .store(in: &cancellables)
+        
+        output.selectedRepeatDays
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateRepeatButton)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanTwenty
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyNameTextField.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: studyNameTextField)
+            .store(in: &cancellables)
+        
+        output.titleCount
+            .map { "\($0)/20" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyNameLengthLabel)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanHundredExplain
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.explainTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.explainCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainLengthLabel)
+            .store(in: &cancellables)
+        
+        output.explainBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.isBiggerThanHundredRule
+            .receive(on: RunLoop.main)
+            .filter { $0 }
+            .map { _ in String(self.studyRuleTextView.text?.dropLast() ?? "") }
+            .assign(to: \.text, on: explainTextView)
+            .store(in: &cancellables)
+        
+        output.ruleCount
+            .map { "\($0)/100" }
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleLengthLabel)
+            .store(in: &cancellables)
+        
+        output.ruleBeginText
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: studyRuleTextView)
+            .store(in: &cancellables)
+        
+        output.snackBarText
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: checkShowSnackbarOrComplete)
+            .store(in: &cancellables)
+        
+        output.imageViewBackgroundColor
+            .receive(on: RunLoop.main)
+            .assign(to: \.backgroundColor, on: studyGroupImageView)
+            .store(in: &cancellables)
+        
+        output.randomButtonColor
+            .receive(on: RunLoop.main)
+            .assign(to: \.backgroundColor, on: randomColorButton)
+            .store(in: &cancellables)
+        
+        output.dismiss
+            .map { true }
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.dismiss)
+            .store(in: &cancellables)
     }
 }
 
@@ -538,7 +694,7 @@ extension CreateStudyGroupViewController {
         var config = UIButton.Configuration.plain()
         
         config.image = image
-        config.imagePadding = 6
+        config.imagePadding = 8
         
         var titleAttributes = AttributedString(title)
         titleAttributes.font = StumeetFont.bodyMedium14.font
@@ -559,9 +715,8 @@ extension CreateStudyGroupViewController {
         textView.text = placeholder
         textView.textColor = StumeetColor.gray300.color
         textView.font = StumeetFont.bodyMedium14.font
-        textView.isScrollEnabled = false
         textView.backgroundColor = StumeetColor.primary50.color
-        textView.textContainerInset = UIEdgeInsets(top: 16, left: 24, bottom: 16, right: 24)
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 24)
         textView.layer.cornerRadius = 16
             
         return textView
@@ -573,7 +728,9 @@ extension CreateStudyGroupViewController {
 extension CreateStudyGroupViewController: 
     SelectStudyGroupItemDelegate,
     SetStudyGroupPeriodDelegate,
-    SelectStudyTimeDelegate {
+    SelectStudyTimeDelegate,
+    SelectStudyRepeatDelegate
+{
     
     func didTapFileldCompleteButton(field: SelectStudyItem) {
         fieldSubject.send(field)
@@ -589,6 +746,10 @@ extension CreateStudyGroupViewController:
     
     func didTapCompleteButton(time: String) {
         timeSubject.send(time)
+    }
+    
+    func didTapCompleteButton(repeatType: StudyRepeatType) {
+        repeatDaysSubject.send(repeatType)
     }
 }
 
@@ -620,9 +781,6 @@ extension CreateStudyGroupViewController {
         titleAttributes.font = StumeetFont.bodyMedium14.font
         titleAttributes.foregroundColor = StumeetColor.primary700.color
         config.attributedTitle = titleAttributes
-        
-        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -44, bottom: 0, trailing: 0)
-        
         regionButton.configuration = config
         regionButton.layer.borderColor = StumeetColor.primary700.color.cgColor
     }
@@ -641,14 +799,87 @@ extension CreateStudyGroupViewController {
         }
     }
     
-    
-    
     private func updateTimeButton(time: AttributedString) {
         timeButton.layer.borderColor = StumeetColor.primary700.color.cgColor
         timeButton.configuration?.image = UIImage(resource: .CreateStudyGroup.clock).withTintColor(StumeetColor.primary700.color)
         timeButton.configuration?.attributedTitle = time
         timeButton.configuration?.attributedTitle?.font = StumeetFont.bodyMedium14.font
         timeButton.configuration?.baseForegroundColor = StumeetColor.primary700.color
+    }
+    
+    private func updateRepeatButton(type: StudyRepeatType) {
+        
+        var config = repeatButton.configuration!
+        switch type {
+        case .dailiy:
+            config.attributedTitle = AttributedString(type.title)
+        case .weekly(let days):
+            if days.count == 7 {
+                config.attributedTitle = AttributedString("매일")
+            } else {
+                let joinedDays = days.joined(separator: ", ")
+                config.attributedTitle = AttributedString(type.title + " " + joinedDays + "요일")
+            }
+
+        case .monthly(let days):
+            if days.last == "마지막 날" {
+                var dayNumbers = days
+                dayNumbers.removeLast()  // "마지막 날"을 제거
+                
+                let joinedDays = dayNumbers.joined(separator: ",")
+                
+                if !dayNumbers.isEmpty {
+                    config.attributedTitle = AttributedString("\(type.title) \(joinedDays) 일, 마지막 날")
+                } else {
+                    config.attributedTitle = AttributedString("\(type.title) 마지막 날")
+                }
+            } else {
+                let joinedDays = days.joined(separator: ",")
+                config.attributedTitle = AttributedString("\(type.title) \(joinedDays) 일")
+            }
+        }
+        config.attributedTitle?.font = StumeetFont.bodyMedium14.font
+        config.baseForegroundColor = StumeetColor.primary700.color
+        config.image = UIImage(resource: .CreateStudyGroup.repeatButton).withTintColor(StumeetColor.primary700.color)
+        repeatButton.configuration = config
+        repeatButton.layer.borderColor = StumeetColor.primary700.color.cgColor
+    }
+    
+    private func updateRandomColorButton(color: UIColor?) {
+        randomColorButton.backgroundColor = color
+    }
+    
+    private func checkShowSnackbarOrComplete(text: String) {
+        print("asdf \(text)")
+        if text.isEmpty {
+            coordinator.dismiss(animated: true)
+        } else {
+            let snackBar = SnackBar(frame: .zero, text: text)
+            
+            view.addSubview(snackBar)
+            
+            snackBar.snp.makeConstraints { make in
+                make.leading.trailing.equalToSuperview().inset(16)
+                make.bottom.equalTo(completeButton.snp.top).offset(-24)
+                make.height.equalTo(74)
+            }
+            
+            snackBar.isHidden = false
+            snackBar.alpha = 0
+            
+            UIView.animate(withDuration: 0.3) {
+                snackBar.alpha = 1
+            } completion: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    UIView.animate(withDuration: 0.3) {
+                        snackBar.alpha = 0
+                    } completion: { _ in
+                        snackBar.isHidden = true
+                        snackBar.removeFromSuperview()
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -693,5 +924,34 @@ extension CreateStudyGroupViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(tags)
         datasource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func showPHPickerVC() {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 1
+        let pickerVC = PHPickerViewController(configuration: config)
+        pickerVC.delegate = self
+        
+        coordinator.presentPHPickerView(pickerVC: pickerVC)
+    }
+}
+
+extension CreateStudyGroupViewController: PHPickerViewControllerDelegate {
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, _ in
+                if let url {
+                    self.selectedPhotoSubject.send(url)
+                }
+            }
+        }
+        picker.dismiss(animated: true)
     }
 }

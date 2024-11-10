@@ -6,21 +6,25 @@
 //
 
 import UIKit
+import PhotosUI
 
 protocol CreateStudyGroupCoordinatorDependencies {
     func makeCreateStudyGroupVC(coordinator: CreateStudyGroupNavigation) -> CreateStudyGroupViewController
-    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType) -> SelectStudyGroupItemViewController
+    func makeSelectStudyGroupItemVC(coordinator: CreateStudyGroupNavigation, type: CreateStudySelectItemType, selectedItem: String) -> SelectStudyGroupItemViewController
     func makeSetStudyGroupPeriodVC(coordinator: CreateStudyGroupNavigation, dates: (isStart: Bool, startDate: Date, endDate: Date?)) -> SetStudyGroupPeriodViewController
     func makeSelectStudyTimeVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyTimeViewController
+    func makeSelectStudyRepeatVC(coordinator: CreateStudyGroupNavigation) -> SelectStudyRepeatViewController
 }
 
 protocol CreateStudyGroupNavigation: AnyObject {
     func presentToCreateStudyGroupVC()
-    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType)
+    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType, selectedItem: String)
     func popToCreateStudyGroupVC()
     func presentToSetPeriodCalendarVC(delegate: SetStudyGroupPeriodDelegate, dates: (isStart: Bool, startDate: Date, endDate: Date?))
     func presentToSelectStudyTimeVC(delegate: SelectStudyTimeDelegate)
-    func dismiss()
+    func presentPHPickerView(pickerVC: PHPickerViewController)
+    func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate)
+    func dismiss(animated: Bool)
 }
 
 final class CreateStudyGroupCoordinator: Coordinator {
@@ -51,8 +55,8 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         parentCoordinator?.navigationController.present(navigationController, animated: true)
     }
     
-    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType) {
-        let fieldVC = dependencies.makeSelectStudyGroupItemVC(coordinator: self, type: type)
+    func navigateToSelectStudyGroupItemVC(delegate: SelectStudyGroupItemDelegate, type: CreateStudySelectItemType, selectedItem: String) {
+        let fieldVC = dependencies.makeSelectStudyGroupItemVC(coordinator: self, type: type, selectedItem: selectedItem)
         fieldVC.delegate = delegate
         navigationController.pushViewController(fieldVC, animated: true)
     }
@@ -77,10 +81,23 @@ extension CreateStudyGroupCoordinator: CreateStudyGroupNavigation {
         navigationController.present(selectTimeVC, animated: false)
     }
     
-    func dismiss() {
-        guard let lastVC = navigationController.viewControllers.last else { return }
-        lastVC.dismiss(animated: false)
+    func presentPHPickerView(pickerVC: PHPickerViewController) {
+        let imagePicker = pickerVC
+        imagePicker.modalPresentationStyle = .fullScreen
+        navigationController.present(imagePicker, animated: true)
     }
+      
+    func presentToSelectStudyRepeatVC(delegate: SelectStudyRepeatDelegate) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        let selectRepeatVC = dependencies.makeSelectStudyRepeatVC(coordinator: self)
+        selectRepeatVC.modalPresentationStyle = .overFullScreen
+        selectRepeatVC.delegate = delegate
+        navigationController.present(selectRepeatVC, animated: false)
+    }
+        
     
-    
+    func dismiss(animated: Bool) {
+        guard let lastVC = navigationController.viewControllers.last else { return }
+        lastVC.dismiss(animated: animated)
+    }
 }

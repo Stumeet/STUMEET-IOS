@@ -42,7 +42,7 @@ class SetStudyGroupPeriodViewController: BaseViewController {
     private let dragIndicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.8797428012, green: 0.8797428012, blue: 0.8797428012, alpha: 1)
-        view.layer.cornerRadius = 7
+        view.layer.cornerRadius = 4
         return view
         
     }()
@@ -170,14 +170,14 @@ class SetStudyGroupPeriodViewController: BaseViewController {
         
         dragIndicatorContainerView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(24)
+            make.top.equalToSuperview()
             make.height.equalTo(30)
             make.width.equalTo(72)
         }
         
         dragIndicatorView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().inset(24)
             make.height.equalTo(8)
         }
         
@@ -287,7 +287,7 @@ class SetStudyGroupPeriodViewController: BaseViewController {
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] period in
                 self?.delegate?.didTapCompleteButton(startDate: period.startDate, endDate: period.endDate)
-                self?.coordinator.dismiss()
+                self?.coordinator.dismiss(animated: false)
             })
             .store(in: &cancellables)
     }
@@ -375,7 +375,7 @@ extension SetStudyGroupPeriodViewController {
                 self.view.layoutIfNeeded()
             },
             completion: { _ in
-                self.coordinator.dismiss()
+                self.coordinator.dismiss(animated: false)
             })
     }
     
