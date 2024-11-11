@@ -1,5 +1,5 @@
 //
-//  StudyMemberMeetingDetailViewController.swift
+//  StudyMemberActivityDetailViewController.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/09/29.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Combine
 
-class StudyMemberMeetingDetailViewController: BaseViewController {
+class StudyMemberActivityDetailViewController: BaseViewController {
     
     // MARK: - UIComponents
     private var titleStackView: UIStackView = {
@@ -140,7 +140,7 @@ class StudyMemberMeetingDetailViewController: BaseViewController {
     }
 }
 
-extension StudyMemberMeetingDetailViewController:
+extension StudyMemberActivityDetailViewController:
     UITableViewDataSource,
     StudyMemberMeetingStateListTableViewCellDelegate {
     

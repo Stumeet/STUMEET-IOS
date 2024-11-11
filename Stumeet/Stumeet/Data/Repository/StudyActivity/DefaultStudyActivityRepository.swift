@@ -79,14 +79,14 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         page: Int,
         isNotice: Bool?,
         studyId: Int?,
-        category: String?
+        category: ActivityCategory? = nil
     ) -> AnyPublisher<ActivityPage, MoyaError> {
         let requestDTO = AllStudyActivityRequestDTO(
             size: size,
             page: page,
             isNotice: isNotice,
             studyId: studyId,
-            category: category
+            category: category?.rawValue
         )
         
         return provider.requestPublisher(.fetchAllActivities(requestDTO))

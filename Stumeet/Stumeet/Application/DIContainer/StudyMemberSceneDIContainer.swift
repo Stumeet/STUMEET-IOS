@@ -55,6 +55,10 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         DefaultDelegateStudyAdminUseCase(repository: makeStudyMemberRepository())
     }
     
+    func makeFetchAllStudyActivitiesUseCase() -> FetchAllStudyActivitiesUseCase {
+        DefaultFetchAllStudyActivitiesUseCase(repository: makeStudyActivityRepository())
+    }
+    
     // MARK: - StudyMember
     func makeStudyMemberViewModel(studyId: Int) -> StudyMemberViewModel {
         StudyMemberViewModel(
@@ -72,7 +76,7 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     }
     
     // MARK: - StudyMemberDetail
-    func makeStudyMemberDetailModel(studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewModel {
+    func makeStudyMemberDetailViewModel(studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewModel {
         StudyMemberDetailViewModel(
             fetchStudyMemberDetailUseCase: makeFetchStudyMemberDetailUseCase(),
             fetchStudyMemberActivityUseCase: makeFetchStudyMemberActivityUseCase(),
@@ -87,7 +91,7 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     func makeStudyMemberDetailVC(coordinator: Navigation, studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewController {
         StudyMemberDetailViewController(
             coordinator: coordinator,
-            viewModel: makeStudyMemberDetailModel(
+            viewModel: makeStudyMemberDetailViewModel(
                 studyId: studyId,
                 studyMemberId: studyMemberId
             )
@@ -95,15 +99,22 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     }
     
     // MARK: - StudyMemberAchievement
-    func makeStudyMemberAchievementVC(coordinator: Navigation) -> StudyMemberAchievementViewController {
+    func makeStudyMemberAchievementViewModel(studyId: Int) -> StudyMemberAchievementViewModel {
+        StudyMemberAchievementViewModel(
+            fetchAllStudyActivitiesUseCase: makeFetchAllStudyActivitiesUseCase(),
+            studyId: studyId
+        )
+    }
+    func makeStudyMemberAchievementVC(coordinator: Navigation, studyId: Int) -> StudyMemberAchievementViewController {
         StudyMemberAchievementViewController(
-            coordinator: coordinator
+            coordinator: coordinator,
+            viewModel: makeStudyMemberAchievementViewModel(studyId: studyId)
         )
     }
     
     // MARK: - StudyMemberMeetingDetail
-    func makeStudyMemberMeetingDetailVC(coordinator: Navigation) -> StudyMemberMeetingDetailViewController {
-        StudyMemberMeetingDetailViewController(
+    func makeStudyMemberActivityDetailVC(coordinator: Navigation) -> StudyMemberActivityDetailViewController {
+        StudyMemberActivityDetailViewController(
             coordinator: coordinator
         )
     }

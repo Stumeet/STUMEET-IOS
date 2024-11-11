@@ -18,7 +18,7 @@ protocol StudyActivityRepository {
         page: Int,
         isNotice: Bool?,
         studyId: Int?,
-        category: String?
+        category: ActivityCategory?
     ) -> AnyPublisher<ActivityPage, MoyaError>
     func fetchBriefActivityList(
         size: Int?,
