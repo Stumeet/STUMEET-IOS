@@ -35,7 +35,10 @@ final class StudyMainViewModel: ViewModelType {
     private var hasMorePages: Bool { currentPage < totalPageCount}
     private var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
     private var canLoadMorePages: Bool { hasMorePages && !isNextPageLoading }
+    
     private var useCase: StudyGroupMainUseCase
+    private var fetchLatestNoticeUseCase: FetchLatestNoticeUseCase
+    
     private var studyMainViewHeaderItemSubject = CurrentValueSubject<StudyMainViewHeaderItem?, Never>(nil)
     private var studyMainViewDetailInfoItemSubject = CurrentValueSubject<StudyMainViewDetailInfoItem?, Never>(nil)
     private var studyMainViewActivityNoticeItemSubject = CurrentValueSubject<StudyMainViewActivityItem?, Never>(nil)
@@ -46,9 +49,11 @@ final class StudyMainViewModel: ViewModelType {
     // MARK: - Init
     init(
         useCase: StudyGroupMainUseCase,
+        fetchLatestNoticeUseCase: FetchLatestNoticeUseCase,
         studyID: Int
     ) {
         self.useCase = useCase
+        self.fetchLatestNoticeUseCase = fetchLatestNoticeUseCase
         self.studyID = studyID
     }
     
@@ -88,7 +93,7 @@ final class StudyMainViewModel: ViewModelType {
         
         input.loadStudyGroupDetailData
             .compactMap { [weak self] in self?.studyID }
-            .flatMap(useCase.getActivityNoticeItem(studyId:))
+            .flatMap(fetchLatestNoticeUseCase.execute(studyID:))
             .compactMap { [weak self] receiveValue in
                 self?.convertToActivityViewItems(
                 from: receiveValue,

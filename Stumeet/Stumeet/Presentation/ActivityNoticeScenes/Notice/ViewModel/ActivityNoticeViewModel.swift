@@ -30,8 +30,8 @@ final class ActivityNoticeViewModel: ViewModelType {
     private var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
     private var canLoadMorePages: Bool { hasMorePages && !isNextPageLoading }
     
-    // TODO: - 임시 유즈케이스 추후 공지 관련 API가 별도로 나오면 수정 필요
-    private var useCase: StudyGroupMainUseCase
+    private var fetchLatestNoticeUseCase: FetchLatestNoticeUseCase
+    private var fetchNoticesUseCase: FetchNoticesUseCase
     
     private var currentNoticeItemSubject = CurrentValueSubject<StudyMainViewActivityItem?, Never>(nil)
     private var pastNoticesItemSubject = CurrentValueSubject<[StudyMainViewActivityItem]?, Never>(nil)
@@ -40,11 +40,14 @@ final class ActivityNoticeViewModel: ViewModelType {
     
     // MARK: - Init
     init(
-        useCase: StudyGroupMainUseCase,
+        fetchLatestNoticeUseCase: FetchLatestNoticeUseCase,
+        fetchNoticesUseCase: FetchNoticesUseCase,
         studyID: Int
     ) {
+        self.fetchLatestNoticeUseCase = fetchLatestNoticeUseCase
+        self.fetchNoticesUseCase = fetchNoticesUseCase
         self.studyID = studyID
-        self.useCase = useCase
+        
     }
     
     func transform(input: Input) -> Output {
@@ -59,14 +62,14 @@ final class ActivityNoticeViewModel: ViewModelType {
         input.loadData
             .handleEvents(receiveOutput: resetPages )
             .map { (self.currentPage, self.studyID) }
-            .flatMap(useCase.getActivityItems(page:studyId:))
+            .flatMap(fetchNoticesUseCase.execute(page:studyID:))
             .map(updateActivityPageData(receiveValue:))
             .sink(receiveValue: pastNoticesItemSubject.send)
             .store(in: &cancellables)
         
         input.loadData
             .compactMap { [weak self] in self?.studyID }
-            .flatMap(useCase.getActivityNoticeItem(studyId:))
+            .flatMap(fetchLatestNoticeUseCase.execute(studyID:))
             .compactMap { [weak self] receiveValue in
                 self?.convertToActivityViewItems(
                 from: receiveValue,
@@ -80,7 +83,7 @@ final class ActivityNoticeViewModel: ViewModelType {
             .filter { [weak self] in self?.canLoadMorePages ?? false }
             .handleEvents(receiveOutput: { [weak self] in self?.isNextPageLoading = true })
             .map { (self.nextPage, self.studyID) }
-            .flatMap(useCase.getActivityItems(page:studyId:))
+            .flatMap(fetchNoticesUseCase.execute(page:studyID:))
             .handleEvents(receiveOutput: { [weak self] in self?.appendPage($0.pageInfo) })
             .map(updateActivityPageData(receiveValue:))
             .handleEvents(receiveOutput: { [weak self] _ in self?.isNextPageLoading = false })

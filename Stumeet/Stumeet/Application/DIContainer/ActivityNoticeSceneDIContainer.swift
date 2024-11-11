@@ -33,17 +33,23 @@ final class ActivityNoticeSceneDIContainer: ActivityNoticeCoordinatorDependencie
     }
     
     // MARK: - Use Cases
-    func makeMyStudyGroupListUseCase() -> StudyGroupMainUseCase {
-        DefaultStudyGroupMainUseCase(
-            studyMainRepository: makeStudyGroupMainRepository(),
-            studyActivityRepository: makeStudyActivityRepository()
+    func makeFetchLatestNoticeUseCase() -> FetchLatestNoticeUseCase {
+        DefaultFetchLatestNoticeUseCase(
+            repository: makeStudyActivityRepository()
+        )
+    }
+    
+    func makeFetchNoticesUseCase() -> FetchNoticesUseCase {
+        DefaultFetchNoticesUseCase(
+            repository: makeStudyActivityRepository()
         )
     }
     
     // MARK: - ActivityNotice
     func makeActivityNoticeViewModel(studyId: Int) -> ActivityNoticeViewModel {
         ActivityNoticeViewModel(
-            useCase: makeMyStudyGroupListUseCase(),
+            fetchLatestNoticeUseCase: makeFetchLatestNoticeUseCase(),
+            fetchNoticesUseCase: makeFetchNoticesUseCase(),
             studyID: studyId
         )
     }
