@@ -120,6 +120,7 @@
 		35D49E232C90865A00F8C5C8 /* StudyMemberComplimentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D49E222C90865A00F8C5C8 /* StudyMemberComplimentPopupViewController.swift */; };
 		35D49E252C90980E00F8C5C8 /* StudyMemberComplimentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D49E242C90980E00F8C5C8 /* StudyMemberComplimentButton.swift */; };
 		35D49E292C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D49E282C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift */; };
+		35DA74F22CE63DC6006D6FB1 /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */; };
 		35E4EA312BCA878A003A10D4 /* Config(release).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */; };
 		35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */; };
 		35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */; };
@@ -178,7 +179,6 @@
 		CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */; };
 		CA1C92CE2BC92EEA00ECF835 /* CalendarSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */; };
 		CA1C92D02BC951DE00ECF835 /* UIImage++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */; };
-		CA26F8062C7B32020061B7F7 /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA26F8052C7B32020061B7F7 /* MonthlyCell.swift */; };
 		CA26F8082C7B376C0061B7F7 /* CreateStudyGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA26F8072C7B376C0061B7F7 /* CreateStudyGroup.swift */; };
 		CA26F80A2C7C9CE20061B7F7 /* DefaultCreateStudyGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA26F8092C7C9CE20061B7F7 /* DefaultCreateStudyGroupRepository.swift */; };
 		CA26F80C2C7C9CF10061B7F7 /* CreateStudyGroupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA26F80B2C7C9CF10061B7F7 /* CreateStudyGroupRepository.swift */; };
@@ -456,6 +456,7 @@
 		35D49E222C90865A00F8C5C8 /* StudyMemberComplimentPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberComplimentPopupViewController.swift; sourceTree = "<group>"; };
 		35D49E242C90980E00F8C5C8 /* StudyMemberComplimentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberComplimentButton.swift; sourceTree = "<group>"; };
 		35D49E282C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberComplimentRowItem.swift; sourceTree = "<group>"; };
+		35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCell.swift; sourceTree = "<group>"; };
 		35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		35E4EA302BCA878A003A10D4 /* Config(debug).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
 		35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewController.swift; sourceTree = "<group>"; };
@@ -518,7 +519,6 @@
 		CA1C92CA2BC92E3E00ECF835 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
 		CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSection.swift; sourceTree = "<group>"; };
 		CA1C92CF2BC951DE00ECF835 /* UIImage++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage++Extension.swift"; sourceTree = "<group>"; };
-		CA26F8052C7B32020061B7F7 /* MonthlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonthlyCell.swift; path = ../../../../../../../../Downloads/MonthlyCell.swift; sourceTree = "<group>"; };
 		CA26F8072C7B376C0061B7F7 /* CreateStudyGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyGroup.swift; sourceTree = "<group>"; };
 		CA26F8092C7C9CE20061B7F7 /* DefaultCreateStudyGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCreateStudyGroupRepository.swift; sourceTree = "<group>"; };
 		CA26F80B2C7C9CF10061B7F7 /* CreateStudyGroupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStudyGroupRepository.swift; sourceTree = "<group>"; };
@@ -1535,7 +1535,7 @@
 		CA26F8042C7B31FB0061B7F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CA26F8052C7B32020061B7F7 /* MonthlyCell.swift */,
+				35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2802,6 +2802,7 @@
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
 				358D24302C46A77F001EFB51 /* StudyGroupMainRepository.swift in Sources */,
 				CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */,
+				35DA74F22CE63DC6006D6FB1 /* MonthlyCell.swift in Sources */,
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA6450802C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
@@ -2963,7 +2964,6 @@
 				358F34462C7788C200683713 /* StudyMemberViewController.swift in Sources */,
 				353A08C82C7B7C6F00678E96 /* DefaultStudyMemberRepository.swift in Sources */,
 				CA01B2912C0465F600A01CEA /* DefaultDetailActivityMemberListRepository.swift in Sources */,
-				CA26F8062C7B32020061B7F7 /* MonthlyCell.swift in Sources */,
 				CA98F6BC2BEE1B3600C36772 /* MyStudyGroupListDIContainer.swift in Sources */,
 				CA64482E2B863BB90090DD84 /* RegionRepository.swift in Sources */,
 				CA64508E2C14643900E00665 /* StudyActivityViewModel.swift in Sources */,
@@ -3207,7 +3207,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Stumeet;
@@ -3241,7 +3241,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YNN2UAMM79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stumeet/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Stumeet;
