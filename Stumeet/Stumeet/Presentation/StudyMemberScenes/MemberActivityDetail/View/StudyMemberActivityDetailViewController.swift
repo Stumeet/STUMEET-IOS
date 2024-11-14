@@ -34,24 +34,7 @@ class StudyMemberActivityDetailViewController: BaseViewController {
         return view
     }()
     
-    // TODO: - API 연동 시 수정
-    private var headerView = StudyMemberActivityView(
-        StudyMemberActivityViewItem(
-            activity: Activity(
-                id: 0,
-                tag: .meeting,
-                title: "test1120399210390-2193-02910-39102-930-21930-9213387238732899823820394893028490328904",
-                content: "test12",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-22T00:00:00",
-                place: "성심",
-                image: nil,
-                name: nil,
-                day: "2024-08-19T11:20:21.961423",
-                status: .absent
-            )
-        )
-    )
+    private var headerView = StudyMemberActivityView()
     
     private lazy var meetingStateTableView: UITableView = {
         let tableView = UITableView()
@@ -65,13 +48,18 @@ class StudyMemberActivityDetailViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: StudyMemberNavigation!
+    private var viewModel: StudyMemberActivityDetailViewModel
     private var meetingStateDataSource: [StudyMemberMeetingStateListItem] = []
+    
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
-        coordinator: StudyMemberNavigation
+        coordinator: StudyMemberNavigation,
+        viewModel: StudyMemberActivityDetailViewModel
     ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -117,23 +105,40 @@ class StudyMemberActivityDetailViewController: BaseViewController {
     }
     
     override func bind() {
+        // MARK: - Input
+        let input = StudyMemberActivityDetailViewModel.Input(
+            loadDataTrigger: loadDataSubject.eraseToAnyPublisher()
+        )
+
+        // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.activityHeaderItem
+            .receive(on: RunLoop.main)
+            .sink { [weak self] item in
+                guard let self,
+                      let item
+                else { return }
+                headerView.configure(item)
+            }
+            .store(in: &cancellables)
+ 
+        output.studyMemberActivityDataSource
+            .receive(on: RunLoop.main)
+            .sink { [weak self] dataSource in
+                guard let self else { return }
+                updateMeetingStateDataSource(items: dataSource)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: - API 연동 시 수정
-        
-        updateMeetingStateDataSource(items: [
-            StudyMemberMeetingStateListItem(id: 0, isStateHidden: true, attendanceState: .absence),
-            StudyMemberMeetingStateListItem(id: 1, isStateHidden: true, attendanceState: .excusedAbsence),
-            StudyMemberMeetingStateListItem(id: 2, isStateHidden: true, attendanceState: .late),
-            StudyMemberMeetingStateListItem(id: 3, isStateHidden: true, attendanceState: .present)
-        ])
+        loadDataSubject.send()
     }
     
     // MARK: - Function
-    
     private func updateMeetingStateDataSource(items: [StudyMemberMeetingStateListItem]) {
         meetingStateDataSource = items
         meetingStateTableView.reloadData()

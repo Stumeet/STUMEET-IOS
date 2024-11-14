@@ -8,12 +8,13 @@
 import UIKit
 
 struct DetailActivityMember: Hashable {
+    let id: Int?
     let name: String?
-    let state: ActivityState
+    var state: ActivityState
     let profileImageURL: String?
 }
 
-enum ActivityState: String {
+enum ActivityState: String, Equatable {
     case perform = "수행"
     case notperform = "미수행"
     case attendance = "출석"
@@ -23,6 +24,7 @@ enum ActivityState: String {
     case okPerform = "지각제출"
     case noParticipation = "미참여"
     case beforeStart = "시작 전"
+    case none = "없음"
     
     var primaryColor: UIColor {
         switch self {

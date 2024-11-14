@@ -30,6 +30,15 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
     }
     
+    func makeDetailActivityMemberListRepository() -> DetailActivityMemberListRepository {
+        DefaultDetailActivityMemberListRepository(provider: dependencies.provider.makeProvider())
+    }
+    
+    func makeDetailStudyActivityRepository() -> DetailStudyActivityRepository {
+        DefaultDetailStudyActivityRepository(provider: dependencies.provider.makeProvider())
+    }
+    
+    
     // MARK: - Use Cases
     func makeStudyMemberUseCase() -> StudyMemberUseCase {
         DefaultStudyMemberUseCase(repository: makeStudyMemberRepository())
@@ -57,6 +66,14 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     
     func makeFetchAllStudyActivitiesUseCase() -> FetchAllStudyActivitiesUseCase {
         DefaultFetchAllStudyActivitiesUseCase(repository: makeStudyActivityRepository())
+    }
+    
+    func makeFetchActiveStudyMembersUseCase() -> FetchActiveStudyMembersUseCase {
+        DefaultFetchActiveStudyMembersUseCase(repository: makeDetailActivityMemberListRepository())
+    }
+    
+    func makeDetailStudyActivityUseCase() -> DetailStudyActivityUseCase {
+        DefaultDetailStudyActivityUseCase(repository: makeDetailStudyActivityRepository())
     }
     
     // MARK: - StudyMember
@@ -105,6 +122,7 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
             studyId: studyId
         )
     }
+    
     func makeStudyMemberAchievementVC(coordinator: Navigation, studyId: Int) -> StudyMemberAchievementViewController {
         StudyMemberAchievementViewController(
             coordinator: coordinator,
@@ -113,9 +131,23 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     }
     
     // MARK: - StudyMemberMeetingDetail
-    func makeStudyMemberActivityDetailVC(coordinator: Navigation) -> StudyMemberActivityDetailViewController {
+    func makeStudyMemberActivityDetailViewModel(studyID: Int, activityID: Int) -> StudyMemberActivityDetailViewModel {
+        StudyMemberActivityDetailViewModel(
+            fetchActiveStudyMembersUseCase: makeFetchActiveStudyMembersUseCase(),
+            detailStudyActivityUseCase: makeDetailStudyActivityUseCase(),
+            studyID: studyID,
+            activityID: activityID
+        )
+    }
+    
+    func makeStudyMemberActivityDetailVC(
+        coordinator: Navigation,
+        studyID: Int,
+        activityID: Int
+    ) -> StudyMemberActivityDetailViewController {
         StudyMemberActivityDetailViewController(
-            coordinator: coordinator
+            coordinator: coordinator,
+            viewModel: makeStudyMemberActivityDetailViewModel(studyID: studyID, activityID: activityID)
         )
     }
     

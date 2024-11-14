@@ -13,7 +13,11 @@ protocol StudyMemberCoordinatorDependencies {
     func makeStudyMemberVC(coordinator: StudyMemberNavigation, studyId: Int) -> StudyMemberViewController
     func makeStudyMemberDetailVC(coordinator: StudyMemberNavigation, studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewController
     func makeStudyMemberAchievementVC(coordinator: StudyMemberNavigation, studyId: Int) -> StudyMemberAchievementViewController
-    func makeStudyMemberActivityDetailVC(coordinator: StudyMemberNavigation) -> StudyMemberActivityDetailViewController
+    func makeStudyMemberActivityDetailVC(
+        coordinator: StudyMemberNavigation,
+        studyID: Int,
+        activityID: Int
+    ) -> StudyMemberActivityDetailViewController
 }
 
 protocol StudyMemberNavigation: AnyObject {
@@ -110,7 +114,9 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
     
     func goToMemberActivityDetailVC(studyID: Int, activityID: Int) {
         let memberMeetingDetailVC = dependencies.makeStudyMemberActivityDetailVC(
-            coordinator: self
+            coordinator: self,
+            studyID: studyID,
+            activityID: activityID
         )
 
         navigationController.pushViewController(memberMeetingDetailVC, animated: true)

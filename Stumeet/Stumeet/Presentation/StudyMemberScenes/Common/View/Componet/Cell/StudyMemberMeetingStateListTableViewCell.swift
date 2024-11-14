@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
     
@@ -128,7 +129,7 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         }
         
         profileImageView.snp.makeConstraints {
-            $0.size.equalTo(profileImageSize).priority(.medium)
+            $0.size.equalTo(profileImageSize)
         }
     }
     
@@ -143,6 +144,7 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         stateListHStackView.addArrangedSubview(spacerView)
         
         StudyMemberMeetingStateListItem.AttendanceState.allCases.forEach { state in
+            guard state != .none else { return }
             let button = createStateButton(for: state)
             stateButtonsDict[state] = button
             stateListHStackView.addArrangedSubview(button)
@@ -211,11 +213,19 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
     func configureCell(_ item: StudyMemberMeetingStateListItem) {
         taskStateitem = item
         stateListHStackView.isHidden = item.isStateHidden
+        nameLabel.text = item.name
+        
+        if let image = item.profileImage {
+            let url = URL(string: image)
+            profileImageView.kf.setImage(with: url)
+        }
         
         updateStateButton(for: item.attendanceState)
         
         var container = AttributeContainer()
         container.font = StumeetFont.bodyMedium14.font
+        
+        attendanceStateButton.isHidden = item.attendanceState == .none
         
         if item.isStateHidden {
             container.foregroundColor = taskStateitem?.attendanceState.primaryColor

@@ -19,6 +19,32 @@ struct Activity: Hashable {
     let name: String?
     let day: String?
     let status: ActivityState?
+    
+    init(
+        id: Int,
+        tag: ActivityCategory? = nil,
+        title: String,
+        content: String? = nil,
+        startTiem: String? = nil,
+        endTime: String? = nil,
+        place: String? = nil,
+        image: String? = nil,
+        name: String? = nil,
+        day: String? = nil,
+        status: ActivityState? = nil
+    ) {
+        self.id = id
+        self.tag = tag
+        self.title = title
+        self.content = content
+        self.startTiem = startTiem
+        self.endTime = endTime
+        self.place = place
+        self.image = image
+        self.name = name
+        self.day = day
+        self.status = status
+    }
 }
 
 struct ActivityPage: Equatable {
