@@ -131,23 +131,25 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
     }
     
     // MARK: - StudyMemberMeetingDetail
-    func makeStudyMemberActivityDetailViewModel(studyID: Int, activityID: Int) -> StudyMemberActivityDetailViewModel {
+    func makeStudyMemberActivityDetailViewModel(studyID: Int, activityID: Int, category: ActivityCategory) -> StudyMemberActivityDetailViewModel {
         StudyMemberActivityDetailViewModel(
             fetchActiveStudyMembersUseCase: makeFetchActiveStudyMembersUseCase(),
             detailStudyActivityUseCase: makeDetailStudyActivityUseCase(),
             studyID: studyID,
-            activityID: activityID
+            activityID: activityID,
+            category: category
         )
     }
     
     func makeStudyMemberActivityDetailVC(
         coordinator: Navigation,
         studyID: Int,
-        activityID: Int
+        activityID: Int,
+        category: ActivityCategory
     ) -> StudyMemberActivityDetailViewController {
         StudyMemberActivityDetailViewController(
             coordinator: coordinator,
-            viewModel: makeStudyMemberActivityDetailViewModel(studyID: studyID, activityID: activityID)
+            viewModel: makeStudyMemberActivityDetailViewModel(studyID: studyID, activityID: activityID, category: category)
         )
     }
     

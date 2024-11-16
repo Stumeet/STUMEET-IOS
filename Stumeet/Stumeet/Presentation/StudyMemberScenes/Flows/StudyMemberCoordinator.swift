@@ -16,7 +16,8 @@ protocol StudyMemberCoordinatorDependencies {
     func makeStudyMemberActivityDetailVC(
         coordinator: StudyMemberNavigation,
         studyID: Int,
-        activityID: Int
+        activityID: Int,
+        category: ActivityCategory
     ) -> StudyMemberActivityDetailViewController
 }
 
@@ -30,7 +31,7 @@ protocol StudyMemberNavigation: AnyObject {
         popupContextView: UIView
     )
     func goToMemberAchievementVC(studyId: Int)
-    func goToMemberActivityDetailVC(studyID: Int, activityID: Int)
+    func goToMemberActivityDetailVC(studyID: Int, activityID: Int, category: ActivityCategory)
     func dimiss()
 }
 
@@ -112,11 +113,12 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         navigationController.pushViewController(memberAchievementVC, animated: true)
     }
     
-    func goToMemberActivityDetailVC(studyID: Int, activityID: Int) {
+    func goToMemberActivityDetailVC(studyID: Int, activityID: Int, category: ActivityCategory) {
         let memberMeetingDetailVC = dependencies.makeStudyMemberActivityDetailVC(
             coordinator: self,
             studyID: studyID,
-            activityID: activityID
+            activityID: activityID,
+            category: category
         )
 
         navigationController.pushViewController(memberMeetingDetailVC, animated: true)

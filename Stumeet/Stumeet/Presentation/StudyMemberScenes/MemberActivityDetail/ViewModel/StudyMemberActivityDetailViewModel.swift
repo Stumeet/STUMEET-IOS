@@ -18,6 +18,7 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
     struct Output {
         let studyMemberActivityDataSource: AnyPublisher<[StudyMemberMeetingStateListItem], Never>
         let activityHeaderItem: AnyPublisher<StudyMemberActivityViewItem?, Never>
+        let naviTitleText: AnyPublisher<String, Never>
     }
     
     // MARK: - UseCase
@@ -27,6 +28,7 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
     // MARK: - Properties
     private var studyID: Int
     private var activityID: Int
+    private var category: ActivityCategory
     
     private var studyMemberActivityItemsSubject = CurrentValueSubject<[StudyMemberMeetingStateListItem], Never>([])
     private var activityItemSubject = CurrentValueSubject<StudyMemberActivityViewItem?, Never>(nil)
@@ -37,18 +39,25 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
         fetchActiveStudyMembersUseCase: FetchActiveStudyMembersUseCase,
         detailStudyActivityUseCase: DetailStudyActivityUseCase,
         studyID: Int,
-        activityID: Int
+        activityID: Int,
+        category: ActivityCategory
     ) {
         self.fetchActiveStudyMembersUseCase = fetchActiveStudyMembersUseCase
         self.detailStudyActivityUseCase = detailStudyActivityUseCase
         self.studyID = studyID
         self.activityID = activityID
+        self.category = category
     }
     
     func transform(input: Input) -> Output {
         
         let studyMemberActivityDataSource = studyMemberActivityItemsSubject.eraseToAnyPublisher()
         let activityItem = activityItemSubject.eraseToAnyPublisher()
+        let naviTitleText = input.loadDataTrigger
+            .map { [weak self] in
+                guard let title = self?.category.title else { return "상세" }
+                return "\(title) 상세"
+            }.eraseToAnyPublisher()
         
         
         input.loadDataTrigger
@@ -83,7 +92,8 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
         
         return Output(
             studyMemberActivityDataSource: studyMemberActivityDataSource,
-            activityHeaderItem: activityItem
+            activityHeaderItem: activityItem,
+            naviTitleText: naviTitleText
         )
     }
     
@@ -92,7 +102,7 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
         from detailActivityListItem: [DetailActivityMember]
     ) -> [StudyMemberMeetingStateListItem] {
         return detailActivityListItem.map {
-            StudyMemberMeetingStateListItem(detailActivityMember: $0)
+            StudyMemberMeetingStateListItem(detailActivityMember: $0, category: category)
         }
     }
     

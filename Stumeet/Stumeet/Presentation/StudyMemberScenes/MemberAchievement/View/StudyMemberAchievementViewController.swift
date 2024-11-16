@@ -130,9 +130,9 @@ class StudyMemberAchievementViewController: BaseViewController {
  
         output.moveToMemberActivityDetailVC
             .receive(on: RunLoop.main)
-            .sink { [weak self] studyID, activityID in
+            .sink { [weak self] studyID, activityID, category in
                 guard let self else { return }
-                coordinator.goToMemberActivityDetailVC(studyID: studyID, activityID: activityID)
+                coordinator.goToMemberActivityDetailVC(studyID: studyID, activityID: activityID, category: category)
             }
             .store(in: &cancellables)
     }

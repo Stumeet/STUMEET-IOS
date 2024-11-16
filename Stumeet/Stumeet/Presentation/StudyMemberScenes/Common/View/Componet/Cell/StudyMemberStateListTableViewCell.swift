@@ -1,5 +1,5 @@
 //
-//  StudyMemberMeetingStateListTableViewCell.swift
+//  StudyMemberStateListTableViewCell.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/09/29.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
+class StudyMemberStateListTableViewCell: BaseTableViewCell {
     
     // MARK: - UIComponents
     private let rootVStackView: UIStackView = {
@@ -44,25 +44,24 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         return imageView
     }()
     
-    private lazy var attendanceStateButton: UIButton = {
+    private lazy var currentStateButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         var container = AttributeContainer()
         
         container.font = StumeetFont.bodyMedium14.font
-        container.foregroundColor = StudyMemberMeetingStateListItem
-            .AttendanceState
-            .present
+        container.foregroundColor = ActivityState
+            .attendance
             .secondaryColor
         
         configuration.imagePlacement = .trailing
         configuration.imagePadding = 4
         configuration.attributedTitle = AttributedString(
-            StudyMemberMeetingStateListItem.AttendanceState.present.title,
+            ActivityState
+                .attendance.rawValue,
             attributes: container
         )
-        configuration.baseBackgroundColor = StudyMemberMeetingStateListItem
-            .AttendanceState
-            .present
+        configuration.baseBackgroundColor = ActivityState
+            .attendance
             .secondaryColor
         configuration.contentInsets = .init(top: 4, leading: 12, bottom: 4, trailing: 12)
         
@@ -81,7 +80,6 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         label.font = StumeetFont.bodyMedium16.font
         label.textColor = StumeetColor.gray700.color
         label.numberOfLines = 1
-        label.text = "홍길동"
         return label
     }()
     
@@ -92,7 +90,7 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         return stackView
     }()
     
-    private var stateButtonsDict: [StudyMemberMeetingStateListItem.AttendanceState: UIButton] = [:]
+    private var stateButtonsDict: [ActivityState: UIButton] = [:]
     private let spacerView = UIView()
     
     // MARK: - Properties
@@ -111,7 +109,7 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         
         [
             profileHStackView,
-            attendanceStateButton
+            currentStateButton
         ].forEach { mainHStackView.addArrangedSubview($0) }
         
         [
@@ -143,21 +141,20 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
         stateButtonsDict = [:]
         stateListHStackView.addArrangedSubview(spacerView)
         
-        StudyMemberMeetingStateListItem.AttendanceState.allCases.forEach { state in
-            guard state != .none else { return }
+        ActivityState.allCases.forEach { state in
             let button = createStateButton(for: state)
             stateButtonsDict[state] = button
             stateListHStackView.addArrangedSubview(button)
         }
     }
     
-    private func createStateButton(for state: StudyMemberMeetingStateListItem.AttendanceState) -> UIButton {
+    private func createStateButton(for state: ActivityState) -> UIButton {
         var configuration = UIButton.Configuration.filled()
         var container = AttributeContainer()
         
         container.font = StumeetFont.bodyMedium14.font
         container.foregroundColor = StumeetColor.gray300.color
-        configuration.attributedTitle = AttributedString(state.title, attributes: container)
+        configuration.attributedTitle = AttributedString(state.rawValue, attributes: container)
         configuration.baseBackgroundColor = StumeetColor.gray75.color
         configuration.contentInsets = .init(top: 4, leading: 12, bottom: 4, trailing: 12)
         configuration.titleLineBreakMode = .byTruncatingTail
@@ -169,12 +166,10 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
             ).height / 2
         button.addTarget(self, action: #selector(stateButtonTapped), for: .touchUpInside)
         
-        button.tag = state.rawValue
-        
         return button
     }
     
-    private func updateStateButton(for selectedState: StudyMemberMeetingStateListItem.AttendanceState) {
+    private func updateStateButton(for selectedState: ActivityState, category: ActivityCategory) {
         for (state, button) in stateButtonsDict {
             var container = AttributeContainer()
             container.font = StumeetFont.bodyMedium14.font
@@ -182,14 +177,23 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
             if state == selectedState {
                 container.foregroundColor = selectedState.secondaryColor
                 
-                button.configuration?.attributedTitle = AttributedString(selectedState.title, attributes: container)
+                button.configuration?.attributedTitle = AttributedString(selectedState.rawValue, attributes: container)
                 button.configuration?.baseBackgroundColor = selectedState.primaryColor
             } else {
                 container.foregroundColor = StumeetColor.gray300.color
                 
-                button.configuration?.attributedTitle = AttributedString(state.title, attributes: container)
+                button.configuration?.attributedTitle = AttributedString(state.rawValue, attributes: container)
                 button.configuration?.baseBackgroundColor = StumeetColor.gray75.color
             }
+        }
+
+        stateButtonsDict.values.forEach { $0.isHidden = true}
+
+        let allStates = ActivityState.allCases
+        let currentStates = allStates.filter { $0.category == category }
+
+        currentStates.forEach {
+            stateButtonsDict[$0]?.isHidden = false
         }
     }
     
@@ -202,11 +206,11 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
     
     @objc func stateButtonTapped(_ sender: UIButton) {
         guard var taskStateitem,
-              let selectedStatus = StudyMemberMeetingStateListItem.AttendanceState(rawValue: sender.tag)
+              let selectedStatus = stateButtonsDict.first(where: { $0.value === sender })?.key
         else { return }
         
         taskStateitem.isStateHidden = true
-        taskStateitem.attendanceState = selectedStatus
+        taskStateitem.activityState = selectedStatus
         delegate?.didTapTaskState(taskStateitem, cell: self)
     }
     
@@ -220,29 +224,27 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
             profileImageView.kf.setImage(with: url)
         }
         
-        updateStateButton(for: item.attendanceState)
+        updateStateButton(for: item.activityState, category: item.category)
         
         var container = AttributeContainer()
         container.font = StumeetFont.bodyMedium14.font
         
-        attendanceStateButton.isHidden = item.attendanceState == .none
-        
         if item.isStateHidden {
-            container.foregroundColor = taskStateitem?.attendanceState.primaryColor
+            container.foregroundColor = taskStateitem?.activityState.primaryColor
             
-            attendanceStateButton.configuration?.attributedTitle = AttributedString(taskStateitem?.attendanceState.title ?? "", attributes: container)
-            attendanceStateButton.configuration?.baseBackgroundColor = taskStateitem?.attendanceState.secondaryColor
-            attendanceStateButton.configuration?.image = nil
+            currentStateButton.configuration?.attributedTitle = AttributedString(taskStateitem?.activityState.rawValue ?? "", attributes: container)
+            currentStateButton.configuration?.baseBackgroundColor = taskStateitem?.activityState.secondaryColor
+            currentStateButton.configuration?.image = nil
         } else {
-            container.foregroundColor = taskStateitem?.attendanceState.secondaryColor
+            container.foregroundColor = taskStateitem?.activityState.secondaryColor
             
-            attendanceStateButton.configuration?.attributedTitle = AttributedString(taskStateitem?.attendanceState.title ?? "", attributes: container)
-            attendanceStateButton.configuration?.baseBackgroundColor = taskStateitem?.attendanceState.primaryColor
-            attendanceStateButton.configuration?.image = UIImage(
+            currentStateButton.configuration?.attributedTitle = AttributedString(taskStateitem?.activityState.rawValue ?? "", attributes: container)
+            currentStateButton.configuration?.baseBackgroundColor = taskStateitem?.activityState.primaryColor
+            currentStateButton.configuration?.image = UIImage(
                 resource: .StudyMember.iconWhiteArrowDown
             )
             .withTintColor(
-                taskStateitem?.attendanceState.secondaryColor ?? .white,
+                taskStateitem?.activityState.secondaryColor ?? .white,
                 renderingMode: .alwaysOriginal
             )
         }
@@ -250,5 +252,5 @@ class StudyMemberMeetingStateListTableViewCell: BaseTableViewCell {
 }
 
 protocol StudyMemberMeetingStateListTableViewCellDelegate: AnyObject {
-    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberMeetingStateListTableViewCell)
+    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberStateListTableViewCell)
 }

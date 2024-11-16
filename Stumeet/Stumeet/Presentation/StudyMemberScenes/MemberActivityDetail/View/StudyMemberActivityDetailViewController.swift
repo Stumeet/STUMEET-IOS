@@ -25,7 +25,7 @@ class StudyMemberActivityDetailViewController: BaseViewController {
         label.font = StumeetFont.titleMedium.font
         label.textColor = StumeetColor.gray800.color
         label.numberOfLines = 1
-        label.text = "모임 상세"
+        label.text = "상세"
         return label
     }()
     
@@ -42,7 +42,7 @@ class StudyMemberActivityDetailViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
-        tableView.registerCell(StudyMemberMeetingStateListTableViewCell.self)
+        tableView.registerCell(StudyMemberStateListTableViewCell.self)
         return tableView
     }()
     
@@ -130,6 +130,14 @@ class StudyMemberActivityDetailViewController: BaseViewController {
                 updateMeetingStateDataSource(items: dataSource)
             }
             .store(in: &cancellables)
+        
+        output.naviTitleText
+            .receive(on: RunLoop.main)
+            .sink { [weak self] title in
+                guard let self else { return }
+                titleLabel.text = title
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -156,7 +164,7 @@ extension StudyMemberActivityDetailViewController:
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeue(StudyMemberMeetingStateListTableViewCell.self, for: indexPath),
+        guard let cell = tableView.dequeue(StudyMemberStateListTableViewCell.self, for: indexPath),
               let taskStateData = meetingStateDataSource[safe: indexPath.row]
         else { return UITableViewCell() }
         cell.configureCell(taskStateData)
@@ -165,7 +173,7 @@ extension StudyMemberActivityDetailViewController:
     }
    
     // MARK: - StudyMemberMeetingStateListTableViewCellDelegate
-    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberMeetingStateListTableViewCell) {
+    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberStateListTableViewCell) {
         guard let indexPath = meetingStateTableView.indexPath(for: cell),
               meetingStateDataSource[safe: indexPath.row] != nil
         else { return}

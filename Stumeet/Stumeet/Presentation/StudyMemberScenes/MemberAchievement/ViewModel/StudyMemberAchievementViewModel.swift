@@ -20,7 +20,7 @@ final class StudyMemberAchievementViewModel: ViewModelType {
     // MARK: - Output
     struct Output {
         let activityDataSource: AnyPublisher<[StudyMemberActivityListItem], Never>
-        let moveToMemberActivityDetailVC: AnyPublisher<(Int, Int), Never>
+        let moveToMemberActivityDetailVC: AnyPublisher<(Int, Int, ActivityCategory), Never>
     }
     
     // MARK: - UseCase
@@ -54,12 +54,13 @@ final class StudyMemberAchievementViewModel: ViewModelType {
         let activityDataSource = activityItemsSubject.eraseToAnyPublisher()
         
         let moveToMemberActivityDetailVC = input.didSelectRow
-            .compactMap { [weak self] indexPath -> (Int, Int)? in
+            .compactMap { [weak self] indexPath -> (Int, Int, ActivityCategory)? in
                 guard let self = self,
-                      let rowItem = activityItemsSubject.value[safe: indexPath.row]
+                      let rowItem = activityItemsSubject.value[safe: indexPath.row],
+                      let type = rowItem.type
                 else { return nil }
                 
-                return (studyId, rowItem.id)
+                return (studyId, rowItem.id, type)
             }
             .eraseToAnyPublisher()
         
