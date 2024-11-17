@@ -8,12 +8,13 @@
 import UIKit
 
 struct DetailActivityMember: Hashable {
+    let id: Int?
     let name: String?
-    let state: ActivityState
+    var state: ActivityState
     let profileImageURL: String?
 }
 
-enum ActivityState: String {
+enum ActivityState: String, Equatable, CaseIterable {
     case perform = "수행"
     case notperform = "미수행"
     case attendance = "출석"
@@ -23,6 +24,17 @@ enum ActivityState: String {
     case okPerform = "지각제출"
     case noParticipation = "미참여"
     case beforeStart = "시작 전"
+    case none = "없음"
+    
+    var category: ActivityCategory {
+        switch self {
+        case .attendance, .late, .okAbsent, .absent:
+            return .meeting
+        case .perform, .okPerform, .notperform:
+            return .homework
+        default: return .freedom
+        }
+    }
     
     var primaryColor: UIColor {
         switch self {
@@ -32,6 +44,7 @@ enum ActivityState: String {
         case .absent: StumeetColor.danger500.color
         case .late: StumeetColor.warning500.color
         case .okAbsent: StumeetColor.danger500.color
+        case .okPerform: StumeetColor.warning500.color
         case .beforeStart: StumeetColor.gray300.color
         default: StumeetColor.gray300.color
         }
@@ -45,6 +58,7 @@ enum ActivityState: String {
         case .absent: StumeetColor.danger50.color
         case .late: StumeetColor.warning50.color
         case .okAbsent: StumeetColor.danger50.color
+        case .okPerform: StumeetColor.warning50.color
         case .beforeStart: StumeetColor.gray75.color
         default: StumeetColor.gray75.color
         }

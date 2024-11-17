@@ -13,6 +13,7 @@ final class StudyMemberViewModel: ViewModelType {
     struct Input {
         let loadData: AnyPublisher<Void, Never>
         let didSelectMemberRow: AnyPublisher<IndexPath, Never>
+        let didTapAchievement: AnyPublisher<Void, Never>
     }
 
     // MARK: - Output
@@ -21,6 +22,7 @@ final class StudyMemberViewModel: ViewModelType {
         let studyMemberCount: AnyPublisher<Int, Never>
         let isAdminChecked: AnyPublisher<Bool, Never>
         let presentToMemberDetailVC: AnyPublisher<(StudyMember, Int), Never>
+        let moveToMemberAchievementVC: AnyPublisher<Int, Never>
     }
     
     // MARK: - Properties
@@ -60,6 +62,14 @@ final class StudyMemberViewModel: ViewModelType {
             }
             .eraseToAnyPublisher()
         
+        let moveToMemberAchievementVC = input.didTapAchievement
+            .compactMap { [weak self] () -> Int? in
+                guard let self = self
+                else { return nil }
+                return studyId
+            }
+            .eraseToAnyPublisher()
+        
         input.loadData
             .flatMap { [weak self] in
                 guard let self else { return Just<[StudyMember]>([])
@@ -87,7 +97,8 @@ final class StudyMemberViewModel: ViewModelType {
             studyMemberDataSource: studyMemberDataSource,
             studyMemberCount: studyMemberCount,
             isAdminChecked: isAdminChecked,
-            presentToMemberDetailVC: presentToMemberDetailVC
+            presentToMemberDetailVC: presentToMemberDetailVC,
+            moveToMemberAchievementVC: moveToMemberAchievementVC
         )
     }
     

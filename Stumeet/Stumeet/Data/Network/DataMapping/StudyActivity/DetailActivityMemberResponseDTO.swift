@@ -22,6 +22,7 @@ extension DetailActivityMemberResponseDTO {
     func toDomain() -> [DetailActivityMember] {
         participants.map { member in
             DetailActivityMember(
+                id: member.id,
                 name: member.name,
                 state: ActivityState(rawValue: member.status)!,
                 profileImageURL: member.profileImageUrl

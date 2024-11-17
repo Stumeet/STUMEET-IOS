@@ -12,8 +12,13 @@ import Moya
 protocol StudyMemberCoordinatorDependencies {
     func makeStudyMemberVC(coordinator: StudyMemberNavigation, studyId: Int) -> StudyMemberViewController
     func makeStudyMemberDetailVC(coordinator: StudyMemberNavigation, studyId: Int, studyMemberId: Int) -> StudyMemberDetailViewController
-    func makeStudyMemberAchievementVC(coordinator: StudyMemberNavigation) -> StudyMemberAchievementViewController
-    func makeStudyMemberMeetingDetailVC(coordinator: StudyMemberNavigation) -> StudyMemberMeetingDetailViewController
+    func makeStudyMemberAchievementVC(coordinator: StudyMemberNavigation, studyId: Int) -> StudyMemberAchievementViewController
+    func makeStudyMemberActivityDetailVC(
+        coordinator: StudyMemberNavigation,
+        studyID: Int,
+        activityID: Int,
+        category: ActivityCategory
+    ) -> StudyMemberActivityDetailViewController
 }
 
 protocol StudyMemberNavigation: AnyObject {
@@ -25,8 +30,8 @@ protocol StudyMemberNavigation: AnyObject {
         delegate: StumeetConfirmationPopupViewControllerDelegate,
         popupContextView: UIView
     )
-    func goToMemberAchievementVC()
-    func goToMemberMeetingDetailVC()
+    func goToMemberAchievementVC(studyId: Int)
+    func goToMemberActivityDetailVC(studyID: Int, activityID: Int, category: ActivityCategory)
     func dimiss()
 }
 
@@ -99,17 +104,21 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         viewController.present(exitPopupVC, animated: false, completion: nil)
     }
     
-    func goToMemberAchievementVC() {
+    func goToMemberAchievementVC(studyId: Int) {
         let memberAchievementVC = dependencies.makeStudyMemberAchievementVC(
-            coordinator: self
+            coordinator: self,
+            studyId: studyId
         )
 
         navigationController.pushViewController(memberAchievementVC, animated: true)
     }
     
-    func goToMemberMeetingDetailVC() {
-        let memberMeetingDetailVC = dependencies.makeStudyMemberMeetingDetailVC(
-            coordinator: self
+    func goToMemberActivityDetailVC(studyID: Int, activityID: Int, category: ActivityCategory) {
+        let memberMeetingDetailVC = dependencies.makeStudyMemberActivityDetailVC(
+            coordinator: self,
+            studyID: studyID,
+            activityID: activityID,
+            category: category
         )
 
         navigationController.pushViewController(memberMeetingDetailVC, animated: true)

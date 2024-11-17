@@ -1,5 +1,5 @@
 //
-//  StudyMemberMeetingDetailViewController.swift
+//  StudyMemberActivityDetailViewController.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/09/29.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Combine
 
-class StudyMemberMeetingDetailViewController: BaseViewController {
+class StudyMemberActivityDetailViewController: BaseViewController {
     
     // MARK: - UIComponents
     private var titleStackView: UIStackView = {
@@ -25,7 +25,7 @@ class StudyMemberMeetingDetailViewController: BaseViewController {
         label.font = StumeetFont.titleMedium.font
         label.textColor = StumeetColor.gray800.color
         label.numberOfLines = 1
-        label.text = "모임 상세"
+        label.text = "상세"
         return label
     }()
     
@@ -34,24 +34,7 @@ class StudyMemberMeetingDetailViewController: BaseViewController {
         return view
     }()
     
-    // TODO: - API 연동 시 수정
-    private var headerView = StudyMemberActivityView(
-        StudyMemberActivityViewItem(
-            activity: Activity(
-                id: 0,
-                tag: .meeting,
-                title: "test1120399210390-2193-02910-39102-930-21930-9213387238732899823820394893028490328904",
-                content: "test12",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-22T00:00:00",
-                place: "성심",
-                image: nil,
-                name: nil,
-                day: "2024-08-19T11:20:21.961423",
-                status: .absent
-            )
-        )
-    )
+    private var headerView = StudyMemberActivityView()
     
     private lazy var meetingStateTableView: UITableView = {
         let tableView = UITableView()
@@ -59,19 +42,24 @@ class StudyMemberMeetingDetailViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
-        tableView.registerCell(StudyMemberMeetingStateListTableViewCell.self)
+        tableView.registerCell(StudyMemberStateListTableViewCell.self)
         return tableView
     }()
     
     // MARK: - Properties
     private weak var coordinator: StudyMemberNavigation!
+    private var viewModel: StudyMemberActivityDetailViewModel
     private var meetingStateDataSource: [StudyMemberMeetingStateListItem] = []
+    
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
-        coordinator: StudyMemberNavigation
+        coordinator: StudyMemberNavigation,
+        viewModel: StudyMemberActivityDetailViewModel
     ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -117,30 +105,55 @@ class StudyMemberMeetingDetailViewController: BaseViewController {
     }
     
     override func bind() {
+        // MARK: - Input
+        let input = StudyMemberActivityDetailViewModel.Input(
+            loadDataTrigger: loadDataSubject.eraseToAnyPublisher()
+        )
+
+        // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.activityHeaderItem
+            .receive(on: RunLoop.main)
+            .sink { [weak self] item in
+                guard let self,
+                      let item
+                else { return }
+                headerView.configure(item)
+            }
+            .store(in: &cancellables)
+ 
+        output.studyMemberActivityDataSource
+            .receive(on: RunLoop.main)
+            .sink { [weak self] dataSource in
+                guard let self else { return }
+                updateMeetingStateDataSource(items: dataSource)
+            }
+            .store(in: &cancellables)
+        
+        output.naviTitleText
+            .receive(on: RunLoop.main)
+            .sink { [weak self] title in
+                guard let self else { return }
+                titleLabel.text = title
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: - API 연동 시 수정
-        
-        updateMeetingStateDataSource(items: [
-            StudyMemberMeetingStateListItem(id: 0, isStateHidden: true, attendanceState: .absence),
-            StudyMemberMeetingStateListItem(id: 1, isStateHidden: true, attendanceState: .excusedAbsence),
-            StudyMemberMeetingStateListItem(id: 2, isStateHidden: true, attendanceState: .late),
-            StudyMemberMeetingStateListItem(id: 3, isStateHidden: true, attendanceState: .present)
-        ])
+        loadDataSubject.send()
     }
     
     // MARK: - Function
-    
     private func updateMeetingStateDataSource(items: [StudyMemberMeetingStateListItem]) {
         meetingStateDataSource = items
         meetingStateTableView.reloadData()
     }
 }
 
-extension StudyMemberMeetingDetailViewController:
+extension StudyMemberActivityDetailViewController:
     UITableViewDataSource,
     StudyMemberMeetingStateListTableViewCellDelegate {
     
@@ -151,7 +164,7 @@ extension StudyMemberMeetingDetailViewController:
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeue(StudyMemberMeetingStateListTableViewCell.self, for: indexPath),
+        guard let cell = tableView.dequeue(StudyMemberStateListTableViewCell.self, for: indexPath),
               let taskStateData = meetingStateDataSource[safe: indexPath.row]
         else { return UITableViewCell() }
         cell.configureCell(taskStateData)
@@ -160,7 +173,7 @@ extension StudyMemberMeetingDetailViewController:
     }
    
     // MARK: - StudyMemberMeetingStateListTableViewCellDelegate
-    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberMeetingStateListTableViewCell) {
+    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberStateListTableViewCell) {
         guard let indexPath = meetingStateTableView.indexPath(for: cell),
               meetingStateDataSource[safe: indexPath.row] != nil
         else { return}

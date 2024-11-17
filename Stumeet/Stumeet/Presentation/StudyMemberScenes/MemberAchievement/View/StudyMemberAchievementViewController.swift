@@ -50,13 +50,21 @@ class StudyMemberAchievementViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: StudyMemberNavigation!
+    private var viewModel: StudyMemberAchievementViewModel
     private var activityDataSource: UITableViewDiffableDataSource<StudyMemberActivityListSection, StudyMemberActivityListItem>?
+    
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
+    private let didTapHeadderTapBarButtonSubject = PassthroughSubject<StudyMemberAchievementHeaderTapBarViewType, Never>()
+    private let didReachTableBottomSubject = PassthroughSubject<Void, Never>()
+    private let didSelectRowSubject = PassthroughSubject<IndexPath, Never>()
 
     // MARK: - Init
     init(
-        coordinator: StudyMemberNavigation
+        coordinator: StudyMemberNavigation,
+        viewModel: StudyMemberAchievementViewModel
     ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -101,12 +109,30 @@ class StudyMemberAchievementViewController: BaseViewController {
     }
     
     override func bind() {
-        // TODO: - 임시 viewModel 생성 시 수정
-        activityTableView.didSelectRowPublisher
+        // MARK: - Input
+        let input = StudyMemberAchievementViewModel.Input(
+            loadDataTrigger: loadDataSubject.eraseToAnyPublisher(),
+            didTapHeadderTapBarButton: didTapHeadderTapBarButtonSubject.eraseToAnyPublisher(),
+            didReachTableBottom: didReachTableBottomSubject.eraseToAnyPublisher(),
+            didSelectRow: didSelectRowSubject.eraseToAnyPublisher()
+        )
+
+        // MARK: - Output
+        let output = viewModel.transform(input: input)
+        
+        output.activityDataSource
             .receive(on: RunLoop.main)
-            .sink { [weak self] selectRow in
-                guard let self = self else { return }
-                coordinator.goToMemberMeetingDetailVC()
+            .sink { [weak self] items in
+                guard let self else { return }
+                updateSnapshot(items: items)
+            }
+            .store(in: &cancellables)
+ 
+        output.moveToMemberActivityDetailVC
+            .receive(on: RunLoop.main)
+            .sink { [weak self] studyID, activityID, category in
+                guard let self else { return }
+                coordinator.goToMemberActivityDetailVC(studyID: studyID, activityID: activityID, category: category)
             }
             .store(in: &cancellables)
     }
@@ -114,86 +140,21 @@ class StudyMemberAchievementViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: - API 연동 시 수정
+        setupDelegate()
         configureDatasource()
-        updateSnapshot(
-            items: [
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 0,
-                        tag: .meeting,
-                        title: "test1120399210390-2193-02910-39102-930-21930-9213387238732899823820394893028490328904",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .absent
-                    ),
-                    cellType: .firstCell,
-                    screenType: .achievement
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 2,
-                        tag: .meeting,
-                        title: "test2",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .beforeStart
-                    ),
-                    cellType: .normal,
-                    screenType: .achievement
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 3,
-                        tag: .homework,
-                        title: "test323094329048324321948fdsaklndfkjmnaikfniwejfeiuajhiufhawiluhfliuawhefliuhawiluefhilauwehfiluawhilufehliaufwehuliwfh",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: nil
-                    ),
-                    cellType: .normal,
-                    screenType: .achievement
-                ),
-                StudyMemberActivityListItem(
-                    activity: Activity(
-                        id: 4,
-                        tag: .homework,
-                        title: "test4",
-                        content: "test12",
-                        startTiem: "2024-04-22T00:00:00",
-                        endTime: "2024-04-22T00:00:00",
-                        place: "성심",
-                        image: nil,
-                        name: nil,
-                        day: "2024-08-19T11:20:21.961423",
-                        status: .noParticipation
-                    ),
-                    cellType: .normal,
-                    screenType: .achievement
-                )]
-        )
-        
+        loadDataSubject.send()
     }
     
     // MARK: - Function
+    private func setupDelegate() {
+        headerTapBarView.delegate = self
+        activityTableView.delegate = self
+    }
 }
 
-extension StudyMemberAchievementViewController {
+extension StudyMemberAchievementViewController:
+    UITableViewDelegate,
+    StudyMemberHeaderTapBarViewDelegate {
     
     // MARK: - DataSource
     private func configureDatasource() {
@@ -215,5 +176,23 @@ extension StudyMemberAchievementViewController {
         
         guard let datasource = self.activityDataSource else { return }
         datasource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    // MARK: - UITableViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yDelta = scrollView.contentOffset.y
+        let threshold = max(0, (scrollView.contentSize.height) * 0.3)
+
+        if yDelta > threshold { didReachTableBottomSubject.send() }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        didSelectRowSubject.send(indexPath)
+    }
+    
+    // MARK: - StudyMemberHeaderTapBarViewDelegate
+    func didTapAction(_ button: StudyMemberHeaderTapBarView.RadioButton) {
+        guard let tapType = StudyMemberAchievementHeaderTapBarViewType(rawValue: button.id) else { return }
+        didTapHeadderTapBarButtonSubject.send(tapType)
     }
 }

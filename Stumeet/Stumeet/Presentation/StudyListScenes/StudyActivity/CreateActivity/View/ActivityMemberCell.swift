@@ -131,6 +131,7 @@ class ActivityMemberCell: UITableViewCell {
         case .noParticipation, .beforeStart:
             stateLabel.backgroundColor = StumeetColor.gray75.color
             stateLabel.textColor = StumeetColor.gray400.color
+        default: break
         }
         stateLabel.text = item.state.rawValue
     }

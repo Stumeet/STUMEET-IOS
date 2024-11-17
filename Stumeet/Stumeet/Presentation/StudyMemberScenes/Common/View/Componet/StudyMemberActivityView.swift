@@ -99,11 +99,10 @@ class StudyMemberActivityView: UIView {
     }()
     
     // MARK: - Init
-    init(_ item: StudyMemberActivityViewItem) {
+    init() {
         super.init(frame: .zero)
         setupAddView()
         setupConstaints()
-        configure(item)
     }
     
     required init?(coder: NSCoder) {

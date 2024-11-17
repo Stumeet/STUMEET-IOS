@@ -344,6 +344,7 @@ extension StudyActivityCell {
         case .noParticipation, .beforeStart:
             statusLabel.backgroundColor = StumeetColor.gray75.color
             statusLabel.textColor = StumeetColor.gray400.color
+        default: break
         }
         statusLabel.text = status.rawValue
     }

@@ -78,6 +78,7 @@ class StudyMemberViewController: BaseViewController {
     private let viewModel: StudyMemberViewModel
     private var studyMemberDataSource: UITableViewDiffableDataSource<StudyMemberListSection, StudyMember>?
     private let loadDataSubject = PassthroughSubject<Void, Never>()
+    private let didTapAchievementSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
@@ -135,7 +136,8 @@ class StudyMemberViewController: BaseViewController {
         // MARK: - Input
         let input = StudyMemberViewModel.Input(
             loadData: loadDataSubject.eraseToAnyPublisher(),
-            didSelectMemberRow: memberTableView.didSelectRowPublisher
+            didSelectMemberRow: memberTableView.didSelectRowPublisher,
+            didTapAchievement: didTapAchievementSubject.eraseToAnyPublisher()
         )
 
         // MARK: - Output
@@ -174,6 +176,14 @@ class StudyMemberViewController: BaseViewController {
                 navigationItem.rightBarButtonItem = isAdmin ? memberSettingsButton : nil
             }
             .store(in: &cancellables)
+        
+        output.moveToMemberAchievementVC
+            .receive(on: RunLoop.main)
+            .sink { [weak self] studyID in
+                guard let self else { return }
+                coordinator.goToMemberAchievementVC(studyId: studyID)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -197,7 +207,7 @@ class StudyMemberViewController: BaseViewController {
     }
     
     @objc func memberSettingsButtonTapped(_ sender: UIBarButtonItem) {
-        coordinator.goToMemberAchievementVC()
+        didTapAchievementSubject.send()
     }
     
     @objc private func updateMemberList() {
