@@ -13,6 +13,11 @@ import SnapKit
     @objc optional func cancelAction()
 }
 
+enum StumeetConfirmationPopupViewControllerType {
+    case basic
+    case error
+}
+
 class StumeetConfirmationPopupViewController: BaseViewController {
 
     // MARK: - UIComponents
@@ -61,9 +66,10 @@ class StumeetConfirmationPopupViewController: BaseViewController {
     weak var delegate: StumeetConfirmationPopupViewControllerDelegate?
     
     // MARK: - Init
-    init(contextView: UIView) {
+    init(contextView: UIView, type: StumeetConfirmationPopupViewControllerType = .basic) {
         self.contextContainerView = contextView
         super.init(nibName: nil, bundle: nil)
+        configure(type: type)
     }
     
     required init?(coder: NSCoder) {
@@ -138,6 +144,15 @@ class StumeetConfirmationPopupViewController: BaseViewController {
             completion?()
             self.dismiss(animated: false, completion: nil)
         })
+    }
+    
+    private func configure(type: StumeetConfirmationPopupViewControllerType) {
+        switch type {
+        case .error:
+            cancelButton.isHidden = true
+            confirmButton.setTitle("확인", for: .normal)
+        default: break
+        }
     }
     
     @objc private func confirmButtonTapped(_ sender: UIButton) {

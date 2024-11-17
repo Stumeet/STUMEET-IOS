@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 extension UIViewController {
     
@@ -83,5 +84,55 @@ extension UIViewController {
         }
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    /// Error  Alert 보여주기
+    func showErrorAlert() {
+        let rootView = UIView()
+        let rootVStackView: UIStackView = {
+            let stackView = UIStackView()
+            stackView.axis = .vertical
+            stackView.spacing = 8
+            return stackView
+        }()
+        
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.font = StumeetFont.titleBold.font
+            label.textColor = StumeetColor.gray900.color
+            label.numberOfLines = 0
+            label.textAlignment = .center
+            return label
+        }()
+        
+        let subtitleLabel: UILabel = {
+            let label = UILabel()
+            label.font = StumeetFont.titleMedium.font
+            label.textColor = StumeetColor.gray800.color
+            label.numberOfLines = 2
+            label.textAlignment = .center
+            return label
+        }()
+        
+        rootView.addSubview(rootVStackView)
+        
+        [
+            titleLabel,
+            subtitleLabel
+        ].forEach { rootVStackView.addArrangedSubview($0)}
+        
+        titleLabel.text = "오류!"
+        subtitleLabel.text = "앱을 다시 시작해주세요."
+        
+        rootVStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalToSuperview().inset(48)
+            $0.bottom.equalToSuperview().inset(16)
+        }
+        
+        let errorVC = StumeetConfirmationPopupViewController(contextView: rootView, type: .error)
+        errorVC.modalPresentationStyle = .overFullScreen
+        errorVC.modalTransitionStyle = .crossDissolve
+        self.present(errorVC, animated: false, completion: nil)
     }
 }
