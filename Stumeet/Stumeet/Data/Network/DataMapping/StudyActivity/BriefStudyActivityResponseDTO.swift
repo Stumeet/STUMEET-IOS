@@ -8,10 +8,11 @@
 import Foundation
 
 struct BriefStudyActivityRequestDTO: Encodable {
-    let size: Int
-    let page: Int
+    let size: Int?
+    let page: Int?
     let isNotice: Bool?
     let studyId: Int?
+    let memberId: Int?
     let category: String?
     let fromDate: String?
     let toDate: String?

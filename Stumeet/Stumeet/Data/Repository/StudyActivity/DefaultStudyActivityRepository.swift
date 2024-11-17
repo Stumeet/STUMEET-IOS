@@ -42,6 +42,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             page: page,
             isNotice: nil,
             studyId: 1,
+            memberId: nil,
             category: ActivityCategory.meeting.rawValue,
             fromDate: nil,
             toDate: nil
@@ -60,6 +61,7 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             page: page,
             isNotice: nil,
             studyId: 1,
+            memberId: nil,
             category: ActivityCategory.homework.rawValue,
             fromDate: nil,
             toDate: nil
@@ -89,6 +91,35 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         
         return provider.requestPublisher(.fetchAllActivities(requestDTO))
             .map(ResponseWithDataDTO<AllStudyActivityResponseDTO>.self)
+            .tryMap { response -> ActivityPage in
+                guard let data = response.data else { throw MoyaError.requestMapping("Data is nil") }
+                return data.toDomain()
+            }
+            .mapError { $0 as? MoyaError ?? MoyaError.underlying($0, nil) }
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchBriefActivityList(
+        size: Int? = nil,
+        page: Int? = nil,
+        isNotice: Bool? = nil,
+        studyId: Int?,
+        memberId: Int?,
+        category: ActivityCategory? = nil
+    ) -> AnyPublisher<ActivityPage, MoyaError> {
+        let requestDTO = BriefStudyActivityRequestDTO(
+            size: size,
+            page: page,
+            isNotice: isNotice,
+            studyId: studyId,
+            memberId: memberId,
+            category: category?.rawValue,
+            fromDate: nil,
+            toDate: nil
+        )
+        
+        return provider.requestPublisher(.fetchBriefActivities(requestDTO))
+            .map(ResponseWithDataDTO<BreifStudyActivityResponseDTO>.self)
             .tryMap { response -> ActivityPage in
                 guard let data = response.data else { throw MoyaError.requestMapping("Data is nil") }
                 return data.toDomain()

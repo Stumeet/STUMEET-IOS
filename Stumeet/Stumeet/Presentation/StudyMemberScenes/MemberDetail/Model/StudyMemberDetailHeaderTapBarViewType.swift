@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum StudyMemberDetailHeaderTapBarViewType: CaseIterable {
-    case meeting
+enum StudyMemberDetailHeaderTapBarViewType: Int, CaseIterable {
+    case meeting = 0
     case task
     
     var title: String {
@@ -19,9 +19,6 @@ enum StudyMemberDetailHeaderTapBarViewType: CaseIterable {
     }
     
     var id: Int {
-        switch self {
-        case .meeting: 0
-        case .task: 1
-        }
+        self.rawValue
     }
 }

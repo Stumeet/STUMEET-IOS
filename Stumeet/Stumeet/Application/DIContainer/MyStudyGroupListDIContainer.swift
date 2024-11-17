@@ -77,6 +77,12 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         DefualtDetailActivityMemberListUseCase(repository: makeDetailActivityMemberRepository())
     }
     
+    func makeFetchLatestNoticeUseCase() -> FetchLatestNoticeUseCase {
+        DefaultFetchLatestNoticeUseCase(
+            repository: makeStudyActivityRepository()
+        )
+    }
+    
  
     // MARK: - MyStudyGroupList
     
@@ -86,7 +92,7 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     
     func makeMyStudyGroupListVC(coordinator: Navigation) -> MyStudyGroupListViewController {
         MyStudyGroupListViewController(
-            coordinator:  coordinator,
+            coordinator: coordinator,
             viewModel: makeMyStudyGroupListViewModel()
         )
     }
@@ -95,13 +101,14 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
     func makeStudyMainViewModel(studyId: Int) -> StudyMainViewModel {
         StudyMainViewModel(
             useCase: makeMyStudyGroupListUseCase(),
+            fetchLatestNoticeUseCase: makeFetchLatestNoticeUseCase(),
             studyID: studyId
         )
     }
     
     func makeStudyMainVC(coordinator: Navigation, studyId: Int) -> StudyMainViewController {
         StudyMainViewController(
-            coordinator:  coordinator,
+            coordinator: coordinator,
             viewModel: makeStudyMainViewModel(studyId: studyId)
         )
     }
@@ -231,5 +238,19 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
             provider: dependencies.provider
         )
         return StudyMemberSceneDIContainer(dependencies: dependencies)
+    }
+    
+    func makeActivityNoticeSceneDIContainer() -> ActivityNoticeSceneDIContainer {
+        let dependencies = ActivityNoticeSceneDIContainer.Dependencies(
+            provider: dependencies.provider
+        )
+        return ActivityNoticeSceneDIContainer(dependencies: dependencies)
+    }
+    
+    func makeScheduleSceneDIContainer() -> ScheduleSceneDIContainer {
+        let dependencies = ScheduleSceneDIContainer.Dependencies(
+            provider: dependencies.provider
+        )
+        return ScheduleSceneDIContainer(dependencies: dependencies)
     }
 }

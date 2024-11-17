@@ -221,8 +221,12 @@ class StudyMainSideMenuViewController: BaseViewController {
                 var isDismissSideMenu = true
                 
                 switch selectRow.item {
-                case 0: print("공지")
-                case 1: print("일정")
+                case 0:
+                    coordinator.startActivityNoticeCoordinator(studyId: studyId)
+                    isDismissSideMenu = false
+                case 1:
+                    coordinator.startScheduleCoordinator(studyId: studyId)
+                    isDismissSideMenu = false
                 case 2: coordinator.goToStudyActivityList()
                 case 3: 
                     coordinator.startStudyMemberCoordinator(studyId: studyId)

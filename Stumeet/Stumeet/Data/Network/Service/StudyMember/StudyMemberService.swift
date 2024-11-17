@@ -11,6 +11,10 @@ import Moya
 
 enum StudyMemberService {
     case fetchStudyMembers(StudyMemberRequestDTO)
+    case adminCheck(StudyMemberRequestDTO)
+    case fetchStudyMemberDetailInfo(StudyMemberDetailRequestDTO)
+    case removeStudyMember(StudyMemberRemoveRequestDTO)
+    case delegateAdminRights(StudyAdminDelegateRequestDTO)
 }
 
 extension StudyMemberService: BaseTargetType {
@@ -18,19 +22,31 @@ extension StudyMemberService: BaseTargetType {
         switch self {
         case .fetchStudyMembers(let requestDTO):
             return "api/v1/studies/\(requestDTO.studyId)/members"
+        case .adminCheck(let requestDTO):
+            return "api/v1/studies/\(requestDTO.studyId)/me/admin/check"
+        case .fetchStudyMemberDetailInfo(let requestDTO):
+            return "api/external/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)"
+        case .removeStudyMember(let requestDTO):
+            return "api/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)"
+        case .delegateAdminRights(let requestDTO):
+            return "api/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)/admin/delegate"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .fetchStudyMembers:
+        case .fetchStudyMembers, .adminCheck, .fetchStudyMemberDetailInfo:
             return .get
+        case .removeStudyMember:
+            return .delete
+        case .delegateAdminRights:
+            return .patch
         }
     }
     
     var task: Task {
         switch self {
-        case .fetchStudyMembers:
+        case .fetchStudyMembers, .adminCheck, .fetchStudyMemberDetailInfo, .removeStudyMember, .delegateAdminRights:
             return .requestPlain
         }
     }
