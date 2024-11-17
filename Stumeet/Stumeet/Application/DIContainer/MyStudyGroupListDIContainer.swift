@@ -246,4 +246,11 @@ final class MyStudyGroupListDIContainer: MyStudyGroupListCoordinatorDependencies
         )
         return ActivityNoticeSceneDIContainer(dependencies: dependencies)
     }
+    
+    func makeScheduleSceneDIContainer() -> ScheduleSceneDIContainer {
+        let dependencies = ScheduleSceneDIContainer.Dependencies(
+            provider: dependencies.provider
+        )
+        return ScheduleSceneDIContainer(dependencies: dependencies)
+    }
 }

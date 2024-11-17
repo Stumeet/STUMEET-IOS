@@ -1,5 +1,5 @@
 //
-//  ActivityNoticeCoordinator.swift
+//  ScheduleCoordinator.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/11/09.
@@ -8,25 +8,25 @@
 import UIKit
 import Moya
 
-protocol ActivityNoticeCoordinatorDependencies {
-    func makeActivityNoticeVC(coordinator: ActivityNoticeNavigation, studyId: Int) -> ActivityNoticeViewController
+protocol ScheduleCoordinatorDependencies {
+    func makeScheduleVC(coordinator: ScheduleNavigation, studyId: Int) -> ScheduleViewController
 }
 
-protocol ActivityNoticeNavigation: AnyObject {
-    func presentToNoticeVC(studyId: Int)
+protocol ScheduleNavigation: AnyObject {
+    func presentToScheduleVC(studyId: Int)
     func dimiss()
 }
 
-final class ActivityNoticeCoordinator: Coordinator {
+final class ScheduleCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
-    private let dependencies: ActivityNoticeCoordinatorDependencies
+    private let dependencies: ScheduleCoordinatorDependencies
     private let studyId: Int
 
     init(
         navigationController: UINavigationController,
-        dependencies: ActivityNoticeCoordinatorDependencies,
+        dependencies: ScheduleCoordinatorDependencies,
         studyId: Int
     ) {
         self.navigationController = navigationController
@@ -35,24 +35,24 @@ final class ActivityNoticeCoordinator: Coordinator {
     }
     
     func start() {
-        presentToNoticeVC(studyId: studyId)
+        presentToScheduleVC(studyId: studyId)
     }
     
     deinit {
-        print("ActivityNoticeCoordinator - 코디네이터 해제")
+        print("ScheduleCoordinator - 코디네이터 해제")
     }
 }
 
-extension ActivityNoticeCoordinator: ActivityNoticeNavigation {
+extension ScheduleCoordinator: ScheduleNavigation {
 
-    func presentToNoticeVC(studyId: Int) {
-        let noticeVC = dependencies.makeActivityNoticeVC(
+    func presentToScheduleVC(studyId: Int) {
+        let scheduleVC = dependencies.makeScheduleVC(
             coordinator: self,
             studyId: studyId
         )
         
-        navigationController.setViewControllers([noticeVC], animated: true)
-        navigationController.presentationController?.delegate = noticeVC
+        navigationController.setViewControllers([scheduleVC], animated: true)
+        navigationController.presentationController?.delegate = scheduleVC
 
         parentCoordinator?.navigationController.presentedViewController?.present(navigationController, animated: true, completion: nil)
     }
