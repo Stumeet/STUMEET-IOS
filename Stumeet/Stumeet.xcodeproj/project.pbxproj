@@ -55,6 +55,8 @@
 		3554AAC92CDF686C00705EDC /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */; };
 		3554AACB2CDF68B700705EDC /* ScheduleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */; };
 		3554AACD2CDF693900705EDC /* ScheduleSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */; };
+		3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */; };
+		3554AAB02CDA59BA00705EDC /* TextBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */; };
 		355A75BC2C3AB71500C50BA0 /* StudyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BB2C3AB71500C50BA0 /* StudyService.swift */; };
 		355A75C02C3ABBEE00C50BA0 /* StudiesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */; };
 		355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */; };
@@ -416,6 +418,8 @@
 		3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCoordinator.swift; sourceTree = "<group>"; };
 		3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSceneDIContainer.swift; sourceTree = "<group>"; };
+		3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPlaceholderView.swift; sourceTree = "<group>"; };
+		3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBubbleView.swift; sourceTree = "<group>"; };
 		355A75BB2C3AB71500C50BA0 /* StudyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyService.swift; sourceTree = "<group>"; };
 		355A75BF2C3ABBEE00C50BA0 /* StudiesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudiesRequestDTO.swift; sourceTree = "<group>"; };
 		355A75C12C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListRepository.swift; sourceTree = "<group>"; };
@@ -2251,6 +2255,8 @@
 				3562163C2C0208B100CAB23F /* ActivityInfoBoxView.swift */,
 				35EF30022C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift */,
 				359923162C9F03AC009822B7 /* StumeetConfirmationPopupViewController.swift */,
+				3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */,
+				3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3078,6 +3084,7 @@
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityCell.swift in Sources */,
 				3554AAD22CE2448100705EDC /* FetchNoticesUseCase.swift in Sources */,
 				35EF30032C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				3554AAB02CDA59BA00705EDC /* TextBubbleView.swift in Sources */,
 				353A08C52C7B7C0F00678E96 /* StudyMemberRepository.swift in Sources */,
 				357923282C4D641900E9CD68 /* StudyMainViewHeaderItem.swift in Sources */,
 				CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */,
@@ -3160,6 +3167,7 @@
 				CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */,
 				CA94FD7D2C50E07A00A11A8E /* CreateStudyGroupViewController.swift in Sources */,
 				35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */,
+				3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */,
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
 				35C7F8182C85DE1D00F9009E /* StudyMemberDetailViewController.swift in Sources */,
 				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,

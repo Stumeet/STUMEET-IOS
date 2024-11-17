@@ -20,6 +20,7 @@ class MyStudyGroupListViewController: BaseViewController {
         label.numberOfLines = 0
         return label
     }()
+    
     private lazy var studyGroupTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -27,6 +28,18 @@ class MyStudyGroupListViewController: BaseViewController {
         tableView.scrollsToTop = false
         tableView.registerCell(MyStudyGroupListTableViewCell.self)
         return tableView
+    }()
+    
+    private let emptyView: EmptyPlaceholderView = {
+        let emptyView = EmptyPlaceholderView(text: "가입한 스터디가 없어요.\n직접 스터디를 만들어 보세요!")
+        emptyView.isHidden = true
+        return emptyView
+    }()
+    
+    private let addButtonTooltipView: TextBubbleView = {
+        let textBubbleView = TextBubbleView(text: "스터밋과 함께 스터디를 시작해볼까요?")
+        textBubbleView.isHidden = true
+        return textBubbleView
     }()
     
     // MARK: - Properties
@@ -64,15 +77,27 @@ class MyStudyGroupListViewController: BaseViewController {
     
     override func setupAddView() {
         view.addSubview(studyGroupTableView)
+        view.addSubview(emptyView)
+        view.addSubview(addButtonTooltipView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationTitleLabel)
-        navigationItem.rightBarButtonItem = makeBarButtonItem("tabler_plus")
+        navigationItem.rightBarButtonItem = makeBarButtonItem(.StudyGroupList.tablerPlus)
     }
     
     override func setupConstaints() {
         studyGroupTableView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        emptyView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        addButtonTooltipView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.trailing.equalToSuperview().inset(16)
         }
     }
 
@@ -113,12 +138,33 @@ class MyStudyGroupListViewController: BaseViewController {
             .sink(receiveValue: coordinator.startCreateStudyGroupCoordinator)
             .store(in: &cancellables)
         
+        output.showEmptyView
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isShow in
+                guard let self else { return }
+                emptyView.isHidden = !isShow
+            }
+            .store(in: &cancellables)
+        
+        output.showAddTooltipView
+            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isShow in
+                guard let self else { return }
+                
+                if isShow {
+                    addButtonTooltipView.show()
+                } else {
+                    addButtonTooltipView.hide()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Function
-    private func makeBarButtonItem(_ imageName: String) -> UIBarButtonItem {
+    private func makeBarButtonItem(_ imageResource: ImageResource) -> UIBarButtonItem {
         let button = UIButton()
-        let image = UIImage(named: imageName)
+        let image = UIImage(resource: imageResource)
         button.setImage(image, for: .normal)
         
         button.tapPublisher

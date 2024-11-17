@@ -21,6 +21,8 @@ final class MyStudyGroupListViewModel: ViewModelType {
         let studyGroupDataSource: AnyPublisher<[StudyGroup], Never>
         let navigateToStudyMainVC: AnyPublisher<Int, Never>
         let presentToCreateStudyGroupVC: AnyPublisher<Void, Never>
+        let showEmptyView: AnyPublisher<Bool, Never>
+        let showAddTooltipView: AnyPublisher<Bool, Never>
     }
     
     // MARK: - Properties
@@ -40,6 +42,10 @@ final class MyStudyGroupListViewModel: ViewModelType {
             .compactMap(studyGroupId(for:))
             .eraseToAnyPublisher()
         
+        let studyGroupItemsEmpty = studyGroupItemsSubject
+            .map { $0.isEmpty }
+            .eraseToAnyPublisher()
+        
         input.loadStudyGroupData
             .flatMap(useCase.getStudyGroupItems)
             .sink(receiveValue: studyGroupItemsSubject.send)
@@ -48,7 +54,9 @@ final class MyStudyGroupListViewModel: ViewModelType {
         return Output(
             studyGroupDataSource: studyGroupDataSource,
             navigateToStudyMainVC: navigateToStudyMainVC,
-            presentToCreateStudyGroupVC: input.didTapCreateStudyButton
+            presentToCreateStudyGroupVC: input.didTapCreateStudyButton,
+            showEmptyView: studyGroupItemsEmpty,
+            showAddTooltipView: studyGroupItemsEmpty
         )
     }
     
