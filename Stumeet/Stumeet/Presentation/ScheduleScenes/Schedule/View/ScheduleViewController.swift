@@ -128,6 +128,7 @@ extension ScheduleViewController:
     
     // MARK: - UIAdaptivePresentationControllerDelegate
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        guard let coordinator else { return }
         coordinator.dimiss()
     }
 }
