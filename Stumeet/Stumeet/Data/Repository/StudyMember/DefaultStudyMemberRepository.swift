@@ -65,4 +65,24 @@ final class DefaultStudyMemberRepository: StudyMemberRepository {
             .mapError { $0 as MoyaError }
             .eraseToAnyPublisher()
     }
+    
+    func updateMemberActivityStatus(
+        studyID: Int,
+        activityID: Int,
+        participantID: Int,
+        status: String
+    ) -> AnyPublisher<Bool, MoyaError> {
+        let requestDTO = StudyMemberActivityStatusRequestDTO(
+            studyId: studyID,
+            activityId: activityID,
+            participantId: participantID,
+            status: status
+        )
+        
+        return provider.requestPublisher(.updateMemberActivityStatus(requestDTO))
+            .map(ResponseWithDataDTO<Bool>.self)
+            .compactMap { $0.code == 200 }
+            .mapError { $0 as MoyaError }
+            .eraseToAnyPublisher()
+    }
 }

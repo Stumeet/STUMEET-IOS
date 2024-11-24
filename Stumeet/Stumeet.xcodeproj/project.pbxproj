@@ -45,18 +45,18 @@
 		35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B192B9F506200252283 /* KakaoLoginService.swift */; };
 		3554AAAA2CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */; };
 		3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */; };
+		3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */; };
+		3554AAB02CDA59BA00705EDC /* TextBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */; };
 		3554AAB82CDF49B900705EDC /* ActivityNoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAB72CDF49B900705EDC /* ActivityNoticeCoordinator.swift */; };
 		3554AABC2CDF4A2600705EDC /* ActivityNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABB2CDF4A2600705EDC /* ActivityNoticeViewController.swift */; };
 		3554AABE2CDF4B0000705EDC /* ActivityNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */; };
 		3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */; };
-		3554AAD02CE243D900705EDC /* FetchLatestNoticeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */; };
-		3554AAD22CE2448100705EDC /* FetchNoticesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAD12CE2448100705EDC /* FetchNoticesUseCase.swift */; };
 		3554AAC72CDF672900705EDC /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC62CDF672900705EDC /* ScheduleViewController.swift */; };
 		3554AAC92CDF686C00705EDC /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */; };
 		3554AACB2CDF68B700705EDC /* ScheduleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */; };
 		3554AACD2CDF693900705EDC /* ScheduleSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */; };
-		3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */; };
-		3554AAB02CDA59BA00705EDC /* TextBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */; };
+		3554AAD02CE243D900705EDC /* FetchLatestNoticeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */; };
+		3554AAD22CE2448100705EDC /* FetchNoticesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAD12CE2448100705EDC /* FetchNoticesUseCase.swift */; };
 		3554AAD42CE2493500705EDC /* FetchAllStudyActivitiesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAD32CE2493500705EDC /* FetchAllStudyActivitiesUseCase.swift */; };
 		3554AAD72CE24AD700705EDC /* StudyMemberAchievementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAD62CE24AD700705EDC /* StudyMemberAchievementViewModel.swift */; };
 		3554AAD92CE24CC500705EDC /* StudyMemberAchievementHeaderTapBarViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAD82CE24CC500705EDC /* StudyMemberAchievementHeaderTapBarViewType.swift */; };
@@ -149,6 +149,8 @@
 		35DA74F22CE63DC6006D6FB1 /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */; };
 		35DA74F52CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */; };
 		35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */; };
+		35DA74F92CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F82CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift */; };
+		35DA74FB2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74FA2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift */; };
 		35E4EA312BCA878A003A10D4 /* Config(release).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */; };
 		35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */; };
 		35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */; };
@@ -412,18 +414,18 @@
 		35446B192B9F506200252283 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
 		3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateStudyAdminUseCase.swift; sourceTree = "<group>"; };
 		3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAdminDelegateRequestDTO.swift; sourceTree = "<group>"; };
+		3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPlaceholderView.swift; sourceTree = "<group>"; };
+		3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBubbleView.swift; sourceTree = "<group>"; };
 		3554AAB72CDF49B900705EDC /* ActivityNoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeCoordinator.swift; sourceTree = "<group>"; };
 		3554AABB2CDF4A2600705EDC /* ActivityNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeViewController.swift; sourceTree = "<group>"; };
 		3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeViewModel.swift; sourceTree = "<group>"; };
 		3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeSceneDIContainer.swift; sourceTree = "<group>"; };
-		3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLatestNoticeUseCase.swift; sourceTree = "<group>"; };
-		3554AAD12CE2448100705EDC /* FetchNoticesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNoticesUseCase.swift; sourceTree = "<group>"; };
 		3554AAC62CDF672900705EDC /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCoordinator.swift; sourceTree = "<group>"; };
 		3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSceneDIContainer.swift; sourceTree = "<group>"; };
-		3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPlaceholderView.swift; sourceTree = "<group>"; };
-		3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBubbleView.swift; sourceTree = "<group>"; };
+		3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLatestNoticeUseCase.swift; sourceTree = "<group>"; };
+		3554AAD12CE2448100705EDC /* FetchNoticesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNoticesUseCase.swift; sourceTree = "<group>"; };
 		3554AAD32CE2493500705EDC /* FetchAllStudyActivitiesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAllStudyActivitiesUseCase.swift; sourceTree = "<group>"; };
 		3554AAD62CE24AD700705EDC /* StudyMemberAchievementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberAchievementViewModel.swift; sourceTree = "<group>"; };
 		3554AAD82CE24CC500705EDC /* StudyMemberAchievementHeaderTapBarViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberAchievementHeaderTapBarViewType.swift; sourceTree = "<group>"; };
@@ -513,6 +515,8 @@
 		35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCell.swift; sourceTree = "<group>"; };
 		35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberActivityDetailViewModel.swift; sourceTree = "<group>"; };
 		35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchActiveStudyMembersUseCase.swift; sourceTree = "<group>"; };
+		35DA74F82CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberActivityStatusRequestDTO.swift; sourceTree = "<group>"; };
+		35DA74FA2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMemberStatusUseCase.swift; sourceTree = "<group>"; };
 		35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		35E4EA302BCA878A003A10D4 /* Config(debug).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
 		35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewController.swift; sourceTree = "<group>"; };
@@ -868,6 +872,7 @@
 				358DF6072CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift */,
 				358DF60B2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift */,
 				3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */,
+				35DA74FA2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift */,
 			);
 			path = StudyMember;
 			sourceTree = "<group>";
@@ -1026,15 +1031,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		3554AACE2CE2433E00705EDC /* Notice */ = {
-			isa = PBXGroup;
-			children = (
-				3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */,
-				3554AAD12CE2448100705EDC /* FetchNoticesUseCase.swift */,
-			);
-			path = Notice;
-			sourceTree = "<group>";
-		};
 		3554AAC12CDF66DD00705EDC /* ScheduleScenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1075,6 +1071,15 @@
 				3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3554AACE2CE2433E00705EDC /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */,
+				3554AAD12CE2448100705EDC /* FetchNoticesUseCase.swift */,
+			);
+			path = Notice;
 			sourceTree = "<group>";
 		};
 		3554AAD52CE24ACA00705EDC /* ViewModel */ = {
@@ -1726,6 +1731,7 @@
 				358A93EF2CC509E9007945D4 /* StudyMemberDetailResponseDTO.swift */,
 				358DF6092CD3BDB900DCD2EF /* StudyMemberRemoveRequestDTO.swift */,
 				3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */,
+				35DA74F82CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift */,
 			);
 			path = StudyMember;
 			sourceTree = "<group>";
@@ -3187,6 +3193,7 @@
 				CAA883EF2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift in Sources */,
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
 				CA01B2772C01B3B600A01CEA /* DetailStudyActivityUseCase.swift in Sources */,
+				35DA74FB2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift in Sources */,
 				CA9AB2142B8C6A480027072E /* AllStudyActivityViewModel.swift in Sources */,
 				358D243A2C46B062001EFB51 /* StudyGroupMainUseCase.swift in Sources */,
 				355A75CD2C3AE2C700C50BA0 /* MyStudyGroupListSection.swift in Sources */,
@@ -3236,6 +3243,7 @@
 				357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */,
 				CA6450982C1481FF00E00665 /* TaskStudyActivityViewModel.swift in Sources */,
 				353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */,
+				35DA74F92CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift in Sources */,
 				CA342DBF2C382F920055A9A4 /* DefaultStudyActivitySettingRepository.swift in Sources */,
 				CA6450862C141E0B00E00665 /* StumeetPopUpView.swift in Sources */,
 				356216432C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift in Sources */,

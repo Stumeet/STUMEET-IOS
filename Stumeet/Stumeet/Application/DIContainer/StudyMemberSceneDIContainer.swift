@@ -76,6 +76,10 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         DefaultDetailStudyActivityUseCase(repository: makeDetailStudyActivityRepository())
     }
     
+    func makeUpdateMemberStatusUseCase() -> UpdateMemberStatusUseCase {
+        DefaultUpdateMemberStatusUseCase(repository: makeStudyMemberRepository())
+    }
+    
     // MARK: - StudyMember
     func makeStudyMemberViewModel(studyId: Int) -> StudyMemberViewModel {
         StudyMemberViewModel(
@@ -135,6 +139,7 @@ final class StudyMemberSceneDIContainer: StudyMemberCoordinatorDependencies {
         StudyMemberActivityDetailViewModel(
             fetchActiveStudyMembersUseCase: makeFetchActiveStudyMembersUseCase(),
             detailStudyActivityUseCase: makeDetailStudyActivityUseCase(),
+            updateMemberStatusUseCase: makeUpdateMemberStatusUseCase(),
             studyID: studyID,
             activityID: activityID,
             category: category

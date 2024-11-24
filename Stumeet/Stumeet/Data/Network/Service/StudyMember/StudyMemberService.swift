@@ -15,6 +15,7 @@ enum StudyMemberService {
     case fetchStudyMemberDetailInfo(StudyMemberDetailRequestDTO)
     case removeStudyMember(StudyMemberRemoveRequestDTO)
     case delegateAdminRights(StudyAdminDelegateRequestDTO)
+    case updateMemberActivityStatus(StudyMemberActivityStatusRequestDTO)
 }
 
 extension StudyMemberService: BaseTargetType {
@@ -30,6 +31,8 @@ extension StudyMemberService: BaseTargetType {
             return "api/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)"
         case .delegateAdminRights(let requestDTO):
             return "api/v1/studies/\(requestDTO.studyId)/members/\(requestDTO.memberId)/admin/delegate"
+        case .updateMemberActivityStatus(let requestDTO):
+            return "api/v1/studies/\(requestDTO.studyId)/activities/\(requestDTO.activityId)/status"
         }
     }
     
@@ -39,7 +42,7 @@ extension StudyMemberService: BaseTargetType {
             return .get
         case .removeStudyMember:
             return .delete
-        case .delegateAdminRights:
+        case .delegateAdminRights, .updateMemberActivityStatus:
             return .patch
         }
     }
@@ -48,6 +51,17 @@ extension StudyMemberService: BaseTargetType {
         switch self {
         case .fetchStudyMembers, .adminCheck, .fetchStudyMemberDetailInfo, .removeStudyMember, .delegateAdminRights:
             return .requestPlain
+        case .updateMemberActivityStatus(let requestDTO):
+            return .requestParameters(parameters: requestDTO.toJSON, encoding: JSONEncoding.default)
+        }
+    }
+    
+    var headers: [String: String]? {
+        switch self {
+        case .updateMemberActivityStatus:
+            return ["Content-Type": "application/json"]
+        default:            
+            return ["Content-Type": "application/x-www-form-urlencoded"]
         }
     }
 }

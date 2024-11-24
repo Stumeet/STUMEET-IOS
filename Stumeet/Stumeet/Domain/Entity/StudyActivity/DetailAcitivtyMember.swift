@@ -36,6 +36,20 @@ enum ActivityState: String, Equatable, CaseIterable {
         }
     }
     
+    var requestValue: String {
+        switch self {
+        case .perform: "PERFORMED"
+        case .notperform: "UNPERFORMED"
+        case .attendance: "ATTENDANCE"
+        case .absent: "ABSENCE"
+        case .late: "TARDINESS"
+        case .okAbsent: "ACKNOWLEDGED_ABSENCE"
+        case .okPerform: "UNSUBMITTED"
+        case .noParticipation: "NOT_JOINED"
+        default: "NONE"
+        }
+    }
+    
     var primaryColor: UIColor {
         switch self {
         case .perform: StumeetColor.primary700.color

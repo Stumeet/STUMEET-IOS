@@ -52,6 +52,7 @@ class StudyMemberActivityDetailViewController: BaseViewController {
     private var meetingStateDataSource: [StudyMemberMeetingStateListItem] = []
     
     private let loadDataSubject = PassthroughSubject<Void, Never>()
+    private let didTapActivityStateSubject = PassthroughSubject<StudyMemberMeetingStateListItem, Never>()
 
     // MARK: - Init
     init(
@@ -107,7 +108,8 @@ class StudyMemberActivityDetailViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = StudyMemberActivityDetailViewModel.Input(
-            loadDataTrigger: loadDataSubject.eraseToAnyPublisher()
+            loadDataTrigger: loadDataSubject.eraseToAnyPublisher(),
+            didTapActivityState: didTapActivityStateSubject.eraseToAnyPublisher()
         )
 
         // MARK: - Output
@@ -136,6 +138,13 @@ class StudyMemberActivityDetailViewController: BaseViewController {
             .sink { [weak self] title in
                 guard let self else { return }
                 titleLabel.text = title
+            }
+            .store(in: &cancellables)
+        
+        output.updateActivityStatusCompleted
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isSuccess in
+                // TODO: 사용안하면 수정 필요
             }
             .store(in: &cancellables)
     }
@@ -173,11 +182,16 @@ extension StudyMemberActivityDetailViewController:
     }
    
     // MARK: - StudyMemberMeetingStateListTableViewCellDelegate
-    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberStateListTableViewCell) {
+    func didTapActivityState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberStateListTableViewCell, isToggle: Bool) {
         guard let indexPath = meetingStateTableView.indexPath(for: cell),
               meetingStateDataSource[safe: indexPath.row] != nil
-        else { return}
+        else { return }
         meetingStateDataSource[indexPath.row] = item
+        
+        if !isToggle {
+            didTapActivityStateSubject.send(item)
+        }
+        
         UIView.performWithoutAnimation {
             meetingStateTableView.reconfigureRows(at: [indexPath])
         }

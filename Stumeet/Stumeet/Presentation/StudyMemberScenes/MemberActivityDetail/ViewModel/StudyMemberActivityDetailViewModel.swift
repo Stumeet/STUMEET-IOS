@@ -12,6 +12,7 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
     // MARK: - Input
     struct Input {
         let loadDataTrigger: AnyPublisher<Void, Never>
+        let didTapActivityState: AnyPublisher<StudyMemberMeetingStateListItem, Never>
     }
 
     // MARK: - Output
@@ -19,11 +20,13 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
         let studyMemberActivityDataSource: AnyPublisher<[StudyMemberMeetingStateListItem], Never>
         let activityHeaderItem: AnyPublisher<StudyMemberActivityViewItem?, Never>
         let naviTitleText: AnyPublisher<String, Never>
+        let updateActivityStatusCompleted: AnyPublisher<Bool, Never>
     }
     
     // MARK: - UseCase
     private var fetchActiveStudyMembersUseCase: FetchActiveStudyMembersUseCase
     private var detailStudyActivityUseCase: DetailStudyActivityUseCase
+    private var updateMemberStatusUseCase: UpdateMemberStatusUseCase
     
     // MARK: - Properties
     private var studyID: Int
@@ -38,12 +41,14 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
     init(
         fetchActiveStudyMembersUseCase: FetchActiveStudyMembersUseCase,
         detailStudyActivityUseCase: DetailStudyActivityUseCase,
+        updateMemberStatusUseCase: UpdateMemberStatusUseCase,
         studyID: Int,
         activityID: Int,
         category: ActivityCategory
     ) {
         self.fetchActiveStudyMembersUseCase = fetchActiveStudyMembersUseCase
         self.detailStudyActivityUseCase = detailStudyActivityUseCase
+        self.updateMemberStatusUseCase = updateMemberStatusUseCase
         self.studyID = studyID
         self.activityID = activityID
         self.category = category
@@ -57,6 +62,19 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
             .map { [weak self] in
                 guard let title = self?.category.title else { return "상세" }
                 return "\(title) 상세"
+            }.eraseToAnyPublisher()
+        
+        let updateActivityStatusCompleted = input.didTapActivityState
+            .flatMap { [weak self] activityState in
+                guard let self,
+                      let participantID = activityState.id
+                else { return Empty<Bool, Never>().eraseToAnyPublisher()}
+                return updateMemberStatusUseCase.execute(
+                    studyID: studyID,
+                    activityID: activityID,
+                    participantID: participantID,
+                    status: activityState.activityState.requestValue
+                )
             }.eraseToAnyPublisher()
         
         
@@ -93,7 +111,8 @@ final class StudyMemberActivityDetailViewModel: ViewModelType {
         return Output(
             studyMemberActivityDataSource: studyMemberActivityDataSource,
             activityHeaderItem: activityItem,
-            naviTitleText: naviTitleText
+            naviTitleText: naviTitleText,
+            updateActivityStatusCompleted: updateActivityStatusCompleted
         )
     }
     

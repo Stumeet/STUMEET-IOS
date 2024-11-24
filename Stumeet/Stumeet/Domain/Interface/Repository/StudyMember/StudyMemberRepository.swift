@@ -14,4 +14,10 @@ protocol StudyMemberRepository {
     func fetchStudyMemberDetailInfo(studyID: Int, memberID: Int) -> AnyPublisher<StudyMember, MoyaError>
     func removeStudyMember(studyID: Int, memberID: Int) -> AnyPublisher<Bool, MoyaError>
     func delegateAdminRights(studyID: Int, memberID: Int) -> AnyPublisher<Bool, MoyaError>
+    func updateMemberActivityStatus(
+        studyID: Int,
+        activityID: Int,
+        participantID: Int,
+        status: String
+    ) -> AnyPublisher<Bool, MoyaError>
 }

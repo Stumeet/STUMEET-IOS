@@ -201,7 +201,7 @@ class StudyMemberStateListTableViewCell: BaseTableViewCell {
         guard var taskStateitem else { return }
         
         taskStateitem.isStateHidden.toggle()
-        delegate?.didTapTaskState(taskStateitem, cell: self)
+        delegate?.didTapActivityState(taskStateitem, cell: self, isToggle: true)
     }
     
     @objc func stateButtonTapped(_ sender: UIButton) {
@@ -211,7 +211,7 @@ class StudyMemberStateListTableViewCell: BaseTableViewCell {
         
         taskStateitem.isStateHidden = true
         taskStateitem.activityState = selectedStatus
-        delegate?.didTapTaskState(taskStateitem, cell: self)
+        delegate?.didTapActivityState(taskStateitem, cell: self, isToggle: false)
     }
     
     func configureCell(_ item: StudyMemberMeetingStateListItem) {
@@ -252,5 +252,5 @@ class StudyMemberStateListTableViewCell: BaseTableViewCell {
 }
 
 protocol StudyMemberMeetingStateListTableViewCellDelegate: AnyObject {
-    func didTapTaskState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberStateListTableViewCell)
+    func didTapActivityState(_ item: StudyMemberMeetingStateListItem, cell: StudyMemberStateListTableViewCell, isToggle: Bool)
 }
