@@ -9,7 +9,7 @@ import Foundation
 
 struct BreifStudyActivityResponseDTO: Decodable {
     let items: [BreifActivityItemResponseDTO]
-    let pageInfo: PageInfoResponseDTO
+    let pageInfo: PageInfoResponseDTO?
 }
 
 extension BreifStudyActivityResponseDTO {
@@ -21,8 +21,14 @@ extension BreifStudyActivityResponseDTO {
     }
     
     func toDomain() -> ActivityPage {
-        return .init(pageInfo: pageInfo.toDomain(),
-                     activitys: items.map { $0.toDomain() })
+        if let pageInfo {
+            return .init(pageInfo: pageInfo.toDomain(),
+                         activitys: items.map { $0.toDomain() })
+        } else {
+            return .init(pageInfo: PageInfo(totalPages: 0, totalElements: 0, currentPage: 0, pageSize: 0),
+                         activitys: items.map { $0.toDomain() })
+        }
+        
     }
 }
 

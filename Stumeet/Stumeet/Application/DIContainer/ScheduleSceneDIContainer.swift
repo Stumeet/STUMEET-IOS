@@ -22,12 +22,35 @@ final class ScheduleSceneDIContainer: ScheduleCoordinatorDependencies {
     }
     
     // MARK: - Repositories
-
+    func makeStudyActivityRepository() -> StudyActivityRepository {
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
+    }
+    
+    func makeStudyGroupMainRepository() -> StudyGroupMainRepository {
+        DefaultStudyGroupMainRepository(
+            provider: dependencies.provider.makeProvider()
+        )
+    }
+    
     // MARK: - Use Cases
+    func makeFetchMonthlyActivitiesUseCase() -> FetchMonthlyActivitiesUseCase {
+        DefaultFetchMonthlyActivitiesUseCase(
+            repository: makeStudyActivityRepository()
+        )
+    }
+    
+    func makeMyStudyGroupListUseCase() -> StudyGroupMainUseCase {
+        DefaultStudyGroupMainUseCase(
+            studyMainRepository: makeStudyGroupMainRepository(),
+            studyActivityRepository: makeStudyActivityRepository()
+        )
+    }
     
     // MARK: - ActivityNotice
     func makeScheduleViewModel(studyId: Int) -> ScheduleViewModel {
         ScheduleViewModel(
+            fetchMonthlyActivitiesUseCase: makeFetchMonthlyActivitiesUseCase(),
+            studyGroupMainUseCase: makeMyStudyGroupListUseCase(),
             studyID: studyId
         )
     }
