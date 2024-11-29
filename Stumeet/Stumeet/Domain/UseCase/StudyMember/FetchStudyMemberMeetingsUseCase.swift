@@ -25,7 +25,9 @@ final class DefaultFetchStudyMemberActivityUseCase: FetchStudyMemberActivityUseC
             isNotice: false,
             studyId: studyID,
             memberId: memberID,
-            category: category
+            category: category,
+            fromDate: nil,
+            toDate: nil
         )
         .catch { error -> AnyPublisher<ActivityPage, Never> in
             fatalError("error: \(error)")

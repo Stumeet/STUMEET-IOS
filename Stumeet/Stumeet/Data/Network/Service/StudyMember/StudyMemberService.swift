@@ -60,7 +60,7 @@ extension StudyMemberService: BaseTargetType {
         switch self {
         case .updateMemberActivityStatus:
             return ["Content-Type": "application/json"]
-        default:            
+        default:
             return ["Content-Type": "application/x-www-form-urlencoded"]
         }
     }

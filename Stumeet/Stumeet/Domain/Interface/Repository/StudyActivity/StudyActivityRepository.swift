@@ -26,6 +26,8 @@ protocol StudyActivityRepository {
         isNotice: Bool?,
         studyId: Int?,
         memberId: Int?,
-        category: ActivityCategory?
+        category: ActivityCategory?,
+        fromDate: String?,
+        toDate: String?
     ) -> AnyPublisher<ActivityPage, MoyaError>
 }

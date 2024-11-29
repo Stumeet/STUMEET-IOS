@@ -151,6 +151,11 @@
 		35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */; };
 		35DA74F92CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F82CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift */; };
 		35DA74FB2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74FA2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift */; };
+		35DA74FF2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74FE2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift */; };
+		35DA75012CF30AF0006D6FB1 /* CalenderSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75002CF30AF0006D6FB1 /* CalenderSwiftUIView.swift */; };
+		35DA75032CF36231006D6FB1 /* Calendar++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75022CF36231006D6FB1 /* Calendar++Extension.swift */; };
+		35DA75072CF605D0006D6FB1 /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75062CF605D0006D6FB1 /* ScheduleItem.swift */; };
+		35DA75092CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75082CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift */; };
 		35E4EA312BCA878A003A10D4 /* Config(release).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */; };
 		35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */; };
 		35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */; };
@@ -517,6 +522,11 @@
 		35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchActiveStudyMembersUseCase.swift; sourceTree = "<group>"; };
 		35DA74F82CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberActivityStatusRequestDTO.swift; sourceTree = "<group>"; };
 		35DA74FA2CEB67C6006D6FB1 /* UpdateMemberStatusUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMemberStatusUseCase.swift; sourceTree = "<group>"; };
+		35DA74FE2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSwiftUIView.swift; sourceTree = "<group>"; };
+		35DA75002CF30AF0006D6FB1 /* CalenderSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderSwiftUIView.swift; sourceTree = "<group>"; };
+		35DA75022CF36231006D6FB1 /* Calendar++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar++Extension.swift"; sourceTree = "<group>"; };
+		35DA75062CF605D0006D6FB1 /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
+		35DA75082CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMonthlyActivitiesUseCase.swift; sourceTree = "<group>"; };
 		35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		35E4EA302BCA878A003A10D4 /* Config(debug).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
 		35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewController.swift; sourceTree = "<group>"; };
@@ -1051,6 +1061,7 @@
 		3554AAC32CDF66FD00705EDC /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				35DA75052CF605A2006D6FB1 /* Model */,
 				3554AAC52CDF670D00705EDC /* ViewModel */,
 				3554AAC42CDF670700705EDC /* View */,
 			);
@@ -1060,6 +1071,7 @@
 		3554AAC42CDF670700705EDC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				35DA74FD2CF30955006D6FB1 /* Component */,
 				3554AAC62CDF672900705EDC /* ScheduleViewController.swift */,
 			);
 			path = View;
@@ -1569,6 +1581,23 @@
 				35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		35DA74FD2CF30955006D6FB1 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				35DA74FE2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift */,
+				35DA75002CF30AF0006D6FB1 /* CalenderSwiftUIView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		35DA75052CF605A2006D6FB1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				35DA75062CF605D0006D6FB1 /* ScheduleItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		35E4EA2E2BCA878A003A10D4 /* Configurations */ = {
@@ -2097,6 +2126,7 @@
 				35ED53D42C3D9BF3006DDBA7 /* Collection++Extension.swift */,
 				3582D0942C500D7800C9D63E /* String++Extension.swift */,
 				CA443BC22C8442F300652B6A /* Date++Extension.swift */,
+				35DA75022CF36231006D6FB1 /* Calendar++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2523,6 +2553,7 @@
 				CA01B28C2C04654000A01CEA /* DetailActivityMemberListUseCase.swift */,
 				3554AAD32CE2493500705EDC /* FetchAllStudyActivitiesUseCase.swift */,
 				35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */,
+				35DA75082CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift */,
 			);
 			path = StudyActivity;
 			sourceTree = "<group>";
@@ -2983,6 +3014,7 @@
 				3554AACB2CDF68B700705EDC /* ScheduleCoordinator.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */,
+				35DA75092CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
 				CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */,
 				CAFBF3732B9C347600507047 /* ChangeProfileUseCase.swift in Sources */,
@@ -3112,6 +3144,7 @@
 				352885FD2BB9CEF600EFC0F6 /* TokensResponseDTO.swift in Sources */,
 				CA64507E2C134B5D00E00665 /* CreateActivityLinkPopUpViewController.swift in Sources */,
 				3544657E2C359B3700504C28 /* MyStudyGroupListViewModel.swift in Sources */,
+				35DA75072CF605D0006D6FB1 /* ScheduleItem.swift in Sources */,
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA26F80C2C7C9CF10061B7F7 /* CreateStudyGroupRepository.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
@@ -3148,6 +3181,7 @@
 				35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */,
 				35BDF70C2B89078F000B6DCB /* OnboardingCollectionViewCell.swift in Sources */,
 				CA342DC12C3830370055A9A4 /* PostActivityRequestDTO.swift in Sources */,
+				35DA75012CF30AF0006D6FB1 /* CalenderSwiftUIView.swift in Sources */,
 				CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */,
 				CA6448582B863BB90090DD84 /* BaseCollectionViewCell.swift in Sources */,
 				3581B2AC2CBBF19500D00B11 /* StudyMemberActivityListItem.swift in Sources */,
@@ -3172,6 +3206,7 @@
 				358DF60A2CD3BDB900DCD2EF /* StudyMemberRemoveRequestDTO.swift in Sources */,
 				35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */,
 				358DF6082CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift in Sources */,
+				35DA74FF2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift in Sources */,
 				358D24352C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift in Sources */,
 				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,
@@ -3245,6 +3280,7 @@
 				353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */,
 				35DA74F92CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift in Sources */,
 				CA342DBF2C382F920055A9A4 /* DefaultStudyActivitySettingRepository.swift in Sources */,
+				35DA75032CF36231006D6FB1 /* Calendar++Extension.swift in Sources */,
 				CA6450862C141E0B00E00665 /* StumeetPopUpView.swift in Sources */,
 				356216432C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift in Sources */,
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,

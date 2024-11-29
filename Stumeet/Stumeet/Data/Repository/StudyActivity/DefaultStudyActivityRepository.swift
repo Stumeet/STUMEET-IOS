@@ -105,7 +105,9 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         isNotice: Bool? = nil,
         studyId: Int?,
         memberId: Int?,
-        category: ActivityCategory? = nil
+        category: ActivityCategory? = nil,
+        fromDate: String? = nil,
+        toDate: String?  = nil
     ) -> AnyPublisher<ActivityPage, MoyaError> {
         let requestDTO = BriefStudyActivityRequestDTO(
             size: size,
@@ -114,8 +116,8 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             studyId: studyId,
             memberId: memberId,
             category: category?.rawValue,
-            fromDate: nil,
-            toDate: nil
+            fromDate: fromDate,
+            toDate: toDate
         )
         
         return provider.requestPublisher(.fetchBriefActivities(requestDTO))
