@@ -26,9 +26,11 @@ final class TabBarCoordinator: Coordinator {
     
     func initializeTabBar() {
         let tabbarController = UITabBarController()
+        tabbarController.setupBarAppearance()
         
         let homeNavigationController = UINavigationController()
         let homeCoordinator = HomeCoordinator(navigationController: homeNavigationController)
+        homeNavigationController.setupBarAppearance()
         homeCoordinator.parentCoordinator = parentCoordinator
         
         let homeItem = UITabBarItem()
@@ -39,6 +41,7 @@ final class TabBarCoordinator: Coordinator {
         let studyListNavigationController = UINavigationController()
         let studyListDIContainer = appDIContainer.makeMyStudyGroupListDIContainer()
         let studyListCoordinator = studyListDIContainer.makeMyStudyGroupListCoordinator(navigationController: studyListNavigationController)
+        studyListNavigationController.setupBarAppearance()
         studyListCoordinator.parentCoordinator = parentCoordinator
         
         let studyListItem = UITabBarItem()
@@ -48,6 +51,7 @@ final class TabBarCoordinator: Coordinator {
         
         let calendarNavigationController = UINavigationController()
         let calendarCoordinator = CalendarCoordinator(navigationController: calendarNavigationController)
+        calendarNavigationController.setupBarAppearance()
         calendarCoordinator.parentCoordinator = parentCoordinator
         
         let calendarItem = UITabBarItem()
@@ -57,6 +61,7 @@ final class TabBarCoordinator: Coordinator {
         
         let myPageNavigationController = UINavigationController()
         let myPageCoordinator = MyPageCoordinator(navigationController: myPageNavigationController)
+        myPageNavigationController.setupBarAppearance()
         myPageCoordinator.parentCoordinator = parentCoordinator
         
         let myPageItem = UITabBarItem()

@@ -34,7 +34,7 @@ class StudyMemberAchievementViewController: BaseViewController {
         return view
     }()
     
-    private var headerTapBarView = StudyMemberHeaderTapBarView(
+    private var headerTapBarView = HeaderTapBarView(
         options: StudyMemberAchievementHeaderTapBarViewType.allCases.map { ($0.title, $0.id) },
         initSelectedIndex: StudyMemberAchievementHeaderTapBarViewType.meeting.id
     )
@@ -154,7 +154,7 @@ class StudyMemberAchievementViewController: BaseViewController {
 
 extension StudyMemberAchievementViewController:
     UITableViewDelegate,
-    StudyMemberHeaderTapBarViewDelegate {
+    HeaderTapBarViewDelegate {
     
     // MARK: - DataSource
     private func configureDatasource() {
@@ -191,7 +191,7 @@ extension StudyMemberAchievementViewController:
     }
     
     // MARK: - StudyMemberHeaderTapBarViewDelegate
-    func didTapAction(_ button: StudyMemberHeaderTapBarView.RadioButton) {
+    func didTapAction(_ button: HeaderTapBarView.RadioButton) {
         guard let tapType = StudyMemberAchievementHeaderTapBarViewType(rawValue: button.id) else { return }
         didTapHeadderTapBarButtonSubject.send(tapType)
     }

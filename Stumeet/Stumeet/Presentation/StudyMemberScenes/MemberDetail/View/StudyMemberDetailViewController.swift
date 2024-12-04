@@ -73,7 +73,7 @@ class StudyMemberDetailViewController: BaseViewController {
     }()
     
     private let headerView = StudyMemberDetailInfoHeaderView()
-    private var headerTapBarView = StudyMemberHeaderTapBarView(
+    private var headerTapBarView = HeaderTapBarView(
         options: StudyMemberDetailHeaderTapBarViewType.allCases.map { ($0.title, $0.id) },
         initSelectedIndex: StudyMemberDetailHeaderTapBarViewType.meeting.id
     )
@@ -399,7 +399,7 @@ extension StudyMemberDetailViewController:
     UITableViewDelegate,
     StudyMemberDetailInfoHeaderViewDelegate,
     StumeetConfirmationPopupViewControllerDelegate,
-    StudyMemberHeaderTapBarViewDelegate {
+    HeaderTapBarViewDelegate {
     
     // MARK: - UITableViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -442,7 +442,7 @@ extension StudyMemberDetailViewController:
     }
     
     // MARK: - StudyMemberHeaderTapBarViewDelegate
-    func didTapAction(_ button: StudyMemberHeaderTapBarView.RadioButton) {
+    func didTapAction(_ button: HeaderTapBarView.RadioButton) {
         guard let tapType = StudyMemberDetailHeaderTapBarViewType(rawValue: button.id) else { return }
         didTapHeadderTapBarButtonSubject.send(tapType)
     }

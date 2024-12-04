@@ -64,15 +64,6 @@ class MyStudyGroupListViewController: BaseViewController {
     
     override func setupStyles() {
         view.backgroundColor = .white
-
-        // TODO: 네비 및 탭바 속성 설정 위치 재구성
-        let naviBarAppearance = UINavigationBarAppearance()
-        let tabBarAppearance = UITabBarAppearance()
-        naviBarAppearance.configureWithTransparentBackground()
-        tabBarAppearance.configureWithTransparentBackground()
-        
-        navigationController?.navigationBar.standardAppearance = naviBarAppearance
-        tabBarController?.tabBar.standardAppearance = tabBarAppearance
     }
     
     override func setupAddView() {
@@ -81,7 +72,14 @@ class MyStudyGroupListViewController: BaseViewController {
         view.addSubview(addButtonTooltipView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationTitleLabel)
-        navigationItem.rightBarButtonItem = makeBarButtonItem(.StudyGroupList.tablerPlus)
+        navigationItem.rightBarButtonItem = makeBarButtonItem(
+            image: .StudyGroupList.tablerPlus,
+            action: UIAction { [weak self] _ in
+                guard let self else { return }
+                didTapCreateStudyButtonSubject.send()
+                
+            }
+        )
     }
     
     override func setupConstaints() {
@@ -162,15 +160,12 @@ class MyStudyGroupListViewController: BaseViewController {
     }
     
     // MARK: - Function
-    private func makeBarButtonItem(_ imageResource: ImageResource) -> UIBarButtonItem {
+    private func makeBarButtonItem(image: ImageResource, action: UIAction) -> UIBarButtonItem {
         let button = UIButton()
-        let image = UIImage(resource: imageResource)
+        let image = UIImage(resource: image)
         button.setImage(image, for: .normal)
-        
-        button.tapPublisher
-            .sink(receiveValue: didTapCreateStudyButtonSubject.send)
-            .store(in: &cancellables)
-        
+        button.addAction(action, for: .touchUpInside)
+    
         return UIBarButtonItem(customView: button)
     }
 }

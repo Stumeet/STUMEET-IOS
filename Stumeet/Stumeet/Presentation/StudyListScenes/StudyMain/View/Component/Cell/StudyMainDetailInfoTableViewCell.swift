@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 
-
 class StudyMainDetailInfoTableViewCell: BaseTableViewCell {
     
     // MARK: - UIComponents

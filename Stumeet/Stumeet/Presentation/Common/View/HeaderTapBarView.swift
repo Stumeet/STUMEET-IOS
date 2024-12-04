@@ -1,5 +1,5 @@
 //
-//  StudyMemberHeaderTapBarView.swift
+//  HeaderTapBarView.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/09/03.
@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-protocol StudyMemberHeaderTapBarViewDelegate: AnyObject {
-    func didTapAction(_ button: StudyMemberHeaderTapBarView.RadioButton)
+protocol HeaderTapBarViewDelegate: AnyObject {
+    func didTapAction(_ button: HeaderTapBarView.RadioButton)
 }
 
-class StudyMemberHeaderTapBarView: UIView {
+class HeaderTapBarView: UIView {
     // MARK: - UIComponents
     private var buttonHStackView: UIStackView = {
         let stackView = UIStackView()
@@ -29,10 +29,10 @@ class StudyMemberHeaderTapBarView: UIView {
             buttons.forEach { $0.isSelected = ($0 == selectedButton) }
         }
     }
-    weak var delegate: StudyMemberHeaderTapBarViewDelegate?
+    weak var delegate: HeaderTapBarViewDelegate?
 
     // MARK: - Init
-    init(options: [(String,Int)], initSelectedIndex: Int? = nil) {
+    init(options: [(String, Int)], initSelectedIndex: Int? = nil) {
         super.init(frame: .zero)
         setupAddView()
         setupViews(options: options, selectedIndex: initSelectedIndex)
@@ -47,7 +47,7 @@ class StudyMemberHeaderTapBarView: UIView {
         addSubview(buttonHStackView)
     }
     
-    private func setupViews(options: [(String,Int)], selectedIndex: Int? = nil) {
+    private func setupViews(options: [(String, Int)], selectedIndex: Int? = nil) {
         for (title, id) in options {
             let button = RadioButton(title: title, id: id)
             button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
@@ -77,7 +77,7 @@ class StudyMemberHeaderTapBarView: UIView {
     }
 }
 
-extension StudyMemberHeaderTapBarView {
+extension HeaderTapBarView {
     // MARK: - Nested Class
     class RadioButton: UIButton {
         private(set) var id: Int

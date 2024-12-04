@@ -113,7 +113,7 @@ class StudyMainViewController: BaseViewController {
     override func setupStyles() {
         view.backgroundColor = .white
         navigationController?.setupBarAppearance(backgroundColor: .white.withAlphaComponent(0), backButtonColor: .white)
-        tabBarController?.setupBarAppearance()
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: menuOpenButton)
         
         tableView.contentInset = UIEdgeInsets(top: tableHeaderHeight, left: 0, bottom: 72, right: 0) // headerView의 공간 확보를 위해 헤더 높이 만큼 inset 부여
