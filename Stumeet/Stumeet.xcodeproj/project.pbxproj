@@ -158,6 +158,9 @@
 		35DA75092CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75082CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift */; };
 		35DA750F2CFF33FE006D6FB1 /* HomeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA750E2CFF33FE006D6FB1 /* HomeHeaderTableViewCell.swift */; };
 		35DA75122CFF40D1006D6FB1 /* HomeHeaderTapBarViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75112CFF40D1006D6FB1 /* HomeHeaderTapBarViewType.swift */; };
+		35DA75142D008D7F006D6FB1 /* HomeActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75132D008D7F006D6FB1 /* HomeActivityTableViewCell.swift */; };
+		35DA75162D008EB9006D6FB1 /* HomeActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75152D008EB9006D6FB1 /* HomeActivityItem.swift */; };
+		35DA75182D00935B006D6FB1 /* ActivityRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA75172D00935B006D6FB1 /* ActivityRepresentable.swift */; };
 		35E4EA312BCA878A003A10D4 /* Config(release).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */; };
 		35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */; };
 		35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4EA392BCC29AC003A10D4 /* UITableView++Extension.swift */; };
@@ -531,6 +534,9 @@
 		35DA75082CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMonthlyActivitiesUseCase.swift; sourceTree = "<group>"; };
 		35DA750E2CFF33FE006D6FB1 /* HomeHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		35DA75112CFF40D1006D6FB1 /* HomeHeaderTapBarViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderTapBarViewType.swift; sourceTree = "<group>"; };
+		35DA75132D008D7F006D6FB1 /* HomeActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeActivityTableViewCell.swift; sourceTree = "<group>"; };
+		35DA75152D008EB9006D6FB1 /* HomeActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeActivityItem.swift; sourceTree = "<group>"; };
+		35DA75172D00935B006D6FB1 /* ActivityRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRepresentable.swift; sourceTree = "<group>"; };
 		35E4EA2F2BCA878A003A10D4 /* Config(release).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(release).xcconfig"; sourceTree = "<group>"; };
 		35E4EA302BCA878A003A10D4 /* Config(debug).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config(debug).xcconfig"; sourceTree = "<group>"; };
 		35E4EA362BCA8DC8003A10D4 /* StudyMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewController.swift; sourceTree = "<group>"; };
@@ -1614,6 +1620,7 @@
 			isa = PBXGroup;
 			children = (
 				35DA750E2CFF33FE006D6FB1 /* HomeHeaderTableViewCell.swift */,
+				35DA75132D008D7F006D6FB1 /* HomeActivityTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1622,6 +1629,7 @@
 			isa = PBXGroup;
 			children = (
 				35DA75112CFF40D1006D6FB1 /* HomeHeaderTapBarViewType.swift */,
+				35DA75152D008EB9006D6FB1 /* HomeActivityItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1763,6 +1771,7 @@
 			children = (
 				CA1C92CD2BC92EEA00ECF835 /* CalendarSection.swift */,
 				CA6450872C14220200E00665 /* PopUp.swift */,
+				35DA75172D00935B006D6FB1 /* ActivityRepresentable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3097,6 +3106,7 @@
 				CA0CEDE32C68BA8A007C3A4A /* MonthlyDaysRepository.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
 				357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */,
+				35DA75142D008D7F006D6FB1 /* HomeActivityTableViewCell.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
 				3562163F2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift in Sources */,
 				358D24322C46A85E001EFB51 /* StudyGroupDetail.swift in Sources */,
@@ -3104,6 +3114,7 @@
 				355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */,
 				3554AAD42CE2493500705EDC /* FetchAllStudyActivitiesUseCase.swift in Sources */,
 				3581B2B92CBBF19500D00B11 /* StudyMemberAchievementViewController.swift in Sources */,
+				35DA75182D00935B006D6FB1 /* ActivityRepresentable.swift in Sources */,
 				355A75C52C3ABE8300C50BA0 /* StudyGroup.swift in Sources */,
 				CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */,
 				CA946B6F2C44DD5F00BDD377 /* DetailActivityMemberResponseDTO.swift in Sources */,
@@ -3237,6 +3248,7 @@
 				35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */,
 				358DF6082CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift in Sources */,
 				35DA74FF2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift in Sources */,
+				35DA75162D008EB9006D6FB1 /* HomeActivityItem.swift in Sources */,
 				358D24352C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift in Sources */,
 				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
 				CA64485A2B863BB90090DD84 /* DefualtRegionRepository.swift in Sources */,

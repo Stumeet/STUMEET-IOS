@@ -20,6 +20,13 @@ class ActivityInfoBoxView: UIView {
         return stackView
     }()
     
+    private let innerTopHStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        return stackView
+    }()
+    
     private let typeView: UIView = {
         let view = UIView()
         view.backgroundColor = StumeetColor.primary50.color
@@ -30,6 +37,27 @@ class ActivityInfoBoxView: UIView {
         let label = UILabel()
         label.font = StumeetFont.bodyMedium14.font
         label.textColor = StumeetColor.primary700.color
+        label.text = " "
+        return label
+    }()
+        
+    private let innerTopSpacerView: UIView = {
+        let spacer = UIView()
+        return spacer
+    }()
+    
+    private let studyNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = StumeetFont.captionMedium13.font
+        label.textColor = StumeetColor.gray400.color
+        label.text = " "
+        return label
+    }()
+    
+    private let rightTypeLabel: UILabel = {
+        let label = UILabel()
+        label.font = StumeetFont.captionMedium13.font
+        label.textColor = StumeetColor.gray400.color
         label.text = " "
         return label
     }()
@@ -70,6 +98,33 @@ class ActivityInfoBoxView: UIView {
         return label
     }()
     
+    private let remainingContentTimeHStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .bottom
+        return stackView
+    }()
+    
+    private let remainingContentTimeSpacerView: UIView = {
+        let spacer = UIView()
+        return spacer
+    }()
+    
+    private let remainingTimeContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.primary50.color
+        return view
+    }()
+    
+    private let remainingTimeLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = StumeetFont.bodyMedium14.font
+        label.textColor = StumeetColor.primary700.color
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        return label
+    }()
     
     private let subContentVStackView: UIStackView = {
         let stackView = UIStackView()
@@ -129,7 +184,7 @@ class ActivityInfoBoxView: UIView {
     
     private let profileInfoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .StudyGroupMain.iconClock)
+        imageView.backgroundColor = StumeetColor.gray100.color
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -166,7 +221,7 @@ class ActivityInfoBoxView: UIView {
         layer.borderWidth = 1
         layer.borderColor = StumeetColor.primary50.color.cgColor
         layer.cornerRadius = 16
-        setShadow()
+        setShadow(radius: 5, offset: CGSize(width: 0, height: 4))
         
         typeView.setRoundCorner()
         profileInfoImageView.setRoundCorner()
@@ -176,9 +231,16 @@ class ActivityInfoBoxView: UIView {
         addSubview(rootVStackView)
         
         [
-            typeView,
+            innerTopHStackView,
             innerVStackView
         ].forEach { rootVStackView.addArrangedSubview($0) }
+        
+        [
+            typeView,
+            studyNameLabel,
+            innerTopSpacerView,
+            rightTypeLabel
+        ].forEach { innerTopHStackView.addArrangedSubview($0) }
         
         typeView.addSubview(typeLabel)
         
@@ -189,7 +251,7 @@ class ActivityInfoBoxView: UIView {
         
         [
             mainContentVStackView,
-            subContentVStackView
+            remainingContentTimeHStackView
         ].forEach { bodyContainerVStackView.addArrangedSubview($0) }
         
         [
@@ -202,6 +264,14 @@ class ActivityInfoBoxView: UIView {
             mainTitleLabel,
             mainSubtitleLabel
         ].forEach { mainContentVStackView.addArrangedSubview($0) }
+        
+        [
+            subContentVStackView,
+            remainingContentTimeSpacerView,
+            remainingTimeContainerView
+        ].forEach { remainingContentTimeHStackView.addArrangedSubview($0) }
+        
+        remainingTimeContainerView.addSubview(remainingTimeLabel)
         
         [
             dateContentHStackView,
@@ -229,16 +299,44 @@ class ActivityInfoBoxView: UIView {
             $0.verticalEdges.equalToSuperview().inset(4)
             $0.horizontalEdges.equalToSuperview().inset(12)
         }
+                
+        innerTopSpacerView.snp.makeConstraints {
+            $0.width.equalTo(CGFloat.greatestFiniteMagnitude).priority(.low)
+        }
+        
+        remainingContentTimeSpacerView.snp.makeConstraints {
+            $0.width.equalTo(CGFloat.greatestFiniteMagnitude).priority(.medium)
+        }
         
         profileInfoImageView.snp.makeConstraints {
             $0.size.equalTo(24)
         }
+        
+        remainingTimeLabel.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview().inset(4)
+            $0.horizontalEdges.equalToSuperview().inset(16)
+        }
     }
 
     // MARK: - Function
-    func configureView(data: StudyMainViewActivityItem) {
-        typeLabel.text = data.displayType.title
-        mainTitleLabel.text = data.activity.title
+    func configureView(data: ActivityRepresentable) {
+        if let homeItem = data as? HomeActivityItem {
+            typeView.isHidden = true
+            studyNameLabel.isHidden = false
+            rightTypeLabel.isHidden = false
+            
+            studyNameLabel.text = homeItem.displayStudyName
+            rightTypeLabel.text = homeItem.displayType.title
+            
+        } else {
+            typeView.isHidden = false
+            studyNameLabel.isHidden = true
+            rightTypeLabel.isHidden = true
+            
+            typeLabel.text = data.displayType.title            
+        }
+        
+        mainTitleLabel.text = data.displayActivityTitle
         mainSubtitleLabel.text = data.activity.content
         
         switch data.displayType {
@@ -264,6 +362,16 @@ class ActivityInfoBoxView: UIView {
         if let imageUrl = data.activity.image {
             let url = URL(string: imageUrl)
             profileInfoImageView.kf.setImage(with: url)
+        }
+        
+        if let remainingTime = data.displayRemainingTime {
+            remainingTimeContainerView.isHidden = false
+            remainingTimeLabel.text = remainingTime
+            remainingTimeContainerView.setRoundCorner()
+            profileInfoContentHStackView.isHidden = true
+        } else {
+            remainingTimeContainerView.isHidden = true
+            remainingTimeLabel.text = ""
         }
         
         profileInfoNameLabel.text = data.displayAuthorName

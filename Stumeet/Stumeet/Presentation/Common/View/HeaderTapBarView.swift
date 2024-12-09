@@ -23,6 +23,13 @@ class HeaderTapBarView: UIView {
     
     private var buttons: [RadioButton] = []
     
+    private let bottomSeparatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = StumeetColor.primary50.color
+        view.alpha = 0
+        return view
+    }()
+    
     // MARK: - Properties
     private(set) var selectedButton: RadioButton? {
         didSet {
@@ -45,6 +52,7 @@ class HeaderTapBarView: UIView {
     
     private func setupAddView() {
         addSubview(buttonHStackView)
+        addSubview(bottomSeparatorView)
     }
     
     private func setupViews(options: [(String, Int)], selectedIndex: Int? = nil) {
@@ -66,6 +74,12 @@ class HeaderTapBarView: UIView {
             $0.trailing.lessThanOrEqualToSuperview().inset(16)
             $0.verticalEdges.equalToSuperview()
         }
+        
+        bottomSeparatorView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(2)
+        }
     }
 
     // MARK: - Function
@@ -74,6 +88,10 @@ class HeaderTapBarView: UIView {
             selectedButton = sender
             delegate?.didTapAction(sender)
         }
+    }
+    
+    func adjustSeparatorAlpha(alpha: CGFloat) {
+        bottomSeparatorView.alpha = alpha
     }
 }
 

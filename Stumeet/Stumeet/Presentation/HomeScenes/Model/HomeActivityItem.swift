@@ -1,20 +1,24 @@
 //
-//  StudyMainViewActivityItem.swift
+//  HomeActivityItem.swift
 //  Stumeet
 //
-//  Created by 조웅희 on 2024/07/21.
+//  Created by 조웅희 on 2024/12/04.
 //
 
 import Foundation
 
-struct StudyMainViewActivityItem: ActivityRepresentable, Hashable, Identifiable {
+struct HomeActivityItem: ActivityRepresentable, Hashable, Identifiable {
+    
     let activity: Activity
     var id: Int { activity.id }
-    var cellType: StudyMainActivityCellStyle
     
-    var displayStudyName: String? 
-    var displayActivityTitle: String?
-    var displayRemainingTime: String?
+    var displayStudyName: String? {
+        "스터디명"
+    }
+    
+    var displayActivityTitle: String? {
+        activity.title
+    }
     
     var displayAuthorName: String {
         activity.name ?? "악명"
@@ -36,14 +40,11 @@ struct StudyMainViewActivityItem: ActivityRepresentable, Hashable, Identifiable 
         activity.endTime?.formattedDateHHmm()
     }
     
-    enum StudyMainActivityCellStyle {
-        case notice
-        case activityFirstCell
-        case normal
+    var displayRemainingTime: String? {
+        "9시간 30분 남음"
     }
-    
-    internal init(activity: Activity, cellType: StudyMainViewActivityItem.StudyMainActivityCellStyle) {
+
+    internal init(activity: Activity) {
         self.activity = activity
-        self.cellType = cellType
     }
 }

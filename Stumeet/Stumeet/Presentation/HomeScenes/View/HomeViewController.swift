@@ -30,6 +30,7 @@ class HomeViewController: BaseViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.sectionHeaderTopPadding = 0
         tableView.registerCell(HomeHeaderTableViewCell.self)
+        tableView.registerCell(HomeActivityTableViewCell.self)
         return tableView
     }()
     
@@ -39,13 +40,144 @@ class HomeViewController: BaseViewController {
             initSelectedIndex: HomeHeaderTapBarViewType.task.id
         )
         
-        tapbarView.backgroundColor = .white        
+        tapbarView.backgroundColor = .white
         return tapbarView
     }()
     
     
     // MARK: - Properties
     private weak var coordinator: HomeNavigation!
+    
+    private var headerDataSource: [String] = ["테스트"]
+    private var activityDataSource: [HomeActivityItem] = [
+        HomeActivityItem(
+            activity: Activity(
+                id: 0,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 1,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 2,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 3,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 4,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 5,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 6,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 7,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        ),
+        HomeActivityItem(
+            activity: Activity(
+                id: 8,
+                tag: .homework,
+                title: "제목",
+                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
+                startTiem: "2024-04-22T00:00:00",
+                endTime: "2024-04-23T00:00:00",
+                place: "강남",
+                name: "타이틀",
+                day: "2024-11-25T09:56:21.296888",
+                status: .attendance
+            )
+        )
+    ]
+    
     private let didTapAlarmButtonSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
@@ -109,8 +241,8 @@ extension HomeViewController:
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return 1 }
-        return 0
+        if section == 0 { return headerDataSource.count }
+        return activityDataSource.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -124,13 +256,37 @@ extension HomeViewController:
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeue(HomeHeaderTableViewCell.self, for: indexPath)
-        else { return UITableViewCell() }
-        cell.configureCell()
-        return cell
+        
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeue(HomeHeaderTableViewCell.self, for: indexPath)
+            else { return UITableViewCell() }
+            cell.configureCell()
+            return cell
+        } else {
+            guard let cell = tableView.dequeue(HomeActivityTableViewCell.self, for: indexPath),
+                  let activityData = activityDataSource[safe: indexPath.row]
+            else { return UITableViewCell() }
+            cell.configureCell(data: activityData)
+            return cell
+        }
     }
     
     // MARK: - UITableViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let tableView = scrollView as? UITableView else { return }
+        
+        // 첫 번째 섹션의 헤더 위치 계산
+        let firstSectionHeaderRect = tableView.rectForHeader(inSection: 1)
+        let firstSectionHeaderPosition = firstSectionHeaderRect.origin.y
+        
+        let currentScrollPosition = scrollView.contentOffset.y
+        let alphaValue = (currentScrollPosition - firstSectionHeaderPosition) / firstSectionHeaderPosition
+        
+        if currentScrollPosition >= firstSectionHeaderPosition {
+            headerTapBarView.adjustSeparatorAlpha(alpha: max(0, min(1, alphaValue + 0.2)))
+            
+        } else {
+            headerTapBarView.adjustSeparatorAlpha(alpha: 0)            
+        }
     }
 }
