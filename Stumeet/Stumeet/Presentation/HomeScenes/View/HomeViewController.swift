@@ -47,6 +47,7 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: HomeNavigation!
+    private let viewModel: HomeViewModel
     
     private var headerDataSource: [String] = ["테스트"]
     private var activityDataSource: [HomeActivityItem] = [
@@ -181,8 +182,12 @@ class HomeViewController: BaseViewController {
     private let didTapAlarmButtonSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
-    init( coordinator: HomeNavigation ) {
+    init(
+        coordinator: HomeNavigation,
+        viewModel: HomeViewModel
+    ) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -213,6 +218,21 @@ class HomeViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.verticalEdges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    override func bind() {
+        // MARK: - Input
+        let input = HomeViewModel.Input(
+            didTapAlarmButton: didTapAlarmButtonSubject.eraseToAnyPublisher()
+        )
+                
+        // MARK: - Output
+        let output = viewModel.transform(input: input)
+ 
+        output.presentToAlarmVC
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: coordinator.startAlarmCoordinator )
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
@@ -286,7 +306,7 @@ extension HomeViewController:
             headerTapBarView.adjustSeparatorAlpha(alpha: max(0, min(1, alphaValue + 0.2)))
             
         } else {
-            headerTapBarView.adjustSeparatorAlpha(alpha: 0)            
+            headerTapBarView.adjustSeparatorAlpha(alpha: 0)
         }
     }
 }

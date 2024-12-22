@@ -71,8 +71,7 @@ extension StudyMemberCoordinator: StudyMemberNavigation {
         
         navigationController.setViewControllers([memberVC], animated: true)
         navigationController.presentationController?.delegate = memberVC
-
-        parentCoordinator?.navigationController.presentedViewController?.present(navigationController, animated: true, completion: nil)
+        parentCoordinator?.presentOnTop(navigationController)
     }
     
     func presentToMemberDetailVC(studyId: Int, studyMemberId: Int) {

@@ -29,7 +29,8 @@ final class TabBarCoordinator: Coordinator {
         tabbarController.setupBarAppearance()
         
         let homeNavigationController = UINavigationController()
-        let homeCoordinator = HomeCoordinator(navigationController: homeNavigationController)
+        let homeDIContainer = appDIContainer.makeHomeDIContainer()
+        let homeCoordinator = homeDIContainer.makeHomeCoordinator(navigationController: homeNavigationController)
         homeNavigationController.setupBarAppearance()
         homeCoordinator.parentCoordinator = parentCoordinator
         
