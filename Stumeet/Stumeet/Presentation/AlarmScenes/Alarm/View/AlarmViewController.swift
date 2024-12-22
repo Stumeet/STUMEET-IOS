@@ -36,6 +36,8 @@ class AlarmViewController: BaseViewController {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.rowHeight = 77
+        tableView.registerCell(AlarmListTableViewCell.self)        
         return tableView
     }()
     
@@ -47,6 +49,7 @@ class AlarmViewController: BaseViewController {
     // MARK: - Properties
     private weak var coordinator: AlarmNavigation!
     private let viewModel: AlarmViewModel
+    private var alarmDataSource: UITableViewDiffableDataSource<AlarmListSection, AlarmListItem>?
     private let loadDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
@@ -80,30 +83,67 @@ class AlarmViewController: BaseViewController {
         navigationItem.titleView = titleLabel
     }
     
-    override func setupConstaints() {        
+    override func setupConstaints() {
         alarmTableView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.horizontalEdges.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
     
     override func bind() {
         // MARK: - Input
-
-
+        let input = AlarmViewModel.Input(
+            loadData: loadDataSubject.eraseToAnyPublisher()
+        )
+        
         // MARK: - Output
-    
+        let output = viewModel.transform(input: input)
+        
+        output.alarmDataSource
+            .receive(on: RunLoop.main)
+            .sink { [weak self] items in
+                self?.updateSnapshot(items: items)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDatasource()
         loadDataSubject.send()
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        alarmTableView.contentInset.bottom = view.safeAreaInsets.bottom
     }
     
     // MARK: - Function
     @objc func closeButtonTapped(_ sender: UIBarButtonItem) {
         coordinator.dimiss()
+    }
+}
+
+extension AlarmViewController {
+    // MARK: - DataSource
+    private func configureDatasource() {
+        alarmDataSource = UITableViewDiffableDataSource(
+            tableView: alarmTableView,
+            cellProvider: { tableView, indexPath, item in
+                guard let cell = tableView.dequeue(AlarmListTableViewCell.self, for: indexPath)
+                else { return UITableViewCell() }
+                cell.configureCell(item)
+                return cell
+            }
+        )
+    }
+    
+    private func updateSnapshot(items: [AlarmListItem]) {
+        var snapshot = NSDiffableDataSourceSnapshot<AlarmListSection, AlarmListItem>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(items)
+        
+        guard let datasource = self.alarmDataSource else { return }
+        datasource.apply(snapshot, animatingDifferences: false)
     }
 }

@@ -85,6 +85,9 @@
 		35732C6B2D1834A10035AE55 /* AlarmDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C6A2D1834A10035AE55 /* AlarmDIContainer.swift */; };
 		35732C6D2D18378B0035AE55 /* HomeDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C6C2D18378B0035AE55 /* HomeDIContainer.swift */; };
 		35732C702D183B000035AE55 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C6F2D183B000035AE55 /* HomeViewModel.swift */; };
+		35732C742D1855D90035AE55 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */; };
+		35732C762D18578D0035AE55 /* AlarmListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C752D18578D0035AE55 /* AlarmListItem.swift */; };
+		35732C782D185A8A0035AE55 /* AlarmListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C772D185A8A0035AE55 /* AlarmListSection.swift */; };
 		357923282C4D641900E9CD68 /* StudyMainViewHeaderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357923272C4D641900E9CD68 /* StudyMainViewHeaderItem.swift */; };
 		357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */; };
 		357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */; };
@@ -469,6 +472,9 @@
 		35732C6A2D1834A10035AE55 /* AlarmDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDIContainer.swift; sourceTree = "<group>"; };
 		35732C6C2D18378B0035AE55 /* HomeDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDIContainer.swift; sourceTree = "<group>"; };
 		35732C6F2D183B000035AE55 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
+		35732C752D18578D0035AE55 /* AlarmListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListItem.swift; sourceTree = "<group>"; };
+		35732C772D185A8A0035AE55 /* AlarmListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListSection.swift; sourceTree = "<group>"; };
 		357923272C4D641900E9CD68 /* StudyMainViewHeaderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewHeaderItem.swift; sourceTree = "<group>"; };
 		357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListCoordinator.swift; sourceTree = "<group>"; };
@@ -1224,6 +1230,7 @@
 		35732C5F2D1807280035AE55 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				35732C712D1855BD0035AE55 /* Componet */,
 				35732C642D1807D90035AE55 /* AlarmViewController.swift */,
 			);
 			path = View;
@@ -1232,6 +1239,8 @@
 		35732C602D18072A0035AE55 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				35732C752D18578D0035AE55 /* AlarmListItem.swift */,
+				35732C772D185A8A0035AE55 /* AlarmListSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1268,6 +1277,22 @@
 				35732C6F2D183B000035AE55 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		35732C712D1855BD0035AE55 /* Componet */ = {
+			isa = PBXGroup;
+			children = (
+				35732C722D1855C90035AE55 /* Cell */,
+			);
+			path = Componet;
+			sourceTree = "<group>";
+		};
+		35732C722D1855C90035AE55 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		357D1B852BB07A630079DCE6 /* Flows */ = {
@@ -3093,6 +3118,7 @@
 				CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */,
 				3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */,
 				CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */,
+				35732C762D18578D0035AE55 /* AlarmListItem.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
@@ -3205,6 +3231,7 @@
 				CA26F80A2C7C9CE20061B7F7 /* DefaultCreateStudyGroupRepository.swift in Sources */,
 				CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */,
 				3554AACD2CDF693900705EDC /* ScheduleSceneDIContainer.swift in Sources */,
+				35732C782D185A8A0035AE55 /* AlarmListSection.swift in Sources */,
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
 				358A93E92CC4EAB9007945D4 /* StudyMemberAdminResponseDTO.swift in Sources */,
 				CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */,
@@ -3326,6 +3353,7 @@
 				35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */,
 				358DF6082CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift in Sources */,
 				35DA74FF2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift in Sources */,
+				35732C742D1855D90035AE55 /* AlarmListTableViewCell.swift in Sources */,
 				35DA75162D008EB9006D6FB1 /* HomeActivityItem.swift in Sources */,
 				358D24352C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift in Sources */,
 				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
