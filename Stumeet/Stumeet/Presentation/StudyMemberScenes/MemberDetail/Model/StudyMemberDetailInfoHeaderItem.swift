@@ -8,7 +8,7 @@
 import Foundation
 
 struct StudyMemberDetailInfoHeaderItem {
-    
+     
     private let member: StudyMember
     
     var displayName: String {

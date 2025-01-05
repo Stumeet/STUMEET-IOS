@@ -60,21 +60,22 @@ final class TabBarCoordinator: Coordinator {
         calendarItem.image = UIImage(systemName: "calendar")
         calendarNavigationController.tabBarItem = calendarItem
         
-        let myPageNavigationController = UINavigationController()
-        let myPageCoordinator = MyPageCoordinator(navigationController: myPageNavigationController)
-        myPageNavigationController.setupBarAppearance()
-        myPageCoordinator.parentCoordinator = parentCoordinator
+        let myNavigationController = UINavigationController()
+        let myDIContainer = appDIContainer.makeMyDIContainer()
+        let myCoordinator = myDIContainer.makeMyCoordinator(navigationController: myNavigationController)
+        myNavigationController.setupBarAppearance()
+        myCoordinator.parentCoordinator = parentCoordinator
         
-        let myPageItem = UITabBarItem()
-        myPageItem.title = "myPage"
-        myPageItem.image = UIImage(systemName: "person")
-        myPageNavigationController.tabBarItem = myPageItem
+        let myItem = UITabBarItem()
+        myItem.title = "my"
+        myItem.image = UIImage(systemName: "person")
+        myNavigationController.tabBarItem = myItem
         
         tabbarController.viewControllers = [
             homeNavigationController,
             studyListNavigationController,
             calendarNavigationController,
-            myPageNavigationController
+            myNavigationController
         ]
         
         tabbarController.modalPresentationStyle = .fullScreen
@@ -85,11 +86,11 @@ final class TabBarCoordinator: Coordinator {
         parentCoordinator?.children.append(homeCoordinator)
         parentCoordinator?.children.append(studyListCoordinator)
         parentCoordinator?.children.append(calendarCoordinator)
-        parentCoordinator?.children.append(myPageCoordinator)
+        parentCoordinator?.children.append(myCoordinator)
         
         homeCoordinator.start()
         studyListCoordinator.start()
         calendarCoordinator.start()
-        myPageCoordinator.start()
+        myCoordinator.start()
     }
 }

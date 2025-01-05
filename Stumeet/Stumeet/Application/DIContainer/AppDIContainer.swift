@@ -67,4 +67,11 @@ final class AppDIContainer {
         )
         return HomeDIContainer(dependencies: dependencies)
     }
+    
+    func makeMyDIContainer() -> MyDIContainer {
+        let dependencies = MyDIContainer.Dependencies(
+            provider: networkServiceProvider
+        )
+        return MyDIContainer(dependencies: dependencies)
+    }
 }

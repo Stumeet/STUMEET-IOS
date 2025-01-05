@@ -43,6 +43,8 @@
 		35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B152B9F4BDA00252283 /* AppleLoginService.swift */; };
 		35446B182B9F4C3600252283 /* SnsLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */; };
 		35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35446B192B9F506200252283 /* KakaoLoginService.swift */; };
+		3547069A2D2ADA3E004D0588 /* CenterHeaderTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354706992D2ADA3E004D0588 /* CenterHeaderTabView.swift */; };
+		3547069C2D2ADDC5004D0588 /* MyHeaderTapBarViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3547069B2D2ADDC5004D0588 /* MyHeaderTapBarViewType.swift */; };
 		3554AAAA2CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */; };
 		3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */; };
 		3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */; };
@@ -88,11 +90,16 @@
 		35732C742D1855D90035AE55 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */; };
 		35732C762D18578D0035AE55 /* AlarmListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C752D18578D0035AE55 /* AlarmListItem.swift */; };
 		35732C782D185A8A0035AE55 /* AlarmListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C772D185A8A0035AE55 /* AlarmListSection.swift */; };
+		35732C7F2D256D800035AE55 /* MyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C7E2D256D800035AE55 /* MyCoordinator.swift */; };
+		35732C812D256D900035AE55 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C802D256D900035AE55 /* MyViewController.swift */; };
+		35732C832D256D9C0035AE55 /* MyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C822D256D9C0035AE55 /* MyViewModel.swift */; };
+		35732C852D256FBA0035AE55 /* MyDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C842D256FBA0035AE55 /* MyDIContainer.swift */; };
+		35732C882D2579950035AE55 /* MyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C872D2579950035AE55 /* MyHeaderView.swift */; };
+		35732C8A2D257E8E0035AE55 /* MyHeaderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C892D257E8E0035AE55 /* MyHeaderItem.swift */; };
 		357923282C4D641900E9CD68 /* StudyMainViewHeaderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357923272C4D641900E9CD68 /* StudyMainViewHeaderItem.swift */; };
 		357D1B882BB07AB40079DCE6 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */; };
 		357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */; };
 		357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */; };
-		357D1B902BB07D1D0079DCE6 /* MyPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B8F2BB07D1D0079DCE6 /* MyPageCoordinator.swift */; };
 		357D1B972BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B922BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift */; };
 		357D1B9A2BB2FDBF0079DCE6 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B952BB2FDBF0079DCE6 /* BaseTargetType.swift */; };
 		357D1B9E2BB2FF280079DCE6 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357D1B9D2BB2FF280079DCE6 /* AuthService.swift */; };
@@ -281,7 +288,6 @@
 		CA64484A2B863BB90090DD84 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6448042B863BB90090DD84 /* ViewModelType.swift */; };
 		CA64484B2B863BB90090DD84 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6448062B863BB90090DD84 /* Coordinator.swift */; };
 		CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6448082B863BB90090DD84 /* CoreGraphicsManager.swift */; };
-		CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64480C2B863BB90090DD84 /* MyPageViewController.swift */; };
 		CA64484F2B863BB90090DD84 /* UITextField++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA64480F2B863BB90090DD84 /* UITextField++Extension.swift */; };
 		CA6448502B863BB90090DD84 /* UILabel++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6448102B863BB90090DD84 /* UILabel++Extension.swift */; };
 		CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6448112B863BB90090DD84 /* CALayer++Extension.swift */; };
@@ -431,6 +437,8 @@
 		35446B152B9F4BDA00252283 /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		35446B172B9F4C3600252283 /* SnsLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsLoginViewModel.swift; sourceTree = "<group>"; };
 		35446B192B9F506200252283 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
+		354706992D2ADA3E004D0588 /* CenterHeaderTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterHeaderTabView.swift; sourceTree = "<group>"; };
+		3547069B2D2ADDC5004D0588 /* MyHeaderTapBarViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHeaderTapBarViewType.swift; sourceTree = "<group>"; };
 		3554AAA92CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateStudyAdminUseCase.swift; sourceTree = "<group>"; };
 		3554AAAB2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAdminDelegateRequestDTO.swift; sourceTree = "<group>"; };
 		3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPlaceholderView.swift; sourceTree = "<group>"; };
@@ -475,11 +483,16 @@
 		35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
 		35732C752D18578D0035AE55 /* AlarmListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListItem.swift; sourceTree = "<group>"; };
 		35732C772D185A8A0035AE55 /* AlarmListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListSection.swift; sourceTree = "<group>"; };
+		35732C7E2D256D800035AE55 /* MyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoordinator.swift; sourceTree = "<group>"; };
+		35732C802D256D900035AE55 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		35732C822D256D9C0035AE55 /* MyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewModel.swift; sourceTree = "<group>"; };
+		35732C842D256FBA0035AE55 /* MyDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDIContainer.swift; sourceTree = "<group>"; };
+		35732C872D2579950035AE55 /* MyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHeaderView.swift; sourceTree = "<group>"; };
+		35732C892D257E8E0035AE55 /* MyHeaderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHeaderItem.swift; sourceTree = "<group>"; };
 		357923272C4D641900E9CD68 /* StudyMainViewHeaderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainViewHeaderItem.swift; sourceTree = "<group>"; };
 		357D1B872BB07AB40079DCE6 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		357D1B892BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyGroupListCoordinator.swift; sourceTree = "<group>"; };
 		357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCoordinator.swift; sourceTree = "<group>"; };
-		357D1B8F2BB07D1D0079DCE6 /* MyPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCoordinator.swift; sourceTree = "<group>"; };
 		357D1B922BB2FDBF0079DCE6 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		357D1B952BB2FDBF0079DCE6 /* BaseTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
 		357D1B9D2BB2FF280079DCE6 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -676,8 +689,6 @@
 		CA6448042B863BB90090DD84 /* ViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		CA6448062B863BB90090DD84 /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		CA6448082B863BB90090DD84 /* CoreGraphicsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreGraphicsManager.swift; sourceTree = "<group>"; };
-		CA64480A2B863BB90090DD84 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		CA64480C2B863BB90090DD84 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		CA64480F2B863BB90090DD84 /* UITextField++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField++Extension.swift"; sourceTree = "<group>"; };
 		CA6448102B863BB90090DD84 /* UILabel++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel++Extension.swift"; sourceTree = "<group>"; };
 		CA6448112B863BB90090DD84 /* CALayer++Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer++Extension.swift"; sourceTree = "<group>"; };
@@ -866,6 +877,7 @@
 				3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */,
 				35732C6A2D1834A10035AE55 /* AlarmDIContainer.swift */,
 				35732C6C2D18378B0035AE55 /* HomeDIContainer.swift */,
+				35732C842D256FBA0035AE55 /* MyDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -1295,6 +1307,59 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		35732C792D256D3F0035AE55 /* MyScenes */ = {
+			isa = PBXGroup;
+			children = (
+				35732C7A2D256D530035AE55 /* Flows */,
+				35732C7D2D256D690035AE55 /* Model */,
+				35732C7C2D256D630035AE55 /* ViewModel */,
+				35732C7B2D256D5D0035AE55 /* View */,
+			);
+			path = MyScenes;
+			sourceTree = "<group>";
+		};
+		35732C7A2D256D530035AE55 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				35732C7E2D256D800035AE55 /* MyCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		35732C7B2D256D5D0035AE55 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				35732C862D2579760035AE55 /* Componet */,
+				35732C802D256D900035AE55 /* MyViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		35732C7C2D256D630035AE55 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				35732C822D256D9C0035AE55 /* MyViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		35732C7D2D256D690035AE55 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				35732C892D257E8E0035AE55 /* MyHeaderItem.swift */,
+				3547069B2D2ADDC5004D0588 /* MyHeaderTapBarViewType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		35732C862D2579760035AE55 /* Componet */ = {
+			isa = PBXGroup;
+			children = (
+				35732C872D2579950035AE55 /* MyHeaderView.swift */,
+			);
+			path = Componet;
+			sourceTree = "<group>";
+		};
 		357D1B852BB07A630079DCE6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
@@ -1315,14 +1380,6 @@
 			isa = PBXGroup;
 			children = (
 				357D1B8C2BB07C530079DCE6 /* CalendarCoordinator.swift */,
-			);
-			path = Flows;
-			sourceTree = "<group>";
-		};
-		357D1B8E2BB07D050079DCE6 /* Flows */ = {
-			isa = PBXGroup;
-			children = (
-				357D1B8F2BB07D1D0079DCE6 /* MyPageCoordinator.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -2039,11 +2096,11 @@
 				3554AAB22CDF489900705EDC /* ActivityNoticeScenes */,
 				35BDF6F02B88CEFA000B6DCB /* AuthScenes */,
 				CA6447DC2B863BB90090DD84 /* HomeScenes */,
+				35732C792D256D3F0035AE55 /* MyScenes */,
 				CA6447E02B863BB90090DD84 /* StudyListScenes */,
 				357193E12C7E16170057A94C /* StudyMemberScenes */,
 				CA6447FE2B863BB90090DD84 /* CalendarScenes */,
 				CA6448022B863BB90090DD84 /* Common */,
-				CA6448092B863BB90090DD84 /* MyPageScenes */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -2206,24 +2263,6 @@
 				CA6448082B863BB90090DD84 /* CoreGraphicsManager.swift */,
 			);
 			path = Manager;
-			sourceTree = "<group>";
-		};
-		CA6448092B863BB90090DD84 /* MyPageScenes */ = {
-			isa = PBXGroup;
-			children = (
-				357D1B8E2BB07D050079DCE6 /* Flows */,
-				CA64480A2B863BB90090DD84 /* .gitkeep */,
-				CA64480B2B863BB90090DD84 /* ViewController */,
-			);
-			path = MyPageScenes;
-			sourceTree = "<group>";
-		};
-		CA64480B2B863BB90090DD84 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				CA64480C2B863BB90090DD84 /* MyPageViewController.swift */,
-			);
-			path = ViewController;
 			sourceTree = "<group>";
 		};
 		CA64480D2B863BB90090DD84 /* Utilities */ = {
@@ -2455,6 +2494,7 @@
 				3554AAAD2CDA509200705EDC /* EmptyPlaceholderView.swift */,
 				3554AAAF2CDA59BA00705EDC /* TextBubbleView.swift */,
 				3581B2A92CBBF19500D00B11 /* HeaderTapBarView.swift */,
+				354706992D2ADA3E004D0588 /* CenterHeaderTabView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3106,6 +3146,7 @@
 				352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */,
 				CAF533582B9EB6D000A7B8B2 /* StartRepository.swift in Sources */,
 				353393192BC2975E0021FDF9 /* AuthSceneDIContainer.swift in Sources */,
+				35732C7F2D256D800035AE55 /* MyCoordinator.swift in Sources */,
 				CAA883ED2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift in Sources */,
 				CA8C0DE42C33D126005ECA55 /* AllStudyActivityResponseDTO.swift in Sources */,
 				CA6448372B863BB90090DD84 /* MyStudyGroupListViewController.swift in Sources */,
@@ -3140,6 +3181,7 @@
 				CA01B2712BFF294500A01CEA /* DetailStudyActivity.swift in Sources */,
 				357193E02C7E15F90057A94C /* StudyMemberSceneDIContainer.swift in Sources */,
 				3582D09B2C56945500C9D63E /* PageInfo.swift in Sources */,
+				35732C812D256D900035AE55 /* MyViewController.swift in Sources */,
 				35C7F81A2C85DE4D00F9009E /* StudyMemberDetailViewModel.swift in Sources */,
 				357D1BA32BB7E68E0079DCE6 /* OauthResponseDTO.swift in Sources */,
 				355F51EF2BFE309B00782D17 /* UITabBarController++Extension.swift in Sources */,
@@ -3162,6 +3204,7 @@
 				358DF60C2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift in Sources */,
 				CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */,
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
+				35732C8A2D257E8E0035AE55 /* MyHeaderItem.swift in Sources */,
 				CA64485B2B863BB90090DD84 /* DefaultSelectFieldRepository.swift in Sources */,
 				CA31EC612C5A25E2004D79A8 /* CreateStudySelectItemType.swift in Sources */,
 				CAF5335C2B9EB7AC00A7B8B2 /* DefualtStartRepository.swift in Sources */,
@@ -3241,6 +3284,7 @@
 				CA6448562B863BB90090DD84 /* StumeetFont.swift in Sources */,
 				355F51DD2BF89F9800782D17 /* StudyMainSideMenuViewController.swift in Sources */,
 				358A93F42CC51664007945D4 /* FetchStudyMemberDetailUseCase.swift in Sources */,
+				35732C882D2579950035AE55 /* MyHeaderView.swift in Sources */,
 				CAD45A0D2BB41E64006BCB4A /* BottomSheetCalendarViewModel.swift in Sources */,
 				35C7F81D2C85DF2500F9009E /* StudyMemberDetailInfoHeaderView.swift in Sources */,
 				35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */,
@@ -3254,6 +3298,7 @@
 				CA342DB42C37AEF10055A9A4 /* StudyMemberResponseDTO.swift in Sources */,
 				353A08BE2C7B795A00678E96 /* StudyMember.swift in Sources */,
 				CA01B2852C043EDA00A01CEA /* DetailActivityPhotoListUseCase.swift in Sources */,
+				3547069A2D2ADA3E004D0588 /* CenterHeaderTabView.swift in Sources */,
 				CA6450902C14657500E00665 /* AllStudyActivityViewController.swift in Sources */,
 				357D1BA02BB30CA30079DCE6 /* NetworkServiceProvider.swift in Sources */,
 				CA26F8082C7B376C0061B7F7 /* CreateStudyGroup.swift in Sources */,
@@ -3345,7 +3390,6 @@
 				3554AAD02CE243D900705EDC /* FetchLatestNoticeUseCase.swift in Sources */,
 				3554AAD92CE24CC500705EDC /* StudyMemberAchievementHeaderTapBarViewType.swift in Sources */,
 				35D091672C4D3B0900471014 /* StudyMainViewDetailInfoItem.swift in Sources */,
-				CA64484E2B863BB90090DD84 /* MyPageViewController.swift in Sources */,
 				35ED53D52C3D9BF3006DDBA7 /* Collection++Extension.swift in Sources */,
 				CA023A562BF75B1400E98103 /* ActivityMemberSettingUseCase.swift in Sources */,
 				CA31EC632C5A6860004D79A8 /* SetStudyGroupPeriodViewController.swift in Sources */,
@@ -3372,6 +3416,7 @@
 				35DA74F52CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift in Sources */,
 				35E4EA372BCA8DC8003A10D4 /* StudyMainViewController.swift in Sources */,
 				CA6448552B863BB90090DD84 /* StumeetColor.swift in Sources */,
+				3547069C2D2ADDC5004D0588 /* MyHeaderTapBarViewType.swift in Sources */,
 				CA8C0DDF2C33C7F5005ECA55 /* ActivityService.swift in Sources */,
 				CAA883EF2C5B46A800EF4CE5 /* DefaultSetStudyGroupPeriodRepository.swift in Sources */,
 				CA6448382B863BB90090DD84 /* SelectRegionViewModel.swift in Sources */,
@@ -3384,7 +3429,6 @@
 				35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */,
 				35732C6B2D1834A10035AE55 /* AlarmDIContainer.swift in Sources */,
 				358A93EE2CC509A8007945D4 /* StudyMemberDetailRequestDTO.swift in Sources */,
-				357D1B902BB07D1D0079DCE6 /* MyPageCoordinator.swift in Sources */,
 				CA6448442B863BB90090DD84 /* TagCell.swift in Sources */,
 				35732C6D2D18378B0035AE55 /* HomeDIContainer.swift in Sources */,
 				CA9958552BB018CB00884615 /* ActivityCategory.swift in Sources */,
@@ -3392,6 +3436,7 @@
 				35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */,
 				3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */,
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
+				35732C852D256FBA0035AE55 /* MyDIContainer.swift in Sources */,
 				35C7F8182C85DE1D00F9009E /* StudyMemberDetailViewController.swift in Sources */,
 				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,
 				CA0CEDDD2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift in Sources */,
@@ -3408,6 +3453,7 @@
 				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				3543578A2CC15DAA00D99695 /* FCMTokenManager.swift in Sources */,
 				CA6450942C1465AF00E00665 /* GroupStudyActivityViewController.swift in Sources */,
+				35732C832D256D9C0035AE55 /* MyViewModel.swift in Sources */,
 				35D49E252C90980E00F8C5C8 /* StudyMemberComplimentButton.swift in Sources */,
 				3554AAAA2CD7C7B400705EDC /* DelegateStudyAdminUseCase.swift in Sources */,
 				357D1BA92BB8119E0079DCE6 /* UserAuthInfo.swift in Sources */,
