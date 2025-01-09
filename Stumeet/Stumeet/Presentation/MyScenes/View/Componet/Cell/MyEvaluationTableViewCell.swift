@@ -80,4 +80,3 @@ class MyEvaluationTableViewCell: BaseTableViewCell {
         bottomConst?.update(inset: item.isLastItem ? 0 : 12)
     }
 }
-

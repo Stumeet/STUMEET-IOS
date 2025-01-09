@@ -11,10 +11,3 @@ enum MyEvaluationListSection: Int, Hashable, CaseIterable {
     case evaluations
     case reviews
 }
-
-enum MyEvaluationRow: Hashable {
-    case evaluation(MyEvaluationItem)
-    case evaluationSeeMore(Bool)
-    case reviewOrder(String)
-    case review(MyReviewItem)
-}

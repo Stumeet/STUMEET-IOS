@@ -170,6 +170,11 @@
 		35D49E252C90980E00F8C5C8 /* StudyMemberComplimentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D49E242C90980E00F8C5C8 /* StudyMemberComplimentButton.swift */; };
 		35D49E292C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D49E282C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift */; };
 		35D685D42D2ED0FB00C4BA02 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685D32D2ED0FB00C4BA02 /* ProgressBarView.swift */; };
+		35D685D62D301AFA00C4BA02 /* MyActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685D52D301AFA00C4BA02 /* MyActivityTableViewCell.swift */; };
+		35D685D82D30232900C4BA02 /* MyActivityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685D72D30232900C4BA02 /* MyActivityItem.swift */; };
+		35D685DA2D30234300C4BA02 /* MyActivityListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685D92D30234300C4BA02 /* MyActivityListSection.swift */; };
+		35D685DC2D30238C00C4BA02 /* MyActivityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685DB2D30238C00C4BA02 /* MyActivityRow.swift */; };
+		35D685DE2D3023A600C4BA02 /* MyEvaluationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685DD2D3023A600C4BA02 /* MyEvaluationRow.swift */; };
 		35DA74F22CE63DC6006D6FB1 /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */; };
 		35DA74F52CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */; };
 		35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */; };
@@ -569,6 +574,11 @@
 		35D49E242C90980E00F8C5C8 /* StudyMemberComplimentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberComplimentButton.swift; sourceTree = "<group>"; };
 		35D49E282C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberComplimentRowItem.swift; sourceTree = "<group>"; };
 		35D685D32D2ED0FB00C4BA02 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		35D685D52D301AFA00C4BA02 /* MyActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityTableViewCell.swift; sourceTree = "<group>"; };
+		35D685D72D30232900C4BA02 /* MyActivityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityItem.swift; sourceTree = "<group>"; };
+		35D685D92D30234300C4BA02 /* MyActivityListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityListSection.swift; sourceTree = "<group>"; };
+		35D685DB2D30238C00C4BA02 /* MyActivityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityRow.swift; sourceTree = "<group>"; };
+		35D685DD2D3023A600C4BA02 /* MyEvaluationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEvaluationRow.swift; sourceTree = "<group>"; };
 		35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCell.swift; sourceTree = "<group>"; };
 		35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberActivityDetailViewModel.swift; sourceTree = "<group>"; };
 		35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchActiveStudyMembersUseCase.swift; sourceTree = "<group>"; };
@@ -1063,6 +1073,7 @@
 				354706A72D2BE429004D0588 /* MyEvaluationSeeMoreTableViewCell.swift */,
 				354706A92D2BE43F004D0588 /* MyReviewTableViewCell.self.swift */,
 				354706AB2D2BEAC0004D0588 /* MyReviewOrderTypeTableViewCell.swift */,
+				35D685D52D301AFA00C4BA02 /* MyActivityTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1378,6 +1389,10 @@
 				3547069D2D2AE5E6004D0588 /* MyEvaluationListSection.swift */,
 				3547069F2D2AE7C0004D0588 /* MyEvaluationItem.swift */,
 				354706A12D2AE7C9004D0588 /* MyReviewItem.swift */,
+				35D685D72D30232900C4BA02 /* MyActivityItem.swift */,
+				35D685D92D30234300C4BA02 /* MyActivityListSection.swift */,
+				35D685DB2D30238C00C4BA02 /* MyActivityRow.swift */,
+				35D685DD2D3023A600C4BA02 /* MyEvaluationRow.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3282,12 +3297,14 @@
 				CA023A582BF75B3600E98103 /* DefaultActivityMemberSettingRepository.swift in Sources */,
 				CA0CEDE32C68BA8A007C3A4A /* MonthlyDaysRepository.swift in Sources */,
 				CA64483F2B863BB90090DD84 /* SelectRegionViewController.swift in Sources */,
+				35D685D82D30232900C4BA02 /* MyActivityItem.swift in Sources */,
 				357D1B8A2BB07BA20079DCE6 /* MyStudyGroupListCoordinator.swift in Sources */,
 				35DA75142D008D7F006D6FB1 /* HomeActivityTableViewCell.swift in Sources */,
 				CA64482B2B863BB90090DD84 /* AppDelegate.swift in Sources */,
 				3562163F2C0208F400CAB23F /* StudyMainActivityTableViewCell.swift in Sources */,
 				358D24322C46A85E001EFB51 /* StudyGroupDetail.swift in Sources */,
 				3582D0952C500D7800C9D63E /* String++Extension.swift in Sources */,
+				35D685DC2D30238C00C4BA02 /* MyActivityRow.swift in Sources */,
 				355A75C22C3ABDC700C50BA0 /* MyStudyGroupListRepository.swift in Sources */,
 				3554AAD42CE2493500705EDC /* FetchAllStudyActivitiesUseCase.swift in Sources */,
 				3581B2B92CBBF19500D00B11 /* StudyMemberAchievementViewController.swift in Sources */,
@@ -3296,6 +3313,7 @@
 				CA023A542BF75A0C00E98103 /* ActivityMemberSettingViewModel.swift in Sources */,
 				CA946B6F2C44DD5F00BDD377 /* DetailActivityMemberResponseDTO.swift in Sources */,
 				CA94FD912C528FC900A11A8E /* SelectStudyGroupItemUseCase.swift in Sources */,
+				35D685DE2D3023A600C4BA02 /* MyEvaluationRow.swift in Sources */,
 				35C992972BA341FB003B0AE7 /* LoginService.swift in Sources */,
 				3587F02E2C077744003C07D2 /* StudyMainPraiseReminderPopupView.swift in Sources */,
 				354465812C35A51900504C28 /* MyStudyGroupListUseCase.swift in Sources */,
@@ -3354,6 +3372,7 @@
 				354706A62D2BE412004D0588 /* MyEvaluationTableViewCell.swift in Sources */,
 				35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */,
 				35732C652D1807D90035AE55 /* AlarmViewController.swift in Sources */,
+				35D685D62D301AFA00C4BA02 /* MyActivityTableViewCell.swift in Sources */,
 				359923152C9C643C009822B7 /* StudyMemberDetailContextMenuView.swift in Sources */,
 				35DA750F2CFF33FE006D6FB1 /* HomeHeaderTableViewCell.swift in Sources */,
 				CA6448492B863BB90090DD84 /* CalendarViewController.swift in Sources */,
@@ -3362,6 +3381,7 @@
 				CA023A5A2BF75B5500E98103 /* ActivityMemberSettingRepository.swift in Sources */,
 				3543578C2CC15FF500D99695 /* FCMTokenRequestDTO.swift in Sources */,
 				CA6448352B863BB90090DD84 /* HomeViewController.swift in Sources */,
+				35D685DA2D30234300C4BA02 /* MyActivityListSection.swift in Sources */,
 				CA8C0DE22C33C98D005ECA55 /* AllStudyActivityRequestDTO.swift in Sources */,
 				35EF30072C03841700F86052 /* StudyMainExitPopupViewController.swift in Sources */,
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,

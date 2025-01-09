@@ -12,11 +12,13 @@ final class MyViewModel: ViewModelType {
     // MARK: - Input
     struct Input {
         let loadData: AnyPublisher<Void, Never>
+        let didTapHeadderTapBarButton: AnyPublisher<MyHeaderTapBarViewType, Never>
     }
     
     // MARK: - Output
     struct Output {
         let myHeaderItem: AnyPublisher<MyHeaderItem, Never>
+        let headderTapType: AnyPublisher<MyHeaderTapBarViewType, Never>
     }
     
     // MARK: - Properties
@@ -34,6 +36,10 @@ final class MyViewModel: ViewModelType {
             .compactMap { $0 }
             .eraseToAnyPublisher()
         
+        let headderTapType = input.didTapHeadderTapBarButton
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+        
         input.loadData
             .sink { [weak self] _ in
                 guard let self else { return }
@@ -42,7 +48,8 @@ final class MyViewModel: ViewModelType {
             .store(in: &cancellables)
         
         return Output(
-            myHeaderItem: myHeaderItem
+            myHeaderItem: myHeaderItem,
+            headderTapType: headderTapType
         )
     }
     

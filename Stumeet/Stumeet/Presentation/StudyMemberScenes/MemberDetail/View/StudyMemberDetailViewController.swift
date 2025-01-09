@@ -441,7 +441,7 @@ extension StudyMemberDetailViewController:
         didTapModalConfirmSubject.send()
     }
     
-    // MARK: - StudyMemberHeaderTapBarViewDelegate
+    // MARK: - HeaderTapBarViewDelegate
     func didTapAction(_ button: HeaderTapBarView.RadioButton) {
         guard let tapType = StudyMemberDetailHeaderTapBarViewType(rawValue: button.id) else { return }
         didTapHeadderTapBarButtonSubject.send(tapType)
