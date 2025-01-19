@@ -41,7 +41,7 @@ class ScheduleViewController: BaseViewController {
         return label
     }()
     
-    private var rootView: UIHostingController<ScheduleSwiftUIView>
+    private var rootView: UIHostingController<ScheduleSwiftUIView<ScheduleViewModelImpl>>
     
     private var titleSpaceView: UIView = {
         let view = UIView()
@@ -50,13 +50,13 @@ class ScheduleViewController: BaseViewController {
     
     // MARK: - Properties
     private weak var coordinator: ScheduleNavigation!
-    private let viewModel: ScheduleViewModel
+    private let viewModel: ScheduleViewModelImpl
     private let loadTitleSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
         coordinator: ScheduleNavigation,
-        viewModel: ScheduleViewModel
+        viewModel: ScheduleViewModelImpl
     ) {
         self.coordinator = coordinator
         self.viewModel = viewModel
@@ -100,7 +100,7 @@ class ScheduleViewController: BaseViewController {
     
     override func bind() {
         // MARK: - Input
-        let input = ScheduleViewModel.Input(
+        let input = ScheduleViewModelImpl.Input(
             loadTitle: loadTitleSubject.eraseToAnyPublisher()
         )
                 

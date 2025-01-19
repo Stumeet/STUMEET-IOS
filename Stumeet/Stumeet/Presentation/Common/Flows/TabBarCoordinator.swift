@@ -51,7 +51,8 @@ final class TabBarCoordinator: Coordinator {
         studyListNavigationController.tabBarItem = studyListItem
         
         let calendarNavigationController = UINavigationController()
-        let calendarCoordinator = CalendarCoordinator(navigationController: calendarNavigationController)
+        let calendarDIContainer = appDIContainer.makeCalenderDIContainer()
+        let calendarCoordinator = calendarDIContainer.makeCalenderCoordinator(navigationController: calendarNavigationController)
         calendarNavigationController.setupBarAppearance()
         calendarCoordinator.parentCoordinator = parentCoordinator
         
@@ -59,6 +60,7 @@ final class TabBarCoordinator: Coordinator {
         calendarItem.title = "calendar"
         calendarItem.image = UIImage(systemName: "calendar")
         calendarNavigationController.tabBarItem = calendarItem
+        
         
         let myNavigationController = UINavigationController()
         let myDIContainer = appDIContainer.makeMyDIContainer()

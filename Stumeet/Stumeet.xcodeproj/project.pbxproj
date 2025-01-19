@@ -61,7 +61,7 @@
 		3554AABE2CDF4B0000705EDC /* ActivityNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */; };
 		3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */; };
 		3554AAC72CDF672900705EDC /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC62CDF672900705EDC /* ScheduleViewController.swift */; };
-		3554AAC92CDF686C00705EDC /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */; };
+		3554AAC92CDF686C00705EDC /* ScheduleViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AAC82CDF686C00705EDC /* ScheduleViewModelImpl.swift */; };
 		3554AACB2CDF68B700705EDC /* ScheduleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */; };
 		3554AACD2CDF693900705EDC /* ScheduleSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */; };
 		3554AAD02CE243D900705EDC /* FetchLatestNoticeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */; };
@@ -175,6 +175,12 @@
 		35D685DA2D30234300C4BA02 /* MyActivityListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685D92D30234300C4BA02 /* MyActivityListSection.swift */; };
 		35D685DC2D30238C00C4BA02 /* MyActivityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685DB2D30238C00C4BA02 /* MyActivityRow.swift */; };
 		35D685DE2D3023A600C4BA02 /* MyEvaluationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685DD2D3023A600C4BA02 /* MyEvaluationRow.swift */; };
+		35D685E62D3D4A7600C4BA02 /* CalenderCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685E52D3D4A7600C4BA02 /* CalenderCoordinator.swift */; };
+		35D685E82D3D4AA900C4BA02 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685E72D3D4AA900C4BA02 /* CalenderViewController.swift */; };
+		35D685EA2D3D4AE500C4BA02 /* CalenderViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685E92D3D4AE500C4BA02 /* CalenderViewModelImpl.swift */; };
+		35D685ED2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685EC2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift */; };
+		35D685EF2D3D52C400C4BA02 /* CalenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685EE2D3D52C400C4BA02 /* CalenderViewModel.swift */; };
+		35D685F12D3D57C100C4BA02 /* CalenderDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685F02D3D57C100C4BA02 /* CalenderDIContainer.swift */; };
 		35DA74F22CE63DC6006D6FB1 /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */; };
 		35DA74F52CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */; };
 		35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */; };
@@ -468,7 +474,7 @@
 		3554AABD2CDF4B0000705EDC /* ActivityNoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeViewModel.swift; sourceTree = "<group>"; };
 		3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNoticeSceneDIContainer.swift; sourceTree = "<group>"; };
 		3554AAC62CDF672900705EDC /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
-		3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		3554AAC82CDF686C00705EDC /* ScheduleViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelImpl.swift; sourceTree = "<group>"; };
 		3554AACA2CDF68B700705EDC /* ScheduleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCoordinator.swift; sourceTree = "<group>"; };
 		3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSceneDIContainer.swift; sourceTree = "<group>"; };
 		3554AACF2CE243D900705EDC /* FetchLatestNoticeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLatestNoticeUseCase.swift; sourceTree = "<group>"; };
@@ -579,6 +585,12 @@
 		35D685D92D30234300C4BA02 /* MyActivityListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityListSection.swift; sourceTree = "<group>"; };
 		35D685DB2D30238C00C4BA02 /* MyActivityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityRow.swift; sourceTree = "<group>"; };
 		35D685DD2D3023A600C4BA02 /* MyEvaluationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEvaluationRow.swift; sourceTree = "<group>"; };
+		35D685E52D3D4A7600C4BA02 /* CalenderCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderCoordinator.swift; sourceTree = "<group>"; };
+		35D685E72D3D4AA900C4BA02 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
+		35D685E92D3D4AE500C4BA02 /* CalenderViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewModelImpl.swift; sourceTree = "<group>"; };
+		35D685EC2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderScheduleSwiftUIView.swift; sourceTree = "<group>"; };
+		35D685EE2D3D52C400C4BA02 /* CalenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewModel.swift; sourceTree = "<group>"; };
+		35D685F02D3D57C100C4BA02 /* CalenderDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderDIContainer.swift; sourceTree = "<group>"; };
 		35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCell.swift; sourceTree = "<group>"; };
 		35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberActivityDetailViewModel.swift; sourceTree = "<group>"; };
 		35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchActiveStudyMembersUseCase.swift; sourceTree = "<group>"; };
@@ -904,6 +916,7 @@
 				35732C6A2D1834A10035AE55 /* AlarmDIContainer.swift */,
 				35732C6C2D18378B0035AE55 /* HomeDIContainer.swift */,
 				35732C842D256FBA0035AE55 /* MyDIContainer.swift */,
+				35D685F02D3D57C100C4BA02 /* CalenderDIContainer.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -1159,7 +1172,7 @@
 		3554AAC52CDF670D00705EDC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				3554AAC82CDF686C00705EDC /* ScheduleViewModel.swift */,
+				3554AAC82CDF686C00705EDC /* ScheduleViewModelImpl.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1783,6 +1796,49 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		35D685E12D3D4A2300C4BA02 /* CalenderScenes */ = {
+			isa = PBXGroup;
+			children = (
+				35D685E22D3D4A3F00C4BA02 /* Flows */,
+				35D685E42D3D4A4B00C4BA02 /* ViewModel */,
+				35D685E32D3D4A4400C4BA02 /* View */,
+			);
+			path = CalenderScenes;
+			sourceTree = "<group>";
+		};
+		35D685E22D3D4A3F00C4BA02 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				35D685E52D3D4A7600C4BA02 /* CalenderCoordinator.swift */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		35D685E32D3D4A4400C4BA02 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				35D685EB2D3D4F1C00C4BA02 /* Component */,
+				35D685E72D3D4AA900C4BA02 /* CalenderViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		35D685E42D3D4A4B00C4BA02 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				35D685E92D3D4AE500C4BA02 /* CalenderViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		35D685EB2D3D4F1C00C4BA02 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				35D685EC2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		35DA74F32CE64002006D6FB1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1795,7 +1851,6 @@
 			isa = PBXGroup;
 			children = (
 				35DA74FE2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift */,
-				35DA75002CF30AF0006D6FB1 /* CalenderSwiftUIView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -2142,6 +2197,7 @@
 				3554AAB22CDF489900705EDC /* ActivityNoticeScenes */,
 				35BDF6F02B88CEFA000B6DCB /* AuthScenes */,
 				CA6447DC2B863BB90090DD84 /* HomeScenes */,
+				35D685E12D3D4A2300C4BA02 /* CalenderScenes */,
 				35732C792D256D3F0035AE55 /* MyScenes */,
 				CA6447E02B863BB90090DD84 /* StudyListScenes */,
 				357193E12C7E16170057A94C /* StudyMemberScenes */,
@@ -2291,6 +2347,7 @@
 			isa = PBXGroup;
 			children = (
 				CA6448042B863BB90090DD84 /* ViewModelType.swift */,
+				35D685EE2D3D52C400C4BA02 /* CalenderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2542,6 +2599,7 @@
 				3581B2A92CBBF19500D00B11 /* HeaderTapBarView.swift */,
 				354706992D2ADA3E004D0588 /* CenterHeaderTabView.swift */,
 				35D685D32D2ED0FB00C4BA02 /* ProgressBarView.swift */,
+				35DA75002CF30AF0006D6FB1 /* CalenderSwiftUIView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3189,6 +3247,7 @@
 				35D49E232C90865A00F8C5C8 /* StudyMemberComplimentPopupViewController.swift in Sources */,
 				CA7D18E12C1FE33800710C0D /* ActivityMember.swift in Sources */,
 				CA64508C2C14596100E00665 /* StudyActivityViewController.swift in Sources */,
+				35D685EA2D3D4AE500C4BA02 /* CalenderViewModelImpl.swift in Sources */,
 				CAF533512B9DA6EC00A7B8B2 /* FadeOutAnimator.swift in Sources */,
 				352885F52BB9C9B900EFC0F6 /* DefaultUserTokenRepository.swift in Sources */,
 				CAF533582B9EB6D000A7B8B2 /* StartRepository.swift in Sources */,
@@ -3208,6 +3267,7 @@
 				CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */,
 				35732C762D18578D0035AE55 /* AlarmListItem.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
+				35D685F12D3D57C100C4BA02 /* CalenderDIContainer.swift in Sources */,
 				3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */,
 				35446B162B9F4BDA00252283 /* AppleLoginService.swift in Sources */,
 				CA0A0AEF2B919155009D4064 /* DefaultNicknameRepository.swift in Sources */,
@@ -3219,7 +3279,7 @@
 				CAF5335A2B9EB72000A7B8B2 /* RegisterResponseDTO.swift in Sources */,
 				CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
-				3554AAC92CDF686C00705EDC /* ScheduleViewModel.swift in Sources */,
+				3554AAC92CDF686C00705EDC /* ScheduleViewModelImpl.swift in Sources */,
 				353A08B62C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift in Sources */,
 				35D49E292C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift in Sources */,
 				352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */,
@@ -3229,6 +3289,7 @@
 				357193E02C7E15F90057A94C /* StudyMemberSceneDIContainer.swift in Sources */,
 				3582D09B2C56945500C9D63E /* PageInfo.swift in Sources */,
 				35732C812D256D900035AE55 /* MyViewController.swift in Sources */,
+				35D685E82D3D4AA900C4BA02 /* CalenderViewController.swift in Sources */,
 				35C7F81A2C85DE4D00F9009E /* StudyMemberDetailViewModel.swift in Sources */,
 				357D1BA32BB7E68E0079DCE6 /* OauthResponseDTO.swift in Sources */,
 				355F51EF2BFE309B00782D17 /* UITabBarController++Extension.swift in Sources */,
@@ -3412,6 +3473,7 @@
 				CA0CEDE12C68BA6E007C3A4A /* DefaultMonthlyDaysRepository.swift in Sources */,
 				CA107A6B2C672F0E00163407 /* SelectStudyRepeatViewController.swift in Sources */,
 				CA94FD842C526F4700A11A8E /* CreateStudyGroupViewModel.swift in Sources */,
+				35D685ED2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift in Sources */,
 				CA6448452B863BB90090DD84 /* CenterAlignCollectionViewLayout.swift in Sources */,
 				358D242D2C46A1F2001EFB51 /* StudyMainViewModel.swift in Sources */,
 				CA01B28B2C04614300A01CEA /* DetailAcitivtyMember.swift in Sources */,
@@ -3494,6 +3556,7 @@
 				35E4EA402BCC2BF2003A10D4 /* BaseTableViewCell.swift in Sources */,
 				3554AAAE2CDA509200705EDC /* EmptyPlaceholderView.swift in Sources */,
 				CA6FADE92B8720CA008BCEF7 /* BaseCollectionReusableView.swift in Sources */,
+				35D685EF2D3D52C400C4BA02 /* CalenderViewModel.swift in Sources */,
 				35732C852D256FBA0035AE55 /* MyDIContainer.swift in Sources */,
 				35C7F8182C85DE1D00F9009E /* StudyMemberDetailViewController.swift in Sources */,
 				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,
@@ -3542,6 +3605,7 @@
 				CA6448392B863BB90090DD84 /* NicknameViewModel.swift in Sources */,
 				35C9929A2BA728DF003B0AE7 /* DefaultLoginRepository.swift in Sources */,
 				CA194E922BCA619C0090E97C /* RegionSection.swift in Sources */,
+				35D685E62D3D4A7600C4BA02 /* CalenderCoordinator.swift in Sources */,
 				CA107A692C6105CF00163407 /* SelectStudyTimeUseCase.swift in Sources */,
 				CA9EBA692C0DBD8F00D01A16 /* CreateActivitySection.swift in Sources */,
 				3554AAB82CDF49B900705EDC /* ActivityNoticeCoordinator.swift in Sources */,

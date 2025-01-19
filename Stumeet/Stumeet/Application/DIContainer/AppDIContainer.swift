@@ -74,4 +74,11 @@ final class AppDIContainer {
         )
         return MyDIContainer(dependencies: dependencies)
     }
+    
+    func makeCalenderDIContainer() -> CalenderDIContainer {
+        let dependencies = CalenderDIContainer.Dependencies(
+            provider: networkServiceProvider
+        )
+        return CalenderDIContainer(dependencies: dependencies)
+    }
 }

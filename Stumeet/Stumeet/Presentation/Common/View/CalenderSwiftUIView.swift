@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct CalenderSwiftUIView: View {
-    @StateObject var viewModel: ScheduleViewModel
+struct CalenderSwiftUIView<ViewModel: CalenderViewModel>: View {
+    @StateObject var viewModel: ViewModel
     
     var body: some View {
         VStack(spacing: 0) {

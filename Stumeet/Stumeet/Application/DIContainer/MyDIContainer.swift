@@ -49,4 +49,3 @@ final class MyDIContainer: MyCoordinatorDependencies {
    
     // MARK: - DIContainers of scenes
 }
-

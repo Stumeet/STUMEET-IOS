@@ -47,8 +47,8 @@ final class ScheduleSceneDIContainer: ScheduleCoordinatorDependencies {
     }
     
     // MARK: - ActivityNotice
-    func makeScheduleViewModel(studyId: Int) -> ScheduleViewModel {
-        ScheduleViewModel(
+    func makeScheduleViewModel(studyId: Int) -> ScheduleViewModelImpl {
+        ScheduleViewModelImpl(
             fetchMonthlyActivitiesUseCase: makeFetchMonthlyActivitiesUseCase(),
             studyGroupMainUseCase: makeMyStudyGroupListUseCase(),
             studyID: studyId

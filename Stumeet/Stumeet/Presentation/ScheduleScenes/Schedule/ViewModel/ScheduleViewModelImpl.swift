@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import Algorithms
 
-final class ScheduleViewModel: ViewModelType, ObservableObject {
+final class ScheduleViewModelImpl: CalenderViewModel {
     // MARK: - Input
     struct Input {
         let loadTitle: AnyPublisher<Void, Never>

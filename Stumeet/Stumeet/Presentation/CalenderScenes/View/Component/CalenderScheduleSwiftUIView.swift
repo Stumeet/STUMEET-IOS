@@ -1,13 +1,13 @@
 //
-//  ScheduleSwiftUIView.swift
+//  CalenderScheduleSwiftUIView.swift
 //  Stumeet
 //
-//  Created by 조웅희 on 2024/11/24.
+//  Created by 조웅희 on 2025/01/20.
 //
 
 import SwiftUI
 
-struct ScheduleSwiftUIView<ViewModel: CalenderViewModel>: View {
+struct CalenderScheduleSwiftUIView<ViewModel: CalenderViewModel>: View {
     @ObservedObject var viewModel: ViewModel
     
     var body: some View {
@@ -21,7 +21,6 @@ struct ScheduleSwiftUIView<ViewModel: CalenderViewModel>: View {
                     if viewModel.scheduleDetailList.count > 0 {
                         ForEach(viewModel.scheduleDetailList) { schedule in
                             detailScheduleView(schedule)
-                            lineView
                         }
                     } else {
                         nonScheduleView
@@ -42,6 +41,7 @@ struct ScheduleSwiftUIView<ViewModel: CalenderViewModel>: View {
             .frame(maxWidth: .infinity, maxHeight: 1)
     }
     
+    // TODO: - 캘린더 디테일 리스트 수정 필요
     private func detailScheduleView(_ schedule: ScheduleItem) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
@@ -104,9 +104,8 @@ struct ScheduleSwiftUIView<ViewModel: CalenderViewModel>: View {
                 }
             }
         }
-        .padding(.top, 22)
         .padding(.horizontal, 24)
-        .padding(.bottom, 24)
+        .padding(.vertical, 8)
     }
     
     private func stateBadgeView(_ state: ActivityState) -> some View {
