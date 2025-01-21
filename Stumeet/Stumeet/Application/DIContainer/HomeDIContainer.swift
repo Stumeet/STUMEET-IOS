@@ -48,10 +48,10 @@ final class HomeDIContainer: HomeCoordinatorDependencies {
     }
    
     // MARK: - DIContainers of scenes
-    func makeAlarmDIContainer() -> AlarmDIContainer {
-        let dependencies = AlarmDIContainer.Dependencies(
+    func makeNotificationDIContainer() -> NotificationDIContainer {
+        let dependencies = NotificationDIContainer.Dependencies(
             provider: dependencies.provider
         )
-        return AlarmDIContainer(dependencies: dependencies)
+        return NotificationDIContainer(dependencies: dependencies)
     }
 }

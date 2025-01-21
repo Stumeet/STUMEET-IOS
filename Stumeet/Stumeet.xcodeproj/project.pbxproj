@@ -30,9 +30,9 @@
 		353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */; };
 		353EAEAD2B8E11D9008F7E8C /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */; };
 		354357752CC12A4500D99695 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 354357742CC12A4500D99695 /* FirebaseMessaging */; };
-		354357792CC154AF00D99695 /* FCMTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354357782CC154AF00D99695 /* FCMTokenRepository.swift */; };
-		3543577C2CC1558900D99695 /* DefaultFCMTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3543577B2CC1558900D99695 /* DefaultFCMTokenRepository.swift */; };
-		354357802CC155C000D99695 /* FCMTokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3543577F2CC155C000D99695 /* FCMTokenService.swift */; };
+		354357792CC154AF00D99695 /* NotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354357782CC154AF00D99695 /* NotificationRepository.swift */; };
+		3543577C2CC1558900D99695 /* DefaultNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3543577B2CC1558900D99695 /* DefaultNotificationRepository.swift */; };
+		354357802CC155C000D99695 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3543577F2CC155C000D99695 /* NotificationService.swift */; };
 		3543578A2CC15DAA00D99695 /* FCMTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354357892CC15DAA00D99695 /* FCMTokenManager.swift */; };
 		3543578C2CC15FF500D99695 /* FCMTokenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3543578B2CC15FF500D99695 /* FCMTokenRequestDTO.swift */; };
 		35435BBA2C310FED00BED2A9 /* UserDefaults++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */; };
@@ -88,15 +88,15 @@
 		356216432C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356216422C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift */; };
 		357193E02C7E15F90057A94C /* StudyMemberSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357193DF2C7E15F90057A94C /* StudyMemberSceneDIContainer.swift */; };
 		357193E42C7E16410057A94C /* StudyMemberCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357193E32C7E16410057A94C /* StudyMemberCoordinator.swift */; };
-		35732C632D18079C0035AE55 /* AlarmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C622D18079C0035AE55 /* AlarmCoordinator.swift */; };
-		35732C652D1807D90035AE55 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C642D1807D90035AE55 /* AlarmViewController.swift */; };
-		35732C692D1832A20035AE55 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C682D1832A20035AE55 /* AlarmViewModel.swift */; };
-		35732C6B2D1834A10035AE55 /* AlarmDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C6A2D1834A10035AE55 /* AlarmDIContainer.swift */; };
+		35732C632D18079C0035AE55 /* NotificationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C622D18079C0035AE55 /* NotificationCoordinator.swift */; };
+		35732C652D1807D90035AE55 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C642D1807D90035AE55 /* NotificationViewController.swift */; };
+		35732C692D1832A20035AE55 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C682D1832A20035AE55 /* NotificationViewModel.swift */; };
+		35732C6B2D1834A10035AE55 /* NotificationDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C6A2D1834A10035AE55 /* NotificationDIContainer.swift */; };
 		35732C6D2D18378B0035AE55 /* HomeDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C6C2D18378B0035AE55 /* HomeDIContainer.swift */; };
 		35732C702D183B000035AE55 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C6F2D183B000035AE55 /* HomeViewModel.swift */; };
-		35732C742D1855D90035AE55 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */; };
-		35732C762D18578D0035AE55 /* AlarmListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C752D18578D0035AE55 /* AlarmListItem.swift */; };
-		35732C782D185A8A0035AE55 /* AlarmListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C772D185A8A0035AE55 /* AlarmListSection.swift */; };
+		35732C742D1855D90035AE55 /* NotificationListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C732D1855D90035AE55 /* NotificationListTableViewCell.swift */; };
+		35732C762D18578D0035AE55 /* NotificationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C752D18578D0035AE55 /* NotificationListItem.swift */; };
+		35732C782D185A8A0035AE55 /* NotificationListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C772D185A8A0035AE55 /* NotificationListSection.swift */; };
 		35732C7F2D256D800035AE55 /* MyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C7E2D256D800035AE55 /* MyCoordinator.swift */; };
 		35732C812D256D900035AE55 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C802D256D900035AE55 /* MyViewController.swift */; };
 		35732C832D256D9C0035AE55 /* MyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35732C822D256D9C0035AE55 /* MyViewModel.swift */; };
@@ -181,6 +181,10 @@
 		35D685ED2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685EC2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift */; };
 		35D685EF2D3D52C400C4BA02 /* CalenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685EE2D3D52C400C4BA02 /* CalenderViewModel.swift */; };
 		35D685F12D3D57C100C4BA02 /* CalenderDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685F02D3D57C100C4BA02 /* CalenderDIContainer.swift */; };
+		35D685F52D3FD19D00C4BA02 /* FetchNotificationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685F42D3FD19D00C4BA02 /* FetchNotificationsUseCase.swift */; };
+		35D685F82D3FD1F100C4BA02 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685F72D3FD1F100C4BA02 /* Reminder.swift */; };
+		35D685FA2D3FD2F300C4BA02 /* NotificationRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685F92D3FD2F300C4BA02 /* NotificationRequestDTO.swift */; };
+		35D685FC2D3FD37500C4BA02 /* ReminderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D685FB2D3FD37500C4BA02 /* ReminderResponseDTO.swift */; };
 		35DA74F22CE63DC6006D6FB1 /* MonthlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */; };
 		35DA74F52CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */; };
 		35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */; };
@@ -346,7 +350,7 @@
 		CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */; };
 		CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */; };
 		CA8062F72BF20089009BE351 /* ActivityMemberSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */; };
-		CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */; };
+		CA86DC4E2B8DCCAF0044DB6C /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA86DC4D2B8DCCAF0044DB6C /* Activity.swift */; };
 		CA8C0DDF2C33C7F5005ECA55 /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8C0DDE2C33C7F5005ECA55 /* ActivityService.swift */; };
 		CA8C0DE22C33C98D005ECA55 /* AllStudyActivityRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8C0DE12C33C98D005ECA55 /* AllStudyActivityRequestDTO.swift */; };
 		CA8C0DE42C33D126005ECA55 /* AllStudyActivityResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8C0DE32C33D126005ECA55 /* AllStudyActivityResponseDTO.swift */; };
@@ -444,9 +448,9 @@
 		353EAEA92B8E1135008F7E8C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		353EAEAC2B8E11D9008F7E8C /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		353EAEC62B8F934D008F7E8C /* Stumeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stumeet.entitlements; sourceTree = "<group>"; };
-		354357782CC154AF00D99695 /* FCMTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenRepository.swift; sourceTree = "<group>"; };
-		3543577B2CC1558900D99695 /* DefaultFCMTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFCMTokenRepository.swift; sourceTree = "<group>"; };
-		3543577F2CC155C000D99695 /* FCMTokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenService.swift; sourceTree = "<group>"; };
+		354357782CC154AF00D99695 /* NotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRepository.swift; sourceTree = "<group>"; };
+		3543577B2CC1558900D99695 /* DefaultNotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNotificationRepository.swift; sourceTree = "<group>"; };
+		3543577F2CC155C000D99695 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		354357892CC15DAA00D99695 /* FCMTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenManager.swift; sourceTree = "<group>"; };
 		3543578B2CC15FF500D99695 /* FCMTokenRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenRequestDTO.swift; sourceTree = "<group>"; };
 		35435BB92C310FED00BED2A9 /* UserDefaults++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults++Extension.swift"; sourceTree = "<group>"; };
@@ -500,15 +504,15 @@
 		356216422C023CB200CAB23F /* StudyMainTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMainTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		357193DF2C7E15F90057A94C /* StudyMemberSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberSceneDIContainer.swift; sourceTree = "<group>"; };
 		357193E32C7E16410057A94C /* StudyMemberCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberCoordinator.swift; sourceTree = "<group>"; };
-		35732C622D18079C0035AE55 /* AlarmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCoordinator.swift; sourceTree = "<group>"; };
-		35732C642D1807D90035AE55 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
-		35732C682D1832A20035AE55 /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
-		35732C6A2D1834A10035AE55 /* AlarmDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDIContainer.swift; sourceTree = "<group>"; };
+		35732C622D18079C0035AE55 /* NotificationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCoordinator.swift; sourceTree = "<group>"; };
+		35732C642D1807D90035AE55 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		35732C682D1832A20035AE55 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		35732C6A2D1834A10035AE55 /* NotificationDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDIContainer.swift; sourceTree = "<group>"; };
 		35732C6C2D18378B0035AE55 /* HomeDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDIContainer.swift; sourceTree = "<group>"; };
 		35732C6F2D183B000035AE55 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
-		35732C752D18578D0035AE55 /* AlarmListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListItem.swift; sourceTree = "<group>"; };
-		35732C772D185A8A0035AE55 /* AlarmListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListSection.swift; sourceTree = "<group>"; };
+		35732C732D1855D90035AE55 /* NotificationListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListTableViewCell.swift; sourceTree = "<group>"; };
+		35732C752D18578D0035AE55 /* NotificationListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListItem.swift; sourceTree = "<group>"; };
+		35732C772D185A8A0035AE55 /* NotificationListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListSection.swift; sourceTree = "<group>"; };
 		35732C7E2D256D800035AE55 /* MyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoordinator.swift; sourceTree = "<group>"; };
 		35732C802D256D900035AE55 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		35732C822D256D9C0035AE55 /* MyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewModel.swift; sourceTree = "<group>"; };
@@ -591,6 +595,10 @@
 		35D685EC2D3D503700C4BA02 /* CalenderScheduleSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderScheduleSwiftUIView.swift; sourceTree = "<group>"; };
 		35D685EE2D3D52C400C4BA02 /* CalenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewModel.swift; sourceTree = "<group>"; };
 		35D685F02D3D57C100C4BA02 /* CalenderDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderDIContainer.swift; sourceTree = "<group>"; };
+		35D685F42D3FD19D00C4BA02 /* FetchNotificationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNotificationsUseCase.swift; sourceTree = "<group>"; };
+		35D685F72D3FD1F100C4BA02 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		35D685F92D3FD2F300C4BA02 /* NotificationRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestDTO.swift; sourceTree = "<group>"; };
+		35D685FB2D3FD37500C4BA02 /* ReminderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderResponseDTO.swift; sourceTree = "<group>"; };
 		35DA74F12CE63DC6006D6FB1 /* MonthlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCell.swift; sourceTree = "<group>"; };
 		35DA74F42CE64014006D6FB1 /* StudyMemberActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberActivityDetailViewModel.swift; sourceTree = "<group>"; };
 		35DA74F62CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchActiveStudyMembersUseCase.swift; sourceTree = "<group>"; };
@@ -762,7 +770,7 @@
 		CA8062F12BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSettingViewController.swift; sourceTree = "<group>"; };
 		CA8062F32BF1FC59009BE351 /* ActivityMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberCell.swift; sourceTree = "<group>"; };
 		CA8062F62BF20089009BE351 /* ActivityMemberSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMemberSection.swift; sourceTree = "<group>"; };
-		CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivity.swift; sourceTree = "<group>"; };
+		CA86DC4D2B8DCCAF0044DB6C /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		CA8C0DDE2C33C7F5005ECA55 /* ActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		CA8C0DE12C33C98D005ECA55 /* AllStudyActivityRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStudyActivityRequestDTO.swift; sourceTree = "<group>"; };
 		CA8C0DE32C33D126005ECA55 /* AllStudyActivityResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStudyActivityResponseDTO.swift; sourceTree = "<group>"; };
@@ -913,7 +921,7 @@
 				357193DF2C7E15F90057A94C /* StudyMemberSceneDIContainer.swift */,
 				3554AABF2CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift */,
 				3554AACC2CDF693900705EDC /* ScheduleSceneDIContainer.swift */,
-				35732C6A2D1834A10035AE55 /* AlarmDIContainer.swift */,
+				35732C6A2D1834A10035AE55 /* NotificationDIContainer.swift */,
 				35732C6C2D18378B0035AE55 /* HomeDIContainer.swift */,
 				35732C842D256FBA0035AE55 /* MyDIContainer.swift */,
 				35D685F02D3D57C100C4BA02 /* CalenderDIContainer.swift */,
@@ -994,7 +1002,7 @@
 		354357772CC1547700D99695 /* FCMToken */ = {
 			isa = PBXGroup;
 			children = (
-				354357782CC154AF00D99695 /* FCMTokenRepository.swift */,
+				354357782CC154AF00D99695 /* NotificationRepository.swift */,
 			);
 			path = FCMToken;
 			sourceTree = "<group>";
@@ -1002,7 +1010,7 @@
 		3543577A2CC1555C00D99695 /* FCMToken */ = {
 			isa = PBXGroup;
 			children = (
-				3543577B2CC1558900D99695 /* DefaultFCMTokenRepository.swift */,
+				3543577B2CC1558900D99695 /* DefaultNotificationRepository.swift */,
 			);
 			path = FCMToken;
 			sourceTree = "<group>";
@@ -1010,17 +1018,19 @@
 		3543577E2CC155A500D99695 /* FCMToken */ = {
 			isa = PBXGroup;
 			children = (
-				3543577F2CC155C000D99695 /* FCMTokenService.swift */,
+				3543577F2CC155C000D99695 /* NotificationService.swift */,
 			);
 			path = FCMToken;
 			sourceTree = "<group>";
 		};
-		354357822CC1568C00D99695 /* FCMToken */ = {
+		354357822CC1568C00D99695 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
 				3543578B2CC15FF500D99695 /* FCMTokenRequestDTO.swift */,
+				35D685F92D3FD2F300C4BA02 /* NotificationRequestDTO.swift */,
+				35D685FB2D3FD37500C4BA02 /* ReminderResponseDTO.swift */,
 			);
-			path = FCMToken;
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		354357882CC15D6500D99695 /* FCMToken */ = {
@@ -1281,20 +1291,20 @@
 			path = Flows;
 			sourceTree = "<group>";
 		};
-		35732C5E2D1807100035AE55 /* AlarmScenes */ = {
+		35732C5E2D1807100035AE55 /* NotificationScenes */ = {
 			isa = PBXGroup;
 			children = (
 				35732C612D18072C0035AE55 /* Flows */,
-				35732C662D1808020035AE55 /* Alarm */,
+				35732C662D1808020035AE55 /* Notification */,
 			);
-			path = AlarmScenes;
+			path = NotificationScenes;
 			sourceTree = "<group>";
 		};
 		35732C5F2D1807280035AE55 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				35732C712D1855BD0035AE55 /* Componet */,
-				35732C642D1807D90035AE55 /* AlarmViewController.swift */,
+				35732C642D1807D90035AE55 /* NotificationViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1302,8 +1312,8 @@
 		35732C602D18072A0035AE55 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				35732C752D18578D0035AE55 /* AlarmListItem.swift */,
-				35732C772D185A8A0035AE55 /* AlarmListSection.swift */,
+				35732C752D18578D0035AE55 /* NotificationListItem.swift */,
+				35732C772D185A8A0035AE55 /* NotificationListSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1311,25 +1321,25 @@
 		35732C612D18072C0035AE55 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				35732C622D18079C0035AE55 /* AlarmCoordinator.swift */,
+				35732C622D18079C0035AE55 /* NotificationCoordinator.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
 		};
-		35732C662D1808020035AE55 /* Alarm */ = {
+		35732C662D1808020035AE55 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
 				35732C672D1832970035AE55 /* ViewModel */,
 				35732C602D18072A0035AE55 /* Model */,
 				35732C5F2D1807280035AE55 /* View */,
 			);
-			path = Alarm;
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		35732C672D1832970035AE55 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				35732C682D1832A20035AE55 /* AlarmViewModel.swift */,
+				35732C682D1832A20035AE55 /* NotificationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1353,7 +1363,7 @@
 		35732C722D1855C90035AE55 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				35732C732D1855D90035AE55 /* AlarmListTableViewCell.swift */,
+				35732C732D1855D90035AE55 /* NotificationListTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1839,6 +1849,22 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		35D685F32D3FD16800C4BA02 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				35D685F42D3FD19D00C4BA02 /* FetchNotificationsUseCase.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		35D685F62D3FD1EB00C4BA02 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				35D685F72D3FD1F100C4BA02 /* Reminder.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 		35DA74F32CE64002006D6FB1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -2152,6 +2178,7 @@
 		CA6447D42B863BB90090DD84 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				35D685F62D3FD1EB00C4BA02 /* Notification */,
 				CA94FD872C528B6A00A11A8E /* CreateStudyGroup */,
 				3582D0992C56941E00C9D63E /* Common */,
 				355A75C32C3ABE6000C50BA0 /* StudyGroup */,
@@ -2167,6 +2194,7 @@
 		CA6447D62B863BB90090DD84 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				35D685F32D3FD16800C4BA02 /* Notification */,
 				3554AACE2CE2433E00705EDC /* Notice */,
 				353A08BF2C7B7AA900678E96 /* StudyMember */,
 				CA94FD8F2C528FBB00A11A8E /* CreateStudyGroup */,
@@ -2192,7 +2220,7 @@
 		CA6447DB2B863BB90090DD84 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				35732C5E2D1807100035AE55 /* AlarmScenes */,
+				35732C5E2D1807100035AE55 /* NotificationScenes */,
 				3554AAC12CDF66DD00705EDC /* ScheduleScenes */,
 				3554AAB22CDF489900705EDC /* ActivityNoticeScenes */,
 				35BDF6F02B88CEFA000B6DCB /* AuthScenes */,
@@ -2492,7 +2520,7 @@
 				352885F92BB9CB3500EFC0F6 /* UserToken */,
 				357D1BA12BB7DFA10079DCE6 /* Auth */,
 				CA4E7EDB2B93080B009C07FD /* Register */,
-				354357822CC1568C00D99695 /* FCMToken */,
+				354357822CC1568C00D99695 /* Notification */,
 				357D1BA52BB809B40079DCE6 /* ResponseWithDataDTO.swift */,
 				CA0A0AF22B9196D4009D4064 /* ResponseDTO.swift */,
 			);
@@ -2616,7 +2644,7 @@
 		CA86DC442B8DCBC40044DB6C /* StudyActivity */ = {
 			isa = PBXGroup;
 			children = (
-				CA86DC4D2B8DCCAF0044DB6C /* StudyActivity.swift */,
+				CA86DC4D2B8DCCAF0044DB6C /* Activity.swift */,
 				CA9958542BB018CB00884615 /* ActivityCategory.swift */,
 				CA01B2702BFF294500A01CEA /* DetailStudyActivity.swift */,
 				CA01B28A2C04614300A01CEA /* DetailAcitivtyMember.swift */,
@@ -3239,7 +3267,7 @@
 			files = (
 				358A93F62CC528F9007945D4 /* StudyMemberDetailInfoHeaderItem.swift in Sources */,
 				CA342DAB2C3552990055A9A4 /* String++Extension.swift in Sources */,
-				354357802CC155C000D99695 /* FCMTokenService.swift in Sources */,
+				354357802CC155C000D99695 /* NotificationService.swift in Sources */,
 				35BDF7002B88D36D000B6DCB /* AppConfigurations.swift in Sources */,
 				CA6448432B863BB90090DD84 /* Region.swift in Sources */,
 				355F51EB2BFE1C4600782D17 /* UINavigationController ++Extension.swift in Sources */,
@@ -3256,7 +3284,7 @@
 				CAA883ED2C5B466200EF4CE5 /* SetStudyGroupPeriodUseCase.swift in Sources */,
 				CA8C0DE42C33D126005ECA55 /* AllStudyActivityResponseDTO.swift in Sources */,
 				CA6448372B863BB90090DD84 /* MyStudyGroupListViewController.swift in Sources */,
-				354357792CC154AF00D99695 /* FCMTokenRepository.swift in Sources */,
+				354357792CC154AF00D99695 /* NotificationRepository.swift in Sources */,
 				CA64484B2B863BB90090DD84 /* Coordinator.swift in Sources */,
 				357D1BA62BB809B40079DCE6 /* ResponseWithDataDTO.swift in Sources */,
 				35BDF7092B88D6A6000B6DCB /* OnboardingViewModel.swift in Sources */,
@@ -3265,7 +3293,7 @@
 				CA0A0AED2B918F99009D4064 /* NicknameRepository.swift in Sources */,
 				3554AAAC2CD7C86100705EDC /* StudyAdminDelegateRequestDTO.swift in Sources */,
 				CA8062F22BF1EEE3009BE351 /* ActivityMemberSettingViewController.swift in Sources */,
-				35732C762D18578D0035AE55 /* AlarmListItem.swift in Sources */,
+				35732C762D18578D0035AE55 /* NotificationListItem.swift in Sources */,
 				CA64482C2B863BB90090DD84 /* SceneDelegate.swift in Sources */,
 				35D685F12D3D57C100C4BA02 /* CalenderDIContainer.swift in Sources */,
 				3554AAC02CDF4E7C00705EDC /* ActivityNoticeSceneDIContainer.swift in Sources */,
@@ -3289,6 +3317,7 @@
 				357193E02C7E15F90057A94C /* StudyMemberSceneDIContainer.swift in Sources */,
 				3582D09B2C56945500C9D63E /* PageInfo.swift in Sources */,
 				35732C812D256D900035AE55 /* MyViewController.swift in Sources */,
+				35D685F82D3FD1F100C4BA02 /* Reminder.swift in Sources */,
 				35D685E82D3D4AA900C4BA02 /* CalenderViewController.swift in Sources */,
 				35C7F81A2C85DE4D00F9009E /* StudyMemberDetailViewModel.swift in Sources */,
 				357D1BA32BB7E68E0079DCE6 /* OauthResponseDTO.swift in Sources */,
@@ -3300,7 +3329,7 @@
 				CA4E7EE52B9311D1009C07FD /* Field.swift in Sources */,
 				3554AACB2CDF68B700705EDC /* ScheduleCoordinator.swift in Sources */,
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
-				35732C692D1832A20035AE55 /* AlarmViewModel.swift in Sources */,
+				35732C692D1832A20035AE55 /* NotificationViewModel.swift in Sources */,
 				CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */,
 				35DA75092CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
@@ -3324,7 +3353,7 @@
 				358D24302C46A77F001EFB51 /* StudyGroupMainRepository.swift in Sources */,
 				CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */,
 				35DA74F22CE63DC6006D6FB1 /* MonthlyCell.swift in Sources */,
-				35732C632D18079C0035AE55 /* AlarmCoordinator.swift in Sources */,
+				35732C632D18079C0035AE55 /* NotificationCoordinator.swift in Sources */,
 				CA6448462B863BB90090DD84 /* TabBarCoordinator.swift in Sources */,
 				CA6450802C134B8300E00665 /* CreateActivityLinkPopUpViewModel.swift in Sources */,
 				CA64483E2B863BB90090DD84 /* StartViewController.swift in Sources */,
@@ -3334,7 +3363,7 @@
 				CA6448532B863BB90090DD84 /* UIVIew++Extension.swift in Sources */,
 				CA342DAD2C365E980055A9A4 /* StudyActivityEmptyView.swift in Sources */,
 				CA01B2752C01B36D00A01CEA /* DetailStudyActivityViewModel.swift in Sources */,
-				3543577C2CC1558900D99695 /* DefaultFCMTokenRepository.swift in Sources */,
+				3543577C2CC1558900D99695 /* DefaultNotificationRepository.swift in Sources */,
 				3581B2BC2CBBF19500D00B11 /* StudyMemberActivityDetailViewController.swift in Sources */,
 				CAE62E342BA80BF300AAD44A /* CreateActivityViewController.swift in Sources */,
 				358A93F02CC509E9007945D4 /* StudyMemberDetailResponseDTO.swift in Sources */,
@@ -3385,7 +3414,7 @@
 				CA26F80A2C7C9CE20061B7F7 /* DefaultCreateStudyGroupRepository.swift in Sources */,
 				CA1C92C62BC91A0200ECF835 /* CalendarCell.swift in Sources */,
 				3554AACD2CDF693900705EDC /* ScheduleSceneDIContainer.swift in Sources */,
-				35732C782D185A8A0035AE55 /* AlarmListSection.swift in Sources */,
+				35732C782D185A8A0035AE55 /* NotificationListSection.swift in Sources */,
 				CA9AB21E2B8C7EBF0027072E /* StudyActivityRepository.swift in Sources */,
 				358A93E92CC4EAB9007945D4 /* StudyMemberAdminResponseDTO.swift in Sources */,
 				CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */,
@@ -3402,6 +3431,7 @@
 				35C7F81D2C85DF2500F9009E /* StudyMemberDetailInfoHeaderView.swift in Sources */,
 				35E4EA3A2BCC29AC003A10D4 /* UITableView++Extension.swift in Sources */,
 				353A08BC2C7B789000678E96 /* StudyMemberViewModel.swift in Sources */,
+				35D685FA2D3FD2F300C4BA02 /* NotificationRequestDTO.swift in Sources */,
 				35BC0B482C3D85A000F96A22 /* MyStudyGroupListType.swift in Sources */,
 				354706A02D2AE7C0004D0588 /* MyEvaluationItem.swift in Sources */,
 				CA0CEDE72C68FA8F007C3A4A /* StudyRepeatType.swift in Sources */,
@@ -3432,7 +3462,7 @@
 				35DA75122CFF40D1006D6FB1 /* HomeHeaderTapBarViewType.swift in Sources */,
 				354706A62D2BE412004D0588 /* MyEvaluationTableViewCell.swift in Sources */,
 				35446B1A2B9F506200252283 /* KakaoLoginService.swift in Sources */,
-				35732C652D1807D90035AE55 /* AlarmViewController.swift in Sources */,
+				35732C652D1807D90035AE55 /* NotificationViewController.swift in Sources */,
 				35D685D62D301AFA00C4BA02 /* MyActivityTableViewCell.swift in Sources */,
 				359923152C9C643C009822B7 /* StudyMemberDetailContextMenuView.swift in Sources */,
 				35DA750F2CFF33FE006D6FB1 /* HomeHeaderTableViewCell.swift in Sources */,
@@ -3517,7 +3547,7 @@
 				35DA74F72CE64199006D6FB1 /* FetchActiveStudyMembersUseCase.swift in Sources */,
 				358DF6082CD10F2E00DCD2EF /* FetchStudyMemberMeetingsUseCase.swift in Sources */,
 				35DA74FF2CF309FE006D6FB1 /* ScheduleSwiftUIView.swift in Sources */,
-				35732C742D1855D90035AE55 /* AlarmListTableViewCell.swift in Sources */,
+				35732C742D1855D90035AE55 /* NotificationListTableViewCell.swift in Sources */,
 				35DA75162D008EB9006D6FB1 /* HomeActivityItem.swift in Sources */,
 				358D24352C46A9A7001EFB51 /* DefaultStudyGroupMainRepository.swift in Sources */,
 				CA342DB22C37AE890055A9A4 /* StudyMemberRequestDTO.swift in Sources */,
@@ -3547,7 +3577,7 @@
 				355A75CD2C3AE2C700C50BA0 /* MyStudyGroupListSection.swift in Sources */,
 				CA1C92CB2BC92E3E00ECF835 /* CalendarDay.swift in Sources */,
 				35446B132B9F4B2000252283 /* LoginUseCase.swift in Sources */,
-				35732C6B2D1834A10035AE55 /* AlarmDIContainer.swift in Sources */,
+				35732C6B2D1834A10035AE55 /* NotificationDIContainer.swift in Sources */,
 				358A93EE2CC509A8007945D4 /* StudyMemberDetailRequestDTO.swift in Sources */,
 				CA6448442B863BB90090DD84 /* TagCell.swift in Sources */,
 				35732C6D2D18378B0035AE55 /* HomeDIContainer.swift in Sources */,
@@ -3562,10 +3592,11 @@
 				352DBE522C1DF001008859D2 /* Notification++Extension.swift in Sources */,
 				3547069E2D2AE5E6004D0588 /* MyEvaluationListSection.swift in Sources */,
 				CA0CEDDD2C68B7CD007C3A4A /* SelectStudyRepeatSection.swift in Sources */,
+				35D685F52D3FD19D00C4BA02 /* FetchNotificationsUseCase.swift in Sources */,
 				CA8062F42BF1FC59009BE351 /* ActivityMemberCell.swift in Sources */,
 				355A75CA2C3AC1F700C50BA0 /* StudiesResponseDTO.swift in Sources */,
 				CA94FD892C528B7600A11A8E /* SelectStudyItem.swift in Sources */,
-				CA86DC4E2B8DCCAF0044DB6C /* StudyActivity.swift in Sources */,
+				CA86DC4E2B8DCCAF0044DB6C /* Activity.swift in Sources */,
 				3554AABC2CDF4A2600705EDC /* ActivityNoticeViewController.swift in Sources */,
 				CA617BF92C44058E000A3698 /* DetailActivityResponseDTO.swift in Sources */,
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
@@ -3595,6 +3626,7 @@
 				355F51F12BFF886800782D17 /* StudyMainDetailInfoTableViewCell.swift in Sources */,
 				355F51E12BF8BEC100782D17 /* StudyMainMenuTableViewCell.swift in Sources */,
 				357D1B8D2BB07C530079DCE6 /* CalendarCoordinator.swift in Sources */,
+				35D685FC2D3FD37500C4BA02 /* ReminderResponseDTO.swift in Sources */,
 				CA6450982C1481FF00E00665 /* TaskStudyActivityViewModel.swift in Sources */,
 				353393172BC2947E0021FDF9 /* AppDIContainer.swift in Sources */,
 				35DA74F92CEB61B8006D6FB1 /* StudyMemberActivityStatusRequestDTO.swift in Sources */,

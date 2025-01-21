@@ -40,7 +40,7 @@ final class AppDIContainer {
     
     // MARK: - FCMToken
     lazy var fcmTokenManager: FCMTokenManager = {
-        FCMTokenManager(repository: DefaultFCMTokenRepository(provider: networkServiceProvider.makeProvider()))
+        FCMTokenManager(repository: DefaultNotificationRepository(provider: networkServiceProvider.makeProvider()))
     }()
 
     // MARK: - DIContainers of scenes

@@ -231,7 +231,7 @@ class HomeViewController: BaseViewController {
  
         output.presentToAlarmVC
             .receive(on: RunLoop.main)
-            .sink(receiveValue: coordinator.startAlarmCoordinator )
+            .sink(receiveValue: coordinator.startNotificationCoordinator )
             .store(in: &cancellables)
     }
     

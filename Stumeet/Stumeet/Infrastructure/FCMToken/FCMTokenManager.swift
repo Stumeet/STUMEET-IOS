@@ -8,10 +8,10 @@
 import Combine
 
 class FCMTokenManager {
-    private let repository: FCMTokenRepository
+    private let repository: NotificationRepository
     private var cancellables: Set<AnyCancellable> = []
 
-    init(repository: FCMTokenRepository) {
+    init(repository: NotificationRepository) {
         self.repository = repository
     }
 

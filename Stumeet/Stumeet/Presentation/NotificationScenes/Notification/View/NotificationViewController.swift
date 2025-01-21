@@ -1,5 +1,5 @@
 //
-//  AlarmViewController.swift
+//  NotificationViewController.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/12/22.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Combine
 
-class AlarmViewController: BaseViewController {
+class NotificationViewController: BaseViewController {
     // MARK: - UIComponents
     private lazy var xButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(
@@ -32,12 +32,12 @@ class AlarmViewController: BaseViewController {
         return label
     }()
     
-    private lazy var alarmTableView: UITableView = {
+    private lazy var notificationTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         tableView.rowHeight = 77
-        tableView.registerCell(AlarmListTableViewCell.self)        
+        tableView.registerCell(NotificationListTableViewCell.self)
         return tableView
     }()
     
@@ -47,15 +47,15 @@ class AlarmViewController: BaseViewController {
     }()
     
     // MARK: - Properties
-    private weak var coordinator: AlarmNavigation!
-    private let viewModel: AlarmViewModel
-    private var alarmDataSource: UITableViewDiffableDataSource<AlarmListSection, AlarmListItem>?
+    private weak var coordinator: NotificationNavigation!
+    private let viewModel: NotificationViewModel
+    private var notificationDataSource: UITableViewDiffableDataSource<NotificationListSection, NotificationListItem>?
     private let loadDataSubject = PassthroughSubject<Void, Never>()
 
     // MARK: - Init
     init(
-        coordinator: AlarmNavigation,
-        viewModel: AlarmViewModel
+        coordinator: NotificationNavigation,
+        viewModel: NotificationViewModel
     ) {
         self.coordinator = coordinator
         self.viewModel = viewModel
@@ -77,28 +77,28 @@ class AlarmViewController: BaseViewController {
     }
     
     override func setupAddView() {
-        view.addSubview(alarmTableView)
+        view.addSubview(notificationTableView)
         
         navigationItem.leftBarButtonItem = xButton
         navigationItem.titleView = titleLabel
     }
     
     override func setupConstaints() {
-        alarmTableView.snp.makeConstraints {
+        notificationTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
     override func bind() {
         // MARK: - Input
-        let input = AlarmViewModel.Input(
+        let input = NotificationViewModel.Input(
             loadData: loadDataSubject.eraseToAnyPublisher()
         )
         
         // MARK: - Output
         let output = viewModel.transform(input: input)
         
-        output.alarmDataSource
+        output.notificationDataSource
             .receive(on: RunLoop.main)
             .sink { [weak self] items in
                 self?.updateSnapshot(items: items)
@@ -115,7 +115,7 @@ class AlarmViewController: BaseViewController {
     
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
-        alarmTableView.contentInset.bottom = view.safeAreaInsets.bottom
+        notificationTableView.contentInset.bottom = view.safeAreaInsets.bottom
     }
     
     // MARK: - Function
@@ -124,13 +124,13 @@ class AlarmViewController: BaseViewController {
     }
 }
 
-extension AlarmViewController {
+extension NotificationViewController {
     // MARK: - DataSource
     private func configureDatasource() {
-        alarmDataSource = UITableViewDiffableDataSource(
-            tableView: alarmTableView,
+        notificationDataSource = UITableViewDiffableDataSource(
+            tableView: notificationTableView,
             cellProvider: { tableView, indexPath, item in
-                guard let cell = tableView.dequeue(AlarmListTableViewCell.self, for: indexPath)
+                guard let cell = tableView.dequeue(NotificationListTableViewCell.self, for: indexPath)
                 else { return UITableViewCell() }
                 cell.configureCell(item)
                 return cell
@@ -138,12 +138,12 @@ extension AlarmViewController {
         )
     }
     
-    private func updateSnapshot(items: [AlarmListItem]) {
-        var snapshot = NSDiffableDataSourceSnapshot<AlarmListSection, AlarmListItem>()
+    private func updateSnapshot(items: [NotificationListItem]) {
+        var snapshot = NSDiffableDataSourceSnapshot<NotificationListSection, NotificationListItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
         
-        guard let datasource = self.alarmDataSource else { return }
+        guard let datasource = self.notificationDataSource else { return }
         datasource.apply(snapshot, animatingDifferences: false)
     }
 }

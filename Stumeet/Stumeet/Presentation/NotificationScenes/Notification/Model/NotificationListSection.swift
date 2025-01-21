@@ -1,5 +1,5 @@
 //
-//  AlarmListSection.swift
+//  NotificationListSection.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/12/22.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum AlarmListSection {
+enum NotificationListSection {
     case main
 }

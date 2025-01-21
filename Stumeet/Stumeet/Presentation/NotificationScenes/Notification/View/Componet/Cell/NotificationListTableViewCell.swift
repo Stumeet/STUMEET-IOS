@@ -1,5 +1,5 @@
 //
-//  AlarmListTableViewCell.swift
+//  NotificationListTableViewCell.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/12/22.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class AlarmListTableViewCell: BaseTableViewCell {
+class NotificationListTableViewCell: BaseTableViewCell {
     
     // MARK: - UIComponents
     private let rootHStackView: UIStackView = {
@@ -31,7 +31,7 @@ class AlarmListTableViewCell: BaseTableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 2
+        label.numberOfLines = 4
         label.lineBreakMode = .byTruncatingMiddle
         label.font = StumeetFont.bodyMedium15.font
         label.textColor = StumeetColor.gray500.color
@@ -68,11 +68,11 @@ class AlarmListTableViewCell: BaseTableViewCell {
     }
     
     // MARK: - Function
-    func configureCell(_ item: AlarmListItem) {
-        let fullText = item.title + " " + item.alertTime
+    func configureCell(_ item: NotificationListItem) {
+        let fullText = item.title + " " + (item.alertTime ?? "")
         let targetText = item.alertTime
         
-        if let range = fullText.range(of: targetText, options: .backwards) {
+        if let targetText, let range = fullText.range(of: targetText, options: .backwards) {
             let attributedText = NSMutableAttributedString(string: fullText)
             let nsRange = NSRange(range, in: fullText)
             attributedText.addAttribute(.foregroundColor, value: StumeetColor.gray300.color, range: nsRange)
@@ -81,7 +81,9 @@ class AlarmListTableViewCell: BaseTableViewCell {
             titleLabel.text = fullText
         }
         
-        let url = URL(string: item.thumbnailImageUrl)
-        thumbnailImageView.kf.setImage(with: url)
+        if let imageUrl = item.thumbnailImageUrl {
+            let url = URL(string: imageUrl)
+            thumbnailImageView.kf.setImage(with: url)
+        }
     }
 }

@@ -9,12 +9,12 @@ import UIKit
 
 protocol HomeCoordinatorDependencies {
     func makeHomeVC(coordinator: HomeNavigation) -> HomeViewController
-    func makeAlarmDIContainer() -> AlarmDIContainer    
+    func makeNotificationDIContainer() -> NotificationDIContainer
 }
 
 protocol HomeNavigation: AnyObject {
     func goToHome()
-    func startAlarmCoordinator()
+    func startNotificationCoordinator()
 }
 
 final class HomeCoordinator: Coordinator {
@@ -42,10 +42,10 @@ extension HomeCoordinator: HomeNavigation {
         navigationController.pushViewController(homeVC, animated: true)
     }
     
-    func startAlarmCoordinator() {
+    func startNotificationCoordinator() {
         let homeNav = UINavigationController()
-        let alarmDIContainer = dependencies.makeAlarmDIContainer()
-        let flow = alarmDIContainer.makeAlarmCoordinator(
+        let notificationDIContainer = dependencies.makeNotificationDIContainer()
+        let flow = notificationDIContainer.makeNotificationCoordinator(
             navigationController: homeNav
         )
         

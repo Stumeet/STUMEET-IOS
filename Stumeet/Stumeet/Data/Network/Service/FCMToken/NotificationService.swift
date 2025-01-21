@@ -1,5 +1,5 @@
 //
-//  FCMTokenService.swift
+//  NotificationService.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/10/17.
@@ -7,21 +7,26 @@
 
 import Moya
 
-enum FCMTokenService {
+enum NotificationService {
     case updateFCMToken(FCMTokenRequestDTO)
+    case fetchNotificationLogs(NotificationRequestDTO)
 }
 
-extension FCMTokenService: BaseTargetType {
+extension NotificationService: BaseTargetType {
 
     var path: String {
         switch self {
         case .updateFCMToken:
             return "/api/v1/notification-token/renew"
+        case .fetchNotificationLogs:
+            return "/api/v1/notification/logs"
         }
     }
     
     var method: Method {
         switch self {
+        case .fetchNotificationLogs:
+            return .get
         case .updateFCMToken:
             return .post
         }
@@ -32,6 +37,9 @@ extension FCMTokenService: BaseTargetType {
         case .updateFCMToken(let fcmTokenRequestDTO):
             guard let dto = fcmTokenRequestDTO.toDictionary else { return .requestPlain}
             return .requestParameters(parameters: dto, encoding: JSONEncoding.default)
+        case .fetchNotificationLogs(let requestDTO):
+            guard let dto = requestDTO.toDictionary else { return .requestPlain}
+            return .requestParameters(parameters: dto, encoding: URLEncoding.default)
         }
     }
     

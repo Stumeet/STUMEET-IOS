@@ -63,6 +63,7 @@ class HomeHeaderTableViewCell: BaseTableViewCell {
         label.numberOfLines = 1
         label.font = StumeetFont.bodyMedium15.font
         label.textColor = StumeetColor.gray50.color
+        label.text = "곧 일정이 시작돼요!"
         return label
     }()
     
@@ -136,7 +137,6 @@ class HomeHeaderTableViewCell: BaseTableViewCell {
     
     // MARK: - Function
     func configureCell() {
-        descriptionLabel.text = "곧 일정이 시작돼요!"
         activityNameLabel.text = "일정명"
         studyGroupNameLabel.text = "스터디 그룹명"
         remainingTimeLabel.text = "1시간 00분 남음"

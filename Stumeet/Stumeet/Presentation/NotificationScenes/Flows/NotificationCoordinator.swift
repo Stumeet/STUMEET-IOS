@@ -1,5 +1,5 @@
 //
-//  AlarmCoordinator.swift
+//  NotificationCoordinator.swift
 //  Stumeet
 //
 //  Created by 조웅희 on 2024/12/22.
@@ -7,24 +7,24 @@
 
 import UIKit
 
-protocol AlarmCoordinatorDependencies {
-    func makeAlarmVC(coordinator: AlarmNavigation) -> AlarmViewController
+protocol NotificationCoordinatorDependencies {
+    func makeNotificationVC(coordinator: NotificationNavigation) -> NotificationViewController
 }
 
-protocol AlarmNavigation: AnyObject {
+protocol NotificationNavigation: AnyObject {
     func presentToAlarmVC()
     func dimiss()
 }
 
-final class AlarmCoordinator: Coordinator {
+final class NotificationCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var children: [Coordinator] = []
     var navigationController: UINavigationController
-    private let dependencies: AlarmCoordinatorDependencies
+    private let dependencies: NotificationCoordinatorDependencies
     
     init(
         navigationController: UINavigationController,
-        dependencies: AlarmCoordinatorDependencies
+        dependencies: NotificationCoordinatorDependencies
     ) {
         self.navigationController = navigationController
         self.dependencies = dependencies
@@ -35,13 +35,13 @@ final class AlarmCoordinator: Coordinator {
     }
 }
 
-extension AlarmCoordinator: AlarmNavigation {
+extension NotificationCoordinator: NotificationNavigation {
     func presentToAlarmVC() {
-        let alarmVC = dependencies.makeAlarmVC(
+        let notificationVC = dependencies.makeNotificationVC(
             coordinator: self
         )
         
-        navigationController.setViewControllers([alarmVC], animated: true)
+        navigationController.setViewControllers([notificationVC], animated: true)
         navigationController.modalPresentationStyle = .overFullScreen
         parentCoordinator?.presentOnTop(navigationController)
     }
