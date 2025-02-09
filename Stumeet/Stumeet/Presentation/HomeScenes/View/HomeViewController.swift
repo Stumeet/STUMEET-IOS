@@ -31,15 +31,16 @@ class HomeViewController: BaseViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.registerCell(HomeHeaderTableViewCell.self)
         tableView.registerCell(HomeActivityTableViewCell.self)
+        tableView.registerCell(HomeNoticeTableViewCell.self)
         return tableView
     }()
     
-    private var headerTapBarView: HeaderTapBarView = {
+    private lazy var headerTapBarView: HeaderTapBarView = {
         let tapbarView =  HeaderTapBarView(
             options: HomeHeaderTapBarViewType.allCases.map { ($0.title, $0.id) },
             initSelectedIndex: HomeHeaderTapBarViewType.task.id
         )
-        
+        tapbarView.delegate = self
         tapbarView.backgroundColor = .white
         return tapbarView
     }()
@@ -49,137 +50,14 @@ class HomeViewController: BaseViewController {
     private weak var coordinator: HomeNavigation!
     private let viewModel: HomeViewModel
     
-    private var headerDataSource: [String] = ["테스트"]
-    private var activityDataSource: [HomeActivityItem] = [
-        HomeActivityItem(
-            activity: Activity(
-                id: 0,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 1,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 2,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 3,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 4,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 5,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 6,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 7,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        ),
-        HomeActivityItem(
-            activity: Activity(
-                id: 8,
-                tag: .homework,
-                title: "제목",
-                content: "캠스터디 교재 1장 45.p ~ 47.p 2번까지 풀고 풀",
-                startTiem: "2024-04-22T00:00:00",
-                endTime: "2024-04-23T00:00:00",
-                place: "강남",
-                name: "타이틀",
-                day: "2024-11-25T09:56:21.296888",
-                status: .attendance
-            )
-        )
-    ]
+    private var headerDataSource: HomeHeaderActivityItem?
+    private var activityDataSource: [HomeActivityItem] = []
+    private var noticeDataSource: [HomeNoticeItem] = []
     
     private let didTapAlarmButtonSubject = PassthroughSubject<Void, Never>()
+    private let loadDataSubject = PassthroughSubject<Void, Never>()
+    private let didTapHeadderTapBarButtonSubject = PassthroughSubject<HomeHeaderTapBarViewType, Never>()
+    private let didReachTableBottomSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Init
     init(
@@ -208,7 +86,6 @@ class HomeViewController: BaseViewController {
             action: UIAction { [weak self] _ in
                 guard let self else { return }
                 didTapAlarmButtonSubject.send()
-                
             }
         )
     }
@@ -223,12 +100,30 @@ class HomeViewController: BaseViewController {
     override func bind() {
         // MARK: - Input
         let input = HomeViewModel.Input(
-            didTapAlarmButton: didTapAlarmButtonSubject.eraseToAnyPublisher()
+            loadData: loadDataSubject.eraseToAnyPublisher(),
+            didTapAlarmButton: didTapAlarmButtonSubject.eraseToAnyPublisher(),
+            didTapHeadderTapBarButton: didTapHeadderTapBarButtonSubject.eraseToAnyPublisher(),
+            didReachTableBottom: didReachTableBottomSubject.eraseToAnyPublisher()
         )
                 
         // MARK: - Output
         let output = viewModel.transform(input: input)
- 
+        
+        output.headerActivityDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateHeaderActivityView)
+            .store(in: &cancellables)
+        
+        output.activityDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateActivityView)
+            .store(in: &cancellables)
+        
+        output.noticeDataSource
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: updateNoticeView)
+            .store(in: &cancellables)
+        
         output.presentToAlarmVC
             .receive(on: RunLoop.main)
             .sink(receiveValue: coordinator.startNotificationCoordinator )
@@ -238,6 +133,7 @@ class HomeViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadDataSubject.send()
     }
     
     // MARK: - Function
@@ -249,11 +145,27 @@ class HomeViewController: BaseViewController {
     
         return UIBarButtonItem(customView: button)
     }
+    
+    private func updateHeaderActivityView(data: HomeHeaderActivityItem) {
+        headerDataSource = data
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
+    private func updateActivityView(data: [HomeActivityItem]) {
+        activityDataSource = data
+        tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+    }
+    
+    private func updateNoticeView(data: [HomeNoticeItem]) {
+        noticeDataSource = data
+        tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+    }
 }
 
 extension HomeViewController:
     UITableViewDataSource,
-    UITableViewDelegate {
+    UITableViewDelegate,
+    HeaderTapBarViewDelegate {
     
     // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -261,8 +173,12 @@ extension HomeViewController:
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return headerDataSource.count }
-        return activityDataSource.count
+        if section == 0 { return headerDataSource == nil ? 0 : 1 }
+        switch viewModel.currentTap.value {
+        case .task: return activityDataSource.count
+        case .notice: return noticeDataSource.count
+        default: return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -278,16 +194,28 @@ extension HomeViewController:
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeue(HomeHeaderTableViewCell.self, for: indexPath)
+            guard let cell = tableView.dequeue(HomeHeaderTableViewCell.self, for: indexPath),
+                  let headerDataSource
             else { return UITableViewCell() }
-            cell.configureCell()
+            cell.configureCell(data: headerDataSource)
             return cell
         } else {
-            guard let cell = tableView.dequeue(HomeActivityTableViewCell.self, for: indexPath),
-                  let activityData = activityDataSource[safe: indexPath.row]
-            else { return UITableViewCell() }
-            cell.configureCell(data: activityData)
-            return cell
+            
+            switch viewModel.currentTap.value {
+            case .task:
+                guard let cell = tableView.dequeue(HomeActivityTableViewCell.self, for: indexPath),
+                      let activityData = activityDataSource[safe: indexPath.row]
+                else { return UITableViewCell() }
+                cell.configureCell(data: activityData)
+                return cell
+            case .notice:
+                guard let cell = tableView.dequeue(HomeNoticeTableViewCell.self, for: indexPath),
+                      let noticeData = noticeDataSource[safe: indexPath.row]
+                else { return UITableViewCell() }
+                cell.configureCell(data: noticeData)
+                return cell
+            default: return UITableViewCell()
+            }
         }
     }
     
@@ -301,6 +229,9 @@ extension HomeViewController:
         
         let currentScrollPosition = scrollView.contentOffset.y
         let alphaValue = (currentScrollPosition - firstSectionHeaderPosition) / firstSectionHeaderPosition
+        let threshold = max(0, (scrollView.contentSize.height) * 0.3)
+        
+        if currentScrollPosition > threshold { didReachTableBottomSubject.send() }
         
         if currentScrollPosition >= firstSectionHeaderPosition {
             headerTapBarView.adjustSeparatorAlpha(alpha: max(0, min(1, alphaValue + 0.2)))
@@ -308,5 +239,11 @@ extension HomeViewController:
         } else {
             headerTapBarView.adjustSeparatorAlpha(alpha: 0)
         }
+    }
+    
+    // MARK: - HeaderTapBarViewDelegate
+    func didTapAction(_ button: HeaderTapBarView.RadioButton) {
+        guard let tapType = HomeHeaderTapBarViewType(rawValue: button.id) else { return }
+        didTapHeadderTapBarButtonSubject.send(tapType)
     }
 }

@@ -8,7 +8,7 @@
 import Combine
 
 protocol FetchNoticesUseCase {
-    func execute(page: Int, studyID: Int) -> AnyPublisher<ActivityPage, Never>
+    func execute(page: Int, studyID: Int?) -> AnyPublisher<ActivityPage, Never>
 }
 
 final class DefaultFetchNoticesUseCase: FetchNoticesUseCase {
@@ -18,13 +18,14 @@ final class DefaultFetchNoticesUseCase: FetchNoticesUseCase {
         self.repository = repository
     }
 
-    func execute(page: Int, studyID: Int) -> AnyPublisher<ActivityPage, Never> {
+    func execute(page: Int, studyID: Int? = nil) -> AnyPublisher<ActivityPage, Never> {
         return repository.fetchActivityList(
             size: 15,
             page: page,
             isNotice: true,
             studyId: studyID,
-            category: nil
+            category: nil,
+            sort: nil
         )
         .catch { error -> AnyPublisher<ActivityPage, Never> in
             fatalError("error: \(error)")

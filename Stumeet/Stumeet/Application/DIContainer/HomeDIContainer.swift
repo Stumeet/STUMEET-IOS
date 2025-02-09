@@ -22,14 +22,30 @@ final class HomeDIContainer: HomeCoordinatorDependencies {
     }
     
     // MARK: - Repository
-    
+    func makeStudyActivityRepository() -> StudyActivityRepository {
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
+    }
     
     // MARK: - UseCase
+    func makeFetchClosestActivityUseCase() -> FetchClosestActivityUseCase {
+        DefaultFetchClosestActivityUseCase(repository: makeStudyActivityRepository())
+    }
     
- 
+    func makeFetchClosestActivityListUseCase() -> FetchClosestActivityListUseCase {
+        DefaultFetchClosestActivityListUseCase(repository: makeStudyActivityRepository())
+    }
+    
+    func makeFetchNoticesUseCase() -> FetchNoticesUseCase {
+        DefaultFetchNoticesUseCase(repository: makeStudyActivityRepository())
+    }
+    
     // MARK: - Home
     func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel()
+        HomeViewModel(
+            fetchClosestActivityUseCase: makeFetchClosestActivityUseCase(),
+            fetchClosestActivityListUseCase: makeFetchClosestActivityListUseCase(),
+            fetchNoticesUseCase: makeFetchNoticesUseCase()
+        )
     }
     
     func makeHomeVC(coordinator: HomeNavigation) -> HomeViewController {

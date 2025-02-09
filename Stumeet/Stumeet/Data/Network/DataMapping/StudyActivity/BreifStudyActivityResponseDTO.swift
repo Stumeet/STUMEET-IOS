@@ -16,7 +16,7 @@ extension BreifStudyActivityResponseDTO {
     struct BreifActivityItemResponseDTO: Decodable {
         let id: Int
         let category, title, startDate, endDate: String
-        let location: String?
+        let location, studyName: String?
         let status, createdAt: String
     }
     
@@ -44,6 +44,7 @@ extension BreifStudyActivityResponseDTO.BreifActivityItemResponseDTO {
             place: location,
             image: nil,
             name: nil,
+            studyName: studyName,
             day: createdAt,
             status: ActivityState(rawValue: status)!)
     }

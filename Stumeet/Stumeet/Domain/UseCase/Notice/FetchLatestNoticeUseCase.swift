@@ -24,7 +24,8 @@ final class DefaultFetchLatestNoticeUseCase: FetchLatestNoticeUseCase {
             page: 0,
             isNotice: true,
             studyId: studyID,
-            category: nil
+            category: nil,
+            sort: nil
         )
         .catch { error -> AnyPublisher<ActivityPage, Never> in
             fatalError("error: \(error)")

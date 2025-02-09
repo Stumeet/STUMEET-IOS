@@ -17,6 +17,7 @@ struct Activity: Hashable {
     let place: String?
     let image: String?
     let name: String?
+    let studyName: String?
     let day: String?
     let status: ActivityState?
     
@@ -30,6 +31,7 @@ struct Activity: Hashable {
         place: String? = nil,
         image: String? = nil,
         name: String? = nil,
+        studyName: String? = nil,
         day: String? = nil,
         status: ActivityState? = nil
     ) {
@@ -42,6 +44,7 @@ struct Activity: Hashable {
         self.place = place
         self.image = image
         self.name = name
+        self.studyName = studyName
         self.day = day
         self.status = status
     }

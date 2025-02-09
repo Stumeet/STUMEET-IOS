@@ -24,7 +24,8 @@ final class DefaultFetchAllStudyActivitiesUseCase: FetchAllStudyActivitiesUseCas
                 page: page,
                 isNotice: false,
                 studyId: studyID,
-                category: category
+                category: [category],
+                sort: nil
             )
             .catch { error -> AnyPublisher<ActivityPage, Never> in
                 fatalError("error: \(error)")

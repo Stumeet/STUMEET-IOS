@@ -40,7 +40,8 @@ final class DefaultFetchMonthlyActivitiesUseCase: FetchMonthlyActivitiesUseCase 
             memberId: nil,
             category: nil,
             fromDate: fromDate,
-            toDate: toDate
+            toDate: toDate,
+            sort: nil
         )
         .catch { error -> AnyPublisher<ActivityPage, Never> in
             fatalError("error: \(error)")

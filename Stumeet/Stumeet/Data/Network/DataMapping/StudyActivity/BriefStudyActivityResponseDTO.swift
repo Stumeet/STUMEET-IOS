@@ -13,7 +13,8 @@ struct BriefStudyActivityRequestDTO: Encodable {
     let isNotice: Bool?
     let studyId: Int?
     let memberId: Int?
-    let category: String?
+    let category: [String]?
     let fromDate: String?
     let toDate: String?
+    let sort: String?
 }

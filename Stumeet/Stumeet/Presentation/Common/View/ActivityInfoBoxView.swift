@@ -320,20 +320,20 @@ class ActivityInfoBoxView: UIView {
 
     // MARK: - Function
     func configureView(data: ActivityRepresentable) {
-        if let homeItem = data as? HomeActivityItem {
+        if data is HomeActivityItem || data is HomeNoticeItem {
             typeView.isHidden = true
             studyNameLabel.isHidden = false
             rightTypeLabel.isHidden = false
             
-            studyNameLabel.text = homeItem.displayStudyName
-            rightTypeLabel.text = homeItem.displayType.title
+            studyNameLabel.text = data.displayStudyName
+            rightTypeLabel.text = data.displayType.title
             
         } else {
             typeView.isHidden = false
             studyNameLabel.isHidden = true
             rightTypeLabel.isHidden = true
             
-            typeLabel.text = data.displayType.title            
+            typeLabel.text = data.displayType.title
         }
         
         mainTitleLabel.text = data.displayActivityTitle

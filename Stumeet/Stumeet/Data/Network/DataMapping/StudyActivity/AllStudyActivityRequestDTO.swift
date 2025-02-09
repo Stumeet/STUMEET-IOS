@@ -12,5 +12,6 @@ struct AllStudyActivityRequestDTO: Encodable {
     let page: Int
     let isNotice: Bool?
     let studyId: Int?
-    let category: String?
+    let category: [String]?
+    let sort: String?
 }

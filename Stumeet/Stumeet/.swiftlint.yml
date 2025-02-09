@@ -56,6 +56,12 @@ nesting:
     warning: 3
     error: 4
 
+# 함수 매개변수 개수 제한
+function_parameter_count:
+  warning: 6  # 경고 발생 기준 (기본값: 5)
+  error: 10    # 오류 발생 기준 (기본값: 5)
+  ignores_default_parameters: true
+
 # 개발 중에 적었던 print문 경고표시
 custom_rules:
   disable_print:

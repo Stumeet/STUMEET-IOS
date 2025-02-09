@@ -136,9 +136,9 @@ class HomeHeaderTableViewCell: BaseTableViewCell {
     }
     
     // MARK: - Function
-    func configureCell() {
-        activityNameLabel.text = "일정명"
-        studyGroupNameLabel.text = "스터디 그룹명"
-        remainingTimeLabel.text = "1시간 00분 남음"
+    func configureCell(data: HomeHeaderActivityItem) {
+        activityNameLabel.text = data.displayActivityTitle
+        studyGroupNameLabel.text = data.displayStudyName
+        remainingTimeLabel.text = data.displayRemainingTime
     }
 }

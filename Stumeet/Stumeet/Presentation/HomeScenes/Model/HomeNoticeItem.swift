@@ -1,19 +1,19 @@
 //
-//  HomeActivityItem.swift
+//  HomeNoticeItem.swift
 //  Stumeet
 //
-//  Created by 조웅희 on 2024/12/04.
+//  Created by 조웅희 on 2025/02/03.
 //
 
 import Foundation
 
-struct HomeActivityItem: ActivityRepresentable, Hashable, Identifiable {
+struct HomeNoticeItem: ActivityRepresentable, Hashable, Identifiable {
     
     let activity: Activity
     var id: Int { activity.id }
     
     var displayStudyName: String? {
-        activity.studyName
+        activity.studyName ?? "알 수 없음"
     }
     
     var displayActivityTitle: String? {
@@ -40,17 +40,9 @@ struct HomeActivityItem: ActivityRepresentable, Hashable, Identifiable {
         activity.endTime?.formattedDateHHmm()
     }
     
-    var displayRemainingTime: String? {
-        switch activity.tag {
-        case .homework:
-            activity.endTime?.timeUntilSince() ?? "알 수 없음"
-        case .meeting:
-            activity.startTiem?.timeUntilSince() ?? "알 수 없음"
-        default: "알 수 없음"
-        }
-    }
+    var displayRemainingTime: String?
 
-    internal init(activity: Activity) {
+    init(activity: Activity) {
         self.activity = activity
     }
 }

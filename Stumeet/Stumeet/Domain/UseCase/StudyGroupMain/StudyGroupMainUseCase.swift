@@ -44,7 +44,8 @@ final class DefaultStudyGroupMainUseCase: StudyGroupMainUseCase {
             page: page,
             isNotice: nil,
             studyId: studyId,
-            category: nil
+            category: nil,
+            sort: nil
         )
         .catch { error -> AnyPublisher<ActivityPage, Never> in
             fatalError("error: \(error)")

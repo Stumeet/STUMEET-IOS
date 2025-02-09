@@ -25,7 +25,8 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             page: page,
             isNotice: nil,
             studyId: 1,
-            category: nil
+            category: nil,
+            sort: nil
         )
         
         return provider.requestPublisher(.fetchAllActivities(requestDTO))
@@ -43,9 +44,10 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             isNotice: nil,
             studyId: 1,
             memberId: nil,
-            category: ActivityCategory.meeting.rawValue,
+            category: [ActivityCategory.meeting.rawValue],
             fromDate: nil,
-            toDate: nil
+            toDate: nil,
+            sort: nil
         )
         
         return provider.requestPublisher(.fetchBriefActivities(requestDTO))
@@ -62,9 +64,10 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             isNotice: nil,
             studyId: 1,
             memberId: nil,
-            category: ActivityCategory.homework.rawValue,
+            category: [ActivityCategory.homework.rawValue],
             fromDate: nil,
-            toDate: nil
+            toDate: nil,
+            sort: nil
         )
         
         return provider.requestPublisher(.fetchBriefActivities(requestDTO))
@@ -79,14 +82,16 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         page: Int,
         isNotice: Bool?,
         studyId: Int?,
-        category: ActivityCategory? = nil
+        category: [ActivityCategory]? = nil,
+        sort: ActivitySort?  = nil
     ) -> AnyPublisher<ActivityPage, MoyaError> {
         let requestDTO = AllStudyActivityRequestDTO(
             size: size,
             page: page,
             isNotice: isNotice,
             studyId: studyId,
-            category: category?.rawValue
+            category: category?.map { $0.rawValue},
+            sort: nil
         )
         
         return provider.requestPublisher(.fetchAllActivities(requestDTO))
@@ -105,9 +110,10 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
         isNotice: Bool? = nil,
         studyId: Int?,
         memberId: Int?,
-        category: ActivityCategory? = nil,
+        category: [ActivityCategory]? = nil,
         fromDate: String? = nil,
-        toDate: String?  = nil
+        toDate: String?  = nil,
+        sort: ActivitySort?  = nil
     ) -> AnyPublisher<ActivityPage, MoyaError> {
         let requestDTO = BriefStudyActivityRequestDTO(
             size: size,
@@ -115,9 +121,10 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             isNotice: isNotice,
             studyId: studyId,
             memberId: memberId,
-            category: category?.rawValue,
+            category: category?.map { $0.rawValue},
             fromDate: fromDate,
-            toDate: toDate
+            toDate: toDate,
+            sort: sort?.rawValue
         )
         
         return provider.requestPublisher(.fetchBriefActivities(requestDTO))
@@ -129,4 +136,5 @@ final class DefaultStudyActivityRepository: StudyActivityRepository {
             .mapError { $0 as? MoyaError ?? MoyaError.underlying($0, nil) }
             .eraseToAnyPublisher()
     }
+    
 }
