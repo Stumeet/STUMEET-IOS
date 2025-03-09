@@ -52,7 +52,7 @@ final class ScheduleViewModelImpl: CalenderViewModel {
         loadData
             .flatMap { [weak self] in
                 guard let self else { return Empty<ActivityPage, Never>().eraseToAnyPublisher()}
-                return fetchMonthlyActivitiesUseCase.execute(studyID: studyID, month: currentMonth)
+                return fetchMonthlyActivitiesUseCase.execute(month: currentMonth, studyID: studyID)
             }
             .map(updateActivityPageData(receiveValue:))
             .sink { [weak self] listItem in

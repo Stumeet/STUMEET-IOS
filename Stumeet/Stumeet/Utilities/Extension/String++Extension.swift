@@ -134,7 +134,16 @@ extension String {
             return "\(minute)분 남음"
         }
         
-        return "0분 남음"
+        return "종료"
+    }
+    
+    /// 종료시간 확인 유무 함수
+    func isTimeExpired() -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        guard let endDate = dateFormatter.date(from: self) else { return false }
+        
+        return Date() >= endDate
     }
     
     /// ISO형식으로 바꿔주는 함수입니다.

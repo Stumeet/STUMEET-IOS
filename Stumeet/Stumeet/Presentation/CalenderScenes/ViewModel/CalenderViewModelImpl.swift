@@ -28,6 +28,8 @@ final class CalenderViewModelImpl: CalenderViewModel {
     private var currentMonth: Date = Date()
     private var cancellables = Set<AnyCancellable>()
     
+    private var fetchMonthlyActivitiesUseCase: FetchMonthlyActivitiesUseCase
+    
     private(set) var isLeftButtonDisable: Bool = false
     private(set) var isRightButtonDisable: Bool = false
     @Published private(set) var currentMonthString: String = ""
@@ -35,37 +37,16 @@ final class CalenderViewModelImpl: CalenderViewModel {
     @Published private(set) var scheduleDetailList: [ScheduleItem] = []
     
     // MARK: - Init
-    init() {
+    init(fetchMonthlyActivitiesUseCase: FetchMonthlyActivitiesUseCase) {
+        self.fetchMonthlyActivitiesUseCase = fetchMonthlyActivitiesUseCase
         self.currentMonthString = currentMonth.dateString(format: "yyyy년 MM월")
         
         loadData
-            .map { [weak self] () -> [ScheduleItem] in
-                guard let self else { return [] }
-                // TODO: - 테스트 데이트
-                return updateActivityPageData(
-                    receiveValue: ActivityPage(
-                        pageInfo: .init(
-                            totalPages: 2,
-                            totalElements: 30,
-                            currentPage: 0,
-                            pageSize: 20
-                        ),
-                        activitys: [
-                            Activity(id: 0, title: "타이틀 테스트"),
-                            Activity(id: 1, title: "타이틀 테스트"),
-                            Activity(id: 2, title: "타이틀 테스트"),
-                            Activity(id: 3, title: "타이틀 테스트"),
-                            Activity(id: 4, title: "타이틀 테스트"),
-                            Activity(id: 5, title: "타이틀 테스트"),
-                            Activity(id: 6, title: "타이틀 테스트"),
-                            Activity(id: 7, title: "타이틀 테스트"),
-                            Activity(id: 8, title: "타이틀 테스트"),
-                            Activity(id: 9, title: "타이틀 테스트"),
-                            Activity(id: 10, title: "타이틀 테스트")
-                        ]
-                    )
-                )
+            .flatMap { [weak self] in
+                guard let self else { return Empty<ActivityPage, Never>().eraseToAnyPublisher()}
+                return fetchMonthlyActivitiesUseCase.execute(month: currentMonth, studyID: nil)
             }
+            .map(updateActivityPageData(receiveValue:))
             .sink { [weak self] listItem in
                 guard let self else { return }
                 scheduleList = listItem
@@ -75,10 +56,7 @@ final class CalenderViewModelImpl: CalenderViewModel {
     }
     
     func transform(input: Input) -> Output {
-
-        
         return Output(
-            
         )
     }
     
@@ -122,15 +100,13 @@ final class CalenderViewModelImpl: CalenderViewModel {
     
     func setSelectedDate(_ date: Date) {
         selectedDate = date
-        // FIXME: - 테스트 로직
-        scheduleDetailList = scheduleList
-//        scheduleDetailList = scheduleList.filter {
-//            checkDateContainedIn(
-//                date,
-//                start: $0.activity.startTiem,
-//                end: $0.activity.endTime
-//            )
-//        }
+        scheduleDetailList = scheduleList.filter {
+            checkDateContainedIn(
+                date,
+                start: $0.activity.startTiem,
+                end: $0.activity.endTime
+            )
+        }
     }
     
     /// 날짜 범위 확인

@@ -9,6 +9,7 @@ import Foundation
 
 protocol ActivityRepresentable {
     var activity: Activity { get }
+    var isTimeExpired: Bool? { get }
     var displayStudyName: String? { get }
     var displayActivityTitle: String? { get }
     var displayAuthorName: String { get }

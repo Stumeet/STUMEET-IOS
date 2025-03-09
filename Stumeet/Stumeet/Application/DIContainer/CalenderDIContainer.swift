@@ -22,14 +22,20 @@ final class CalenderDIContainer: CalenderCoordinatorDependencies {
     }
     
     // MARK: - Repository
-    
+    func makeStudyActivityRepository() -> StudyActivityRepository {
+        DefaultStudyActivityRepository(provider: dependencies.provider.makeProvider())
+    }
     
     // MARK: - UseCase
-    
+    func makeFetchMonthlyActivitiesUseCase() -> FetchMonthlyActivitiesUseCase {
+        DefaultFetchMonthlyActivitiesUseCase(
+            repository: makeStudyActivityRepository()
+        )
+    }
  
     // MARK: - Calender
     func makeCalenderViewModel() -> CalenderViewModelImpl {
-        CalenderViewModelImpl()
+        CalenderViewModelImpl(fetchMonthlyActivitiesUseCase: makeFetchMonthlyActivitiesUseCase())
     }
     
     func makeCalenderVC(coordinator: CalenderNavigation) -> CalenderViewController {

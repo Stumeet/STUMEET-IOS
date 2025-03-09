@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol FetchMonthlyActivitiesUseCase {
-    func execute(studyID: Int, month: Date) -> AnyPublisher<ActivityPage, Never>
+    func execute(month: Date, studyID: Int?) -> AnyPublisher<ActivityPage, Never>
 }
 
 final class DefaultFetchMonthlyActivitiesUseCase: FetchMonthlyActivitiesUseCase {
@@ -19,7 +19,7 @@ final class DefaultFetchMonthlyActivitiesUseCase: FetchMonthlyActivitiesUseCase 
         self.repository = repository
     }
 
-    func execute(studyID: Int, month: Date) -> AnyPublisher<ActivityPage, Never> {
+    func execute(month: Date, studyID: Int?) -> AnyPublisher<ActivityPage, Never> {
         // 날짜 계산
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: month)

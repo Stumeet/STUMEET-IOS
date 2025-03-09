@@ -365,9 +365,16 @@ class ActivityInfoBoxView: UIView {
         }
         
         if let remainingTime = data.displayRemainingTime {
+
             remainingTimeContainerView.isHidden = false
             remainingTimeLabel.text = remainingTime
             remainingTimeContainerView.setRoundCorner()
+            
+            if let isTimeExpired = data.isTimeExpired {
+                remainingTimeContainerView.backgroundColor = isTimeExpired ? StumeetColor.gray75.color : StumeetColor.primary50.color
+                remainingTimeLabel.textColor = isTimeExpired ? StumeetColor.gray300.color : StumeetColor.primary700.color
+            }
+            
             profileInfoContentHStackView.isHidden = true
         } else {
             remainingTimeContainerView.isHidden = true

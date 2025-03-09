@@ -12,6 +12,8 @@ struct HomeNoticeItem: ActivityRepresentable, Hashable, Identifiable {
     let activity: Activity
     var id: Int { activity.id }
     
+    var isTimeExpired: Bool?
+    
     var displayStudyName: String? {
         activity.studyName ?? "알 수 없음"
     }

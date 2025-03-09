@@ -11,8 +11,8 @@ struct StudyMainViewActivityItem: ActivityRepresentable, Hashable, Identifiable 
     let activity: Activity
     var id: Int { activity.id }
     var cellType: StudyMainActivityCellStyle
-    
-    var displayStudyName: String? 
+    var isTimeExpired: Bool?
+    var displayStudyName: String?
     var displayActivityTitle: String?
     var displayRemainingTime: String?
     

@@ -12,6 +12,16 @@ struct HomeActivityItem: ActivityRepresentable, Hashable, Identifiable {
     let activity: Activity
     var id: Int { activity.id }
     
+    var isTimeExpired: Bool? {
+        switch activity.tag {
+        case .homework:
+            activity.endTime?.isTimeExpired() ?? true
+        case .meeting:
+            activity.startTiem?.isTimeExpired() ?? true
+        default: true
+        }
+    }
+    
     var displayStudyName: String? {
         activity.studyName
     }

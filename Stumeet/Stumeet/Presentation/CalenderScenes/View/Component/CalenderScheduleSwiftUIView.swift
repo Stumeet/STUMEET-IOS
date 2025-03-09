@@ -22,11 +22,19 @@ struct CalenderScheduleSwiftUIView<ViewModel: CalenderViewModel>: View {
                         ForEach(viewModel.scheduleDetailList) { schedule in
                             detailScheduleView(schedule)
                         }
+                        
                     } else {
                         nonScheduleView
                             .frame(width: geometry.size.width, height: geometry.size.height)
                     }
                 }
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    Spacer().frame(height: 16)
+                }
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    Spacer().frame(height: 16)
+                }
+                
             }
         }
         .background(.white)
@@ -41,69 +49,73 @@ struct CalenderScheduleSwiftUIView<ViewModel: CalenderViewModel>: View {
             .frame(maxWidth: .infinity, maxHeight: 1)
     }
     
-    // TODO: - 캘린더 디테일 리스트 수정 필요
     private func detailScheduleView(_ schedule: ScheduleItem) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text(schedule.displayTitle)
-                    .font(Font(StumeetFont.bodyMedium16.font))
-                    .foregroundStyle(Color(StumeetColor.gray700.color))
+                Text(schedule.displayStudyName)
                     .lineLimit(1)
-                    .padding(.top, -1)
-                
+                    .font(Font(StumeetFont.captionMedium13.font))
+                    .foregroundStyle(Color(StumeetColor.gray400.color))
+                    
                 Spacer()
                 
-                if let state = schedule.displayState {
-                    stateBadgeView(state)
-                }
+                Text(schedule.type?.title ?? "알 수 없음")
+                    .lineLimit(1)
+                    .font(Font(StumeetFont.captionMedium13.font))
+                    .foregroundStyle(Color(StumeetColor.gray400.color))
             }
             
-            HStack(spacing: 16) {
-                HStack(spacing: 4) {
-                    switch schedule.type {
-                    case .homework:
+            Text(schedule.displayTitle)
+                .lineLimit(1)
+                .font(Font(StumeetFont.bodysemibold.font))
+                .foregroundStyle(Color(StumeetColor.gray800.color))
+                .padding(.top, 12)
+            
+            HStack(alignment: .bottom) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 4) {
                         Image(.clock)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
                         
-                        Text(schedule.displayEndTime)
+                        Text(schedule.displayDate)
                             .font(Font(StumeetFont.captionMedium13.font))
                             .foregroundStyle(Color(StumeetColor.gray300.color))
-                            .lineLimit(1)
-                    case .meeting:
-                        Image(.clock)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 16, height: 16)
-                        
-                        Text(schedule.displayStartTiem)
-                            .font(Font(StumeetFont.captionMedium13.font))
-                            .foregroundStyle(Color(StumeetColor.gray300.color))
-                            .lineLimit(1)
-                    default:
-                        EmptyView()
+                    }
+                    
+                    if let displayLocation = schedule.activity.place {
+                        HStack(spacing: 4) {
+                            Image(.marker)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 16, height: 16)
+                            
+                            Text(displayLocation)
+                                .font(Font(StumeetFont.captionMedium13.font))
+                                .foregroundStyle(Color(StumeetColor.gray300.color))
+                        }
                     }
                 }
+                    
+                Spacer()
                 
-                HStack(spacing: 4) {
-                    switch schedule.type {
-                    case .meeting:
-                        Image(.marker)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 16, height: 16)
-                        
-                        Text(schedule.displayLocation)
-                            .font(Font(StumeetFont.captionMedium13.font))
-                            .foregroundStyle(Color(StumeetColor.gray300.color))
-                            .lineLimit(1)
-                    default:
-                        EmptyView()
-                    }
-                }
+                Text(schedule.displayRemainingTime)
+                    .font(Font(StumeetFont.bodyMedium14.font))
+                    .foregroundStyle(Color(schedule.isTimeExpired ? StumeetColor.gray300.color : StumeetColor.primary700.color))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 4)
+                    .background(Color(schedule.isTimeExpired ? StumeetColor.gray75.color : StumeetColor.primary50.color))
+                    .clipShape(Capsule())
             }
+            .padding(.top, 8)
+            
         }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 16)
+        .background(Color(StumeetColor.gray50.color))
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 4)
         .padding(.horizontal, 24)
         .padding(.vertical, 8)
     }
