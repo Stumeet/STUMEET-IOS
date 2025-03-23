@@ -26,7 +26,7 @@ extension FetchMyProfileResponseDTO {
             nickname: nickname,
             region: region,
             profession: profession,
-            tier: .init(rawValue: tier ?? "씨앗") ?? .sprout  ,
+            tier: .init(rawValue: tier ?? "씨앗") ?? .sprout,
             experience: experience ?? 0,
             grapeCount: grapeCount ?? 0
         )

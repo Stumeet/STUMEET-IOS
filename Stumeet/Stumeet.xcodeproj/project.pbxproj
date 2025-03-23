@@ -222,6 +222,10 @@
 		C998FFB12D903D7800DF90CD /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFB02D903D7800DF90CD /* UserRepository.swift */; };
 		C998FFB42D903E1100DF90CD /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFB32D903E1100DF90CD /* DefaultUserRepository.swift */; };
 		C998FFB82D903F0100DF90CD /* FetchMyProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFB72D903F0100DF90CD /* FetchMyProfileUseCase.swift */; };
+		C998FFBC2D90402B00DF90CD /* MemberReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFBB2D90402B00DF90CD /* MemberReviewService.swift */; };
+		C998FFC02D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFBF2D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift */; };
+		C998FFC22D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFC12D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift */; };
+		C998FFC52D904A9E00DF90CD /* ReviewTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFC42D904A9E00DF90CD /* ReviewTag.swift */; };
 		CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */; };
 		CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */; };
 		CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */; };
@@ -651,6 +655,10 @@
 		C998FFB02D903D7800DF90CD /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		C998FFB32D903E1100DF90CD /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		C998FFB72D903F0100DF90CD /* FetchMyProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMyProfileUseCase.swift; sourceTree = "<group>"; };
+		C998FFBB2D90402B00DF90CD /* MemberReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberReviewService.swift; sourceTree = "<group>"; };
+		C998FFBF2D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMemberReviewRequestDTO.swift; sourceTree = "<group>"; };
+		C998FFC12D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMemberReviewTagStatsResponseDTO.swift; sourceTree = "<group>"; };
+		C998FFC42D904A9E00DF90CD /* ReviewTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTag.swift; sourceTree = "<group>"; };
 		CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityViewController.swift; sourceTree = "<group>"; };
 		CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityTopCell.swift; sourceTree = "<group>"; };
 		CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityPhotoCell.swift; sourceTree = "<group>"; };
@@ -2033,6 +2041,31 @@
 			path = User;
 			sourceTree = "<group>";
 		};
+		C998FFBA2D90402000DF90CD /* MemberReview */ = {
+			isa = PBXGroup;
+			children = (
+				C998FFBB2D90402B00DF90CD /* MemberReviewService.swift */,
+			);
+			path = MemberReview;
+			sourceTree = "<group>";
+		};
+		C998FFBE2D9043D300DF90CD /* MemberReview */ = {
+			isa = PBXGroup;
+			children = (
+				C998FFBF2D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift */,
+				C998FFC12D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift */,
+			);
+			path = MemberReview;
+			sourceTree = "<group>";
+		};
+		C998FFC32D904A8200DF90CD /* MemberReview */ = {
+			isa = PBXGroup;
+			children = (
+				C998FFC42D904A9E00DF90CD /* ReviewTag.swift */,
+			);
+			path = MemberReview;
+			sourceTree = "<group>";
+		};
 		CA01B2612BFF1F5200A01CEA /* DetailSttudyActivity */ = {
 			isa = PBXGroup;
 			children = (
@@ -2191,6 +2224,7 @@
 		CA6447CD2B863BB90090DD84 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				C998FFC32D904A8200DF90CD /* MemberReview */,
 				C998FFAA2D9039D600DF90CD /* User */,
 				CA6447CE2B863BB90090DD84 /* Interface */,
 				CA6447D42B863BB90090DD84 /* Entity */,
@@ -2575,6 +2609,7 @@
 		CA6448232B863BB90090DD84 /* DataMapping */ = {
 			isa = PBXGroup;
 			children = (
+				C998FFBE2D9043D300DF90CD /* MemberReview */,
 				3582D0962C56862300C9D63E /* Common */,
 				CA342DB62C37B0330055A9A4 /* StudyMember */,
 				CA8C0DE02C33C974005ECA55 /* StudyActivity */,
@@ -2592,6 +2627,7 @@
 		CA6448252B863BB90090DD84 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				C998FFBA2D90402000DF90CD /* MemberReview */,
 				CA342DB72C37B04A0055A9A4 /* StudyMember */,
 				CA8C0DDD2C33C7E3005ECA55 /* StudyActivity */,
 				355A75BA2C3AB6FA00C50BA0 /* Study */,
@@ -3415,6 +3451,7 @@
 				CA8062F72BF20089009BE351 /* ActivityMemberSection.swift in Sources */,
 				CA64483B2B863BB90090DD84 /* SelecteFieldViewModel.swift in Sources */,
 				CA64484A2B863BB90090DD84 /* ViewModelType.swift in Sources */,
+				C998FFC02D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift in Sources */,
 				CA6448322B863BB90090DD84 /* SelectRegionUseCase.swift in Sources */,
 				358D24302C46A77F001EFB51 /* StudyGroupMainRepository.swift in Sources */,
 				CA4E7EE32B930E70009C07FD /* FieldResponseDTO.swift in Sources */,
@@ -3547,6 +3584,7 @@
 				35EF30072C03841700F86052 /* StudyMainExitPopupViewController.swift in Sources */,
 				CA6448422B863BB90090DD84 /* FieldSection.swift in Sources */,
 				CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */,
+				C998FFC52D904A9E00DF90CD /* ReviewTag.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* TokensResponseDTO.swift in Sources */,
 				CA7D18DB2C1DAFDA00710C0D /* ActivityPlaceSettingViewController.swift in Sources */,
 				352885FD2BB9CEF600EFC0F6 /* TokensResponseDTO.swift in Sources */,
@@ -3556,6 +3594,7 @@
 				35BDF6F62B88D0A4000B6DCB /* OnboardingViewController.swift in Sources */,
 				CA26F80C2C7C9CF10061B7F7 /* CreateStudyGroupRepository.swift in Sources */,
 				CA6448402B863BB90090DD84 /* ChangeProfileViewController.swift in Sources */,
+				C998FFC22D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityCell.swift in Sources */,
 				3554AAD22CE2448100705EDC /* FetchNoticesUseCase.swift in Sources */,
 				35EF30032C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
@@ -3677,6 +3716,7 @@
 				CA6448522B863BB90090DD84 /* UIButton++Extension.swift in Sources */,
 				CA01B2892C04535200A01CEA /* DetailActivityMemberListViewModel.swift in Sources */,
 				353EAEAA2B8E1135008F7E8C /* AppCoordinator.swift in Sources */,
+				C998FFBC2D90402B00DF90CD /* MemberReviewService.swift in Sources */,
 				35EF30092C03926F00F86052 /* StudyMainInvitationPopupViewController.swift in Sources */,
 				CA0A0AEB2B918E27009D4064 /* NicknameUseCase.swift in Sources */,
 				3543578A2CC15DAA00D99695 /* FCMTokenManager.swift in Sources */,
