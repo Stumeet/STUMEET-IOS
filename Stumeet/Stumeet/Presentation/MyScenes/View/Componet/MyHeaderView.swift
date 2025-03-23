@@ -260,7 +260,7 @@ class MyHeaderView: UIView {
         profileImageView.image = UIImage(resource: .My.iconGrape)
         
         levelImageView.image = UIImage(resource: item.level.imageName)
-        levelTitleLabel.text = item.level.title + "단계"
+        levelTitleLabel.text = item.level.rawValue + "단계"
         currentExperienceLabel.text = "\(item.currentExperience)/\(item.level.requiredExperience)"
         grapeButtonTitleLabel.text = "\(item.grapeBunchCount)송이 \(item.grapeBerryCount)개"
         experienceProgressView.progress = item.expProgress
