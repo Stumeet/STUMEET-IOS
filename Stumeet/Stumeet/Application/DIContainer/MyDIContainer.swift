@@ -22,14 +22,33 @@ final class MyDIContainer: MyCoordinatorDependencies {
     }
     
     // MARK: - Repository
+    func makeUserRepository() -> UserRepository {
+        DefaultUserRepository(provider: dependencies.provider.makeProvider())
+    }
     
+    func makeMemberReviewRepository() -> MemberReviewRepository {
+        DefaultMemberReviewRepository(provider: dependencies.provider.makeProvider())
+    }
     
     // MARK: - UseCase
+    func makeFetchMemberReviewTagStatsUseCase() -> FetchMemberReviewTagStatsUseCase {
+        DefaultFetchMemberReviewTagStatsUseCase(
+            repository: makeMemberReviewRepository()
+        )
+    }
     
+    func makeFetchMyProfileUseCase() -> FetchMyProfileUseCase {
+        DefaultFetchMyProfileUseCase(
+            repository: makeUserRepository()
+        )
+    }
  
     // MARK: - My
     func makeMyViewModel() -> MyViewModel {
-        MyViewModel()
+        MyViewModel(
+            fetchMyProfileUseCase: makeFetchMyProfileUseCase(),
+            fetchMemberReviewTagStatsUseCase: makeFetchMemberReviewTagStatsUseCase()
+        )
     }
     
     func makeMyVC(coordinator: MyNavigation) -> MyViewController {

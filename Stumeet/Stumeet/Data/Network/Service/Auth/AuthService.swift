@@ -9,7 +9,6 @@ import Moya
 
 enum AuthService {
     case login(LoginType, String)
-    case fetchMyProfile
 }
 
 extension AuthService: BaseTargetType {
@@ -18,8 +17,6 @@ extension AuthService: BaseTargetType {
         switch self {
         case .login:
             return "/api/v1/oauth"
-        case .fetchMyProfile:
-            return "/api/v1/members/me"
         }
     }
     
@@ -27,14 +24,12 @@ extension AuthService: BaseTargetType {
         switch self {
         case .login:
             return .post
-        case .fetchMyProfile:
-            return .get
         }
     }
     
     var task: Task {
         switch self {
-        case .login, .fetchMyProfile:
+        case .login:
             return .requestPlain
         }
     }
@@ -49,8 +44,6 @@ extension AuthService: BaseTargetType {
             return ["Authorization": authValue,
                     "X-OAUTH-PROVIDER": loginType.english,
                     "Content-Type": "application/x-www-form-urlencoded"]
-        default:
-            return ["Content-Type": "application/x-www-form-urlencoded"]
         }
     }
 }

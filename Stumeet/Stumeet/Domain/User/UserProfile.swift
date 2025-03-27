@@ -46,5 +46,13 @@ struct UserProfile {
             case .fruit: .My.group
             }
         }
+        
+        var next: LevelStage? {
+            guard let currentIndex = Self.allCases.firstIndex(of: self),
+                  currentIndex + 1 < Self.allCases.count else {
+                return nil
+            }
+            return Self.allCases[currentIndex + 1]
+        }
     }
 }

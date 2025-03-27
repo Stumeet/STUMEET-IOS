@@ -142,8 +142,6 @@ final class HomeViewModel: ViewModelType {
             .map(updateNoticePageData(receiveValue:))
             .sink(receiveValue: noticeItemsSubject.send)
             .store(in: &cancellables)
-     
-        
 
         return Output(
             presentToAlarmVC: presentToAlarmVC,

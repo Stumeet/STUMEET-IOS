@@ -150,6 +150,14 @@ class MyViewController: BaseViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        output.evaluationDataSource
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] dataSource in
+                guard let self else { return }
+                evaluationUpdateSnapshot(items: dataSource)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupDelegate() {
@@ -166,27 +174,27 @@ class MyViewController: BaseViewController {
         loadDataSubject.send()
         didTapHeadderTapBarButtonSubject.send(.evaluation)
         
-        evaluationUpdateSnapshot(
-            items: [
-                .evaluation(MyEvaluationItem()),
-                .evaluation(MyEvaluationItem()),
-                .evaluation(MyEvaluationItem()),
-                .evaluation(MyEvaluationItem()),
-                .evaluation(MyEvaluationItem(isLastItem: true)),
-                .evaluationSeeMore(true),
-                .reviewOrder("최신순"),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem()),
-                .review(MyReviewItem())
-            ]
-        )
+//        evaluationUpdateSnapshot(
+//            items: [
+//                .evaluation(MyEvaluationItem()),
+//                .evaluation(MyEvaluationItem()),
+//                .evaluation(MyEvaluationItem()),
+//                .evaluation(MyEvaluationItem()),
+//                .evaluation(MyEvaluationItem(isLastItem: true)),
+//                .evaluationSeeMore(true),
+//                .reviewOrder("최신순"),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem()),
+//                .review(MyReviewItem())
+//            ]
+//        )
         
         activityUpdateSnapshot(
             items: [

@@ -19,16 +19,30 @@ final class MyViewModel: ViewModelType {
     struct Output {
         let myHeaderItem: AnyPublisher<MyHeaderItem, Never>
         let headderTapType: AnyPublisher<MyHeaderTapBarViewType, Never>
+        let evaluationDataSource: AnyPublisher<[MyEvaluationRow], Never>
     }
     
     // MARK: - Properties
+    private var fetchMyProfileUseCase: FetchMyProfileUseCase
+    private var fetchMemberReviewTagStatsUseCase: FetchMemberReviewTagStatsUseCase
+    
     private var myHeaderItemSubject = CurrentValueSubject<MyHeaderItem?, Never>(nil)
+    private var evaluationRowSubject = CurrentValueSubject<[MyEvaluationRow], Never>([])
+    
+    private var evaluationItems: [MyEvaluationItem] = []
+    private var showSeeMore: Bool = false
+    private var reviewOrderTitle: String = ""
+    private var reviewItems: [MyReviewItem] = []
     
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init
     init(
+        fetchMyProfileUseCase: FetchMyProfileUseCase,
+        fetchMemberReviewTagStatsUseCase: FetchMemberReviewTagStatsUseCase
     ) {
+        self.fetchMyProfileUseCase = fetchMyProfileUseCase
+        self.fetchMemberReviewTagStatsUseCase = fetchMemberReviewTagStatsUseCase
     }
     
     func transform(input: Input) -> Output {
@@ -40,18 +54,65 @@ final class MyViewModel: ViewModelType {
             .removeDuplicates()
             .eraseToAnyPublisher()
         
+        let evaluationDataSource = evaluationRowSubject.eraseToAnyPublisher()
+
+        
+        // TODO: loadData 할떄 연동하기 API 연동하기
         input.loadData
-            .sink { [weak self] _ in
+            .flatMap(fetchMyProfileUseCase.execute)
+            .sink { [weak self] userProfile in
                 guard let self else { return }
-                myHeaderItemSubject.send(MyHeaderItem())
+                let convertedData: MyHeaderItem = .init(userProfile)
+                myHeaderItemSubject.send(convertedData)
+            }
+            .store(in: &cancellables)
+        
+        input.loadData
+            .flatMap(fetchMemberReviewTagStatsUseCase.execute)
+            .sink { [weak self] totalCount, reviewTags in
+                guard let self else { return }
+                
+                let items: [MyEvaluationItem] = reviewTags.map { .init(reviewTagData: $0, totalCount: totalCount) }
+                updateEvaluationItems(items)
             }
             .store(in: &cancellables)
         
         return Output(
             myHeaderItem: myHeaderItem,
-            headderTapType: headderTapType
+            headderTapType: headderTapType,
+            evaluationDataSource: evaluationDataSource
         )
     }
     
     // MARK: - Function
+    private func updateEvaluationItems(_ items: [MyEvaluationItem]) {
+        self.evaluationItems = items
+        buildEvaluationRows()
+    }
+
+    private func updateShowSeeMore(_ show: Bool) {
+        self.showSeeMore = show
+        buildEvaluationRows()
+    }
+
+    private func updateReviewOrderTitle(_ title: String) {
+        self.reviewOrderTitle = title
+        buildEvaluationRows()
+    }
+
+    private func updateReviewItems(_ items: [MyReviewItem]) {
+        self.reviewItems = items
+        buildEvaluationRows()
+    }
+    
+    private func buildEvaluationRows() {
+        var rows: [MyEvaluationRow] = []
+
+        rows += evaluationItems.map { .evaluation($0) }
+        rows.append(.evaluationSeeMore(showSeeMore))
+        rows.append(.reviewOrder(reviewOrderTitle))
+        rows += reviewItems.map { .review($0) }
+
+        evaluationRowSubject.send(rows)
+    }
 }

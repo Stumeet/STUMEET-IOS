@@ -9,40 +9,43 @@ import UIKit
 
 struct MyHeaderItem {
     
-    var profileImagePath: String {
-        ""
+    private(set) var userProfileData: UserProfile
+    
+    var profileImagePath: String? {
+        userProfileData.profileImage
     }
     
     var displayName: String {
-        "홍길동"
+        userProfileData.nickname ?? "알 수 없음"
     }
     
     var displayRegionAndField: String {
-        "서울 · IT"
+        "\(userProfileData.region ?? "알 수 없음") · \(userProfileData.profession ?? "알 수 없음")"
     }
     
     var currentExperience: Int {
-        70
+        Int(userProfileData.experience)
     }
     
     var expProgress: Float {
-        0.7
+        guard let nextTier = userProfileData.tier.next else { return 0 }
+        let calculateValue = min(1, currentExperience / nextTier.requiredExperience)
+        return Float(calculateValue)
     }
     
     var level: UserProfile.LevelStage {
-        .flower
+        userProfileData.tier
     }
     
     var grapeBunchCount: Int {
-        23
+        userProfileData.grapeCount / 15
     }
     
     var grapeBerryCount: Int {
-        10
+        userProfileData.grapeCount % 15
     }
     
-    init(
-    ) {
+    init(_ userProfileData: UserProfile) {
+        self.userProfileData = userProfileData
     }
 }
-

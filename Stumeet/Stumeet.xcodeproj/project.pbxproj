@@ -217,6 +217,8 @@
 		3741B20BE70E22A2F222C98D /* Pods_Stumeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42626958E92DD1BA79E1FE6 /* Pods_Stumeet.framework */; };
 		B0FB5293210A12F8ADBB2134 /* Pods_Stumeet_StumeetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BDA323A6351F379AC28EDA3 /* Pods_Stumeet_StumeetUITests.framework */; };
 		C93638272D5651F2007D46E5 /* StudyMemberDetailResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93638262D5651F2007D46E5 /* StudyMemberDetailResponseDTO.swift */; };
+		C99802E12D9593B400DF90CD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99802E02D9593B400DF90CD /* UserService.swift */; };
+		C99802E32D95961000DF90CD /* UIImageView++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99802E22D95961000DF90CD /* UIImageView++Extension.swift */; };
 		C998FFA82D90393900DF90CD /* FetchMyProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFA72D90393900DF90CD /* FetchMyProfileResponseDTO.swift */; };
 		C998FFAC2D903A1C00DF90CD /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFAB2D903A1C00DF90CD /* UserProfile.swift */; };
 		C998FFB12D903D7800DF90CD /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFB02D903D7800DF90CD /* UserRepository.swift */; };
@@ -226,6 +228,9 @@
 		C998FFC02D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFBF2D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift */; };
 		C998FFC22D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFC12D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift */; };
 		C998FFC52D904A9E00DF90CD /* ReviewTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFC42D904A9E00DF90CD /* ReviewTag.swift */; };
+		C998FFC82D90502A00DF90CD /* MemberReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFC72D90502A00DF90CD /* MemberReviewRepository.swift */; };
+		C998FFCB2D90508000DF90CD /* DefaultMemberReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFCA2D90508000DF90CD /* DefaultMemberReviewRepository.swift */; };
+		C998FFCE2D90510000DF90CD /* FetchMemberReviewTagStatsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998FFCD2D90510000DF90CD /* FetchMemberReviewTagStatsUseCase.swift */; };
 		CA01B2672BFF1FC300A01CEA /* DetailStudyActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */; };
 		CA01B2692BFF236000A01CEA /* DetailStudyActivityTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */; };
 		CA01B26B2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */; };
@@ -650,6 +655,8 @@
 		849EAA017ADD01CA00596779 /* Pods-Stumeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.debug.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.debug.xcconfig"; sourceTree = "<group>"; };
 		C751D4B8632A603F5117B7BB /* Pods-Stumeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stumeet.release.xcconfig"; path = "Target Support Files/Pods-Stumeet/Pods-Stumeet.release.xcconfig"; sourceTree = "<group>"; };
 		C93638262D5651F2007D46E5 /* StudyMemberDetailResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberDetailResponseDTO.swift; sourceTree = "<group>"; };
+		C99802E02D9593B400DF90CD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		C99802E22D95961000DF90CD /* UIImageView++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView++Extension.swift"; sourceTree = "<group>"; };
 		C998FFA72D90393900DF90CD /* FetchMyProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMyProfileResponseDTO.swift; sourceTree = "<group>"; };
 		C998FFAB2D903A1C00DF90CD /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		C998FFB02D903D7800DF90CD /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -659,6 +666,9 @@
 		C998FFBF2D9043E900DF90CD /* FetchMemberReviewRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMemberReviewRequestDTO.swift; sourceTree = "<group>"; };
 		C998FFC12D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMemberReviewTagStatsResponseDTO.swift; sourceTree = "<group>"; };
 		C998FFC42D904A9E00DF90CD /* ReviewTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTag.swift; sourceTree = "<group>"; };
+		C998FFC72D90502A00DF90CD /* MemberReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberReviewRepository.swift; sourceTree = "<group>"; };
+		C998FFCA2D90508000DF90CD /* DefaultMemberReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMemberReviewRepository.swift; sourceTree = "<group>"; };
+		C998FFCD2D90510000DF90CD /* FetchMemberReviewTagStatsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMemberReviewTagStatsUseCase.swift; sourceTree = "<group>"; };
 		CA01B2662BFF1FC300A01CEA /* DetailStudyActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityViewController.swift; sourceTree = "<group>"; };
 		CA01B2682BFF236000A01CEA /* DetailStudyActivityTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityTopCell.swift; sourceTree = "<group>"; };
 		CA01B26A2BFF237C00A01CEA /* DetailStudyActivityPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyActivityPhotoCell.swift; sourceTree = "<group>"; };
@@ -2009,6 +2019,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C99802DF2D9593A400DF90CD /* User */ = {
+			isa = PBXGroup;
+			children = (
+				C99802E02D9593B400DF90CD /* UserService.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		C998FFAA2D9039D600DF90CD /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -2062,6 +2080,30 @@
 			isa = PBXGroup;
 			children = (
 				C998FFC42D904A9E00DF90CD /* ReviewTag.swift */,
+			);
+			path = MemberReview;
+			sourceTree = "<group>";
+		};
+		C998FFC62D90501400DF90CD /* MemberReview */ = {
+			isa = PBXGroup;
+			children = (
+				C998FFC72D90502A00DF90CD /* MemberReviewRepository.swift */,
+			);
+			path = MemberReview;
+			sourceTree = "<group>";
+		};
+		C998FFC92D90506300DF90CD /* MemberReview */ = {
+			isa = PBXGroup;
+			children = (
+				C998FFCA2D90508000DF90CD /* DefaultMemberReviewRepository.swift */,
+			);
+			path = MemberReview;
+			sourceTree = "<group>";
+		};
+		C998FFCC2D9050E400DF90CD /* MemberReview */ = {
+			isa = PBXGroup;
+			children = (
+				C998FFCD2D90510000DF90CD /* FetchMemberReviewTagStatsUseCase.swift */,
 			);
 			path = MemberReview;
 			sourceTree = "<group>";
@@ -2244,6 +2286,7 @@
 		CA6447CF2B863BB90090DD84 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				C998FFC62D90501400DF90CD /* MemberReview */,
 				C998FFAF2D903D6500DF90CD /* User */,
 				353A08C32C7B7BE300678E96 /* StudyMember */,
 				CA94FD922C52904A00A11A8E /* CreateStudyGroup */,
@@ -2288,6 +2331,7 @@
 		CA6447D62B863BB90090DD84 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C998FFCC2D9050E400DF90CD /* MemberReview */,
 				C998FFB62D903EED00DF90CD /* User */,
 				35D685F32D3FD16800C4BA02 /* Notification */,
 				3554AACE2CE2433E00705EDC /* Notice */,
@@ -2527,6 +2571,7 @@
 				3582D0942C500D7800C9D63E /* String++Extension.swift */,
 				CA443BC22C8442F300652B6A /* Date++Extension.swift */,
 				35DA75022CF36231006D6FB1 /* Calendar++Extension.swift */,
+				C99802E22D95961000DF90CD /* UIImageView++Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2572,6 +2617,7 @@
 		CA64481D2B863BB90090DD84 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				C998FFC92D90506300DF90CD /* MemberReview */,
 				353A08C62C7B7C4700678E96 /* StudyMember */,
 				CA94FD952C52908000A11A8E /* CreateStudyGroup */,
 				358D24332C46A96F001EFB51 /* StudyGroupMain */,
@@ -2627,6 +2673,7 @@
 		CA6448252B863BB90090DD84 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				C99802DF2D9593A400DF90CD /* User */,
 				C998FFBA2D90402000DF90CD /* MemberReview */,
 				CA342DB72C37B04A0055A9A4 /* StudyMember */,
 				CA8C0DDD2C33C7E3005ECA55 /* StudyActivity */,
@@ -3409,6 +3456,7 @@
 				CA01B26D2BFF238400A01CEA /* DetailStudyActivityBottomCell.swift in Sources */,
 				CA6448542B863BB90090DD84 /* UIViewController++Extension.swift in Sources */,
 				3554AAC92CDF686C00705EDC /* ScheduleViewModelImpl.swift in Sources */,
+				C998FFCB2D90508000DF90CD /* DefaultMemberReviewRepository.swift in Sources */,
 				353A08B62C7B6A2A00678E96 /* StudyMemberListTableViewCell.swift in Sources */,
 				35D49E292C91DD8100F8C5C8 /* StudyMemberComplimentRowItem.swift in Sources */,
 				352DBE542C1F4BA4008859D2 /* UIApplication++Extension.swift in Sources */,
@@ -3433,6 +3481,7 @@
 				CA6448512B863BB90090DD84 /* CALayer++Extension.swift in Sources */,
 				35732C692D1832A20035AE55 /* NotificationViewModel.swift in Sources */,
 				CA98F6B02BEE0AE100C36772 /* CreateActivityCoordinator.swift in Sources */,
+				C99802E32D95961000DF90CD /* UIImageView++Extension.swift in Sources */,
 				35DA75092CF76544006D6FB1 /* FetchMonthlyActivitiesUseCase.swift in Sources */,
 				CA64484C2B863BB90090DD84 /* CoreGraphicsManager.swift in Sources */,
 				CAB0EC0D2BDF681400CD6C61 /* TimeView.swift in Sources */,
@@ -3441,6 +3490,7 @@
 				CA01B27D2C01C41A00A01CEA /* DetailActivityPhotoListViewController.swift in Sources */,
 				CA6FADEC2B8723FB008BCEF7 /* StudyActivitySection.swift in Sources */,
 				358DF60C2CD3BF2B00DCD2EF /* KickOutStudyMemberUseCase.swift in Sources */,
+				C998FFC82D90502A00DF90CD /* MemberReviewRepository.swift in Sources */,
 				CA01B27F2C01C72300A01CEA /* DetailActivityPhotoListViewModel.swift in Sources */,
 				35BDF6F92B88D0BE000B6DCB /* SnsLoginViewController.swift in Sources */,
 				35732C8A2D257E8E0035AE55 /* MyHeaderItem.swift in Sources */,
@@ -3597,6 +3647,7 @@
 				C998FFC22D90443100DF90CD /* FetchMemberReviewTagStatsResponseDTO.swift in Sources */,
 				CA6FADE52B871AF4008BCEF7 /* StudyActivityCell.swift in Sources */,
 				3554AAD22CE2448100705EDC /* FetchNoticesUseCase.swift in Sources */,
+				C998FFCE2D90510000DF90CD /* FetchMemberReviewTagStatsUseCase.swift in Sources */,
 				35EF30032C02E26B00F86052 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				3554AAB02CDA59BA00705EDC /* TextBubbleView.swift in Sources */,
 				353A08C52C7B7C0F00678E96 /* StudyMemberRepository.swift in Sources */,
@@ -3642,6 +3693,7 @@
 				3581B2B02CBBF19500D00B11 /* StudyMemberActivityListTableViewCell.swift.swift in Sources */,
 				3581B2B12CBBF19500D00B11 /* StudyMemberStateListTableViewCell.swift in Sources */,
 				3581B2B22CBBF19500D00B11 /* StudyMemberActivityView.swift in Sources */,
+				C99802E12D9593B400DF90CD /* UserService.swift in Sources */,
 				3581B2B32CBBF19500D00B11 /* HeaderTapBarView.swift in Sources */,
 				CA01B2812C01D28D00A01CEA /* DetailActivityPhotoCell.swift in Sources */,
 				CA342DAF2C36842B0055A9A4 /* CreateActivity.swift in Sources */,

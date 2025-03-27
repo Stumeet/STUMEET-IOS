@@ -252,13 +252,8 @@ class MyHeaderView: UIView {
     
     func configure(with item: MyHeaderItem) {
         nameLabel.text = item.displayName
-        regionAndFieldLabel.text = item.displayRegionAndField
-        
-        // FIXME: API 연동 시 수정
-//        let url = URL(string: item.profileImagePath)
-//        profileImageView.kf.setImage(with: url)
-        profileImageView.image = UIImage(resource: .My.iconGrape)
-        
+        regionAndFieldLabel.text = item.displayRegionAndField       
+        profileImageView.setImage(from: item.profileImagePath)
         levelImageView.image = UIImage(resource: item.level.imageName)
         levelTitleLabel.text = item.level.rawValue + "단계"
         currentExperienceLabel.text = "\(item.currentExperience)/\(item.level.requiredExperience)"

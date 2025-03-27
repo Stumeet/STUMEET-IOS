@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ReviewTag {
+struct ReviewTag: Hashable, Equatable {
     let name: String
     let count: Int
 }

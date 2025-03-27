@@ -8,22 +8,26 @@
 import Foundation
 
 struct MyEvaluationItem: Hashable {
-    var id: UUID = UUID()
+    
+    private let reviewTagData: ReviewTag
+    private let totalCount: Int
+    
     var isLastItem: Bool = false
     
     var title: String {
-        "과제 성실도"
+        reviewTagData.name
     }
     
     var count: Int {
-        1
-    }
-    
-    var totalCount: Int {
-        10
+        reviewTagData.count
     }
     
     var evaluationProgress: Float {
-        0.7
+        Float(min(1, reviewTagData.count / totalCount))
+    }
+    
+    init(reviewTagData: ReviewTag, totalCount: Int) {
+        self.reviewTagData = reviewTagData
+        self.totalCount = totalCount
     }
 }

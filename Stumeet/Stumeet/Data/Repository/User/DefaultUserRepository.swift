@@ -11,9 +11,9 @@ import Combine
 
 final class DefaultUserRepository: UserRepository {
     
-    private let provider: MoyaProvider<AuthService>
+    private let provider: MoyaProvider<UserService>
     
-    init(provider: MoyaProvider<AuthService>) {
+    init(provider: MoyaProvider<UserService>) {
         self.provider = provider
     }
     
